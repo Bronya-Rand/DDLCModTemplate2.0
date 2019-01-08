@@ -1,12 +1,3 @@
-#This is a copy of cgs.rpy from DDLC.
-#Use this as a starting point if you would like to override with your own.
-
-#Explanation for CGs
-#This section defines the special images displayed throughout the game, like
-#during special events and closeups.
-
-#Feeding Yuri chocolate CG
-#This is the slowly fading background
 image y_cg2_bg:
     "images/cg/y_cg2_bg1.png"
     6.0
@@ -15,14 +6,12 @@ image y_cg2_bg:
     "images/cg/y_cg2_bg1.png" with Dissolve(1)
     1
     repeat
-#This is yuri's face
 image y_cg2_base:
     "images/cg/y_cg2_base.png"
 image y_cg2_nochoc:
     "images/cg/y_cg2_nochoc.png"
     on hide:
         linear 0.5 alpha 0
-#These are some animated details to make the art seem less flat
 image y_cg2_details:
     "images/cg/y_cg2_details.png"
     alpha 1.00
@@ -31,20 +20,20 @@ image y_cg2_details:
     1.0
     linear 1.0 alpha 1.0
     repeat
-#Expression changes
-image y_cg2_exp2: #Surprised
+
+image y_cg2_exp2:
     "images/cg/y_cg2_exp2.png"
     alpha 0
     linear 0.5 alpha 1
     on hide:
         linear 0.5 alpha 0
-image y_cg2_exp3: #Embarrassed
+image y_cg2_exp3:
     "images/cg/y_cg2_exp3.png"
     alpha 0
     linear 0.5 alpha 1
     on hide:
         linear 0.5 alpha 0
-#Motes of dust floating in the air
+
 image y_cg2_dust1:
     "images/cg/y_cg2_dust1.png"
     subpixel True
@@ -127,27 +116,22 @@ image y_cg2_dust4:
         linear 19.0 xoffset -100 yoffset 100
         repeat
 
-#Sitting by the window with Natsuki CG
-#Background
 image n_cg1_bg:
     "images/cg/n_cg1_bg.png"
-#Natsuki's normal face
 image n_cg1_base:
     "images/cg/n_cg1_base.png"
 
-#A few simple expressions
 image n_cg1_exp1:
-    "images/cg/n_cg1_exp1.png" #Happy
+    "images/cg/n_cg1_exp1.png"
 image n_cg1_exp2:
-    "images/cg/n_cg1_exp2.png" #Angry
+    "images/cg/n_cg1_exp2.png"
 image n_cg1_exp3:
-    "images/cg/n_cg1_exp3.png" #Also Angry
+    "images/cg/n_cg1_exp3.png"
 image n_cg1_exp4:
-    "images/cg/n_cg1_exp4.png" #Eyes closed
+    "images/cg/n_cg1_exp4.png"
 image n_cg1_exp5:
-    "images/cg/n_cg1_exp5.png" #Eyes halflidded
+    "images/cg/n_cg1_exp5.png"
 
-#Natsuki's glitched out creepy face
 image n_cg1b = LiveComposite((1280,720), (0,0), "images/cg/n_cg1b.png", (882,325), "n_rects1", (732,400), "n_rects2", (850,475), "n_rects3")
 
 image n_rects1:
@@ -165,100 +149,71 @@ image n_rects3:
     pos (764, 490)
     size (30, 20)
 
-#Natsuki in the closet CG
-#The closet background
 image n_cg2_bg:
     "images/cg/n_cg2_bg.png"
-
-#Natsuki herself
 image n_cg2_base:
     "images/cg/n_cg2_base.png"
-#Different expressions for natsuki
 image n_cg2_exp1:
-    "images/cg/n_cg2_exp1.png" #Surprised
+    "images/cg/n_cg2_exp1.png"
 image n_cg2_exp2:
-    "images/cg/n_cg2_exp2.png" #Shouting
+    "images/cg/n_cg2_exp2.png"
 
-#Natsuki pinned against the wall CG
-#Base image with background and Natsuki
 image n_cg3_base:
     "images/cg/n_cg3_base.png"
-#Cake on finger
 image n_cg3_cake:
     "images/cg/n_cg3_cake.png"
-
-#Expressions
 image n_cg3_exp1:
-    "images/cg/n_cg3_exp1.png" #Laughing
+    "images/cg/n_cg3_exp1.png"
 image n_cg3_exp2:
-    "images/cg/n_cg3_exp2.png" #Embarrassed
+    "images/cg/n_cg3_exp2.png"
 
-#Reading with Yuri in the classroom CG
-#Base image with Yuri and classroom
 image y_cg1_base:
     "images/cg/y_cg1_base.png"
-
-#Expressions
 image y_cg1_exp1:
-    "images/cg/y_cg1_exp1.png" #Side-eye at camera
+    "images/cg/y_cg1_exp1.png"
 image y_cg1_exp2:
-    "images/cg/y_cg1_exp2.png" #Mouth open
+    "images/cg/y_cg1_exp2.png"
 image y_cg1_exp3:
-    "images/cg/y_cg1_exp3.png" #Yandere face
+    "images/cg/y_cg1_exp3.png"
 
-#Yuri in the room CG
 image y_cg3_base:
     "images/cg/y_cg3_base.png"
 image y_cg3_exp1:
-    "images/cg/y_cg3_exp1.png" #Eyes closed expression
+    "images/cg/y_cg3_exp1.png"
 
-#Tying Sayori's tie CG
 image s_cg1:
     "images/cg/s_cg1.png"
 
-#Clumsy Sayori CG
-#Without bottle
 image s_cg2_base1:
     "images/cg/s_cg2_base1.png"
-#With bottle
 image s_cg2_base2:
     "images/cg/s_cg2_base2.png"
-
-#Expressions
 image s_cg2_exp1:
-    "images/cg/s_cg2_exp1.png" #Grimmace
+    "images/cg/s_cg2_exp1.png"
 image s_cg2_exp2:
-    "images/cg/s_cg2_exp2.png" #Mouth closed
+    "images/cg/s_cg2_exp2.png"
 image s_cg2_exp3:
-    "images/cg/s_cg2_exp3.png" #Eye closed
+    "images/cg/s_cg2_exp3.png"
 
-#Sayori hugging MC CG
 image s_cg3:
     "images/cg/s_cg3.png"
 
-#Sayori suicide CG
-#Sayori's room normal lighting
 image s_kill_bg:
     subpixel True
     "images/cg/s_kill_bg.png"
 
-#Sayori hanging sprite
 image s_kill:
     subpixel True
     "images/cg/s_kill.png"
 
-#Harsh lighting Sayori's room
 image s_kill_bg2:
     subpixel True
     "images/cg/s_kill_bg2.png"
 
-#Harsh lighting Sayori hanging sprite
 image s_kill2:
     subpixel True
     "images/cg/s_kill2.png"
 
-#The death scene for Yuri, this is one displayable using a ConditionSwitch to
-#switch between images
 image y_kill = ConditionSwitch(
     "persistent.yuri_kill >= 1380", "images/cg/y_kill/3a.png",
     "persistent.yuri_kill >= 1180", "images/cg/y_kill/3c.png",
@@ -273,7 +228,6 @@ image y_kill = ConditionSwitch(
 
     )
 
-#This defines the animations for Sayori's death scene
 transform s_kill_bg_start:
     truecenter
     zoom 1.10
@@ -290,8 +244,8 @@ image s_kill_bg_zoom:
         xalign 0.2 yalign 0.3 zoom 2.0
     dizzy(0.25, 1.0)
 
-transform dizzy(m, t):
-    subpixel True
+transform dizzy(m, t, subpixel=True):
+    subpixel subpixel
     parallel:
         xoffset 0
         ease 0.75 * t xoffset 10 * m
@@ -355,3 +309,4 @@ image s_kill2_zoom:
         linear 0.25 alpha 0.6
         linear 0.25 alpha 0.4
         repeat
+# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc

@@ -1,4 +1,4 @@
-## DDLC Mod Template
+## DDLC Mod Template 2.0
 
 These `.rpy` files are copies of important script files found in DDLC's `script.rpa` archive that are necessary to change for most basic modding projects.
 

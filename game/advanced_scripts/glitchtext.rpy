@@ -1,7 +1,3 @@
-#This is a copy of glitchtext.rpy from DDLC.
-#Use this as a starting point if you would like to override with your own.
-
-#This defines a single function that generates garbage text of a given character length
 init python:
     import random
 
@@ -12,3 +8,4 @@ init python:
         for x in range(length):
             output += random.choice(nonunicode)
         return output
+# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
