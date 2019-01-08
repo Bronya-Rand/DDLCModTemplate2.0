@@ -1,3 +1,14 @@
+## cgs.rpy
+
+# This defines all Character Graphics (CGs) in DDLC
+# such as Yuri Chocolate CG and Natsuki Manga CG.
+
+# Use this as a base if you want to override the CGs from DDLC with your own.
+
+## Yuri Chocolate CG
+
+# Feeding Yuri Chocolate
+# This is the slowly fading background
 image y_cg2_bg:
     "images/cg/y_cg2_bg1.png"
     6.0
@@ -6,12 +17,16 @@ image y_cg2_bg:
     "images/cg/y_cg2_bg1.png" with Dissolve(1)
     1
     repeat
+
+#Yuri's Face
 image y_cg2_base:
     "images/cg/y_cg2_base.png"
 image y_cg2_nochoc:
     "images/cg/y_cg2_nochoc.png"
     on hide:
         linear 0.5 alpha 0
+
+# Animated Details to Yuri's CG
 image y_cg2_details:
     "images/cg/y_cg2_details.png"
     alpha 1.00
@@ -21,12 +36,17 @@ image y_cg2_details:
     linear 1.0 alpha 1.0
     repeat
 
+# Expressions
+
+# Surprised Yuri
 image y_cg2_exp2:
     "images/cg/y_cg2_exp2.png"
     alpha 0
     linear 0.5 alpha 1
     on hide:
         linear 0.5 alpha 0
+
+# Embarrassed Yuri
 image y_cg2_exp3:
     "images/cg/y_cg2_exp3.png"
     alpha 0
@@ -34,6 +54,7 @@ image y_cg2_exp3:
     on hide:
         linear 0.5 alpha 0
 
+# Particles during Yuri CG
 image y_cg2_dust1:
     "images/cg/y_cg2_dust1.png"
     subpixel True
@@ -116,11 +137,17 @@ image y_cg2_dust4:
         linear 19.0 xoffset -100 yoffset 100
         repeat
 
+## Natsuki Reading Manga CG
+
+# Background
 image n_cg1_bg:
     "images/cg/n_cg1_bg.png"
 image n_cg1_base:
     "images/cg/n_cg1_base.png"
 
+# Expressions
+
+# Happy Natsuki
 image n_cg1_exp1:
     "images/cg/n_cg1_exp1.png"
 image n_cg1_exp2:
