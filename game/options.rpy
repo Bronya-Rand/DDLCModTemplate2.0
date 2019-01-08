@@ -5,11 +5,11 @@
 define config.name = "DDLC Mod Template 2.0"
 
 # This controls whether you want your mod name to show in the main menu.
-# If your mod name is big, it is suggested to turn this off (set to False)
+# If your mod name is big, it is suggested to turn this off
 define gui.show_name = True
 
 # This is where you will input the version of your mod.
-# If you have multiple releases or versions of your mod, this will be pretty useful to change.
+# If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0.0"
 define config.version = "2.0.0"
 
@@ -39,7 +39,7 @@ define config.has_voice = False
 # If you want to change this, change the "t1" to the song you want.
 define config.main_menu_music = audio.t1
 
-# These two settings control the transition effects of DDLC on the game menu, whether entering or exiting.
+# These two settings control the transition effects of DDLC on the game menu.
 # Dissolve(.2) sets the transition effect you see.
 # config.enter_transition controls the effect seen when entering the game menu.
 # config.exit_transition controls the effect when returning to the game.
@@ -68,53 +68,51 @@ define config.window = "auto"
 define config.window_show_transition = Dissolve(.2)
 define config.window_hide_transition = Dissolve(.2)
 
-# This sets the text speed of DDLC.
+# This sets the text speed of your mod.
 # By default this is set to 50. 
 # Increasing this number will speed up text while decreasing the number slows down text speed.
 # 0 is instant text display.
 default preferences.text_cps = 50
 
-
-
-
-
+# This controls the auto-forward speed
+# 15 is DDLC's default speed.
+# You can change it from 0-30
 default preferences.afm_time = 15
 
+# This controls the audio level of your mod.
+# Increasing this will make the music louder while decreasing will make it quieter.
+# SFX controls the sound effects volume.
 default preferences.music_volume = 0.75
 default preferences.sfx_volume = 0.75
 
+# This controls the save directory of your mod.
+# Change "DDLCModTemplate2" to your mod's name
+# Windows Directory for Saves: %AppData%/RenPy/
+# macOS Directory for Saves: $HOME/Library/RenPy/ (Un-hide the Library Folder)
+# Linux Directory for Saves $HOME/.renpy/
+define config.save_directory = "DDLCModTemplate2"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-define config.save_directory = "DDLC-1454445547"
-
-
-
-
-
-
-
+# This controls the window logo of your mod.
+# By default this defaults to the DDLC Icon PNG.
 define config.window_icon = "gui/window_icon.png"
 
-
-
+# This controls whether your mod allows skipping dialogue.
 define config.allow_skipping = True
+
+# This controls whether your mod saves automatically.
 define config.has_autosave = False
+
+# This controls whether you mod saves when quitting the game.
 define config.autosave_on_quit = False
+
+# This controls the number of slots auto-saving can use
 define config.autosave_slots = 0
+
+# This controls the layers of screens, images, and more. 
+# Best not to leave this alone.
 define config.layers = [ 'master', 'transient', 'screens', 'overlay', 'front' ]
+
+# Stuff to leave alone also.
 define config.image_cache_size = 64
 define config.predict_statements = 50
 define config.rollback_enabled = config.developer
@@ -145,45 +143,32 @@ init python:
 
 
 
-
+# Building Your Mod
 
 init python:
 
+    # This is where your mod gets built by Ren'Py!
+    # These are case-sensitive and matched against the actual filenames
+    # in your 'game' folder, with or without '/'
+    #
+    # '/' this is a directory seperator
+    # game/**.rpyc tells Ren'Py to grab all .rpyc's in the 'game' folder
+    # **.psd matches all .psd's in the mod project.
+    #
+    # If you don't want a file to be added to your RPA, classify it as None
+    # Example: build.classify("game/randomtext.txt", None)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # Code to Package your mod to a ZIP in Ren'Py
+    build.package(build.directory_name + "Mod",'zip',build.name,description='DDLC Compatible Mod')
 
     build.archive("scripts", "all")
-    build.archive("images", "all")
-    build.archive("audio", "all")
-    build.archive("fonts", "all")
+    build.archive("mod_assets", "all")
 
-    build.classify("game/**.jpg", "images")
-    build.classify("game/**.png", "images")
-
+    build.classify("game/mod_assets/**", "mod_assets")
     build.classify("game/**.rpyc", "scripts")
     build.classify("game/**.txt", "scripts")
     build.classify("game/**.chr", "scripts")
-    build.classify("game/**.wav", "audio")
-    build.classify("game/**.mp3", "audio")
-    build.classify("game/**.ogg", "audio")
-    build.classify("game/**.ttf", "fonts")
-    build.classify("game/**.otf", "fonts")
+    build.classify("game/advanced_scripts/**","scripts")
 
     build.classify('**~', None)
     build.classify('**.bak', None)
@@ -198,29 +183,10 @@ init python:
     build.classify('script-regex.txt', None)
     build.classify('/game/10', None)
     build.classify('/game/cache/*.*', None)
+    build.classify('**.rpa',None)
+    build.classify('README.html',build.name)
 
-
-
-
-
-
-
-
-
-    build.documentation('*.html')
-    build.documentation('*.txt')
+    # Set's README.html as documentation
+    build.documentation('README.html')
 
     build.include_old_themes = False
-
-
-
-
-
-
-
-
-
-
-
-define build.itch_project = "teamsalvato/ddlc"
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
