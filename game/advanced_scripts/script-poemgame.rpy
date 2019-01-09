@@ -21,7 +21,7 @@ init python:
 
     # Building the word list
     full_wordlist = []
-    with renpy.file('poemwords.txt') as wordfile:
+    with renpy.file('advanced_scripts/poemwords.txt') as wordfile:
         for line in wordfile:
             
             line = line.strip()

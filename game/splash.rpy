@@ -31,6 +31,11 @@ image menu_logo:
     zoom 0.60
     menu_logo_move
 
+image menu_bg:
+    topleft
+    "gui/menu_bg.png"
+    menu_bg_move
+
 image game_menu_bg:
     topleft
     "gui/menu_bg.png"
