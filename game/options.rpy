@@ -166,6 +166,7 @@ init python:
 
     build.classify("game/mod_assets/**", "mod_assets")
     build.classify("game/**.rpyc", "scripts")
+    build.classify("game/README.txt", None)
     build.classify("game/**.txt", "scripts")
     build.classify("game/**.chr", "scripts")
     build.classify("game/advanced_scripts/**","scripts")

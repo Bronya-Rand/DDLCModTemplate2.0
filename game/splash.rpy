@@ -260,7 +260,7 @@ label splashscreen:
                 pass
 
     if not firstrun:
-        if persistent.first_run and not persistent.do_not_delete:
+        if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
             $ quick_menu = False
             scene black
             menu:
@@ -273,43 +273,64 @@ label splashscreen:
                         renpy.persistent.should_save_persistent = False
                         renpy.utter_restart()
                 "No, continue where I left off.":
-                    pass
+                    $ restore_relevant_characters()
 
         python:
             if not firstrun:
-                with open(config.basedir + "/game/firstrun", "w") as f:
-                    f.write("1")
-            filepath = renpy.file("firstrun").name
-            open(filepath, "a").close()
+                try:
+                    with open(config.basedir + "/game/firstrun", "w") as f:
+                        f.write("1")
+                filepath = renpy.file("firstrun").name
+                open(filepath, "a").close()
 
     # Sets First Run to False to Show Disclaimer
     default persistent.first_run = False
 
     # Startup Disclaimer
+
     if not persistent.first_run:
+        python:
+            restore_all_characters()
         $ quick_menu = False
         scene white
         pause 0.5
         scene tos
         with Dissolve(1.0)
         pause 1.0
-
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
         "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: http://ddlc.moe or on Steam."
-
         menu:
             "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
             "I agree.":
-                pass
+                 pass
         $ persistent.first_run = True
         scene tos2
         with Dissolve(1.5)
         pause 1.0
         scene white
-        with Dissolve(1.5)
 
         $ persistent.first_run = True
+
+    ## Controls where Sayori Kill Early Starts Up
+    # python:
+    #     s_kill_early = None
+    #     if persistent.playthrough == 0:
+    #         try: renpy.file("../characters/sayori.chr")
+    #         except: s_kill_early = True
+    #     if not s_kill_early:
+    #         if persistent.playthrough <= 2 and persistent.playthrough != 0:
+    #             try: renpy.file("../characters/monika.chr")
+    #             except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
+    #         if persistent.playthrough <= 1 or persistent.playthrough == 4:
+    #             try: renpy.file("../characters/natsuki.chr")
+    #             except: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
+    #             try: renpy.file("../characters/yuri.chr")
+    #             except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
+    #         if persistent.playthrough == 4:
+    #             try: renpy.file("../characters/sayori.chr")
+    #             except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
+
 
     # Controls Special Poems at random on startup
     if not persistent.special_poems:
@@ -331,20 +352,85 @@ label splashscreen:
 
     $ config.allow_skipping = False
 
+    if persistent.playthrough == 2 and not persistent.seen_ghost_menu and renpy.random.randint(0, 63) == 0:
+        show black
+        $ config.main_menu_music = audio.ghostmenu
+        $ persistent.seen_ghost_menu = True
+        $ persistent.ghost_menu = True
+        $ renpy.music.play(config.main_menu_music)
+        $ pause(1.0)
+        show end with dissolve_cg
+        $ pause(3.0)
+        $ config.allow_skipping = True
+        return
+
+    # if s_kill_early:
+    #     show black
+    #     play music "bgm/s_kill_early.ogg"
+    #     $ pause(1.0)
+    #     show end with dissolve_cg
+    #     $ pause(3.0)
+    #     scene white
+    #     show expression "images/cg/s_kill_early.png":
+    #         yalign -0.05
+    #         xalign 0.25
+    #         dizzy(1.0, 4.0, subpixel=False)
+    #     show white as w2:
+    #         choice:
+    #             ease 0.25 alpha 0.1
+    #         choice:
+    #             ease 0.25 alpha 0.125
+    #         choice:
+    #             ease 0.25 alpha 0.15
+    #         choice:
+    #             ease 0.25 alpha 0.175
+    #         choice:
+    #             ease 0.25 alpha 0.2
+    #         choice:
+    #             ease 0.25 alpha 0.225
+    #         choice:
+    #             ease 0.25 alpha 0.25
+    #         choice:
+    #             ease 0.25 alpha 0.275
+    #         choice:
+    #             ease 0.25 alpha 0.3
+    #         pass
+    #         choice:
+    #             pass
+    #         choice:
+    #             0.25
+    #         choice:
+    #             0.5
+    #         choice:
+    #             0.75
+    #         repeat
+    #     show noise:
+    #         alpha 0.1
+    #     with Dissolve(1.0)
+    #     show expression Text("Now everyone can be happy.", style="sayori_text"):
+    #         xalign 0.8
+    #         yalign 0.5
+    #         alpha 0.0
+    #         600
+    #         linear 60 alpha 0.5
+    #     pause
+    #     $ renpy.quit()
+
     show white
     $ persistent.ghost_menu = False
     $ splash_message = splash_message_default
     $ config.main_menu_music = audio.t1
     $ renpy.music.play(config.main_menu_music)
+    $ starttime = datetime.datetime.now()
     show intro with Dissolve(0.5, alpha=True)
-    pause 2.5
-    hide intro with Dissolve(0.5, alpha=True)
-
+    $ pause(3.0 - (datetime.datetime.now() - starttime).total_seconds())
+    hide intro with Dissolve(max(0, 3.5 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
     if persistent.playthrough == 2 and renpy.random.randint(0, 3) == 0:
         $ splash_message = renpy.random.choice(splash_messages)
-    show splash_warning "[splash_message]" with Dissolve(0.5, alpha=True)
-    pause 2.0
-    hide splash_warning with Dissolve(0.5, alpha=True)
+    show splash_warning "[splash_message]" with Dissolve(max(0, 4.0 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
+    $ pause(6.0 - (datetime.datetime.now() - starttime).total_seconds())
+    hide splash_warning with Dissolve(max(0, 6.5 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
+    $ pause(6.5 - (datetime.datetime.now() - starttime).total_seconds())
     $ config.allow_skipping = True
     return
 
@@ -353,7 +439,6 @@ label warningscreen:
     hide intro
     show warning
     pause 3.0
-
 
 label after_load:
     $ config.allow_skipping = allow_skipping
@@ -369,7 +454,6 @@ label after_load:
 
         $ renpy.utter_restart()
     return
-
 
 label autoload:
     python:
@@ -394,7 +478,10 @@ label before_main_menu:
     return
 
 label quit:
-
-    # stuff that happens when the game closes
-
+    if persistent.ghost_menu:
+        hide screen main_menu
+        scene white
+        show expression "gui/menu_art_m_ghost.png":
+            xpos -100 ypos -100 zoom 3.5
+        pause 0.01
     return
