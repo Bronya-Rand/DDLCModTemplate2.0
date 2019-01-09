@@ -1,6 +1,15 @@
+# Credits.rpy
+
+# This controls the ending of DDLC and your mod!
+
+# Use this as a starting point if want to override this with your own.
+
+# Import the datetime python library to calculate time.
 init python:
     import datetime
 
+# This defines the CGs that are deleted after a few seconds.
+# These are the color CGs that are used in the base game.
 image credits_cg1:
     "images/cg/credits/1.png"
     size (640, 360)
@@ -61,6 +70,7 @@ image credits_cg10:
     8.6
     "images/menu/notfound.png"
 
+# These are the CGs that have not been seen (grayed-out)
 image credits_cg1_locked:
     "images/cg/credits/1b.png"
     size (640, 360)
@@ -121,6 +131,8 @@ image credits_cg10_locked:
     8.6
     "images/menu/notfound.png"
 
+# This defines the CG's that are not removed
+# if the user gets a perfect ending (100% Completion)
 image credits_cg1_clearall:
     "images/cg/credits/1.png"
     size (640, 360)
@@ -161,6 +173,7 @@ image credits_cg10_clearall:
     "images/cg/credits/10.png"
     size (640, 360)
 
+# DDLC Logo
 image credits_logo:
     "gui/logo.png"
     truecenter
@@ -169,6 +182,7 @@ image credits_logo:
     4.5
     linear 2.0 alpha 0
 
+# Team Salvato Logo
 image credits_ts:
     "images/bg/splash-white.png"
     xalign 0.5 yalign 0.6
@@ -177,6 +191,7 @@ image credits_ts:
     4.5
     linear 2.0 alpha 0
 
+# Style fonts for the credits
 style credits_header:
     font "gui/font/RifficFree-Bold.ttf"
     color "#ffaae6"
@@ -202,7 +217,7 @@ image credits_header = ParameterizedText(style="credits_header", ypos=-40)
 image credits_text = ParameterizedText(style="credits_text", ypos=40)
 image monika_credits_text = ParameterizedText(style="monika_credits_text", xalign=0.5)
 
-
+# Credit animations to make the credits and images move.
 transform credits_scroll:
     subpixel True
     yoffset 740
@@ -254,6 +269,7 @@ transform credits_sticker_4:
 
 define credits_ypos = 250
 
+# This defines the text of Monika when singing Your Reality
 image mcredits_1a:
     ypos credits_ypos
     xoffset -205
@@ -333,6 +349,7 @@ image mcredits_1_test:
     ypos credits_ypos + 300
     Text("What will it take just to find that special day?", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 15.0, ramplen=4)
 
+# Glitch Images
 image end_glitch1:
     "bg/end-glitch1.jpg"
     alpha 0.0
@@ -375,8 +392,10 @@ image end_glitch4:
         linear 4 yoffset 0
         repeat
 
+# Start of the actual credits scene
 label credits:
-    $ persistent.autoload = "credits"
+    # Reloads DDLC to credits
+    $ persistent.autoload = "credits" 
     $ renpy.save_persistent()
     $ config.keymap['game_menu'] = []
     $ config.keymap['hide_windows'] = []
@@ -385,6 +404,7 @@ label credits:
     $ config.skipping = False
     $ config.allow_skipping = False
     scene black
+    # Starts Monika's spoken dialogue
     play music "bgm/end-voice.ogg" noloop
 
     show noise zorder 9:
@@ -439,7 +459,7 @@ label credits:
             linear 15 ypos -500
             repeat
 
-
+    # Play's Your Reality with Karaoke Lines
     pause 41
     scene black
     pause 0.5
@@ -464,6 +484,7 @@ label credits:
     pause 50
     jump credits2
 
+# This is where the credit scroll starts
 label credits2:
     python:
         sayoriTime = renpy.random.random() * 4 + 4
@@ -490,12 +511,17 @@ label credits2:
     pause 0.88
     show credits_logo
     pause 9.12
+    # Each CG appears. If it has not been seen, it is grayed out. If it's
+    # not a perfect ending, the CG images are deleted after a few seconds
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     show expression ("credits_cg1" + lockedtext) as credits_image_1 at credits_scroll_right
+    
+    # Actual names for Credits, where you plug in stuff
     show credits_header "Concept & Game Design" as credits_header_1 at credits_text_scroll_left
     show credits_text "Dan Salvato" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
@@ -505,8 +531,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/n_cg1.png\")", "n_cg1.png deleted successfully.")
     show expression ("credits_cg2" + lockedtext) as credits_image_2 at credits_scroll_left
+    
     show credits_header "Character Art" as credits_header_2 at credits_text_scroll_right
     show credits_text "Satchely" as credits_text_2 at credits_text_scroll_right
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
@@ -516,8 +544,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/n_cg2.png\")", "n_cg2.png deleted successfully.")
     show expression ("credits_cg3" + lockedtext) as credits_image_1 at credits_scroll_right
+    
     show credits_header "Background Art" as credits_header_1 at credits_text_scroll_left
     show credits_text "Velinquent" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
@@ -527,8 +557,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/y_cg1.png\")", "y_cg1.png deleted successfully.")
     show expression ("credits_cg4" + lockedtext) as credits_image_2 at credits_scroll_left
+    
     show credits_header "Writing" as credits_header_2 at credits_text_scroll_right
     show credits_text "Dan Salvato" as credits_text_2 at credits_text_scroll_right
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
@@ -538,8 +570,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/y_cg2.png\")", "y_cg2.png deleted successfully.")
     show expression ("credits_cg5" + lockedtext) as credits_image_1 at credits_scroll_right
+    
     show credits_header "Music" as credits_header_1 at credits_text_scroll_left
     show credits_text "Dan Salvato" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
@@ -549,8 +583,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/n_cg3.png\")", "n_cg3.png deleted successfully.")
     show expression ("credits_cg6" + lockedtext) as credits_image_2 at credits_scroll_left
+    
     show credits_header "Vocals" as credits_header_2 at credits_text_scroll_right
     show credits_text "Jillian Ashcraft" as credits_text_2 at credits_text_scroll_right
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
@@ -560,8 +596,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/y_cg3.png\")", "y_cg3.png deleted successfully.")
     show expression ("credits_cg7" + lockedtext) as credits_image_1 at credits_scroll_right
+    
     show credits_header "Special Thanks" as credits_header_1 at credits_text_scroll_left
     show credits_text "Masha Gutin\nKagefumi" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
@@ -571,8 +609,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/s_cg1.png\")", "s_cg1.png deleted successfully.")
     show expression ("credits_cg8" + lockedtext) as credits_image_2 at credits_scroll_left
+    
     show credits_header "Special Thanks" as credits_header_2 at credits_text_scroll_right
     show credits_text "David Evelyn\nCorey Shin" as credits_text_2 at credits_text_scroll_right
+    
     show s_sticker at credits_sticker_1
     show n_sticker at credits_sticker_2
     show y_sticker at credits_sticker_3
@@ -587,8 +627,10 @@ label credits2:
         call updateconsole_clearall ("os.remove(\"images/cg/s_cg2.png\")", "s_cg2.png deleted successfully.")
     $ pause(88.00 - (datetime.datetime.now() - starttime).total_seconds())
     show expression ("credits_cg9" + lockedtext) as credits_image_1 at credits_scroll_right
+    
     show credits_header "Special Thanks" as credits_header_1 at credits_text_scroll_left
     show credits_text "Alecia Bardachino\nMatt Naples" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ pause(95.00 - (datetime.datetime.now() - starttime).total_seconds())
@@ -597,8 +639,10 @@ label credits2:
     else:
         call updateconsole_clearall ("os.remove(\"images/cg/s_cg3.png\")", "s_cg3.png deleted successfully.")
     show expression ("credits_cg10" + lockedtext) as credits_image_2 at credits_scroll_left
+    
     show credits_header "Special Thanks" as credits_header_2 at credits_text_scroll_right
     show credits_text "Monika\n[player]" as credits_text_2 at credits_text_scroll_right
+    
     $ pause(104.10 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
         call updateconsole ("os.remove(\"images/cg/m_cg1.png\")", "m_cg1.png deleted successfully.")
@@ -610,6 +654,8 @@ label credits2:
     call updateconsole ("os.remove(\"game/menu.rpy\")", "menu.rpy deleted successfully.")
     call updateconsole ("os.remove(\"game/script.rpy\")", "script.rpy deleted successfully.")
     $ pause(115.72 - (datetime.datetime.now() - starttime).total_seconds())
+    
+    # Hides console and shows the Team Salvato Logo/Thank You
     call hideconsole
     show credits_ts
     show credits_text "made with love by":
@@ -620,18 +666,27 @@ label credits2:
     pause 9.3
     play sound page_turn
     show poem_end with Dissolve(1)
+
+    # Fade to black and make the player quit
     label postcredits_loop:
+        # Game reloads to the postcredits_loop
         $ persistent.autoload = "postcredits_loop"
-        $ renpy.save_persistent()
+
+        # Disables Main Menu, Quick Menu, Everything
         $ config.keymap['game_menu'] = []
         $ config.keymap['hide_windows'] = []
         $ renpy.display.behavior.clear_keymap_cache()
         $ quick_menu = False
         $ config.skipping = False
         $ config.allow_skipping = False
+
+        # Fade to black
         scene black
+
+        # Shows either Monika's or Dan's Goodbye Message
         show poem_end
         $ pause()
+        
+        # Fakes Error Corruption. Makes the player quit the game.
         call screen dialog(message="Error: Script file is missing or corrupt.\nPlease reinstall the game.", ok_action=Quit(confirm=False))
         return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
