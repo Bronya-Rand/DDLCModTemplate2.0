@@ -1,16 +1,18 @@
-## splash screen is first thing that gets shown to player
+## Splash.rpy
+
 init -100 python:
 
-    # archive check for mods
-    for archive in ['audio','images','fonts']:
+    # Checks to see if all of DDLC's files are inside
+    # You may remove 'scripts' if you recieve conflict with scripts.rpa
+    for archive in ['audio','images','fonts','scripts']:
         if archive not in config.archives:
-            renpy.error("DDLC archive files not found in /game folder. Check installation and try again.")
+            renpy.error("DDLC archive files not found in /game folder. Check your installation and try again.")
 
 # disclaimers
 init python:
     menu_trans_time = 1
 
-    splash_message_default = "This game is an unofficial fan work, unaffiliated with Team Salvato."
+    splash_message_default = "This game is an unofficial fan game, unaffiliated with Team Salvato."
 
     splash_messages = [
         "Please support Doki Doki Literature Club.",
@@ -20,7 +22,7 @@ init python:
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
 
-
+# Main Menu Images
 image menu_logo:
     "/mod_assets/DDLCModTemplateLogo.png"
     subpixel True
@@ -28,11 +30,6 @@ image menu_logo:
     ycenter 120
     zoom 0.60
     menu_logo_move
-
-image menu_bg:
-    topleft
-    "gui/menu_bg.png"
-    menu_bg_move
 
 image game_menu_bg:
     topleft
@@ -75,6 +72,7 @@ image menu_art_m:
     zoom 1.00
     menu_art_move(1.00, 1000, 1.00)
 
+# Ghost Main Menu Images
 image menu_art_y_ghost:
     subpixel True
     "gui/menu_art_y_ghost.png"
@@ -107,6 +105,7 @@ image menu_art_m_ghost:
     zoom 1.00
     menu_art_move(1.00, 1000, 1.00)
 
+# Sayori Image After Game 1st Restart
 image menu_art_s_glitch:
     subpixel True
     "gui/menu_art_s_break.png"
@@ -119,11 +118,13 @@ image menu_nav:
     "gui/overlay/main_menu.png"
     menu_nav_move
 
+# Main Menu Effects
+
 image menu_particles:
     2.481
     xpos 224
     ypos 104
-    ParticleBurst("gui/menu_particle.png", explodeTime=0, numParticles=20, particleTime=2.0, particleXSpeed=6, particleYSpeed=4).sm
+    ParticleBurst("gui/menu_particle.png", explodeTime=0, numParticles=40, particleTime=2.0, particleXSpeed=3, particleYSpeed=3).sm
     particle_fadeout
 
 transform particle_fadeout:
@@ -179,6 +180,8 @@ transform menu_art_move(z, x, z2):
         pause 0.75
         ease 1.5 zoom z2 xoffset 0
 
+# Team Salvato Splash Screen
+
 image intro:
     truecenter
     "white"
@@ -188,6 +191,8 @@ image intro:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
+# Special Mod Message Text
+
 image warning:
     truecenter
     "white"
@@ -196,9 +201,7 @@ image warning:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
-image tos = "bg/warning.png"
-image tos2 = "bg/warning2.png"
-
+# Checks for missing character files
 
 init python:
     if not persistent.do_not_delete:
@@ -223,8 +226,29 @@ init python:
         except:
             pass
 
+# Startup Disclaimer Images
+image tos = "bg/warning.png"
+image tos2 = "bg/warning2.png"
+
+# Startup Disclaimer
 
 label splashscreen:
+
+    python:
+        process_list = []
+        currentuser = ""
+        if renpy.windows:
+            try:
+                process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
+            except:
+                pass
+            try:
+                for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
+                    user = os.environ.get(name)
+                    if user:
+                        currentuser = user
+            except:
+                pass
 
 
     python:
@@ -234,6 +258,7 @@ label splashscreen:
         except:
             with open(config.basedir + "/game/firstrun", "wb") as f:
                 pass
+
     if not firstrun:
         if persistent.first_run and not persistent.do_not_delete:
             $ quick_menu = False
@@ -257,8 +282,10 @@ label splashscreen:
             filepath = renpy.file("firstrun").name
             open(filepath, "a").close()
 
-
+    # Sets First Run to False to Show Disclaimer
     default persistent.first_run = False
+
+    # Startup Disclaimer
     if not persistent.first_run:
         $ quick_menu = False
         scene white
@@ -267,30 +294,40 @@ label splashscreen:
         with Dissolve(1.0)
         pause 1.0
 
-        "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated with Team Salvato."
+        "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
-        "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: http://ddlc.moe"
+        "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: http://ddlc.moe or on Steam."
 
         menu:
             "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
             "I agree.":
-
                 pass
+        $ persistent.first_run = True
         scene tos2
         with Dissolve(1.5)
         pause 1.0
-
-
         scene white
         with Dissolve(1.5)
 
         $ persistent.first_run = True
 
-    python:
-        basedir = config.basedir.replace('\\', '/')
+    # Controls Special Poems at random on startup
+    if not persistent.special_poems:
+        python hide:
+            persistent.special_poems = [0,0,0]
+            a = range(1,12)
+            for i in range(3):
+                b = renpy.random.choice(a)
+                persistent.special_poems[i] = b
+                a.remove(b)
 
-    if persistent.autoload and not _restart:
+    $ basedir = config.basedir.replace('\\', '/')
+
+    # Controls auto-load of certain scripts
+    if persistent.autoload:
         jump autoload
+
+    # Team Salvato/Splash Message
 
     $ config.allow_skipping = False
 
@@ -311,10 +348,12 @@ label splashscreen:
     $ config.allow_skipping = True
     return
 
+# Warning Screen
 label warningscreen:
     hide intro
     show warning
     pause 3.0
+
 
 label after_load:
     $ config.allow_skipping = allow_skipping
@@ -328,14 +367,12 @@ label after_load:
         "The save file could not be loaded."
         "Are you trying to cheat?"
 
-
         $ renpy.utter_restart()
     return
 
 
 label autoload:
     python:
-
         if "_old_game_menu_screen" in globals():
             _game_menu_screen = _old_game_menu_screen
             del _old_game_menu_screen
@@ -344,13 +381,10 @@ label autoload:
             del _old_history
         renpy.block_rollback()
 
-
         renpy.context()._menu = False
         renpy.context()._main_menu = False
         main_menu = False
         _in_replay = None
-
-
 
     $ renpy.pop_call()
     jump expression persistent.autoload

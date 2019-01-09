@@ -1,15 +1,14 @@
-#This is a copy of poems.rpy from DDLC.
-#Use this as a starting point if you would like to override with your own.
+# Poems.rpy
 
-#Poems.rpy defines a poem class, a function for showing them, and all of the
-#poems the game shows
+# This defines all the poems in the game
+# Use this as a starting point if you would like to override with your own.
 
-#Define a class for Poem with the following fields:
-#    author - The name of the author, each has a defined styles
-#    title - The title of the poem
-#    text - the poem's text as a blockquote
-#    yuri_2 - This uses the creepy style for yuri's second act2 poem
-#    yuri_3 - This uses Yuri's madness style for her third act2 poem
+# Defines the Poems by the follow fields:
+# author - The name of the author, each has a defined styles
+# title - The title of the poem
+# text - the poem's text as a blockquote
+# yuri_2 - This uses the creepy style for yuri's second act2 poem
+# yuri_3 - This uses Yuri's madness style for her third act2 poem
 init python:
     class Poem:
         def __init__(self, author="", title="", text="", yuri_2=False, yuri_3=False):
@@ -19,7 +18,7 @@ init python:
             self.yuri_2 = yuri_2
             self.yuri_3 = yuri_3
 
-#Define all of the poems
+# All poems are defined here
     poem_y1 = Poem(
     author = "yuri",
     title = "Ghost Under the Light",
@@ -486,7 +485,7 @@ Bright, beautiful colors
 Flashing, expanding, piercing
 Red, green, blue
 An endless
-cacophany
+cacophony
 Of meaningless
 noise
 
@@ -513,7 +512,7 @@ Bright, bea t ful c l rs
 Flash ng, exp nd ng, piercing
 Red, green, blue
 An  ndless
-CACOPHANY
+CACOPHONY
 Of meaningless
 noise
 
@@ -594,13 +593,10 @@ After all,
 Not all good times must come to an end."""
     )
 
-#These are the images used to show a poem
-image paper =  "images/bg/poem.jpg"
-
-#This is the glitchy paper
+image paper = "images/bg/poem.jpg"
 image paper_glitch = LiveComposite((1280, 720), (0, 0), "paper_glitch1", (0, 0), "paper_glitch2")
 image paper_glitch1 = "images/bg/poem-glitch1.png"
-image paper_glitch2: #The animated part of the paper
+image paper_glitch2:
     "images/bg/poem-glitch2.png"
     block:
         yoffset 0
@@ -609,7 +605,7 @@ image paper_glitch2: #The animated part of the paper
         0.05
         repeat
 
-#Animations for the poem
+
 transform paper_in:
     truecenter
     alpha 0
@@ -619,37 +615,34 @@ transform paper_out:
     alpha 1
     linear 1.0 alpha 0
 
-#Defines the screen for the poem
 screen poem(currentpoem, paper="paper"):
     style_prefix "poem"
     vbox:
         add paper
     viewport id "vp":
-        child_size (710, None) #Subwindow size for showing text
-        mousewheel True #make scrollable
+        child_size (710, None)
+        mousewheel True
         draggable True
-        vbox:
-            null height 40
-            #Text style is determine by the author
-            if currentpoem.author == "yuri":
-                if currentpoem.yuri_2:
-                    text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text"
-                elif currentpoem.yuri_3:
-                    text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text_3"
-                else:
-                    text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text"
-            elif currentpoem.author == "sayori":
-                text "[currentpoem.title]\n\n[currentpoem.text]" style "sayori_text"
-            elif currentpoem.author == "natsuki":
-                text "[currentpoem.title]\n\n[currentpoem.text]" style "natsuki_text"
-            elif currentpoem.author == "monika":
-                text "[currentpoem.title]\n\n[currentpoem.text]" style "monika_text"
-            null height 100
+        has vbox
+        null height 40
+        if currentpoem.author == "yuri":
+            if currentpoem.yuri_2:
+                text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text"
+            elif currentpoem.yuri_3:
+                text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text_3"
+            else:
+                text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text"
+        elif currentpoem.author == "sayori":
+            text "[currentpoem.title]\n\n[currentpoem.text]" style "sayori_text"
+        elif currentpoem.author == "natsuki":
+            text "[currentpoem.title]\n\n[currentpoem.text]" style "natsuki_text"
+        elif currentpoem.author == "monika":
+            text "[currentpoem.title]\n\n[currentpoem.text]" style "monika_text"
+        null height 100
     vbar value YScrollValue(viewport="vp") style "poem_vbar"
 
-    #use quick_menu
 
-#Basic styling for all poems
+
 style poem_vbox:
     xalign 0.5
 style poem_viewport:
@@ -659,16 +652,15 @@ style poem_viewport:
 style poem_vbar is vscrollbar:
     xpos 1000
     yalign 0.5
-    #xsize 18
-    ysize 700
-    #base_bar Frame("gui/scrollbar/vertical_poem_bar.png", tile=False)
-    #thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
-    #unscrollable "hide"
-    #bar_invert True
 
-#Styling for each of the authors
+    ysize 700
+
+
+
+
+
 style yuri_text:
-    font "gui/font/y1.ttf" #font used packaged with the game
+    font "gui/font/y1.ttf"
     size 32
     color "#000"
     outlines []
@@ -706,52 +698,42 @@ style monika_text:
     color "#000"
     outlines []
 
-#This defines the function that shows the poem with the following variables
-#    poem - String as the key key for the poem being shown
-#    music - Boolean to play music
-#    track - What music to play, default to bgm_5 for the author
-#    revert_music - Should the music go back to normal after the poem?
-#    img - the image to show in the background, used for if a character can be seen behind the paper
-#    where - The location of the image showm
-#    paper - Use a special paper, like for Yuri's madness poem
 label showpoem(poem=None, music=True, track=None, revert_music=True, img=None, where=i11, paper=None):
-    #If no poem key is given, just go back
     if poem == None:
         return
-
     play sound page_turn
-    #If a special track is chosen, play it, otherwise swap over to the character's
-    #special version of "Okay, Everyone!"
     if music:
-        $ currentpos = get_pos() #The current point in the song
+        $ currentpos = get_pos()
         if track:
-            $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>" + track #change music
+            $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>" + track
         else:
-            $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>bgm/5_" + poem.author + ".ogg" #Play the special character Okay, Everyone! for the character
+            $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>bgm/5_" + poem.author + ".ogg"
         stop music fadeout 2.0
         $ renpy.music.play(audio.t5b, channel="music_poem", fadein=2.0, tight=True)
     window hide
-
-    #Show the background paper
+    $ renpy.game.preferences.afm_enable = False
     if paper:
         show screen poem(poem, paper=paper)
-        with Dissolve(1)
     else:
         show screen poem(poem)
-        with Dissolve(1)
+    if not persistent.first_poem:
+        $ persistent.first_poem = True
+        $ renpy.save_persistent()
+        show expression "gui/poem_dismiss.png" as poem_dismiss:
+            xpos 1050 ypos 590
+    with Dissolve(1)
     $ pause()
-
-    #Show an optional character in the background
     if img:
         $ renpy.hide(poem.author)
         $ renpy.show(img, at_list=[where])
     hide screen poem
+    hide poem_dismiss
     with Dissolve(.5)
     window auto
-    #After the poem is done, switch back to regular version of Okay, Everyone!
     if music and revert_music:
         $ currentpos = get_pos(channel="music_poem")
         $ audio.t5c = "<from " + str(currentpos) + " loop 4.444>bgm/5.ogg"
         stop music_poem fadeout 2.0
         $ renpy.music.play(audio.t5c, fadein=2.0)
     return
+# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc

@@ -1,112 +1,91 @@
-﻿################################################################################
-## Initialization
-################################################################################
 
 ## The init offset statement causes the init code in this file to run before
-## init code in any other file.
-init offset = -2
-
-## Calling gui.init resets the styles to sensible default values, and sets the
-## width and height of the game.
-init python:
+## any other init's in any other file.
+init -2 python:
+    # Set's the resolution of DDLC to 1280x720p@60Hz
     gui.init(1280, 720)
-    #config.gl_resize = False
 
+# GUI Config Variables
+define -2 gui.hover_sound = "gui/sfx/hover.ogg" # Hover Sound Effect
+define -2 gui.activate_sound = "gui/sfx/select.ogg" # Click Sound Effect
+define -2 gui.activate_sound_glitch = "gui/sfx/select_glitch.ogg" # Glitched Sound Effect
 
-################################################################################
-# GUI Configuration Variables
-################################################################################
-
-define gui.hover_sound = "gui/sfx/hover.ogg"
-define gui.activate_sound = "gui/sfx/select.ogg"
-define gui.activate_sound_glitch = "gui/sfx/select_glitch.ogg"
-
-## Colors ######################################################################
-##
-## The colors of text in the interface.
+# Colors!
+# This sets the color of text in DDLC
 
 ## An accent color used throughout the interface to label and highlight text.
-define gui.accent_color = '#ffffff'
+define -2 gui.accent_color = '#ffffff'
 
 ## The color used for a text button when it is neither selected nor hovered.
-define gui.idle_color = '#aaaaaa'
+define -2 gui.idle_color = '#aaaaaa'
 
 ## The small color is used for small text, which needs to be brighter/darker to
 ## achieve the same effect.
-define gui.idle_small_color = '#333'
+define -2 gui.idle_small_color = '#333'
 
 ## The color that is used for buttons and bars that are hovered.
-define gui.hover_color = '#cc6699'
+define -2 gui.hover_color = '#cc6699'
 
 ## The color used for a text button when it is selected but not focused. A
 ## button is selected if it is the current screen or preference value.
-define gui.selected_color = '#bb5588'
+define -2 gui.selected_color = '#bb5588'
 
 ## The color used for a text button when it cannot be selected.
-define gui.insensitive_color = '#aaaaaa7f'
+define -2 gui.insensitive_color = '#aaaaaa7f'
 
 ## Colors used for the portions of bars that are not filled in. These are not
 ## used directly, but are used when re-generating bar image files.
-define gui.muted_color = '#6666a3'
-define gui.hover_muted_color = '#9999c1'
+define -2 gui.muted_color = '#6666a3'
+define -2 gui.hover_muted_color = '#9999c1'
 
 ## The colors used for dialogue and menu choice text.
-define gui.text_color = '#ffffff'
-define gui.interface_text_color = '#ffffff'
+define -2 gui.text_color = '#ffffff'
+define -2 gui.interface_text_color = '#ffffff'
 
-
-## Fonts and Font Sizes ########################################################
+# Fonts and Font Sizes
 
 ## The font used for in-game text.
-define gui.default_font = "gui/font/Aller_Rg.ttf"
+define -2 gui.default_font = "gui/font/Aller_Rg.ttf"
 
 ## The font used for character names.
-define gui.name_font = "gui/font/RifficFree-Bold.ttf"
+define -2 gui.name_font = "gui/font/RifficFree-Bold.ttf"
 
 ## The font used for out-of-game text.
-define gui.interface_font = "gui/font/Aller_Rg.ttf"
+define -2 gui.interface_font = "gui/font/Aller_Rg.ttf"
 
 ## The size of normal dialogue text.
-define gui.text_size = 24
+define -2 gui.text_size = 24
 
 ## The size of character names.
-define gui.name_text_size = 24
+define -2 gui.name_text_size = 24
 
 ## The size of text in the game's user interface.
-define gui.interface_text_size = 24
+define -2 gui.interface_text_size = 24
 
 ## The size of labels in the game's user interface.
-define gui.label_text_size = 28
+define -2 gui.label_text_size = 28
 
 ## The size of text on the notify screen.
-define gui.notify_text_size = 16
+define -2 gui.notify_text_size = 16
 
 ## The size of the game's title.
-define gui.title_text_size = 38
+define -2 gui.title_text_size = 38
 
+# Main Menu and Game Menu
+define -2 gui.main_menu_background = "menu_bg"
+define -2 gui.game_menu_background = "game_menu_bg"
 
-## Main and Game Menus #########################################################
+# Controls wheter we show the name and version of the game
+define -2 gui.show_name = False
 
-## The images used for the main and game menus.
-define gui.main_menu_background = "menu_bg"
-define gui.game_menu_background = "game_menu_bg"
-
-## Should we show the name and version of the game?
-define gui.show_name = False
-
-
-## Dialogue ####################################################################
-##
-## These variables control how dialogue is displayed on the screen one line at a
-## time.
+# Dialogue
 
 ## The height of the textbox containing dialogue.
-define gui.textbox_height = 182
+define -2 gui.textbox_height = 182
 
 ## The placement of the textbox vertically on the screen. 0.0 is the top, 0.5 is
 ## center, and 1.0 is the bottom.
-define gui.textbox_yalign = 0.99
-
+define -2 gui.textbox_yalign = 0.99
 
 ## The placement of the speaking character's name, relative to the textbox.
 ## These can be a whole number of pixels from the left or top, or 0.5 to center.
@@ -144,9 +123,8 @@ define gui.text_width = 744
 ## aligned, 0.5 for centered, and 1.0 for right-aligned.
 define gui.text_xalign = 0.0
 
+# Buttons
 
-## Buttons #####################################################################
-##
 ## These variables, along with the image files in gui/button, control aspects of
 ## how buttons are displayed.
 
@@ -177,7 +155,6 @@ define gui.button_text_insensitive_color = gui.insensitive_color
 # 1.0 is right).
 define gui.button_text_xalign = 0.0
 
-
 ## These variables override settings for different kinds of buttons. Please see
 ## the gui documentation for the kinds of buttons available, and what each is
 ## used for.
@@ -205,9 +182,8 @@ define gui.quick_button_text_insensitive_color = "#a66"
 
 # define gui.navigation_button_width = 250
 
+# Choice Buttons
 
-## Choice Buttons ##############################################################
-##
 ## Choice buttons are used in the in-game menus.
 
 define gui.choice_button_width = 420
@@ -220,9 +196,8 @@ define gui.choice_button_text_xalign = 0.5
 define gui.choice_button_text_idle_color = "#000"
 define gui.choice_button_text_hover_color = "#fa9"
 
+# File Slot Buttons 
 
-## File Slot Buttons ###########################################################
-##
 ## A file slot button is a special kind of button. It contains a thumbnail
 ## image, and text describing the contents of the save slot. A save slot uses
 ## image files in gui/button, like the other kinds of buttons.
@@ -244,9 +219,8 @@ define config.thumbnail_height = 144
 define gui.file_slot_cols = 3
 define gui.file_slot_rows = 2
 
+# Positioning and Spacing
 
-## Positioning and Spacing #####################################################
-##
 ## These variables control the positioning and spacing of various user interface
 ## elements.
 
@@ -278,9 +252,8 @@ define gui.page_spacing = 0
 ## The spacing between file slots.
 define gui.slot_spacing = 10
 
+# Frames
 
-## Frames ######################################################################
-##
 ## These variables control the look of frames that can contain user interface
 ## components when an overlay or window is not present.
 
@@ -299,11 +272,10 @@ define gui.notify_frame_borders = Borders(16, 5, 40, 5)
 ## Should frame backgrounds be tiled?
 define gui.frame_tile = False
 
+# Bars, Scrollbars, and Sliders
 
-## Bars, Scrollbars, and Sliders ###############################################
-##
 ## These control the look and size of bars, scrollbars, and sliders.
-##
+
 ## The default GUI only uses sliders and vertical scrollbars. All of the other
 ## bars are only used in creator-written code.
 
@@ -332,9 +304,8 @@ define gui.vslider_borders = Borders(4, 4, 4, 4)
 ## None shows them.
 define gui.unscrollable = "hide"
 
+# History
 
-## History #####################################################################
-##
 ## The history screen displays dialogue that the player has already dismissed.
 
 ## The number of blocks of dialogue history Ren'Py will keep.
@@ -357,9 +328,8 @@ define gui.history_text_ypos = 5
 define gui.history_text_width = 740
 define gui.history_text_xalign = 0.0
 
+# NVL-Mode
 
-## NVL-Mode ####################################################################
-##
 ## The NVL-mode screen displays the dialogue spoken by NVL-mode characters.
 
 ## The borders of the background of the NVL-mode background window.
@@ -397,11 +367,7 @@ define gui.nvl_thought_xalign = 0.0
 define gui.nvl_button_xpos = 450
 define gui.nvl_button_xalign = 0.0
 
-
-
-################################################################################
-# Mobile devices
-################################################################################
+# Mobile Phones & Tablets
 
 init python:
 
@@ -463,6 +429,3 @@ init python:
 
         ## Quick buttons.
         gui.quick_button_text_size = 20
-
-
-

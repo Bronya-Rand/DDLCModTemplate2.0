@@ -1,33 +1,34 @@
-#This is a copy of console.rpy from DDLC.
-#Use this as a starting point if you would like to override with your own.
+# Console.rpy
 
-#Explanation for console.rpy
-#This script defines the "fake console" that sometimes appears in the game when
-#monika deletes characters
+# This defines the Monika Console that appears in the game when
+# Monika deletes characters
 
-#A gray semi-transparent overlay on the screen
+# Use this as a starting point if you want to override this with your own.
+
+# The gray transparent overlay box on screen
 image console_bg:
     "#333"
     topleft
     alpha 0.75 size (480,180)
 
-#Styling for the console text
+# Font for the console
 style console_text:
     font "gui/font/F25_Bank_Printer.ttf"
     color "#fff"
     size 18
     outlines []
-    #slow_cps 20
 
+# Text Speed of the console
 style console_text_console is console_text:
     slow_cps 30
 
+# Additional Styling for the console
 default consolehistory = []
 image console_text = ParameterizedText(style="console_text_console", anchor=(0,0), xpos=30, ypos=10)
 image console_history = ParameterizedText(style="console_text", anchor=(0,0), xpos=30, ypos=50)
 image console_caret = Text(">", style="console_text", anchor=(0,0), xpos=5, ypos=10)
 
-#This defines a function that displays text in the console
+# This defines the function that displays text in the console
 label updateconsole(text="", history=""):
     show console_bg zorder 100
     show console_caret zorder 100
@@ -36,17 +37,17 @@ label updateconsole(text="", history=""):
     $ pause(len(text) / 30.0 + 0.5)
     hide ctext
     show console_text "_" as ctext zorder 100
-    call updateconsolehistory(history) from _call_updateconsolehistory
-    pause 0.5
+    call updateconsolehistory (history)
+    $ pause(0.5)
     return
 
-#This function clears the console history
+# This clears all console history from the console
 label updateconsole_clearall(text="", history=""):
     $ pause(len(text) / 30.0 + 0.5)
-    pause 0.5
+    $ pause(0.5)
     return
 
-#Seems to be an unused alternative console function
+# Beta console from Dan
 label updateconsole_old(text="", history=""):
     $ starttime = datetime.datetime.now()
     $ textlength = len(text)
@@ -56,29 +57,29 @@ label updateconsole_old(text="", history=""):
     show console_text "_" as ctext zorder 100
     label updateconsole_loop:
         $ currenttext = text[:textcount]
-        call drawconsole(drawtext=currenttext) from _call_drawconsole
+        call drawconsole (drawtext=currenttext)
         $ pause_duration = 0.08 - (datetime.datetime.now() - starttime).microseconds / 1000.0 / 1000.0
         $ starttime = datetime.datetime.now()
         if pause_duration > 0:
-            $ renpy.pause(pause_duration / 2)
+            $ pause(pause_duration / 2)
         $ textcount += 1
         if textcount <= textlength:
             jump updateconsole_loop
 
-    pause 0.5
+    $ pause(0.5)
     hide ctext
     show console_text "_" as ctext zorder 100
-    call updateconsolehistory(history) from _call_updateconsolehistory_1
-    pause 0.5
+    call updateconsolehistory (history)
+    $ pause(0.5)
     return
 
     label drawconsole(drawtext=""):
-        #$ cursortext = "_".rjust(len(drawtext) + 1)
+
         show console_text "[drawtext]_" as ctext zorder 100
-        #show console_text cursortext as ccursor zorder 100
+
         return
 
-#This adds the passed text to the console history
+# This adds passed text to the console history
 label updateconsolehistory(text=""):
     if text:
         python:
@@ -89,10 +90,10 @@ label updateconsolehistory(text=""):
         show console_history "[consolehistorydisplay]" as chistory zorder 100
     return
 
-#This hides all of the parts of the console
+# Hides the whole console
 label hideconsole:
     hide console_bg
     hide console_caret
-    #hide ccursor
+
     hide ctext
     hide chistory

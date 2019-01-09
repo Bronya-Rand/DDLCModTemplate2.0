@@ -1,93 +1,118 @@
+# Options.rpy
 
+# This is where you will name your mod!
+# Change "DDLC Mod Template 2.0" to your mod name (e.g. "Yuri")
+define config.name = "DDLC Mod Template 2.0"
 
-# human readable name of this game
-# _() marks strings eligable for translation
-define config.name = "DDLC Mod Template"
-
-# True shows the name on main menu, False hides it
+# This controls whether you want your mod name to show in the main menu.
+# If your mod name is big, it is suggested to turn this off
 define gui.show_name = True
 
-# Version of the game
-define config.version = "1.1.2"
+# This is where you will input the version of your mod.
+# If you have multiple versions of your mod, this will be pretty useful to change.
+# If you are starting out, set this to "1.0.0"
+define config.version = "2.0.0"
 
-# text placed on about screen
+# This adds information about your mod in the About section.
+# DDLC does not have a about section so you can leave this blank.
 define gui.about = _("")
 
-# short name used in executables and dirs.
-# ASCII-only, no spaces, no colons, no semis
-define build.name = "DDLCModTemplate"
+# This is the name of your build that the Ren'Py SDK will read.
+# The build name is ASCII only so no numbers, spaces, or semicolons.
+# Example: Doki Doki Yuri Time to DokiDokiYuriTime
+define build.name = "DDLCModTemplate2.0"
 
-# Controls which sound / music mixers are available
+# This configures whether your mod has sound effects (e.g. slap sound effects) or not.
+# It is best to leave this set to True default.
 define config.has_sound = True
+
+# This configures whether your mod has music (e.g. Your Reality) or not.
+# It is best to leave this set to True default.
 define config.has_music = True
+
+# This configures whether your mod has voices!
+# If your using voice actors in your mod, set this to True, else leave it at False.
 define config.has_voice = False
 
-# main menu music
+# This configures what song/music will play when you launch your mod.
+# audio.t1 is the Doki Doki Literature Club Main Menu Music.
+# If you want to change this, change the "t1" to the song you want.
 define config.main_menu_music = audio.t1
 
-# enter / exiting game menu transitions
+# These two settings control the transition effects of DDLC on the game menu.
+# Dissolve(.2) sets the transition effect you see.
+# config.enter_transition controls the effect seen when entering the game menu.
+# config.exit_transition controls the effect when returning to the game.
 define config.enter_transition = Dissolve(.2)
 define config.exit_transition = Dissolve(.2)
 
-# transition used when the game has been loaded
+# This controls the transition effect of DDLC when loading a saved game.
+# By default, this is set to None and you can customize what transition you want to show.
+# If you are unsure about this setting, leave it as is.
 define config.after_load_transition = None
 
-# transition used when teh game has ended
+# This controls the transition effect of DDLC when your mod has ended.
+# Dissolve(.2) sets the transition effect you see.
 define config.end_game_transition = Dissolve(.5)
 
-# Controls when dialogue window is displayed:
-#   show - always displayed
-#   hide - only displayed if dialogue is present
-#   auto - hidden before scene statements and shown when dialogue is shown
-#
-# this can be changed with "window <type>" statements
+# This controls the textbox that the characters use to speak.
+# "auto" sets the textbox to hide during scenes and show when a character speaks
+# "show" sets the textbox to show at all times
+# "hide" only shows dialogue when a character speaks.
 define config.window = "auto"
 
-# transitions used to show / hide the dialogue window
+# This controls the transition effects of the textbox.
+# Dissolve(.2) sets the transition effect you see.
+# config.window_show_transition controls the effect when the textbox is shown.
+# config.window_hide_transition controls the effect when the textbox is hidden.
 define config.window_show_transition = Dissolve(.2)
 define config.window_hide_transition = Dissolve(.2)
 
-# default text speed
-# 0 is infinite
-# > 0 is number of characters per second
+# This sets the text speed of your mod.
+# By default this is set to 50. 
+# Increasing this number will speed up text while decreasing the number slows down text speed.
+# 0 is instant text display.
 default preferences.text_cps = 50
 
-# default auto-forward delay. 0 - 30.
+# This controls the auto-forward speed
+# 15 is DDLC's default speed.
+# You can change it from 0-30
 default preferences.afm_time = 15
 
-# default volumes
+# This controls the audio level of your mod.
+# Increasing this will make the music louder while decreasing will make it quieter.
+# SFX controls the sound effects volume.
 default preferences.music_volume = 0.75
 default preferences.sfx_volume = 0.75
 
-# persistent data save directory
-# this is different per platform:
-#   Windows: %AAPDATA%\RenPy\
-#   Mac: $HOME/Libary/RenPy/
-#   Linux: $HOME/.renpy/
-#
-# must be a literal string
-define config.save_directory = "DDLC_Mod_Template"
+# This controls the save directory of your mod.
+# Change "DDLCModTemplate2" to your mod's name
+# Windows Directory for Saves: %AppData%/RenPy/
+# macOS Directory for Saves: $HOME/Library/RenPy/ (Un-hide the Library Folder)
+# Linux Directory for Saves $HOME/.renpy/
+define config.save_directory = "DDLCModTemplate2"
 
-# icon displayed on taskbar / dock
+# This controls the window logo of your mod.
+# By default this defaults to the DDLC Icon PNG.
 define config.window_icon = "gui/window_icon.png"
 
-# True means we allow skipping, False means not
+# This controls whether your mod allows skipping dialogue.
 define config.allow_skipping = True
 
-# True means we can autosave, false means not
+# This controls whether your mod saves automatically.
 define config.has_autosave = False
 
-# True means autosave when we quit, False means not
+# This controls whether you mod saves when quitting the game.
 define config.autosave_on_quit = False
 
-# Number of autosave slots to use
+# This controls the number of slots auto-saving can use
 define config.autosave_slots = 0
 
-# layers that screens / images / anything can be displayed on. Best not to
-# mess with this
+# This controls the layers of screens, images, and more. 
+# Best not to leave this alone.
 define config.layers = [ 'master', 'transient', 'screens', 'overlay', 'front' ]
 
-# Other things to not mess with
+# Stuff to leave alone also.
 define config.image_cache_size = 64
 define config.predict_statements = 50
 define config.rollback_enabled = config.developer
@@ -117,43 +142,34 @@ init python:
 
 
 
-# BUILD CONFIG
+
+# Building Your Mod
 
 init python:
 
-    # the following functions take file pattersn:
-    # file patterns are case-insensitive and matched against the path relative to the 
-    # base directory, with and without a leading /. If multiple patterns match
-    # the first is used.
+    # This is where your mod gets built by Ren'Py!
+    # These are case-sensitive and matched against the actual filenames
+    # in your 'game' folder, with or without '/'
     #
-    # / is directory separator
-    # * matches all characters, exxcept directory separator
-    # ** matches all characters, including directory separator
+    # '/' this is a directory seperator
+    # game/**.rpyc tells Ren'Py to grab all .rpyc's in the 'game' folder
+    # **.psd matches all .psd's in the mod project.
     #
-    # EXAMPLES
-    # *.txt - - matches txt files in base directory
-    # game/**.ogg - mathces ogg files in game directory or subdirs of game
-    # **.psd - matches psd files anywhere in project
-    #
-    # Classify files as None to exclusde them from the built distributions
-    #
+    # If you don't want a file to be added to your RPA, classify it as None
+    # Example: build.classify("game/randomtext.txt", None)
 
-    # packaged ZIP for distibution
+    # Code to Package your mod to a ZIP in Ren'Py
     build.package(build.directory_name + "Mod",'zip',build.name,description='DDLC Compatible Mod')
 
-    # archives to create
-    build.archive("scripts",build.name)
-    build.archive("mod_assets",build.name)
-    build.archive("submods",build.name)
+    build.archive("scripts", "all")
+    build.archive("mod_assets", "all")
 
-    # folder / files to put in archives
-    build.classify("game/mod_assets/**","mod_assets")
-    build.classify("game/submods/**","submods")
-    build.classify('game/**.rpyc',"scripts")
-    build.classify('game/advanced_scripts/**',"scripts")
-    build.classify('game/original_story_scripts/**',"scripts")
+    build.classify("game/mod_assets/**", "mod_assets")
+    build.classify("game/**.rpyc", "scripts")
+    build.classify("game/**.txt", "scripts")
+    build.classify("game/**.chr", "scripts")
+    build.classify("game/advanced_scripts/**","scripts")
 
-    # stuff to ignore
     build.classify('**~', None)
     build.classify('**.bak', None)
     build.classify('**/.**', None)
@@ -168,14 +184,14 @@ init python:
     build.classify('/game/10', None)
     build.classify('/game/cache/*.*', None)
     build.classify('**.rpa',None)
-
-    # stuff not in archive
     build.classify('README.html',build.name)
-    
-    # Doki Doki Mod Manager metadata file
-    build.classify('ddmm-mod.json',build.name)
 
-    # mark as documentation
+    # Set's README.html as documentation
     build.documentation('README.html')
 
     build.include_old_themes = False
+
+    #Advanced Addons
+
+    # Doki Doki Mod Manager metadata file
+    build.classify('ddmm-mod.json',build.name)

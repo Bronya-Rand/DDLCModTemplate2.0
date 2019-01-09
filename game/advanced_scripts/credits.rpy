@@ -1,175 +1,179 @@
-#This is a copy of credits.rpy from DDLC.
-#Use this as a starting point if you would like to override with your own.
+# Credits.rpy
 
-#Import the datetime library for using time
+# This controls the ending of DDLC and your mod!
+
+# Use this as a starting point if want to override this with your own.
+
+# Import the datetime python library to calculate time.
 init python:
     import datetime
 
-#This defines the CGs that disappear after a few seconds
-#These are the colored CGs used for scene cgs
+# This defines the CGs that are deleted after a few seconds.
+# These are the color CGs that are used in the base game.
 image credits_cg1:
     "images/cg/credits/1.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg2:
     "images/cg/credits/2.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg3:
     "images/cg/credits/3.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg4:
     "images/cg/credits/4.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg5:
     "images/cg/credits/5.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg6:
     "images/cg/credits/6.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg7:
     "images/cg/credits/7.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg8:
     "images/cg/credits/8.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg9:
     "images/cg/credits/9.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg10:
     "images/cg/credits/10.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
-#These are the grayed out CGs for unseen cgs
+# These are the CGs that have not been seen (grayed-out)
 image credits_cg1_locked:
     "images/cg/credits/1b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg2_locked:
     "images/cg/credits/2b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg3_locked:
     "images/cg/credits/3b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg4_locked:
     "images/cg/credits/4b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg5_locked:
     "images/cg/credits/5b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg6_locked:
     "images/cg/credits/6b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg7_locked:
     "images/cg/credits/7b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg8_locked:
     "images/cg/credits/8b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg9_locked:
     "images/cg/credits/9b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
 image credits_cg10_locked:
     "images/cg/credits/10b.png"
-    size(640, 360)
+    size (640, 360)
     8.6
     "images/menu/notfound.png"
 
-#This defines the CGs that don't fade for a "perfect ending"
+# This defines the CG's that are not removed
+# if the user gets a perfect ending (100% Completion)
 image credits_cg1_clearall:
     "images/cg/credits/1.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg2_clearall:
     "images/cg/credits/2.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg3_clearall:
     "images/cg/credits/3.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg4_clearall:
     "images/cg/credits/4.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg5_clearall:
     "images/cg/credits/5.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg6_clearall:
     "images/cg/credits/6.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg7_clearall:
     "images/cg/credits/7.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg8_clearall:
     "images/cg/credits/8.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg9_clearall:
     "images/cg/credits/9.png"
-    size(640, 360)
+    size (640, 360)
 
 image credits_cg10_clearall:
     "images/cg/credits/10.png"
-    size(640, 360)
+    size (640, 360)
 
-#DDLC Logo
+# DDLC Logo
 image credits_logo:
     "gui/logo.png"
     truecenter
@@ -178,7 +182,7 @@ image credits_logo:
     4.5
     linear 2.0 alpha 0
 
-#Team Salvato logo
+# Team Salvato Logo
 image credits_ts:
     "images/bg/splash-white.png"
     xalign 0.5 yalign 0.6
@@ -187,7 +191,7 @@ image credits_ts:
     4.5
     linear 2.0 alpha 0
 
-#This styles the different text in the credits
+# Style fonts for the credits
 style credits_header:
     font "gui/font/RifficFree-Bold.ttf"
     color "#ffaae6"
@@ -213,7 +217,7 @@ image credits_header = ParameterizedText(style="credits_header", ypos=-40)
 image credits_text = ParameterizedText(style="credits_text", ypos=40)
 image monika_credits_text = ParameterizedText(style="monika_credits_text", xalign=0.5)
 
-#These are the animations applied to the make the credits and images scroll
+# Credit animations to make the credits and images move.
 transform credits_scroll:
     subpixel True
     yoffset 740
@@ -265,7 +269,7 @@ transform credits_sticker_4:
 
 define credits_ypos = 250
 
-#This defines the Karaoke for Monika's singing
+# This defines the text of Monika when singing Your Reality
 image mcredits_1a:
     ypos credits_ypos
     xoffset -205
@@ -345,7 +349,7 @@ image mcredits_1_test:
     ypos credits_ypos + 300
     Text("What will it take just to find that special day?", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 15.0, ramplen=4)
 
-#Glitchy images
+# Glitch Images
 image end_glitch1:
     "bg/end-glitch1.jpg"
     alpha 0.0
@@ -388,10 +392,11 @@ image end_glitch4:
         linear 4 yoffset 0
         repeat
 
-#Start for the actual credits scene
+# Start of the actual credits scene
 label credits:
-    $ persistent.autoload = "credits" #Come back to the credits if the game is quit
-    #Disable player interactions
+    # Reloads DDLC to credits
+    $ persistent.autoload = "credits" 
+    $ renpy.save_persistent()
     $ config.keymap['game_menu'] = []
     $ config.keymap['hide_windows'] = []
     $ renpy.display.behavior.clear_keymap_cache()
@@ -399,7 +404,7 @@ label credits:
     $ config.skipping = False
     $ config.allow_skipping = False
     scene black
-    #Start Monika's spoken dialogue
+    # Starts Monika's spoken dialogue
     play music "bgm/end-voice.ogg" noloop
 
     show noise zorder 9:
@@ -454,14 +459,14 @@ label credits:
             linear 15 ypos -500
             repeat
 
-    #Play monika's song with Karaoke lines
+    # Play's Your Reality with Karaoke Lines
     pause 41
     scene black
     pause 0.5
     $ consolehistory = []
-    call updateconsole("renpy.music.play(\"ddlc.ogg\")", "Playing audio \"ddlc.ogg\"...") from _call_updateconsole
+    call updateconsole ("renpy.music.play(\"ddlc.ogg\")", "Playing audio \"ddlc.ogg\"...")
     pause 1.0
-    call hideconsole from _call_hideconsole
+    call hideconsole
     play music "<to 50.0>bgm/credits.ogg" noloop
     show mcredits_1a zorder 50
     show mcredits_1b zorder 49
@@ -479,7 +484,7 @@ label credits:
     pause 50
     jump credits2
 
-#This is where the credits scroll starts
+# This is where the credit scroll starts
 label credits2:
     python:
         sayoriTime = renpy.random.random() * 4 + 4
@@ -506,95 +511,108 @@ label credits2:
     pause 0.88
     show credits_logo
     pause 9.12
-    #Each CG is shown. If it's unseen gray it out, if it's not a perfect ending
-    #make each image get deleted after a few seconds
+    # Each CG appears. If it has not been seen, it is grayed out. If it's
+    # not a perfect ending, the CG images are deleted after a few seconds
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
-    show image ("credits_cg1" + lockedtext) at credits_scroll_right as credits_image_1
-
-    #Actual names for the credits
-    show credits_header "Concept & Game Design" at credits_text_scroll_left as credits_header_1
-    show credits_text "Dan Salvato" at credits_text_scroll_left as credits_text_1
-
-    ##The rest of the sections follow this same pattern
+    show expression ("credits_cg1" + lockedtext) as credits_image_1 at credits_scroll_right
+    
+    # Actual names for Credits, where you plug in stuff
+    show credits_header "Concept & Game Design" as credits_header_1 at credits_text_scroll_left
+    show credits_text "Dan Salvato" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(16.95 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/n_cg1.png\")", "n_cg1.png deleted successfully.") from _call_updateconsole_1
+        call updateconsole ("os.remove(\"images/cg/n_cg1.png\")", "n_cg1.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/n_cg1.png\")", "n_cg1.png deleted successfully.") from _call_updateconsole_clearall
-    show image ("credits_cg2" + lockedtext) at credits_scroll_left as credits_image_2
-    show credits_header "Character Art" at credits_text_scroll_right as credits_header_2
-    show credits_text "Satchely" at credits_text_scroll_right as credits_text_2
+        call updateconsole_clearall ("os.remove(\"images/cg/n_cg1.png\")", "n_cg1.png deleted successfully.")
+    show expression ("credits_cg2" + lockedtext) as credits_image_2 at credits_scroll_left
+    
+    show credits_header "Character Art" as credits_header_2 at credits_text_scroll_right
+    show credits_text "Satchely" as credits_text_2 at credits_text_scroll_right
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(26.05 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/n_cg2.png\")", "n_cg2.png deleted successfully.") from _call_updateconsole_2
+        call updateconsole ("os.remove(\"images/cg/n_cg2.png\")", "n_cg2.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/n_cg2.png\")", "n_cg2.png deleted successfully.") from _call_updateconsole_clearall_1
-    show image ("credits_cg3" + lockedtext) at credits_scroll_right as credits_image_1
-    show credits_header "Background Art" at credits_text_scroll_left as credits_header_1
-    show credits_text "Velinquent" at credits_text_scroll_left as credits_text_1
+        call updateconsole_clearall ("os.remove(\"images/cg/n_cg2.png\")", "n_cg2.png deleted successfully.")
+    show expression ("credits_cg3" + lockedtext) as credits_image_1 at credits_scroll_right
+    
+    show credits_header "Background Art" as credits_header_1 at credits_text_scroll_left
+    show credits_text "Velinquent" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(35.15 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/y_cg1.png\")", "y_cg1.png deleted successfully.") from _call_updateconsole_3
+        call updateconsole ("os.remove(\"images/cg/y_cg1.png\")", "y_cg1.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/y_cg1.png\")", "y_cg1.png deleted successfully.") from _call_updateconsole_clearall_2
-    show image ("credits_cg4" + lockedtext) at credits_scroll_left as credits_image_2
-    show credits_header "Writing" at credits_text_scroll_right as credits_header_2
-    show credits_text "Dan Salvato" at credits_text_scroll_right as credits_text_2
+        call updateconsole_clearall ("os.remove(\"images/cg/y_cg1.png\")", "y_cg1.png deleted successfully.")
+    show expression ("credits_cg4" + lockedtext) as credits_image_2 at credits_scroll_left
+    
+    show credits_header "Writing" as credits_header_2 at credits_text_scroll_right
+    show credits_text "Dan Salvato" as credits_text_2 at credits_text_scroll_right
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(44.25 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/y_cg2.png\")", "y_cg2.png deleted successfully.") from _call_updateconsole_4
+        call updateconsole ("os.remove(\"images/cg/y_cg2.png\")", "y_cg2.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/y_cg2.png\")", "y_cg2.png deleted successfully.") from _call_updateconsole_clearall_3
-    show image ("credits_cg5" + lockedtext) at credits_scroll_right as credits_image_1
-    show credits_header "Music" at credits_text_scroll_left as credits_header_1
-    show credits_text "Dan Salvato" at credits_text_scroll_left as credits_text_1
+        call updateconsole_clearall ("os.remove(\"images/cg/y_cg2.png\")", "y_cg2.png deleted successfully.")
+    show expression ("credits_cg5" + lockedtext) as credits_image_1 at credits_scroll_right
+    
+    show credits_header "Music" as credits_header_1 at credits_text_scroll_left
+    show credits_text "Dan Salvato" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(53.35 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/n_cg3.png\")", "n_cg3.png deleted successfully.") from _call_updateconsole_5
+        call updateconsole ("os.remove(\"images/cg/n_cg3.png\")", "n_cg3.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/n_cg3.png\")", "n_cg3.png deleted successfully.") from _call_updateconsole_clearall_4
-    show image ("credits_cg6" + lockedtext) at credits_scroll_left as credits_image_2
-    show credits_header "Vocals" at credits_text_scroll_right as credits_header_2
-    show credits_text "Jillian Ashcraft" at credits_text_scroll_right as credits_text_2
+        call updateconsole_clearall ("os.remove(\"images/cg/n_cg3.png\")", "n_cg3.png deleted successfully.")
+    show expression ("credits_cg6" + lockedtext) as credits_image_2 at credits_scroll_left
+    
+    show credits_header "Vocals" as credits_header_2 at credits_text_scroll_right
+    show credits_text "Jillian Ashcraft" as credits_text_2 at credits_text_scroll_right
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(62.45 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/y_cg3.png\")", "y_cg3.png deleted successfully.") from _call_updateconsole_6
+        call updateconsole ("os.remove(\"images/cg/y_cg3.png\")", "y_cg3.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/y_cg3.png\")", "y_cg3.png deleted successfully.") from _call_updateconsole_clearall_5
-    show image ("credits_cg7" + lockedtext) at credits_scroll_right as credits_image_1
-    show credits_header "Special Thanks" at credits_text_scroll_left as credits_header_1
-    show credits_text "Masha Gutin\nKagefumi" at credits_text_scroll_left as credits_text_1
+        call updateconsole_clearall ("os.remove(\"images/cg/y_cg3.png\")", "y_cg3.png deleted successfully.")
+    show expression ("credits_cg7" + lockedtext) as credits_image_1 at credits_scroll_right
+    
+    show credits_header "Special Thanks" as credits_header_1 at credits_text_scroll_left
+    show credits_text "Masha Gutin\nKagefumi" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(71.55 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/s_cg1.png\")", "s_cg1.png deleted successfully.") from _call_updateconsole_7
+        call updateconsole ("os.remove(\"images/cg/s_cg1.png\")", "s_cg1.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/s_cg1.png\")", "s_cg1.png deleted successfully.") from _call_updateconsole_clearall_6
-    show image ("credits_cg8" + lockedtext) at credits_scroll_left as credits_image_2
-    show credits_header "Special Thanks" at credits_text_scroll_right as credits_header_2
-    show credits_text "David Evelyn\nCorey Shin" at credits_text_scroll_right as credits_text_2
+        call updateconsole_clearall ("os.remove(\"images/cg/s_cg1.png\")", "s_cg1.png deleted successfully.")
+    show expression ("credits_cg8" + lockedtext) as credits_image_2 at credits_scroll_left
+    
+    show credits_header "Special Thanks" as credits_header_2 at credits_text_scroll_right
+    show credits_text "David Evelyn\nCorey Shin" as credits_text_2 at credits_text_scroll_right
+    
     show s_sticker at credits_sticker_1
     show n_sticker at credits_sticker_2
     show y_sticker at credits_sticker_3
@@ -604,37 +622,41 @@ label credits2:
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/s_cg2.png\")", "s_cg2.png deleted successfully.") from _call_updateconsole_8
+        call updateconsole ("os.remove(\"images/cg/s_cg2.png\")", "s_cg2.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/s_cg2.png\")", "s_cg2.png deleted successfully.") from _call_updateconsole_clearall_7
+        call updateconsole_clearall ("os.remove(\"images/cg/s_cg2.png\")", "s_cg2.png deleted successfully.")
     $ pause(88.00 - (datetime.datetime.now() - starttime).total_seconds())
-    show image ("credits_cg9" + lockedtext) at credits_scroll_right as credits_image_1
-    show credits_header "Special Thanks" at credits_text_scroll_left as credits_header_1
-    show credits_text "Alecia Bardachino\nMatt Naples" at credits_text_scroll_left as credits_text_1
+    show expression ("credits_cg9" + lockedtext) as credits_image_1 at credits_scroll_right
+    
+    show credits_header "Special Thanks" as credits_header_1 at credits_text_scroll_left
+    show credits_text "Alecia Bardachino\nMatt Naples" as credits_text_1 at credits_text_scroll_left
+    
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ pause(95.00 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/s_cg3.png\")", "s_cg3.png deleted successfully.") from _call_updateconsole_9
+        call updateconsole ("os.remove(\"images/cg/s_cg3.png\")", "s_cg3.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/s_cg3.png\")", "s_cg3.png deleted successfully.") from _call_updateconsole_clearall_8
-    show image ("credits_cg10" + lockedtext) at credits_scroll_left as credits_image_2
-    show credits_header "Special Thanks" at credits_text_scroll_right as credits_header_2
-    show credits_text "Monika\n[player]" at credits_text_scroll_right as credits_text_2
+        call updateconsole_clearall ("os.remove(\"images/cg/s_cg3.png\")", "s_cg3.png deleted successfully.")
+    show expression ("credits_cg10" + lockedtext) as credits_image_2 at credits_scroll_left
+    
+    show credits_header "Special Thanks" as credits_header_2 at credits_text_scroll_right
+    show credits_text "Monika\n[player]" as credits_text_2 at credits_text_scroll_right
+    
     $ pause(104.10 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole("os.remove(\"images/cg/m_cg1.png\")", "m_cg1.png deleted successfully.") from _call_updateconsole_10
+        call updateconsole ("os.remove(\"images/cg/m_cg1.png\")", "m_cg1.png deleted successfully.")
     else:
-        call updateconsole_clearall("os.remove(\"images/cg/m_cg1.png\")", "m_cg1.png deleted successfully.") from _call_updateconsole_clearall_9
-    #pause 4.0
-    call updateconsole("os.remove(\"game/screens.rpy\")", "screens.rpy deleted successfully.") from _call_updateconsole_11
-    call updateconsole("os.remove(\"game/gui.rpy\")", "gui.rpy deleted successfully.") from _call_updateconsole_12
-    call updateconsole("os.remove(\"game/menu.rpy\")", "menu.rpy deleted successfully.") from _call_updateconsole_13
-    call updateconsole("os.remove(\"game/script.rpy\")", "script.rpy deleted successfully.") from _call_updateconsole_14
-    $ pause(115.72 - (datetime.datetime.now() - starttime).total_seconds())
+        call updateconsole_clearall ("os.remove(\"images/cg/m_cg1.png\")", "m_cg1.png deleted successfully.")
 
-    #Hide console and show the Team salvato logo and thankyou
-    call hideconsole from _call_hideconsole_1
+    call updateconsole ("os.remove(\"game/screens.rpy\")", "screens.rpy deleted successfully.")
+    call updateconsole ("os.remove(\"game/gui.rpy\")", "gui.rpy deleted successfully.")
+    call updateconsole ("os.remove(\"game/menu.rpy\")", "menu.rpy deleted successfully.")
+    call updateconsole ("os.remove(\"game/script.rpy\")", "script.rpy deleted successfully.")
+    $ pause(115.72 - (datetime.datetime.now() - starttime).total_seconds())
+    
+    # Hides console and shows the Team Salvato Logo/Thank You
+    call hideconsole
     show credits_ts
     show credits_text "made with love by":
         zoom 0.75 xalign 0.5 yalign 0.25 alpha 0 subpixel True
@@ -645,11 +667,12 @@ label credits2:
     play sound page_turn
     show poem_end with Dissolve(1)
 
-    #Fade to black and make player quit
+    # Fade to black and make the player quit
     label postcredits_loop:
-        $ persistent.autoload = "postcredits_loop" #If the game quits come back here
+        # Game reloads to the postcredits_loop
+        $ persistent.autoload = "postcredits_loop"
 
-        #Disable player input
+        # Disables Main Menu, Quick Menu, Everything
         $ config.keymap['game_menu'] = []
         $ config.keymap['hide_windows'] = []
         $ renpy.display.behavior.clear_keymap_cache()
@@ -657,10 +680,13 @@ label credits2:
         $ config.skipping = False
         $ config.allow_skipping = False
 
-        #Fade to black
+        # Fade to black
         scene black
-        show poem_end #Show special ending message
+
+        # Shows either Monika's or Dan's Goodbye Message
+        show poem_end
         $ pause()
-        #Make player quit
+        
+        # Fakes Error Corruption. Makes the player quit the game.
         call screen dialog(message="Error: Script file is missing or corrupt.\nPlease reinstall the game.", ok_action=Quit(confirm=False))
         return

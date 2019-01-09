@@ -1,13 +1,9 @@
-﻿
+
 ## Initialization
-################################################################################
 
 init offset = -1
 
-
-################################################################################
 ## Styles
-################################################################################
 
 style default:
     font gui.default_font
@@ -88,10 +84,10 @@ style prompt_text is gui_text:
     size gui.interface_text_size
 
 
-#style bar:
-#    ysize gui.bar_size
-#    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-#    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
+# style bar:
+#     ysize gui.bar_size
+#     left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
+#     right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
 
 style vbar:
     xsize gui.bar_size
@@ -110,7 +106,6 @@ style scrollbar:
     unscrollable "hide"
     bar_invert True
 
-
 style vscrollbar:
     xsize 18
     base_bar Frame("gui/scrollbar/vertical_poem_bar.png", tile=False)
@@ -118,10 +113,10 @@ style vscrollbar:
     unscrollable "hide"
     bar_invert True
 
-#style vscrollbar:
-#    xsize gui.scrollbar_size
-#    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-#    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+# style vscrollbar:
+#     xsize gui.scrollbar_size
+#     base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+#     thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
 
 style slider:
     ysize 18
@@ -138,24 +133,19 @@ style frame:
     padding gui.frame_borders.padding
     background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
+## In-Game Screens
 
+# Say Screen
 
-################################################################################
-## In-game screens
-################################################################################
+# This screen is used to show dialogue to the player.
+# It takes two variables 'who' and 'what', where 'who' is the
+# character speaking and 'what' the text they are saying.
+# (Who can be set to None if no name is given)
 
+# This screen must create a text displayable with id "what", as Ren'Py uses
+# this to manage text display. It can also create displayables with id "who"
+# and id "window" to apply style properties.
 
-## Say screen ##################################################################
-##
-## The say screen is used to display dialogue to the player. It takes two
-## parameters, who and what, which are the name of the speaking character and
-## the text to be displayed, respectively. (The who parameter can be None if no
-## name is given.)
-##
-## This screen must create a text displayable with id "what", as Ren'Py uses
-## this to manage text display. It can also create displayables with id "who"
-## and id "window" to apply style properties.
-##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
 screen say(who, what):
@@ -178,7 +168,6 @@ screen say(who, what):
         add SideImage() xalign 0.0 yalign 1.0
 
     use quick_menu
-
 
 style window is default
 style say_label is default

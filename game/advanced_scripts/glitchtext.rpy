@@ -1,7 +1,10 @@
-#This is a copy of glitchtext.rpy from DDLC.
-#Use this as a starting point if you would like to override with your own.
+# Glitchtext.rpy
 
-#This defines a single function that generates garbage text of a given character length
+# This defines the glitched text that shows in DDLC
+
+# Use this as a starting point if you would like to override with your own.
+
+# This defines a function that generates glitched text of how many characters are in text.
 init python:
     import random
 
@@ -12,3 +15,4 @@ init python:
         for x in range(length):
             output += random.choice(nonunicode)
         return output
+
