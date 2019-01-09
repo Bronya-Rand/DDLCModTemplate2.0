@@ -190,3 +190,8 @@ init python:
     build.documentation('README.html')
 
     build.include_old_themes = False
+
+    #Advanced Addons
+
+    # Doki Doki Mod Manager metadata file
+    build.classify('ddmm-mod.json',build.name)
