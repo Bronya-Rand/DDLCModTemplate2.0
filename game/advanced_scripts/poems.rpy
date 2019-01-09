@@ -1,3 +1,14 @@
+# Poems.rpy
+
+# This defines all the poems in the game
+# Use this as a starting point if you would like to override with your own.
+
+# Defines the Poems by the follow fields:
+# author - The name of the author, each has a defined styles
+# title - The title of the poem
+# text - the poem's text as a blockquote
+# yuri_2 - This uses the creepy style for yuri's second act2 poem
+# yuri_3 - This uses Yuri's madness style for her third act2 poem
 init python:
     class Poem:
         def __init__(self, author="", title="", text="", yuri_2=False, yuri_3=False):
@@ -7,6 +18,7 @@ init python:
             self.yuri_2 = yuri_2
             self.yuri_3 = yuri_3
 
+# All poems are defined here
     poem_y1 = Poem(
     author = "yuri",
     title = "Ghost Under the Light",
