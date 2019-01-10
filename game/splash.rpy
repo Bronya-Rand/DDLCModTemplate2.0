@@ -280,13 +280,13 @@ label splashscreen:
                 "No, continue where I left off.":
                     $ restore_relevant_characters()
 
-        python:
-            if not firstrun:
-                try:
-                    with open(config.basedir + "/game/firstrun", "w") as f:
-                        f.write("1")
-                filepath = renpy.file("firstrun").name
-                open(filepath, "a").close()
+        #python:
+            #if not firstrun:
+                #try:
+                    #with open(config.basedir + "/game/firstrun", "w") as f:
+                        #f.write("1")
+                #filepath = renpy.file("firstrun").name
+                #open(filepath, "a").close()
 
     # Sets First Run to False to Show Disclaimer
     default persistent.first_run = False
