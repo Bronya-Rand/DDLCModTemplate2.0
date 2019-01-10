@@ -256,8 +256,8 @@ label splashscreen:
                 pass
 
 
-    #python:
-        #firstrun = ""
+    python:
+        firstrun = ""
         #try:
             #firstrun = renpy.file("firstrun").read(1)
         #except:
