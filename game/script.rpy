@@ -37,7 +37,8 @@ label start:
     if persistent.playthrough == 0:
         # 'call tutorial_selection' controls what label to call 
         # from in your script files
-        # Make sure to remove this when 
+        # Make sure to remove this when coding your mod, else your player
+        # will face the tutorial or get a error
         if persistent.example_seen:
             call tutorial_selection
         else:
