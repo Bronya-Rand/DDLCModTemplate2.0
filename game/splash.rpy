@@ -4,7 +4,7 @@ init -100 python:
 
     # Checks to see if all of DDLC's files are inside
     # You may remove 'scripts' if you recieve conflict with scripts.rpa
-    for archive in ['audio','images','fonts','scripts']:
+    for archive in ['audio','images','fonts']:
         if archive not in config.archives:
             renpy.error("DDLC archive files not found in /game folder. Check your installation and try again.")
 
@@ -256,13 +256,13 @@ label splashscreen:
                 pass
 
 
-    python:
-        firstrun = ""
-        try:
-            firstrun = renpy.file("firstrun").read(1)
-        except:
-            with open(config.basedir + "/game/firstrun", "wb") as f:
-                pass
+    #python:
+        #firstrun = ""
+        #try:
+            #firstrun = renpy.file("firstrun").read(1)
+        #except:
+            #with open(config.basedir + "/game/firstrun", "wb") as f:
+                #pass
 
     if not firstrun:
         if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
