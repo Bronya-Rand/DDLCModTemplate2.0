@@ -1,9 +1,14 @@
-# Script-poemgame.rpy
+#Commented to absurdity, blame Terra.
+#
+#Worth noting how the game gets here in the first place:
+    #This script is called via "call poem" in script.rpy.
+    #All of the Act 1 instances are done simply with "call poem".
+    #Some of the Act 2 instances are done with "call poem (False)"
+        #This is how we get the abrupt cut-in to the mini-game in Act 2.
+#Images are defined after the main poem game loop.
 
-# This defines all the stuff needed for the poem game
-# Use this as a starting point if you would like to override with your own.
 
-init python:
+init python: #This whole block runs when DDLC is started (as opposed to when the poem minigame is called)
     import random
 
     # This class holds a word, and point values for each of the four heroines
@@ -15,7 +20,7 @@ init python:
             self.yPoint = yPoint
             self.glitch = glitch
 
-    # Static variables for characters' poem appeal: Disklike, Neutral, Like
+    # Static variables for characters' poem appeal: Dislike, Neutral, Like
     POEM_DISLIKE_THRESHOLD = 29
     POEM_LIKE_THRESHOLD = 45
 
@@ -23,12 +28,12 @@ init python:
     full_wordlist = []
     with renpy.file('advanced_scripts/poemwords.txt') as wordfile:
         for line in wordfile:
-            
+            # Ignore lines beginning with '#' and empty lines
             line = line.strip()
-            
+
             if line == '' or line[0] == '#': continue
-            
-            
+
+            # File format: word,sPoint,nPoint,yPoint
             x = line.split(',')
             full_wordlist.append(PoemWord(x[0], float(x[1]), float(x[2]), float(x[3])))
 
@@ -49,9 +54,12 @@ init python:
     natsukiZoom = 1
     yuriZoom = 1
     monikaZoom = 1
+##################################################################################
+#These functions define random pause lengths for each of the stickers' movements.
+#renpy.random.random() returns a random floating point number between 0 and 1
+#So the -Doki-Time variable for each is a random decimal ranging from 4 to 8.
+#These are used in the image definitions.
 
-    # These functions control random movements of the characters
-    # and pauses
     def randomPauseSayori(trans, st, at):
         if st > sayoriTime:
             global sayoriTime
@@ -79,8 +87,7 @@ init python:
             monikaTime = renpy.random.random() * 4 + 4
             return None
         return 0
-
-    # Random movement
+##############These functions define random movements for the stickers.#######
     def randomMoveSayori(trans, st, at):
         global sayoriPos
         global sayoriOffset
@@ -169,43 +176,40 @@ init python:
         monikaZoom = trans.xzoom
         return 0
 
-# Start of the Poem Game
+##################################################################################
+
+
 label poem(transition=True):
     stop music fadeout 2.0
-
-    # These checks change the game for the gitched poem game in Act 3
-    if persistent.playthrough == 3:
+    if persistent.playthrough == 3: #Takes us to the glitched notebook if we're in Just Monika Mode.
         scene bg notebook-glitch
     else:
         scene bg notebook
-    show screen quick_menu
-    # Create the character stickers
-    if persistent.playthrough == 3:
-        show m_sticker at sticker_mid # Show's Monika Chibi in Act 3
+    show screen quick_menu #This allows the player to pull up the save menu during the poem minigame.
+    if persistent.playthrough == 3: 
+        show m_sticker at sticker_mid #Just Monika.
     else:
         if persistent.playthrough == 0:
-            show s_sticker at sticker_left # Show's Sayori Chibi in Act 1
-        show n_sticker at sticker_mid
+            show s_sticker at sticker_left #Only show Sayori's sticker in Act 1.
+        show n_sticker at sticker_mid #Natsuki's sticker
         if persistent.playthrough == 2 and chapter == 2:
-            show y_sticker_cut at sticker_right
+            show y_sticker_cut at sticker_right #Replace Yuri's sticker with the "cut arms" sticker..
         else:
-            show y_sticker at sticker_right
+            show y_sticker at sticker_right #Yuri's sticker
         if persistent.playthrough == 2 and chapter == 2:
-            show m_sticker at sticker_m_glitch
+            show m_sticker at sticker_m_glitch #Monika's sticker
     if transition:
-        with dissolve_scene_full
+        with dissolve_scene_full #Gives the dissolve transition if the minigame isn't called with False.
     if persistent.playthrough == 3:
-        play music ghostmenu # Plays Glitched Music
+        play music ghostmenu #Change the music in Just Monika.
     else:
-        play music t4 # Dreams of Love and Literature
+        play music t4
     $ config.skipping = False
     $ config.allow_skipping = False
-    $ allow_skipping = False
-
-    # Shows the player how to play the poem game.
-    if persistent.playthrough == 0 and chapter == 0:
+    $ allow_skipping = False #Not completely sure why skipping has to be explicitly disabled, but apparently it does..
+    if persistent.playthrough == 0 and chapter == 0: #Shows the below dialogue the first time the minigame is played.
         call screen dialog("It's time to write a poem!\n\nPick words you think your favorite club member\nwill like. Something good might happen with\nwhoever likes your poem the most!", ok_action=Return())
-    python:
+    python: #Variable initialization here. Important to note, these initialize at the start of the mini-game.
         poemgame_glitch = False
         played_baa = False
         progress = 1
@@ -228,42 +232,46 @@ label poem(transition=True):
         natsukiZoom = 1
         yuriZoom = 1
 
+
+
+
         # Main loop for drawing and selecting words
         while True:
             ystart = 160
+##################This block of code controls the word counter.###########################################
             if persistent.playthrough == 2 and chapter == 2:
-                pstring = "" # Broken progress for the last poem of Act 2
+                #This makes the counter do the "111111111" thing in Act 2.
+                pstring = ""
                 for i in range(progress):
-                    pstring += "1"
+                    pstring += "1" #Appends "1" to pstring each loop.
             else:
                 pstring = str(progress)
             ui.text(pstring + "/" + str(numWords), style="poemgame_text", xpos=810, ypos=80, color='#000')
+##################This block of code puts the poem words on the screen.###################################
             for j in range(2):
-                if j == 0: x = 440
+                if j == 0: x = 440 #These two lines build columns out of the words (I think).
                 else: x = 680
                 ui.vbox()
                 for i in range(5):
-                    if persistent.playthrough == 3:
-                        # Only Monika Words
+                    if persistent.playthrough == 3: #This sets all the words to "Monika" in Just Monika.
                         s = list("Monika")
-                        for k in range(6):
+                        for k in range(6): #This gives random corruption effects to the "Monika" words.
                             if random.randint(0, 4) == 0:
                                 s[k] = ' '
                             elif random.randint(0, 4) == 0:
                                 s[k] = random.choice(nonunicode)
                         word = PoemWord("".join(s), 0, 0, 0, False)
                     elif persistent.playthrough == 2 and not poemgame_glitch and chapter >= 1 and progress < numWords and random.randint(0, 400) == 0:
-                        word = PoemWord(glitchtext(80), 0, 0, 0, True) #1/400th chance for a glitched word in Chapter 2
-                    else:
-                        # Pick a word from the word list, without replacement
-                        word = random.choice(wordlist)
-                        wordlist.remove(word)
+                        word = PoemWord(glitchtext(80), 0, 0, 0, True) #This gives a chance for a random word in Act 2 to be the glitched word.
+                    else: #Normal circumstances
+                        word = random.choice(wordlist) #Pick a random word out the wordlist
+                        wordlist.remove(word) #Remove the word from the list so it can't appear in the minigame more than once.
                     ui.textbutton(word.word, clicked=ui.returns(word), text_style="poemgame_text", xpos=x, ypos=i * 56 + ystart)
                 ui.close()
-            
+##################This block controls what happens when words are selected.############################
             t = ui.interact()
             if not poemgame_glitch:
-                if t.glitch: # Make stuff go glitchy if the game glitches
+                if t.glitch: #This conditional controls what happens when the glitch word is selected.
                     poemgame_glitch = True
                     renpy.music.play(audio.t4g)
                     renpy.scene()
@@ -271,48 +279,44 @@ label poem(transition=True):
                     renpy.show("y_sticker glitch", at_list=[sticker_glitch])
                 elif persistent.playthrough != 3:
                     renpy.play(gui.activate_sound)
-                    # Hops the character who liked the word
-                    if persistent.playthrough == 0:
+                    if persistent.playthrough == 0: #Act 1. This makes the stickers hop when words are picked.
                         if t.sPoint >= 3:
                             renpy.show("s_sticker hop")
                         if t.nPoint >= 3:
                             renpy.show("n_sticker hop")
                         if t.yPoint >= 3:
                             renpy.show("y_sticker hop")
-                    else:
-                        if persistent.playthrough == 2 and chapter == 2 and random.randint(0,10) == 0: renpy.show("m_sticker hop")
-                        elif t.nPoint > t.yPoint: renpy.show("n_sticker hop")
+                    else: #Act 2
+                        if persistent.playthrough == 2 and chapter == 2 and random.randint(0,10) == 0: renpy.show("m_sticker hop") #1/10 chance for Monika's sticker to show.
+                        elif t.nPoint > t.yPoint: renpy.show("n_sticker hop") #Since there's just Yuri and Natsuki in Act 2, whoever has the higher value for the word hops.
                         elif persistent.playthrough == 2 and not persistent.seen_sticker and random.randint(0,100) == 0:
-                            renpy.show("y_sticker hopg") # 1/100th chance for creepy yuri sticker in Act 2
+                            renpy.show("y_sticker hopg") #"y_sticker_2g.png". 1/100 chance to see it, if we haven't seen it already.
                             persistent.seen_sticker = True
-                        elif persistent.playthrough == 2 and chapter == 2: renpy.show("y_sticker_cut hop")
+                        elif persistent.playthrough == 2 and chapter == 2: renpy.show("y_sticker_cut hop") #Yuri's cut arms sticker.
                         else: renpy.show("y_sticker hop")
             else:
-                r = random.randint(0, 10)
-                if r == 0 and not played_baa: #1/10th chance for weird sound effect
+                r = random.randint(0, 10) #1/10 chance to hear "baa", one time.
+                if r == 0 and not played_baa:
                     renpy.play("gui/sfx/baa.ogg")
                     played_baa = True
                 elif r <= 5: renpy.play(gui.activate_sound_glitch)
-            # Add points for the selected word to each girl's total
             sPointTotal += t.sPoint
             nPointTotal += t.nPoint
             yPointTotal += t.yPoint
             progress += 1
-            if progress > numWords:
-                break # Break out of the loop once all words are chosen
+            if progress > numWords: #This stops the minigame once we've picked all the words.
+                break
+##################End of main loop.##################################################################
 
-        # After all words are chosen, finish up the game
         if persistent.playthrough == 0:
-
-            # For chapter 1, add 5 points to whoever we sided with
+            # For chapter 1, add 5 points to whomever we sided with
             if chapter == 1:
                 exec(ch1_choice[0] + "PointTotal += 5")
-            
             # Logic for taking point totals and assigning poem appeal, scene order, etc.
             unsorted_pointlist = {"sayori": sPointTotal, "natsuki": nPointTotal, "yuri": yPointTotal}
             pointlist = sorted(unsorted_pointlist, key=unsorted_pointlist.get)
-            
-            # Sets the `poemwinner` to the highest scorer
+
+            # Set poemwinner to the highest scorer
             poemwinner[chapter] = pointlist[2]
         else:
             if nPointTotal > yPointTotal: poemwinner[chapter] = "natsuki"
@@ -321,7 +325,7 @@ label poem(transition=True):
         # Add appeal point based on poem winner
         exec(poemwinner[chapter][0] + "_appeal += 1")
 
-        # Set's `poemappeal`
+        # Set poemappeal
         if sPointTotal < POEM_DISLIKE_THRESHOLD: s_poemappeal[chapter] = -1
         elif sPointTotal > POEM_LIKE_THRESHOLD: s_poemappeal[chapter] = 1
         if nPointTotal < POEM_DISLIKE_THRESHOLD: n_poemappeal[chapter] = -1
@@ -329,29 +333,26 @@ label poem(transition=True):
         if yPointTotal < POEM_DISLIKE_THRESHOLD: y_poemappeal[chapter] = -1
         elif yPointTotal > POEM_LIKE_THRESHOLD: y_poemappeal[chapter] = 1
 
-        # Poem winner always has a appeal of 1
+        # Poem winner always has appeal 1 (loves poem)
         exec(poemwinner[chapter][0] + "_poemappeal[chapter] = 1")
 
-    #1/6th chance that we'll see the creepy Happy Thoughts picture after the game in Act 2
     if persistent.playthrough == 2 and persistent.seen_eyes == None and renpy.random.randint(0,5) == 0:
         $ seen_eyes_this_chapter = True
         $ quick_menu = False
         play sound "sfx/eyes.ogg"
         $ persistent.seen_eyes = True
-        $ renpy.save_persistent()
         stop music
         scene black with None
         show bg eyes_move
-        $ pause(1.2)
+        pause 1.2
         hide bg eyes_move
         show bg eyes
-        $ pause(0.5)
+        pause 0.5
         hide bg eyes
         show bg eyes_move
-        $ pause(1.25)
+        pause 1.25
         hide bg eyes with None
         $ quick_menu = True
-    # Turns back on the UI options for reading portion
     $ config.allow_skipping = True
     $ allow_skipping = True
     stop music fadeout 2.0
@@ -359,10 +360,9 @@ label poem(transition=True):
     show black as fadeout:
         alpha 0
         linear 1.0 alpha 1.0
-    $ pause(1.0)
+    pause 1.0
     return
-
-# Cotrols the creepy Happy Thoughts picture that scrolls up the screen infinitely
+############ Image definitions start here. #############
 image bg eyes_move:
     "images/bg/eyes.png"
     parallel:
@@ -381,7 +381,6 @@ image bg eyes_move:
 image bg eyes:
     "images/bg/eyes.png"
 
-#The character stickers, defined with their animation behaviors
 image s_sticker:
     "gui/poemgame/s_sticker_1.png"
     xoffset sayoriOffset xzoom sayoriZoom
@@ -437,7 +436,6 @@ image m_sticker:
             function randomMoveMonika
         repeat
 
-# The art shown for the sticker when hopping
 image s_sticker hop:
     "gui/poemgame/s_sticker_2.png"
     xoffset sayoriOffset xzoom sayoriZoom
@@ -466,7 +464,6 @@ image y_sticker_cut hop:
     xoffset 0 xzoom 1
     "y_sticker_cut"
 
-# Creepy hopping pic for yuri
 image y_sticker hopg:
     "gui/poemgame/y_sticker_2g.png"
     xoffset yuriOffset xzoom yuriZoom
@@ -481,7 +478,6 @@ image m_sticker hop:
     xoffset 0 xzoom 1
     "m_sticker"
 
-# Glitchy sticker for yuri
 image y_sticker glitch:
     "gui/poemgame/y_sticker_1_broken.png"
     xoffset yuriOffset xzoom yuriZoom zoom 3.0
@@ -493,7 +489,6 @@ image y_sticker glitch:
             function randomMoveYuri
         repeat
 
-#These transforms determine the placement of the stickers
 transform sticker_left:
     xcenter 100 yalign 0.9 subpixel True
 

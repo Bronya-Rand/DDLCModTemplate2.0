@@ -445,6 +445,33 @@ label warningscreen:
     show warning
     pause 3.0
 
+## If Sayori.chr is deleted, this would play
+## From Script-CH0.rpy
+# label ch0_kill:
+#     $ s_name = "Sayori"
+#     show sayori 1b zorder 2 at t11
+#     s "..."
+#     s "..."
+#     s "W-What..."
+#     s 1g "..."
+#     s "This..."
+#     s "What is this...?"
+#     s "Oh no..."
+#     s 1u "No..."
+#     s "This can't be it."
+#     s "This can't be all there is."
+#     s 4w "What is this?"
+#     s "What am I?"
+#     s "Make it stop!"
+#     s "PLEASE MAKE IT STOP!"
+
+#     $ delete_character("sayori")
+#     $ delete_character("natsuki")
+#     $ delete_character("yuri")
+#     $ delete_character("monika")
+#     $ renpy.quit()
+#     return
+
 label after_load:
     $ config.allow_skipping = allow_skipping
     $ _dismiss_pause = config.developer
