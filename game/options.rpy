@@ -10,8 +10,8 @@ define gui.show_name = True
 
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
-# If you are starting out, set this to "1.0.0"
-define config.version = "2.1.0"
+# If you are starting out, set this to "1.0"
+define config.version = "2.1.1"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
