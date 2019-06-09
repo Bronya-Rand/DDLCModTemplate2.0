@@ -18,6 +18,9 @@ Follow these steps to set up the template.
 3. Splash screen on first load. This adheres to the Team Salvato guidelines for creating fan mods of the game.
 4. Remastered RPY's to be exact replicas of DDLC's own RPY's with explainations.
 5. Customizable! Use as a starting point for any ideas you wish to create.
+6. Ready to use with Xcode. Open this project in Xcode and you can edit, build, and run your mod without opening Ren'Py Launcher ever again!
+
+> Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme. [Learn more &rsaquo;](https://marquiskurt.net/2019/06/09/post.html)
 
 ### Returned Features
 1. Ghost Menu
