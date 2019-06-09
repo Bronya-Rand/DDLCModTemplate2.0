@@ -1,0 +1,16 @@
+//
+//  Config.xcconfig
+//  DDLCModTemplate
+//
+//  Created by Marquis Kurt on 6/9/19.
+//  Copyright © 2019 GanstaKingOfSA. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Change the line below to reflect where your Ren'Py install is!
+RENPY_TOOL=/some/renpy/location/renpy.sh
+
+BUILD_ACTION=$(SRCROOT)/game lint
+RUN_ACTION=$(SRCROOT)/game
