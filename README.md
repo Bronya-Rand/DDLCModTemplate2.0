@@ -6,7 +6,7 @@ The Re-Vamped DDLC Mod Template is a remastered version of the DDLC Mod Template
 Follow these steps to set up the template.
 
 1. Download and install the [Ren'Py SDK version 6.99.12](https://www.renpy.org/release/6.99.12). *(NOTE: The current version of DDLC is not compatible with .rpyc files generated with other versions of the Renpy SDK)*
-2. Go to releases to download the [latest stable build](https://github.com/therationalpi/DDLCModTemplate/releases).
+2. Go to releases to download the [latest stable build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases).
 3. Place the files in the Ren'Py working directory (chosen during installation).
 4. Download the DDLC files, available for free at http://ddlc.moe or Steam ('Steam/steamapps/common/Doki Doki Literature Club') & drop the `audio.rpa`, `images.rpa`, and `fonts.rpa` files from it into the /game directory. (Do **not** include the `scripts.rpa` file, as this will create conflicts.)
 5. Launch the project in Ren'Py. It should compile & run.
@@ -27,8 +27,6 @@ Follow these steps to set up the template.
 and more!
 
 ### Added Features
-1. Advanced Mode, for experienced DDLC/Ren'Py Coders
-
-## Disclaimer
-
-The DDLC Mod Template 2.0 is a fork of the Monika-After-Story/DDLCModTemplate repository that is unaffilated with the Monika After Story Team. All code in this remastered template is brought in by GanstaKingofSA from DDLC itself.
+1. Advanced ZIP, for experienced DDLC/Ren'Py Coders
+2. Terra's In-Depth Poemgame
+3. Community Driven Tutorial
