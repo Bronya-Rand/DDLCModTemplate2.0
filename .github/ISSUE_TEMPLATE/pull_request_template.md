@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: Pull Request Template
+about: Template for PRs for added features, fixes, etc
 title: ''
 labels: enhancement
 assignees: ''
