@@ -246,12 +246,12 @@ label poem(transition=True):
                     pstring += "1" #Appends "1" to pstring each loop.
             else:
                 pstring = str(progress)
-            ui.text(pstring + "/" + str(numWords), style="poemgame_text", xpos=810, ypos=80, color='#000')
+            ui.text(pstring + "/" + str(numWords), style="poemgame_text", xpos=810, ypos=80, color='#000') #This is the word counter.
 ##################This block of code puts the poem words on the screen.###################################
-            for j in range(2):
-                if j == 0: x = 440 #These two lines build columns out of the words (I think).
+            for j in range(2): #In python, range() is not inclusive. So j loops from 0 to 1.
+                if j == 0: x = 440 #These two lines build columns out of the words. The first column is at 440px and the second at 680px.
                 else: x = 680
-                ui.vbox()
+                ui.vbox() #This is outdated UI code to create a vbox. It adds things to the vbox until it hits a ui.close()
                 for i in range(5):
                     if persistent.playthrough == 3: #This sets all the words to "Monika" in Just Monika.
                         s = list("Monika")
@@ -265,15 +265,16 @@ label poem(transition=True):
                         word = PoemWord(glitchtext(80), 0, 0, 0, True) #This gives a chance for a random word in Act 2 to be the glitched word.
                     else: #Normal circumstances
                         word = random.choice(wordlist) #Pick a random word out the wordlist
-                        wordlist.remove(word) #Remove the word from the list so it can't appear in the minigame more than once.
+                        wordlist.remove(word) #Remove the word from the list. This prevents a word from being on the screen twice.
                     ui.textbutton(word.word, clicked=ui.returns(word), text_style="poemgame_text", xpos=x, ypos=i * 56 + ystart)
-                ui.close()
+                ui.close() #Closes the vbox from above
 ##################This block controls what happens when words are selected.############################
             t = ui.interact()
             if not poemgame_glitch:
                 if t.glitch: #This conditional controls what happens when the glitch word is selected.
                     poemgame_glitch = True
                     renpy.music.play(audio.t4g)
+                    #The below three lines are just a scene statement in python. It's exactly the same as 'scene bg white'.
                     renpy.scene()
                     renpy.show("white")
                     renpy.show("y_sticker glitch", at_list=[sticker_glitch])
@@ -300,6 +301,7 @@ label poem(transition=True):
                     renpy.play("gui/sfx/baa.ogg")
                     played_baa = True
                 elif r <= 5: renpy.play(gui.activate_sound_glitch)
+            #Add the word's point values to the running total
             sPointTotal += t.sPoint
             nPointTotal += t.nPoint
             yPointTotal += t.yPoint
