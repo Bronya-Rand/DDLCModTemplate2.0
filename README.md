@@ -1,11 +1,11 @@
-# Welcome to the Modification Club!
+# Welcome to the New Modification Club!
 
-The Re-Vamped DDLC Mod Template is a remastered version of the DDLC Mod Template from the Monika After Story Team for Doki Doki Literature Club that adhere to the [Team Salvato IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
+The Remastered DDLC Mod Template is a remastered version of the DDLC Mod Template by GanstaKingofSA for Doki Doki Literature Club that adhere to the [Team Salvato IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
 
 ### Getting Started
 Follow these steps to set up the template.
 
-1. Download and install the [Ren'Py SDK version 6.99.12](https://www.renpy.org/release/6.99.12). *(NOTE: The current version of DDLC is not compatible with .rpyc files generated with other versions of the Renpy SDK)*
+1. Download and install the [Ren'Py SDK version 6.99.12](https://www.renpy.org/release/6.99.12). *(NOTE: The current version of DDLC is not compatible with .rpyc files generated with other versions of the Ren'Py SDK)*
 2. Go to releases to download the [latest stable build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases).
 3. Place the files in the Ren'Py working directory (chosen during installation).
 4. Download the DDLC files, available for free at http://ddlc.moe or Steam ('Steam/steamapps/common/Doki Doki Literature Club') & drop the `audio.rpa`, `images.rpa`, and `fonts.rpa` files from it into the /game directory. (Do **not** include the `scripts.rpa` file, as this will create conflicts.)
@@ -18,18 +18,19 @@ Follow these steps to set up the template.
 3. Splash screen on first load. This adheres to the Team Salvato guidelines for creating fan mods of the game.
 4. Remastered RPY's to be exact replicas of DDLC's own RPY's with explainations.
 5. Customizable! Use as a starting point for any ideas you wish to create.
-6. Ready to use with Xcode. Open this project in Xcode and you can edit, build, and run your mod without opening Ren'Py Launcher ever again!
-
-> Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme. [Learn more &rsaquo;](XCODE.md)
+6. Ready to use with Xcode. Open this project in Xcode and you can edit, build, and run your mod without opening Ren'Py Launcher ever again! 
+> Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 
 ### Returned Features
 1. Ghost Menu
-2. Early Sayori Kill (if you delete Sayori before her Death, new screen takes over)
+2. Early Sayori Kill (if you delete Sayori before her death, new screen takes over)
 3. Special Poems!
-4. Remastered Splash.rpy to be a exact replica of DDLC's Splash Screen.
+4. Remastered `splash.rpy` to be a exact replica of DDLC's Splash Screen.
 and more!
+5. Poem Responses! `(Coming Soon)`
 
 ### Added Features
 1. Advanced ZIP, for experienced DDLC/Ren'Py Coders
 2. Terra's In-Depth Poemgame
 3. Community Driven Tutorial
+4. Xcode Support for MacOS
