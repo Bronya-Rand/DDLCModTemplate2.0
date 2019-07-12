@@ -78,6 +78,10 @@ transform leftin(x=640, z=0.80):
     xcenter -300 yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
     easein .25 xcenter x
 
+transform rightin(x=640, z=0.80):
+    xcenter 2000 yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
+    easein .25 xcenter x
+
 # This hides the character
 transform thide(z=0.80):
     subpixel True
@@ -89,6 +93,11 @@ transform lhide:
     subpixel True
     on hide:
         easeout .25 xcenter -300
+
+transform rhide:
+    subpixel True
+    on hide:
+        easeout .25 xcenter 2000
 
 # Normal positioning and animation based on how many characters
 transform t41:
