@@ -27,11 +27,9 @@ Follow these steps to set up the template.
 3. Special Poems! (Random Special Poems appear when prompted)
 4. Remastered `splash.rpy` to be a exact replica of DDLC's Splash Screen and more!
 5. Poem Responses! (Doki's respond to your custom poems!)
-6. NVL Support!
 
 ### Added Features
-1. Advanced ZIP, for experienced DDLC Coders in the Release Tab
-2. Terra's In-Depth Poem Game Guide!
-3. Community Driven Tutorial (Coming Soon!)
-4. XCode Support for Mac OS/OS X!
-5. NVL Support!
+1. Terra's In-Depth Poem Game Guide!
+2. Community Driven Tutorial (Coming Soon!)
+3. XCode Support for Mac OS/OS X!
+4. NVL Support!
