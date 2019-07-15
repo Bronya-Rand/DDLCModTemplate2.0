@@ -13,7 +13,7 @@ define -2 gui.activate_sound_glitch = "gui/sfx/select_glitch.ogg" # Glitched Sou
 # Colors!
 # This sets the color of text in DDLC
 
-## An accent color used throughout the interface to label and highlight text.
+## Color used to label and highlight text.
 define -2 gui.accent_color = '#ffffff'
 
 ## The color used for a text button when it is neither selected nor hovered.
@@ -26,8 +26,7 @@ define -2 gui.idle_small_color = '#333'
 ## The color that is used for buttons and bars that are hovered.
 define -2 gui.hover_color = '#cc6699'
 
-## The color used for a text button when it is selected but not focused. A
-## button is selected if it is the current screen or preference value.
+## The color used for a text button when it is selected but not focused.
 define -2 gui.selected_color = '#bb5588'
 
 ## The color used for a text button when it cannot be selected.
@@ -72,10 +71,14 @@ define -2 gui.notify_text_size = 16
 define -2 gui.title_text_size = 38
 
 # Main Menu and Game Menu
+
+# Sets the background for the Start Menu
 define -2 gui.main_menu_background = "menu_bg"
+
+# Sets the background for the Pause Menu
 define -2 gui.game_menu_background = "game_menu_bg"
 
-# Controls wheter we show the name and version of the game
+# Controls whether we show the name and version of the game
 define -2 gui.show_name = False
 
 # Dialogue
