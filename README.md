@@ -18,8 +18,8 @@ Follow these steps to set up the template.
 3. Splash Screen on First Load. This adheres to the Team Salvato guidelines for creating fan mods of the game.
 4. Remastered RPY's to be exact replicas of DDLC's with explainations.
 5. Customizable! Use this as a starting point for any ideas you wish to create.
-6. XCode Support! Open this project in XCode and you can edit, build, and run your mod without opening Ren'Py Launcher ever again! 
-> Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for XCode. [Learn more &rsaquo;](XCODE.md)
+6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening Ren'Py Launcher ever again! 
+> Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 
 ### Returned Features
 1. Ghost Menu (Dan's Spooky Easter Egg)
@@ -31,5 +31,5 @@ Follow these steps to set up the template.
 ### Added Features
 1. Terra's In-Depth Poem Game Guide!
 2. Community Driven Tutorial (Coming Soon!)
-3. XCode Support for Mac OS/OS X!
+3. Xcode Support for Mac OS/OS X!
 4. NVL Support!
