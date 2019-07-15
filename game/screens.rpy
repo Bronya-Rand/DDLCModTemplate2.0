@@ -1101,38 +1101,52 @@ style slider_vbox:
 ## https://www.renpy.org/doc/html/history.html
 
 screen history():
-
     tag menu
-
-    ## Avoid predicting this screen, as it can be very large.
     predict False
-
     use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport")):
-
         style_prefix "history"
-
         for h in _history_list:
-
             window:
-
-                ## This lays things out properly if history_height is None.
                 has fixed:
                     yfit True
-
                 if h.who:
-
                     label h.who:
                         style "history_name"
-
-                        ## Take the color of the who text from the Character, if
-                        ## set.
                         if "color" in h.who_args:
                             text_color h.who_args["color"]
-
-                text h.what
-
+                $ what = filter_text_tags(h.what, allow=set([]))
+                text what:
+                    substitute False
         if not _history_list:
             label _("The dialogue history is empty.")
+
+python early:
+    import renpy.text.textsupport as textsupport
+    from renpy.text.textsupport import TAG, PARAGRAPH
+    def filter_text_tags(s, allow=None, deny=None):
+        if (allow is None) and (deny is None):
+            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        if (allow is not None) and (deny is not None):
+            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        tokens = textsupport.tokenize(unicode(s))
+        rv = [ ]
+        for tokentype, text in tokens:
+            if tokentype == PARAGRAPH:
+                rv.append("\n")
+            elif tokentype == TAG:
+                kind = text.partition("=")[0]
+                if kind and (kind[0] == "/"):
+                    kind = kind[1:]
+                if allow is not None:
+                    if kind in allow:
+                        rv.append("{" + text + "}")
+                else:
+                    if kind not in deny:
+                        rv.append("{" + text + "}")
+            else:
+                rv.append(text)
+        return "".join(rv)
+
 
 
 style history_window is empty
