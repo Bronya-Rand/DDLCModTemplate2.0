@@ -7,41 +7,6 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		BF7B5E7D22AD8AC1007BEAD8 /* yuri.chr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yuri.chr; sourceTree = "<group>"; };
-		BF7B5E7E22AD8AC1007BEAD8 /* options.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = options.rpy; sourceTree = "<group>"; };
-		BF7B5E7F22AD8AC1007BEAD8 /* script.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = script.rpy; sourceTree = "<group>"; };
-		BF7B5E8022AD8AC1007BEAD8 /* splash.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = splash.rpy; sourceTree = "<group>"; };
-		BF7B5E8122AD8AC1007BEAD8 /* natsuki.chr */ = {isa = PBXFileReference; lastKnownFileType = file; path = natsuki.chr; sourceTree = "<group>"; };
-		BF7B5E8222AD8AC1007BEAD8 /* tutorials.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tutorials.rpy; sourceTree = "<group>"; };
-		BF7B5E8322AD8AC1007BEAD8 /* script-example.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "script-example.rpy"; sourceTree = "<group>"; };
-		BF7B5E8522AD8AC1007BEAD8 /* singleton.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = singleton.py; sourceTree = "<group>"; };
-		BF7B5E8622AD8AC1007BEAD8 /* sayori.chr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sayori.chr; sourceTree = "<group>"; };
-		BF7B5E8722AD8AC1007BEAD8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		BF7B5E8922AD8AC1007BEAD8 /* DDLCModTemplateLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DDLCModTemplateLogo.png; sourceTree = "<group>"; };
-		BF7B5E8A22AD8AC1007BEAD8 /* screens.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = screens.rpy; sourceTree = "<group>"; };
-		BF7B5E8B22AD8AC1007BEAD8 /* monika.chr */ = {isa = PBXFileReference; lastKnownFileType = file; path = monika.chr; sourceTree = "<group>"; };
-		BF7B5E8D22AD8AC1007BEAD8 /* console.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = console.rpy; sourceTree = "<group>"; };
-		BF7B5E8E22AD8AC1007BEAD8 /* glitchtext.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glitchtext.rpy; sourceTree = "<group>"; };
-		BF7B5E8F22AD8AC1007BEAD8 /* cgs.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cgs.rpy; sourceTree = "<group>"; };
-		BF7B5E9022AD8AC1007BEAD8 /* poemwords.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = poemwords.txt; sourceTree = "<group>"; };
-		BF7B5E9122AD8AC1007BEAD8 /* definitions.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = definitions.rpy; sourceTree = "<group>"; };
-		BF7B5E9222AD8AC1007BEAD8 /* effects.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = effects.rpy; sourceTree = "<group>"; };
-		BF7B5E9322AD8AC1007BEAD8 /* credits.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credits.rpy; sourceTree = "<group>"; };
-		BF7B5E9422AD8AC1007BEAD8 /* transforms.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = transforms.rpy; sourceTree = "<group>"; };
-		BF7B5E9522AD8AC1007BEAD8 /* script-poemgame.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "script-poemgame.rpy"; sourceTree = "<group>"; };
-		BF7B5E9622AD8AC1007BEAD8 /* poems_special.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = poems_special.rpy; sourceTree = "<group>"; };
-		BF7B5E9722AD8AC1007BEAD8 /* poems.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = poems.rpy; sourceTree = "<group>"; };
-		BF7B5E9822AD8AC1007BEAD8 /* gui.rpy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gui.rpy; sourceTree = "<group>"; };
-		BF7B5E9922AD8AC1007BEAD8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		BF7B5E9C22AD8AC1007BEAD8 /* tutorial_hover_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial_hover_background.png; sourceTree = "<group>"; };
-		BF7B5E9D22AD8AC1007BEAD8 /* tutorial_idle_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial_idle_background.png; sourceTree = "<group>"; };
-		BF7B5E9E22AD8AC1007BEAD8 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		BF7B5EA022AD8AC1007BEAD8 /* yuri.chr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yuri.chr; sourceTree = "<group>"; };
-		BF7B5EA122AD8AC1007BEAD8 /* natsuki.chr */ = {isa = PBXFileReference; lastKnownFileType = file; path = natsuki.chr; sourceTree = "<group>"; };
-		BF7B5EA222AD8AC1007BEAD8 /* sayori.chr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sayori.chr; sourceTree = "<group>"; };
-		BF7B5EA322AD8AC1007BEAD8 /* monika.chr */ = {isa = PBXFileReference; lastKnownFileType = file; path = monika.chr; sourceTree = "<group>"; };
-		BF7B5EA422AD8AC1007BEAD8 /* README.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = README.html; sourceTree = "<group>"; };
-		BF7B5EA522AD8AC1007BEAD8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BF7B5EA622AD8ACC007BEAD8 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,98 +15,7 @@
 			isa = PBXGroup;
 			children = (
 				BF7B5EA622AD8ACC007BEAD8 /* Config.xcconfig */,
-				BF7B5E9F22AD8AC1007BEAD8 /* characters */,
-				BF7B5E7C22AD8AC1007BEAD8 /* game */,
-				BF7B5EA422AD8AC1007BEAD8 /* README.html */,
-				BF7B5EA522AD8AC1007BEAD8 /* README.md */,
 			);
-			sourceTree = "<group>";
-		};
-		BF7B5E7C22AD8AC1007BEAD8 /* game */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B5E7D22AD8AC1007BEAD8 /* yuri.chr */,
-				BF7B5E7E22AD8AC1007BEAD8 /* options.rpy */,
-				BF7B5E7F22AD8AC1007BEAD8 /* script.rpy */,
-				BF7B5E8022AD8AC1007BEAD8 /* splash.rpy */,
-				BF7B5E8122AD8AC1007BEAD8 /* natsuki.chr */,
-				BF7B5E8222AD8AC1007BEAD8 /* tutorials.rpy */,
-				BF7B5E8322AD8AC1007BEAD8 /* script-example.rpy */,
-				BF7B5E8422AD8AC1007BEAD8 /* python-packages */,
-				BF7B5E8622AD8AC1007BEAD8 /* sayori.chr */,
-				BF7B5E8722AD8AC1007BEAD8 /* README.md */,
-				BF7B5E8822AD8AC1007BEAD8 /* mod_assets */,
-				BF7B5E8A22AD8AC1007BEAD8 /* screens.rpy */,
-				BF7B5E8B22AD8AC1007BEAD8 /* monika.chr */,
-				BF7B5E8C22AD8AC1007BEAD8 /* advanced_scripts */,
-				BF7B5E9922AD8AC1007BEAD8 /* .gitignore */,
-				BF7B5E9A22AD8AC1007BEAD8 /* gui */,
-				BF7B5E9E22AD8AC1007BEAD8 /* README.txt */,
-			);
-			path = game;
-			sourceTree = "<group>";
-		};
-		BF7B5E8422AD8AC1007BEAD8 /* python-packages */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B5E8522AD8AC1007BEAD8 /* singleton.py */,
-			);
-			path = "python-packages";
-			sourceTree = "<group>";
-		};
-		BF7B5E8822AD8AC1007BEAD8 /* mod_assets */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B5E8922AD8AC1007BEAD8 /* DDLCModTemplateLogo.png */,
-			);
-			path = mod_assets;
-			sourceTree = "<group>";
-		};
-		BF7B5E8C22AD8AC1007BEAD8 /* advanced_scripts */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B5E8D22AD8AC1007BEAD8 /* console.rpy */,
-				BF7B5E8E22AD8AC1007BEAD8 /* glitchtext.rpy */,
-				BF7B5E8F22AD8AC1007BEAD8 /* cgs.rpy */,
-				BF7B5E9022AD8AC1007BEAD8 /* poemwords.txt */,
-				BF7B5E9122AD8AC1007BEAD8 /* definitions.rpy */,
-				BF7B5E9222AD8AC1007BEAD8 /* effects.rpy */,
-				BF7B5E9322AD8AC1007BEAD8 /* credits.rpy */,
-				BF7B5E9422AD8AC1007BEAD8 /* transforms.rpy */,
-				BF7B5E9522AD8AC1007BEAD8 /* script-poemgame.rpy */,
-				BF7B5E9622AD8AC1007BEAD8 /* poems_special.rpy */,
-				BF7B5E9722AD8AC1007BEAD8 /* poems.rpy */,
-				BF7B5E9822AD8AC1007BEAD8 /* gui.rpy */,
-			);
-			path = advanced_scripts;
-			sourceTree = "<group>";
-		};
-		BF7B5E9A22AD8AC1007BEAD8 /* gui */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B5E9B22AD8AC1007BEAD8 /* button */,
-			);
-			path = gui;
-			sourceTree = "<group>";
-		};
-		BF7B5E9B22AD8AC1007BEAD8 /* button */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B5E9C22AD8AC1007BEAD8 /* tutorial_hover_background.png */,
-				BF7B5E9D22AD8AC1007BEAD8 /* tutorial_idle_background.png */,
-			);
-			path = button;
-			sourceTree = "<group>";
-		};
-		BF7B5E9F22AD8AC1007BEAD8 /* characters */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B5EA022AD8AC1007BEAD8 /* yuri.chr */,
-				BF7B5EA122AD8AC1007BEAD8 /* natsuki.chr */,
-				BF7B5EA222AD8AC1007BEAD8 /* sayori.chr */,
-				BF7B5EA322AD8AC1007BEAD8 /* monika.chr */,
-			);
-			path = characters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
