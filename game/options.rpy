@@ -2,7 +2,7 @@
 
 # This is where you will name your mod!
 # Change "DDLC Mod Template 2.0" to your mod name (e.g. "Yuri")
-define config.name = "DDLC Mod Template 2.0"
+define config.name = "DDLC Mod Template"
 
 # This controls whether you want your mod name to show in the main menu.
 # If your mod name is big, it is suggested to turn this off
@@ -11,7 +11,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.2.3"
+define config.version = "2.2.4"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
@@ -90,7 +90,7 @@ default preferences.sfx_volume = 0.75
 # Windows Directory for Saves: %AppData%/RenPy/
 # macOS Directory for Saves: $HOME/Library/RenPy/ (Un-hide the Library Folder)
 # Linux Directory for Saves $HOME/.renpy/
-define config.save_directory = "DDLCModTemplate2"
+define config.save_directory = "DDLCModTemplateTwo"
 
 # This controls the window logo of your mod.
 # By default this defaults to the DDLC Icon PNG.
