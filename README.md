@@ -33,3 +33,5 @@ Follow these steps to set up the template.
 2. Community Driven Tutorial (Coming Soon!)
 3. Xcode Support for Mac OS/OS X!
 4. NVL Support!
+
+This template is included with [DDMMaker](https://github.com/GanstaKingofSA/DDLC-ModMaker/releases), a Ren'Py SDK Mod to build DDLC Mods only.
