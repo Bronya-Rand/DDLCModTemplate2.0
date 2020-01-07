@@ -7,7 +7,7 @@ Follow these steps to set up the template.
 
 1. Download and run the [Ren'Py 6.99.12 SDK](https://www.renpy.org/release/6.99.12). *(NOTE: DDLC does not work with `.rpyc` files generated with other versions of the Ren'Py SDK)*
 2. Go to releases to download the [latest build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) of the template.
-3. Place the files in the Ren'Py working directory (default is the `renpy-6.99.12.4-sdk` folder).
+3. Place the files inside a folder (preferrably your mod name or `game`)in the Ren'Py working directory (default is the `renpy-6.99.12.4-sdk` folder).
 4. Download the DDLC files, available for free at http://ddlc.moe or Steam ('Steam/steamapps/common/Doki Doki Literature Club') & drop the `audio.rpa`, `images.rpa`, and `fonts.rpa` files from it into the /game directory. (Do **not** include the `scripts.rpa` file, as this will create conflicts.)
 5. Launch the project in Ren'Py. It should compile & run.
 6. Navigate the Ren'Py menu & select "Build Distributions." Check "DDLC Compatible Mod" and build the mod. This will create a cross-platform .ZIP file with files for the mod & installation instructions.
