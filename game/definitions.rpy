@@ -132,6 +132,10 @@ define audio.page_turn = "sfx/pageflip.ogg"
 define audio.fall = "sfx/fall.ogg"
 
 # Backgrounds
+# To define a new color background do like so
+# image blue = "#XXXXXX" where X is your hex digits (#158353)
+# To define a new background, do so like this
+# image bg bathroom = "mod_assets/bathroom.png" (make sure you use the right file type [.png, .jpg])
 image black = "#000000"
 image dark = "#000000e4"
 image darkred = "#110000c8"
@@ -252,6 +256,8 @@ image glitch_color2:
 
 # This is where the characters bodies and faces are defined.
 # They are defined by left half, right half and their head.
+# To define a new image, do so like this line below
+# image sayori 1ca = im.Composite((960, 960), (0, 0), "mod_assets/sayori/1cl.png", (0, 0), "mod_assets/sayori/1cr.png", (0, 0), "sayori/a.png")
 
 # Sayori's Definitions
 image sayori 1 = im.Composite((960, 960), (0, 0), "sayori/1l.png", (0, 0), "sayori/1r.png", (0, 0), "sayori/a.png")
@@ -1328,6 +1334,10 @@ image monika g2:
 # Character Variables
 
 # This configure the character variables for writing dialog for each character
+## To define a new character with assets, do so like this
+# define e = DynamicCharacter('e_name', image='eileen', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+## To define a new character without assets, do so like this
+# define en = Character('Eileen & Nat', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define narrator = Character(ctc="ctc", ctc_position="fixed")
 define mc = DynamicCharacter('player', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
@@ -1341,6 +1351,9 @@ define _dismiss_pause = config.developer
 # Persistent Variables
 
 # These variables are load at game startup and exist on all saves.
+## To make a new persistent variable, do so like this
+# default persistent.monika = X 
+# X is either true/false, a number, array (see persistent.clear for arrays) or string based off your choosing
 default persistent.playername = ""
 default player = persistent.playername
 default persistent.playthrough = 0
@@ -1371,6 +1384,9 @@ default chapter = 0
 default currentpos = 0
 default faint_effect = None
 
+# Default Name Variables
+## To define a default name do so like this
+# default e_name = "Eileen"
 default s_name = "Sayori"
 default m_name = "Monika"
 default n_name = "Natsuki"
@@ -1379,6 +1395,8 @@ default y_name = "Yuri"
 # Poem Variables
 # This is how much each character likes your poem day by day
 # -1 - Bad, 0 - Neutral, 1 - Good
+## To add a new poem person to the poem and their like status
+# default e_poemappeal = [0, 0, 0]
 default n_poemappeal = [0, 0, 0]
 default s_poemappeal = [0, 0, 0]
 default y_poemappeal = [0, 0, 0]
