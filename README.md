@@ -2,6 +2,8 @@
 
 The DDLC Mod Template 2.0 is a Mod Template for Doki Doki Literature Club by GanstaKingofSA that adhere to the [Team Salvato IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
 
+Please note that any DDLC Mod Template is meant for DDLC fan games and mods that still use DDLC assets per Team Salvato's IP Guidelines. This template is not meant for any other projects that does not use them, or code to be copied to your non-DDLC project. Most code in this template are the Intellectual Property of Dan Salvato LLC i.e. Team Salvato and may not be copied to non-DDLC fan projects or mods.
+
 ### Getting Started
 Follow these steps to set up the template.
 
