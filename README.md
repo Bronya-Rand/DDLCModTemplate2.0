@@ -2,7 +2,11 @@
 
 The DDLC Mod Template 2.0 is a Mod Template for Doki Doki Literature Club by GanstaKingofSA that adhere to the [Team Salvato IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
 
+<<<<<<< HEAD
 **Please note that any DDLC Mod Template is meant for DDLC fan games and mods that still use DDLC assets as per Team Salvato's IP Guidelines. 
+=======
+**Please note that any DDLC Mod Template is meant for DDLC fan games and mods that still use DDLC assets per Team Salvato's IP Guidelines. 
+>>>>>>> bf10887cd93c750600c486e9c9e86e925f39b7b6
 This template is not meant for any other projects that does not use them, or code to be copied to your non-DDLC project. 
 Most code in this template are the Intellectual Property of Dan Salvato LLC i.e. Team Salvato and may not be copied to non-DDLC fan projects or mods.**
 
@@ -12,7 +16,11 @@ Follow these steps to set up the template.
 1. Download and run the [Ren'Py 6.99.12 SDK](https://www.renpy.org/release/6.99.12). **(NOTE: DDLC does not work with newer Ren'Py versions unless upgraded)**
 2. Go to releases to download the [latest build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) of the template.
 3. Place the files inside a folder (preferrably your mod name or `game`) where you extracted Ren'Py to inside of `renpy-6.99.12.4-sdk`.
+<<<<<<< HEAD
 4. Download the DDLC files, available for free at http://ddlc.moe or Steam & drop the `audio.rpa`, `images.rpa`, `fonts.rpa`, and `scripts.rpa` files inside the ZIP under DDLC-1.1.1-pc/game into the /game directory of where you made your template folder.
+=======
+4. Download the DDLC files, available for free at http://ddlc.moe or Steam & drop the `audio.rpa`, `images.rpa`, and `fonts.rpa` files inside the ZIP under DDLC-1.1.1-pc/game into the /game directory of where you made your template folder. (Do **not** include the `scripts.rpa` file, as this will create conflicts for now.)
+>>>>>>> bf10887cd93c750600c486e9c9e86e925f39b7b6
 5. Launch the project in Ren'Py. It should compile & run.
 6. Navigate the Ren'Py menu & select "Build Distributions." Check "Ren'Py 6 DDLC Compliant Mod" and build the mod. This will create a cross-platform .ZIP file with files for the mod & installation instructions.
 
