@@ -11,7 +11,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.2.4"
+define config.version = "2.3.0"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
@@ -159,10 +159,11 @@ init python:
     # Example: build.classify("game/randomtext.txt", None)
 
     # Code to Package your mod to a ZIP in Ren'Py
-    build.package(build.directory_name + "Mod",'zip',build.name,description='DDLC Compatible Mod')
+    build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compatible Mod")
+    build.package(build.directory_name + "Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compatible Mod")
 
-    build.archive("scripts", build.name)
-    build.archive("mod_assets", build.name)
+    build.archive("scripts", 'mod')
+    build.archive("mod_assets", 'mod')
 
     build.classify("game/mod_assets/**", "mod_assets")
     build.classify("game/**.rpyc", "scripts")
@@ -185,7 +186,7 @@ init python:
     build.classify('/game/10', None)
     build.classify('/game/cache/*.*', None)
     build.classify('**.rpa',None)
-    build.classify('README.html',build.name)
+    build.classify('README.html','mod')
 
     # Set's README.html as documentation
     build.documentation('README.html')
@@ -195,4 +196,4 @@ init python:
     #Advanced Addons
 
     # Doki Doki Mod Manager metadata file
-    build.classify('ddmm-mod.json',build.name)
+    build.classify('ddmm-mod.json','mod')
