@@ -1,6 +1,6 @@
 # Welcome to the New Modification Club!
 
-The DDLC Mod Template 2.0 is a Mod Template for Doki Doki Literature Club by GanstaKingofSA that adhere to the [Team Salvato IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
+The **new** DDLC Mod Template is a Mod Template for Doki Doki Literature Club by GanstaKingofSA that adhere to the [Team Salvato IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
 
 **Please note that any DDLC Mod Template is meant for DDLC fan games and mods that still use DDLC assets as per Team Salvato's IP Guidelines. 
 This template is not meant for any other projects that does not use them, or code to be copied to your non-DDLC project. 
@@ -20,7 +20,7 @@ Follow these steps to set up the template.
 1. Download and run the [Ren'Py 7.3.5 SDK](https://www.renpy.org/release/7.3.5) **(NOTE: Any files built in this version is incompatible with Ren'Py 6)**
 2. Go to releases to download the [latest build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) of the template.
 3. Place the files inside a folder (preferrably your mod name or `game`) where you extracted Ren'Py to inside of `renpy-7.3.5-sdk`.
-4. Download the DDLC files, available for free at http://ddlc.moe or Steam & drop the `audio.rpa`, `images.rpa`, `fonts.rpa`, and `scripts.rpa` files inside the ZIP under DDLC-1.1.1-pc/game into the /game directory of where you made your template folder.
+4. Download the DDLC files, available for free at http://ddlc.moe or Steam & drop the `audio.rpa`, `images.rpa`, & `fonts.rpa` files inside the ZIP under DDLC-1.1.1-pc/game into the /game directory of where you made your template folder. **(NOTE: `scripts.rpa` must be deleted or your mod may not load properly)**
 5. Launch the project in Ren'Py. It should compile & run.
 6. Navigate the Ren'Py menu & select "Build Distributions." Check "Ren'Py 7 DDLC Compliant Mod" and build the mod. This will create a cross-platform .ZIP file with files for the mod & installation instructions.
 7. Please add this install snipbit to your post for others to install your mod to DDLC properly. This is a example for a example mod named DDLC MAS:R.
@@ -33,9 +33,9 @@ Follow these steps to set up the template.
 3. Splash Screen on First Load. This adheres to the Team Salvato guidelines for creating fan mods of the game.
 4. Remastered RPY's to be exact replicas of DDLC's with explainations.
 5. Customizable! Use this as a starting point for any ideas you wish to create.
-6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening Ren'Py Launcher ever again! 
+6. MacOS/OS X and Linux `.app` and `.sh` support
+7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening Ren'Py Launcher ever again! 
 > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-7. MacOS/OS X and Linux `.app` and `.sh` support
 
 ### Added Features
 1. Terra's In-Depth Poem Game Guide!
@@ -53,4 +53,4 @@ Follow these steps to set up the template.
 4. Remastered `splash.rpy` to be a exact replica of DDLC's Splash Screen and more!
 5. Poem Responses! (Doki's respond to your custom poems!)
 
-This template is included with [DDMMaker](https://github.com/GanstaKingofSA/DDLC-ModMaker/releases), a Ren'Py SDK Mod to build DDLC Mods only.
+This template is included with [DDMMaker](https://github.com/GanstaKingofSA/DDLC-ModMaker/releases), a Ren'Py SDK to build only DDLC mods.
