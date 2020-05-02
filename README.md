@@ -23,8 +23,8 @@ Follow these steps to set up the template.
 4. Download the DDLC files, available for free at http://ddlc.moe or Steam & drop the `audio.rpa`, `images.rpa`, `fonts.rpa`, and `scripts.rpa` files inside the ZIP under DDLC-1.1.1-pc/game into the /game directory of where you made your template folder.
 5. Launch the project in Ren'Py. It should compile & run.
 6. Navigate the Ren'Py menu & select "Build Distributions." Check "Ren'Py 7 DDLC Compliant Mod" and build the mod. This will create a cross-platform .ZIP file with files for the mod & installation instructions.
-7. Please add this install snipbit to your post for others to install your mod to DDLC properly. This is a example.
-> To install DDLC MASR, copy all the files inside of the zip file to the game folder.
+7. Please add this install snipbit to your post for others to install your mod to DDLC properly. This is a example for a example mod named DDLC MAS:R.
+> To install DDLC MASR, copy all the files inside of the zip file to the folder that contains DDLC.exe.
 > If it asks you to replace any files, please replace and run the mod via DDLCMASR.exe instead of DDLC.exe
 
 ### Template Features
