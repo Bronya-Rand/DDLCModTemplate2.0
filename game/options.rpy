@@ -159,8 +159,8 @@ init python:
     # Example: build.classify("game/randomtext.txt", None)
 
     # Code to Package your mod to a ZIP in Ren'Py
-    build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compatible Mod")
-    build.package(build.directory_name + "Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compatible Mod")
+    build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compliant Mod")
+    build.package(build.directory_name + "Renpy7Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
 
     build.archive("scripts", 'mod')
     build.archive("mod_assets", 'mod')
