@@ -50,10 +50,9 @@ screen tutorial_choice(items):
     style_prefix "tutorial"
     fixed:
         area (125, 40, 600, 450)
-        bar adjustment adj style "vscrollbar" xalign -0.05
 
-        viewport:
-            yadjustment adj
+        viewport id "tu":
+            #yadjustment adj
             mousewheel True
             has vbox
 
@@ -63,6 +62,7 @@ screen tutorial_choice(items):
 
             null height 20
             textbutton _("That's enough for now.") action Return(False)
+        vbar value YScrollValue(viewport="tu") style "vscrollbar" xalign -0.05
 
 label tutorial_selection:
     stop music fadeout 2.0
