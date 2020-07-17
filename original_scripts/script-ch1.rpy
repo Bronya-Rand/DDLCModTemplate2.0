@@ -800,4 +800,4 @@ label ch1_end_sayori:
     "Such a genuine person really does make a good President, regardless of what she says."
     "If only I could get the chance to talk to her a little more..."
     return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
+

@@ -1,5 +1,0 @@
-label Chapter1:
-    stop fadeout 2.0
-    play music t2
-    mc "Let's listen to the music."
-    return
