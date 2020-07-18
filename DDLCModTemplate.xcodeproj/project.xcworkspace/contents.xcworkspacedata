@@ -45,9 +45,6 @@
          location = "group:natsuki.chr">
       </FileRef>
       <FileRef
-         location = "group:tutorials.rpy">
-      </FileRef>
-      <FileRef
          location = "group:cgs.rpy">
       </FileRef>
       <FileRef
@@ -58,9 +55,6 @@
       </FileRef>
       <FileRef
          location = "group:effects.rpy">
-      </FileRef>
-      <FileRef
-         location = "group:script-example.rpy">
       </FileRef>
       <Group
          location = "group:python-packages"
@@ -97,20 +91,6 @@
       <FileRef
          location = "group:script-poemgame.rpy">
       </FileRef>
-      <Group
-         location = "group:gui"
-         name = "gui">
-         <Group
-            location = "group:button"
-            name = "button">
-            <FileRef
-               location = "group:tutorial_hover_background.png">
-            </FileRef>
-            <FileRef
-               location = "group:tutorial_idle_background.png">
-            </FileRef>
-         </Group>
-      </Group>
       <FileRef
          location = "group:README.txt">
       </FileRef>
