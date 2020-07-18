@@ -11,7 +11,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.3.0"
+define config.version = "2.3.1"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
@@ -154,6 +154,7 @@ init python:
     # '/' this is a directory seperator
     # game/**.rpyc tells Ren'Py to grab all .rpyc's in the 'game' folder
     # **.psd matches all .psd's in the mod project.
+    # game/mod_assets/** tells Ren'Py to grab all the files inside mod_assets
     #
     # If you don't want a file to be added to your RPA, classify it as None
     # Example: build.classify("game/randomtext.txt", None)
@@ -194,7 +195,10 @@ init python:
 
     build.include_old_themes = False
 
-    #Advanced Addons
+    # Advanced Addons
+    # This section is for advanced build classifications to your mod that
+    # can be added to your mod. Note DDLC runs as normal and doesn't require this.
+    # This is either for compatibility issues or added features.
 
     # Doki Doki Mod Manager metadata file
     build.classify('ddmm-mod.json','mod')

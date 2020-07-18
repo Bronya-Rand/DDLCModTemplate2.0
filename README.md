@@ -6,7 +6,7 @@ The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by
 It is not meant for projects that does not use them, or code to be copied to your non-DDLC project. 
 Most code in this template are the IP of Team Salvato and may not be copied to non-DDLC fan projects or mods.**
 
-For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**.
+> For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**. **Only available after Version 2.3.0**
 ### Getting Started for Beginners (Ren'Py 6)
 Follow these steps to set up the template.
 
