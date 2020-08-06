@@ -23,7 +23,7 @@ Follow these steps to set up the template for Ren'Py 7.
 1. Download and run the [Ren'Py 7.3.5 SDK](https://www.renpy.org/release/7.3.5) **(NOTE: Any files built in this version is incompatible with Ren'Py 6)**
 2. Go to releases to download the [latest build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) of the template.
 3. Place the files inside a folder (preferrably your mod name or `game`) where you extracted Ren'Py to inside of `renpy-7.3.5-sdk`.
-4. Download the DDLC files, available for free at http://ddlc.moe or Steam & paste `audio.rpa`, `images.rpa`, and `fonts.rpa`, inside the ZIP under DDLC-1.1.1-pc/game or Doki Doki Literature Club/game (Steam) into the /game directory of where you made your template folder. **(NOTE: `scripts.rpa` must be deleted or your mod may not load properly)**
+4. Download the DDLC files, available for free at http://ddlc.moe or Steam & paste `audio.rpa`, `images.rpa`, `fonts.rpa`, and `scripts.rpa` inside the ZIP under DDLC-1.1.1-pc/game or Doki Doki Literature Club/game (Steam) into the /game directory of where you made your template folder.
 5. Launch the project in Ren'Py. It should launch the game.
 6. Once you finished writing your script, navigate the Ren'Py menu & select "Build Distributions." Uncheck all and check "Ren'Py 7 DDLC Compliant Mod" and build the mod. This will create a cross-platform .ZIP file with files for your mod.
 
