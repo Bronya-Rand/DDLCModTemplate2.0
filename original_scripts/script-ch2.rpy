@@ -936,4 +936,4 @@ label ch2_end_shared:
     "But if there's something that makes her happy, I would hate to take that away from her."
     "That's why I said there's no point in speculating."
     return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
+

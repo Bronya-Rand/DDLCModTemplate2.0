@@ -579,4 +579,4 @@ label yuri_exclusive_2_ch3:
     "In the end, we hastily clean up without so much as a word between us."
     "I get the feeling this is something neither of us will have the courage to bring up..."
     return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
+

@@ -1,24 +1,22 @@
 ## Splash.rpy
 
 init -100 python:
-
     # Checks to see if all of DDLC's files are inside
     # You may remove 'scripts' if you recieve conflict with scripts.rpa
     for archive in ['audio','images','fonts']:
         if archive not in config.archives:
             renpy.error("DDLC archive files not found in /game folder. Check your installation and try again.")
 
-# disclaimers
+# Splash Message
 init python:
     menu_trans_time = 1
-
+    # Default message everyone sees in the game
     splash_message_default = "This game is an unofficial fan game, unaffiliated with Team Salvato."
-
+    # Used sometimes to change splash messages if called upon
     splash_messages = [
         "Please support Doki Doki Literature Club.",
         "Monika is watching you code."
     ]
-
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
 
@@ -238,7 +236,7 @@ image tos2 = "bg/warning2.png"
 # Startup Disclaimer
 
 label splashscreen:
-
+    # Grabs current username of the PC on Windows
     python:
         process_list = []
         currentuser = ""
@@ -258,11 +256,6 @@ label splashscreen:
 
     python:
         firstrun = ""
-        #try:
-            #firstrun = renpy.file("firstrun").read(1)
-        #except:
-            #with open(config.basedir + "/game/firstrun", "wb") as f:
-                #pass
 
     if not firstrun:
         if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
@@ -302,9 +295,11 @@ label splashscreen:
         scene tos
         with Dissolve(1.0)
         pause 1.0
+        # You can edit this message but you MUST have say it's not affiliated with Team Salvato
+        # must finish the official game and has spoilers, and where to get DDLC from."
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
-        "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: http://ddlc.moe or on Steam."
+        "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: https://ddlc.moe or on Steam."
         menu:
             "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
             "I agree.":
@@ -317,7 +312,8 @@ label splashscreen:
 
         $ persistent.first_run = True
 
-    ## Controls where Sayori Kill Early Starts Up
+    ## Controls where Sayori Kill Early Starts Up.
+    ## Commented out for mod safety reasons.
     # python:
     #     s_kill_early = None
     #     if persistent.playthrough == 0:
@@ -357,6 +353,7 @@ label splashscreen:
 
     $ config.allow_skipping = False
 
+    ## Shows the ghost menu if the user is lucky to roll it
     if persistent.playthrough == 2 and not persistent.seen_ghost_menu and renpy.random.randint(0, 63) == 0:
         show black
         $ config.main_menu_music = audio.ghostmenu
@@ -369,6 +366,8 @@ label splashscreen:
         $ config.allow_skipping = True
         return
 
+    ## Commented out for mod safety reasons.
+    ## Sayori Early Death Easter Egg
     # if s_kill_early:
     #     show black
     #     play music "bgm/s_kill_early.ogg"
@@ -445,8 +444,9 @@ label warningscreen:
     show warning
     pause 3.0
 
-## If Sayori.chr is deleted, this would play
+## If Monika.chr is deleted, this would play instead of the regular Chapter 1
 ## From Script-CH0.rpy
+## Commented out for mod safety reasons.
 # label ch0_kill:
 #     $ s_name = "Sayori"
 #     show sayori 1b zorder 2 at t11
@@ -472,6 +472,7 @@ label warningscreen:
 #     $ renpy.quit()
 #     return
 
+# Checks if Afterload is the same as the anticheat
 label after_load:
     $ config.allow_skipping = allow_skipping
     $ _dismiss_pause = config.developer
@@ -487,6 +488,7 @@ label after_load:
         $ renpy.utter_restart()
     return
 
+# Autoreloads the game 
 label autoload:
     python:
         if "_old_game_menu_screen" in globals():
@@ -505,10 +507,12 @@ label autoload:
     $ renpy.pop_call()
     jump expression persistent.autoload
 
+# starts the menu music once started
 label before_main_menu:
     $ config.main_menu_music = audio.t1
     return
 
+# Basic Quit.
 label quit:
     if persistent.ghost_menu:
         hide screen main_menu

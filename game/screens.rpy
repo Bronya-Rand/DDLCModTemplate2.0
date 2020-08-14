@@ -1,9 +1,16 @@
 
+# Screens.rpy
+# This controls the layout of the UI of DDLC from the main menu
+# pause screen, textboxes, buttons, fonts, and more!
+
 ## Initialization
+################################################################################
 
 init offset = -1
 
+################################################################################
 ## Styles
+################################################################################
 
 style default:
     font gui.default_font
@@ -84,10 +91,10 @@ style prompt_text is gui_text:
     size gui.interface_text_size
 
 
-# style bar:
-#     ysize gui.bar_size
-#     left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-#     right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
+#style bar:
+#    ysize gui.bar_size
+#    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
+#    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
 
 style vbar:
     xsize gui.bar_size
@@ -113,10 +120,10 @@ style vscrollbar:
     unscrollable "hide"
     bar_invert True
 
-# style vscrollbar:
-#     xsize gui.scrollbar_size
-#     base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-#     thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+#style vscrollbar:
+#    xsize gui.scrollbar_size
+#    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+#    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
 
 style slider:
     ysize 18
@@ -133,19 +140,22 @@ style frame:
     padding gui.frame_borders.padding
     background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
-## In-Game Screens
+################################################################################
+## In-game screens
+################################################################################
 
-# Say Screen
 
-# This screen is used to show dialogue to the player.
-# It takes two variables 'who' and 'what', where 'who' is the
-# character speaking and 'what' the text they are saying.
-# (Who can be set to None if no name is given)
-
-# This screen must create a text displayable with id "what", as Ren'Py uses
-# this to manage text display. It can also create displayables with id "who"
-# and id "window" to apply style properties.
-
+## Say screen ##################################################################
+##
+## The say screen is used to display dialogue to the player. It takes two
+## parameters, who and what, which are the name of the speaking character and
+## the text to be displayed, respectively. (The who parameter can be None if no
+## name is given.)
+##
+## This screen must create a text displayable with id "what", as Ren'Py uses
+## this to manage text display. It can also create displayables with id "who"
+## and id "window" to apply style properties.
+##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
 screen say(who, what):
@@ -168,6 +178,7 @@ screen say(who, what):
         add SideImage() xalign 0.0 yalign 1.0
 
     use quick_menu
+
 
 style window is default
 style say_label is default
@@ -248,12 +259,9 @@ screen input(prompt):
     window:
 
         vbox:
-#            xpos gui.text_xpos
-#            xanchor 0.5
-#            ypos gui.text_ypos
-            xalign 0.5
-            yalign 0.5
-            spacing 30
+            xpos gui.text_xpos
+            xanchor 0.5
+            ypos gui.text_ypos
 
             text prompt style "input_prompt"
             input id "input"
@@ -328,7 +336,7 @@ screen rigged_choice(items):
     vbox:
         for i in items:
             textbutton i.caption action i.action
-
+    
     timer 1.0/30.0 repeat True action Function(RigMouse)
 
 
@@ -467,7 +475,7 @@ screen navigation():
             if renpy.variant("pc"):
 
                 ## Help isn't necessary or relevant to mobile devices.
-                textbutton _("Help") action Help("README.html")
+                textbutton _("Help") action [Help("README.html"), Show(screen="dialog", message="The help file has been opened in your browser.", ok_action=Hide("dialog"))]
 
                 ## The quit button is banned on iOS and unnecessary on Android.
                 textbutton _("Quit") action Quit(confirm=not main_menu)
@@ -507,19 +515,19 @@ screen main_menu():
     style_prefix "main_menu"
 
     if persistent.ghost_menu:
-         add "white"
-         add "menu_art_y_ghost"
-         add "menu_art_n_ghost"
+        add "white"
+        add "menu_art_y_ghost"
+        add "menu_art_n_ghost"
     else:
         add "menu_bg"
         add "menu_art_y"
         add "menu_art_n"
-    frame:
-        pass
+        frame:
+            pass
 
-## The use statement includes another screen inside this one. The actual
-## contents of the main menu are in the navigation screen.
-    use navigation
+        ## The use statement includes another screen inside this one. The actual
+        ## contents of the main menu are in the navigation screen.
+        use navigation
 
     if gui.show_name:
 
@@ -543,9 +551,9 @@ screen main_menu():
             add "menu_art_s_glitch"
         else:
             add "menu_art_s"
-    add "menu_particles"
-    if persistent.playthrough != 4:
-        add "menu_art_m"
+        add "menu_particles"
+        if persistent.playthrough != 4:
+            add "menu_art_m"
         add "menu_fade"
 
     key "K_ESCAPE" action Quit(confirm=False)
@@ -1103,6 +1111,7 @@ style slider_vbox:
 screen history():
     tag menu
     predict False
+
     use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport")):
         style_prefix "history"
         for h in _history_list:
@@ -1119,35 +1128,6 @@ screen history():
                     substitute False
         if not _history_list:
             label _("The dialogue history is empty.")
-
-python early:
-    import renpy.text.textsupport as textsupport
-    from renpy.text.textsupport import TAG, PARAGRAPH
-    def filter_text_tags(s, allow=None, deny=None):
-        if (allow is None) and (deny is None):
-            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
-        if (allow is not None) and (deny is not None):
-            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
-        tokens = textsupport.tokenize(unicode(s))
-        rv = [ ]
-        for tokentype, text in tokens:
-            if tokentype == PARAGRAPH:
-                rv.append("\n")
-            elif tokentype == TAG:
-                kind = text.partition("=")[0]
-                if kind and (kind[0] == "/"):
-                    kind = kind[1:]
-                if allow is not None:
-                    if kind in allow:
-                        rv.append("{" + text + "}")
-                else:
-                    if kind not in deny:
-                        rv.append("{" + text + "}")
-            else:
-                rv.append(text)
-        return "".join(rv)
-
-
 
 style history_window is empty
 

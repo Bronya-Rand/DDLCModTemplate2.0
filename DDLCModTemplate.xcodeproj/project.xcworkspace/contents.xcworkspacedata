@@ -1,7 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:../characters"
+      name = "characters">
+      <FileRef
+         location = "group:yuri.chr">
+      </FileRef>
+      <FileRef
+         location = "group:natsuki.chr">
+      </FileRef>
+      <FileRef
+         location = "group:sayori.chr">
+      </FileRef>
+      <FileRef
+         location = "group:monika.chr">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:../game"
+      name = "game">
+      <FileRef
+         location = "group:yuri.chr">
+      </FileRef>
+      <FileRef
+         location = "group:options.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:console.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:glitchtext.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-poemresponses.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:splash.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:natsuki.chr">
+      </FileRef>
+      <FileRef
+         location = "group:cgs.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:poemwords.txt">
+      </FileRef>
+      <FileRef
+         location = "group:definitions.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:effects.rpy">
+      </FileRef>
+      <Group
+         location = "group:python-packages"
+         name = "python-packages">
+         <FileRef
+            location = "group:singleton.py">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:credits.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:sayori.chr">
+      </FileRef>
+      <FileRef
+         location = "group:transforms.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <Group
+         location = "group:mod_assets"
+         name = "mod_assets">
+         <FileRef
+            location = "group:DDLCModTemplateLogo.png">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:screens.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:monika.chr">
+      </FileRef>
+      <FileRef
+         location = "group:script-poemgame.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:README.txt">
+      </FileRef>
+      <FileRef
+         location = "group:poems_special.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:poems.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:gui.rpy">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:../original_scripts"
+      name = "original_scripts">
+      <FileRef
+         location = "group:script-exclusives-natsuki.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-exclusives2-yuri.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch10.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch23.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-exclusives2-natsuki.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch22.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch20.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch21.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch30.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-exclusives-yuri.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch3.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch40.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch2.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch0.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch1.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch5.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-exclusives-sayori.rpy">
+      </FileRef>
+      <FileRef
+         location = "group:script-ch4.rpy">
+      </FileRef>
+   </Group>
    <FileRef
-      location = "self:DDLCModTemplate.xcodeproj">
+      location = "group:../README.html">
+   </FileRef>
+   <FileRef
+      location = "group:../README.md">
+   </FileRef>
+   <FileRef
+      location = "group:../XCODE.md">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

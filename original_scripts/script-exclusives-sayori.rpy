@@ -573,4 +573,4 @@ label sayori_exclusive_2:
     mc "Guess I should grab mine..."
     "After making sure the crayon box is closed tightly, I return to my seat."
     return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
+

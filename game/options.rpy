@@ -2,7 +2,7 @@
 
 # This is where you will name your mod!
 # Change "DDLC Mod Template 2.0" to your mod name (e.g. "Yuri")
-define config.name = "DDLC Mod Template 2.0"
+define config.name = "DDLC Mod Template Tutorial"
 
 # This controls whether you want your mod name to show in the main menu.
 # If your mod name is big, it is suggested to turn this off
@@ -11,7 +11,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.2.3"
+define config.version = "2.3.1"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
@@ -20,7 +20,7 @@ define gui.about = _("")
 # This is the name of your build that the Ren'Py SDK will read.
 # The build name is ASCII only so no numbers, spaces, or semicolons.
 # Example: Doki Doki Yuri Time to DokiDokiYuriTime
-define build.name = "DDLCModTemplateTwo"
+define build.name = "DDLCModTemplateTwoTutorial"
 
 # This configures whether your mod has sound effects (e.g. slap sound effects) or not.
 # It is best to leave this set to True default.
@@ -90,7 +90,7 @@ default preferences.sfx_volume = 0.75
 # Windows Directory for Saves: %AppData%/RenPy/
 # macOS Directory for Saves: $HOME/Library/RenPy/ (Un-hide the Library Folder)
 # Linux Directory for Saves $HOME/.renpy/
-define config.save_directory = "DDLCModTemplate2"
+define config.save_directory = "DDLCModTemplateTwoTutorial"
 
 # This controls the window logo of your mod.
 # By default this defaults to the DDLC Icon PNG.
@@ -140,9 +140,6 @@ init python:
         else:
             return (float(height) * (float(config.screen_width) / float(config.screen_height)), height)
 
-
-
-
 # Building Your Mod
 
 init python:
@@ -154,22 +151,24 @@ init python:
     # '/' this is a directory seperator
     # game/**.rpyc tells Ren'Py to grab all .rpyc's in the 'game' folder
     # **.psd matches all .psd's in the mod project.
+    # game/mod_assets/** tells Ren'Py to grab all the files inside mod_assets
     #
     # If you don't want a file to be added to your RPA, classify it as None
     # Example: build.classify("game/randomtext.txt", None)
 
     # Code to Package your mod to a ZIP in Ren'Py
-    build.package(build.directory_name + "Mod",'zip',build.name,description='DDLC Compatible Mod')
+    build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compliant Mod")
+    build.package(build.directory_name + "Renpy7Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
 
-    build.archive("scripts", build.name)
-    build.archive("mod_assets", build.name)
+    build.archive("scripts", 'mod')
+    build.archive("mod_assets", 'mod')
 
     build.classify("game/mod_assets/**", "mod_assets")
     build.classify("game/**.rpyc", "scripts")
     build.classify("game/README.txt", None)
     build.classify("game/**.txt", "scripts")
     build.classify("game/**.chr", "scripts")
-    build.classify("game/advanced_scripts/**","scripts")
+    build.classify("game/tutorial_route_answer/**", None)
 
     build.classify('**~', None)
     build.classify('**.bak', None)
@@ -185,14 +184,17 @@ init python:
     build.classify('/game/10', None)
     build.classify('/game/cache/*.*', None)
     build.classify('**.rpa',None)
-    build.classify('README.html',build.name)
+    build.classify('README.html','mod')
 
     # Set's README.html as documentation
     build.documentation('README.html')
 
     build.include_old_themes = False
 
-    #Advanced Addons
+    # Advanced Addons
+    # This section is for advanced build classifications to your mod that
+    # can be added to your mod. Note DDLC runs as normal and doesn't require this.
+    # This is either for compatibility issues or added features.
 
     # Doki Doki Mod Manager metadata file
-    build.classify('ddmm-mod.json',build.name)
+    build.classify('ddmm-mod.json','mod')
