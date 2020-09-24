@@ -962,6 +962,15 @@ screen preferences():
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
 
+                ## This sets the language mode for DDLC. Normally DDLC is only available in English
+                ## so I readded the Ren'Py Language folder back to the original game.
+                ## Remember to make a Translation in the Ren'Py SDK to translate and use this mode properly
+                #vbox:
+                #   style_prefix "radio"
+                #   label _("Language")
+                #   textbutton "English" action Language(None)
+                #   textbutton "Spanish" action Language("spanish")
+
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
 

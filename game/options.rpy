@@ -11,7 +11,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.3.1"
+define config.version = "2.3.2"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
@@ -119,7 +119,6 @@ define config.rollback_enabled = config.developer
 define config.menu_clear_layers = ["front"]
 define config.gl_test_image = "white"
 
-
 init python:
     if len(renpy.loadsave.location.locations) > 1: del(renpy.loadsave.location.locations[1])
     renpy.game.preferences.pad_enabled = False
@@ -168,6 +167,7 @@ init python:
     build.classify("game/README.txt", None)
     build.classify("game/**.txt", "scripts")
     build.classify("game/**.chr", "scripts")
+    build.classify("game/tl/**", "scripts") ## Translation Folder
     build.classify("game/tutorial_route_answer/**", None)
 
     build.classify('**~', None)
