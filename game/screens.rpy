@@ -959,15 +959,6 @@ screen preferences():
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
 
-                ## This sets the language mode for DDLC. Normally DDLC is only available in English
-                ## so I readded the Ren'Py Language folder back to the original game.
-                ## Remember to make a Translation in the Ren'Py SDK to translate and use this mode properly
-                # vbox:
-                #     style_prefix "radio"
-                #     label _("Language")
-                #     textbutton "English" action Language(None)
-                #     textbutton "Spanish" action Language("spanish")
-                
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
 
@@ -1134,7 +1125,35 @@ screen history():
                     substitute False
         if not _history_list:
             label _("The dialogue history is empty.")
+            
+python early:            
+    import renpy.text.textsupport as textsupport
+    from renpy.text.textsupport import TAG, PARAGRAPH
+    def filter_text_tags(s, allow=None, deny=None):
+        if (allow is None) and (deny is None):
+            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        if (allow is not None) and (deny is not None):
+            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        tokens = textsupport.tokenize(unicode(s))
+        rv = [ ]
+        for tokentype, text in tokens:
+            if tokentype == PARAGRAPH:
+                rv.append("\n")
+            elif tokentype == TAG:
+                kind = text.partition("=")[0]
+                if kind and (kind[0] == "/"):
+                    kind = kind[1:]
+                if allow is not None:
+                    if kind in allow:
+                        rv.append("{" + text + "}")
+                else:
+                    if kind not in deny:
+                        rv.append("{" + text + "}")
+            else:
+                rv.append(text)
+        return "".join(rv)
 
+       
 style history_window is empty
 
 style history_name is gui_label
