@@ -1126,7 +1126,7 @@ screen history():
         if not _history_list:
             label _("The dialogue history is empty.")
             
-python early:            
+python early:
     import renpy.text.textsupport as textsupport
     from renpy.text.textsupport import TAG, PARAGRAPH
     def filter_text_tags(s, allow=None, deny=None):
@@ -1152,8 +1152,7 @@ python early:
             else:
                 rv.append(text)
         return "".join(rv)
-
-       
+ 
 style history_window is empty
 
 style history_name is gui_label
