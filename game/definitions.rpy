@@ -1,8 +1,11 @@
 # Definitions.rpy
 
 # This section defines stuff for DDLC and your mod!
-
 # Use this as a starting point if you would like to override with your own.
+
+## Note: For Android, make sure to change the default package name of to 
+## your own package name in options.rpy under define package_name. 
+##Your package name is what you defined in Ren'Py Launcher in the Android section
 
 define persistent.demo = False
 define persistent.steam = ("steamapps" in config.basedir.lower())
@@ -35,19 +38,33 @@ init python:
     # Delete's Characters
     def delete_character(name):
         import os
-        try: os.remove(config.basedir + "/characters/" + name + ".chr")
-        except: pass
+        if renpy.android:
+            try: os.remove(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/") + name + ".chr")
+            except: pass
+        else:
+            try: os.remove(config.basedir + "/characters/" + name + ".chr")
+            except: pass
 
     # Restores Character's CHR
     def restore_all_characters():
-        try: renpy.file("../characters/monika.chr")
-        except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
-        try: renpy.file("../characters/natsuki.chr")
-        except: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
-        try: renpy.file("../characters/yuri.chr")
-        except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
-        try: renpy.file("../characters/sayori.chr")
-        except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
+        if renpy.android:
+            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/monika.chr"))
+            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/monika.chr"), "wb").write(renpy.file("monika.chr").read())
+            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/natsuki.chr"))
+            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/natsuki.chr"), "wb").write(renpy.file("natsuki.chr").read())
+            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/yuri.chr"))
+            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/yuri.chr"), "wb").write(renpy.file("yuri.chr").read())
+            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/sayori.chr"))
+            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/sayori.chr"), "wb").write(renpy.file("sayori.chr").read())
+        else:
+            try: renpy.file("../characters/monika.chr")
+            except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
+            try: renpy.file("../characters/natsuki.chr")
+            except: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
+            try: renpy.file("../characters/yuri.chr")
+            except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
+            try: renpy.file("../characters/sayori.chr")
+            except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
     
     # Restores Characters if their playthough matches current run.
     def restore_relevant_characters():

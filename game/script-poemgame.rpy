@@ -7,6 +7,14 @@
         #This is how we get the abrupt cut-in to the mini-game in Act 2.
 #Images are defined after the main poem game loop.
 
+## This checks whether we have a game folder setup in the Android/data/[your mod] folder
+init python:
+    if renpy.android: # checks if the platform is android
+        try:
+            if not os.access(os.path.realpath("/sdcard/Android/data/"+package_name+"/game/"), os.F_OK): # sees if game doesn't exist in Android/data/[your mod]
+                os.mkdir(os.path.realpath("/sdcard/Android/data/"+package_name) + "/game") # makes a game folder in your mod
+            file(os.path.realpath("/sdcard/Android/data/"+package_name+"/game/poemwords.txt")) # tries to open poemwords.txt if it's avaliable
+        except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/game/poemwords.txt"), "wb").write(renpy.file("poemwords.txt").read()) # writes poemwords to Android/data/[your mod]/game
 
 init python: #This whole block runs when DDLC is started (as opposed to when the poem minigame is called)
     import random
@@ -26,16 +34,28 @@ init python: #This whole block runs when DDLC is started (as opposed to when the
 
     # Building the word list
     full_wordlist = []
-    with renpy.file('poemwords.txt') as wordfile:
-        for line in wordfile:
-            # Ignore lines beginning with '#' and empty lines
-            line = line.strip()
+    if renpy.android:
+        with file(os.path.realpath("/sdcard/Android/data/"+package_name+"/game/poemwords.txt")) as wordfile:
+            for line in wordfile:
+                # Ignore lines beginning with '#' and empty lines
+                line = line.strip()
 
-            if line == '' or line[0] == '#': continue
+                if line == '' or line[0] == '#': continue
 
-            # File format: word,sPoint,nPoint,yPoint
-            x = line.split(',')
-            full_wordlist.append(PoemWord(x[0], float(x[1]), float(x[2]), float(x[3])))
+                # File format: word,sPoint,nPoint,yPoint
+                x = line.split(',')
+                full_wordlist.append(PoemWord(x[0], float(x[1]), float(x[2]), float(x[3])))
+    else:
+        with renpy.file("poemwords.txt") as wordfile:
+            for line in wordfile:
+                # Ignore lines beginning with '#' and empty lines
+                line = line.strip()
+
+                if line == '' or line[0] == '#': continue
+
+                # File format: word,sPoint,nPoint,yPoint
+                x = line.split(',')
+                full_wordlist.append(PoemWord(x[0], float(x[1]), float(x[2]), float(x[3])))
 
     seen_eyes_this_chapter = False
     sayoriTime = renpy.random.random() * 4 + 4

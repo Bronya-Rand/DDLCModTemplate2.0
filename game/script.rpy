@@ -1,7 +1,11 @@
 # Script.rpy
-
 # This is the main script that DDLC/Ren'Py calls upon to start
 # your mod's story! 
+
+# Imports stuff needed for the android build of DDLC
+init python:
+    if renpy.android:
+        import os
 
 label start:
 
@@ -20,10 +24,10 @@ label start:
     # Names of the Characters
     # To add a character -> $ mi_name = "Mike". Don't forget to
     # add them also in definitions.rpy!
-    $ s_name = "Sayori"
-    $ m_name = "Monika"
-    $ n_name = "Natsuki"
-    $ y_name = "Yuri"
+    $ s_name = "???"
+    $ m_name = "Girl 3"
+    $ n_name = "Girl 2"
+    $ y_name = "Girl 1"
 
     # Controls whether we have a menu in the textbox or not.
     $ quick_menu = True
@@ -45,6 +49,7 @@ label start:
         # '$ chapter = 0' controls the chapter number the game is on for the poem game.
         # 'call tutorial_selection' controls what label to call from in your script files
         # Make sure to change this when coding your mod, else your player will face a script error
+
         $ chapter = 0
         call ch0_main
 
@@ -75,13 +80,21 @@ label start:
         $ chapter = 4
         call ch4_main
 
-        # try: renpy.file(config.basedir + "/hxppy thxughts.png") checks if there is a file
+        ## try: renpy.file(config.basedir + "/hxppy thxughts.png") checks if there is a file
         # where DDLC.exe (.app/.sh for MacOS/Linux) called 'hxppy thxughts.png'
-        # except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+        ## except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
         # writes 'hxppy thxughts.png' to the main directory if not found.
         python:
-            try: renpy.file(config.basedir + "/hxppy thxughts.png")
-            except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+            if renpy.android:
+                # for android, the try and excepts must be formatted like so with this but replace
+                # hxppy thxughts.png with the file you want to write.
+                ## try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"))
+                ## except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+                try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"))
+                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+            else:
+                try: renpy.file(config.basedir + "/hxppy thxughts.png")
+                except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
         $ chapter = 5
         call ch5_main
 
@@ -106,8 +119,8 @@ label start:
 
             call poem
             python:
-                try: renpy.file(config.basedir + "/CAN YOU HEAR ME.txt")
-                except: open(config.basedir + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
+                try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/CAN YOU HEAR ME.txt"))
+                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/CAN YOU HEAR ME.txt"), "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
 
             $ chapter = 1
             call ch21_main
@@ -116,8 +129,8 @@ label start:
 
             call poem(False)
             python:
-                try: renpy.file(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
-                except: open(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
+                try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt"))
+                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/gamefiles/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt"), "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
 
             $ chapter = 2
             call ch22_main
