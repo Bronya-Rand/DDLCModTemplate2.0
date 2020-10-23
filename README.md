@@ -6,9 +6,9 @@ The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by
 It is not meant for projects that does not use them, or as code to be copied to your non-DDLC project. 
 Most code in this template are the IP of Team Salvato and may not be copied to non-DDLC fan projects or mods.**
 
-> For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**. Only available after Version **2.3.0**
+> For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**. Only available after Version **2.3.0** and tutorial builds may have a delay of being released after the version has come out.
 
-> Android Support is only supported on Version **2.4.0** and higher. Refer to *guide.pdf* for more information.
+> Android Support is only supported on Version **2.4.0** and higher. Refer to *guide.pdf* in the ZIP file for more information.
 
 ### Getting Started for Beginners (Ren'Py 6)
 
@@ -30,7 +30,7 @@ Follow these steps to set up the template for Ren'Py 7.
 6. Once you finished writing your script, navigate the Ren'Py menu & select "Build Distributions." Uncheck all and check "Ren'Py 7 DDLC Compliant Mod" and build the mod. This will create a cross-platform .ZIP file with files for your mod.
 
 ### Getting Started For Android Porting/Modding
-Refer to *guide.pdf* for more information but make sure of these key points.
+Refer to *guide.pdf* in your ZIP folder for more information but make sure of these key points.
 1. Make sure that your package name in Ren'Py Launcher is the same as the package name you will use in `options.rpy`. Example: If your package name is named `com.yuri.storm`, your package name in Ren'Py Launcher under Android -> Configure must be `com.yuri.storm` as well. 
 2. It is wise to only change `sdc` to your name and leave everything as is in `options.rpy` under `define package_name`. It will grab your mod name via `build.name` and `com` is common use in Android applications. i.e. `"com.sdc." + build.name.lower()` to `com.monika." + build.name.lower()`
 
