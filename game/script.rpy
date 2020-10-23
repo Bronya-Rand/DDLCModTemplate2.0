@@ -89,9 +89,9 @@ label start:
                 # for android, the try and excepts must be formatted like so with this but replace
                 # hxppy thxughts.png with the file you want to write.
                 ## try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"))
-                ## except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+                ## except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"), "wb").write(renpy.file("hxppy thxughts.png").read())
                 try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"))
-                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"), "wb").write(renpy.file("hxppy thxughts.png").read())
             else:
                 try: renpy.file(config.basedir + "/hxppy thxughts.png")
                 except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
@@ -130,7 +130,7 @@ label start:
             call poem(False)
             python:
                 try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt"))
-                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/gamefiles/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt"), "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
+                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt"), "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
 
             $ chapter = 2
             call ch22_main
