@@ -8,9 +8,9 @@ The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by
 It is not meant for projects that does not use them, or as code to be copied to your non-DDLC project. 
 Most code in this template are the IP of Team Salvato and may not be copied to non-DDLC fan projects or mods.**
 
-> For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**. Only available after Version **2.3.0** and tutorial builds may have a delay of being released after the version has come out.
+> For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**. Only available after version **2.3.0** and tutorial builds may have a delay of being released after the version has come out.
 
-> Android Support is only supported on Version **2.4.0** and higher. Refer to *guide.pdf* in the ZIP file for more information.
+> Android Support is only supported on Version **2.4.0** and higher. Refer to *guide.pdf* in the ZIP file for more information in those versions.
 
 ### Getting Started for Beginners (Ren'Py 6)
 
@@ -41,7 +41,7 @@ More information about Android is listed in the Wiki or *guide.pdf*.
 ### Template Features
 1. Build Packaging on Ren'Py 6 or 7!
 2. Splash Screen when your mod is launched for the first time.
-3. Remastered RPY's to be exact replicas of DDLC's with explainations.
+3. DDLC's exact RPY fiiles with explainations.
 4. Customizable! Use this as a starting point for any ideas you wish to create.
 5. MacOS/OS X and Linux `.app` and `.sh` support.
 6. Full Android Support! Yes, everything DDLC (except `[currentuser]`) will work under Android.
@@ -63,7 +63,7 @@ More information about Android is listed in the Wiki or *guide.pdf*.
 2. Sayori Kill Script (If you delete Sayori before the game starts a new game, new screen takes over)
 3. Monika Kill Script (If you delete Monika after the game loads the main menu and start a new game, a new script plays out)
 4. Special Poems! (Random Special Poems appear when prompted)
-5. Remastered `splash.rpy` and `screens.rpy` to be a exact replica of DDLC's.
+5. Exact `splash.rpy` and `screens.rpy` from DDLC.
 6. Poem Responses! (Doki's respond to your custom poems!)
 and more!
 
