@@ -92,9 +92,6 @@
          location = "group:script-poemgame.rpy">
       </FileRef>
       <FileRef
-         location = "group:README.txt">
-      </FileRef>
-      <FileRef
          location = "group:poems_special.rpy">
       </FileRef>
       <FileRef
@@ -161,6 +158,9 @@
       <FileRef
          location = "group:script-ch4.rpy">
       </FileRef>
+      <FileRef
+         location = "group:script-poemresponses2.rpy">
+      </FileRef>
    </Group>
    <FileRef
       location = "group:../README.html">
@@ -170,6 +170,9 @@
    </FileRef>
    <FileRef
       location = "group:../XCODE.md">
+   </FileRef>
+   <FileRef
+      location = "group:../guide.pdf">
    </FileRef>
    <FileRef
       location = "self:">
