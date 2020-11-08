@@ -1,7 +1,6 @@
 # Welcome to the New Modification Club!
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
-Donating is not required, but is appreciated for maintaining the mod template.
 
 The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
 
