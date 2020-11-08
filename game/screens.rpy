@@ -4,8 +4,13 @@
 
 init offset = -1
 
-
+## Color Styles
 ################################################################################
+
+# This controls the color of outlines in the game like
+# text, say, navigation, labels and such.
+define -2 text_outline_color = "#b59"
+
 ## Styles
 ################################################################################
 
@@ -213,7 +218,8 @@ style say_label:
     size gui.name_text_size
     xalign gui.name_xalign
     yalign 0.5
-    outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
+    outlines [(3, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)]
+    #outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
 
 style say_dialogue:
     xpos gui.text_xpos
@@ -493,7 +499,8 @@ style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
     font "gui/font/RifficFree-Bold.ttf"
     color "#fff"
-    outlines [(4, "#b59", 0, 0), (2, "#b59", 2, 2)]
+    outlines [(4, text_outline_color, 0, 0), (2, text_outline_color, 2, 2)]
+    #outlines [(4, "#b59", 0, 0), (2, "#b59", 2, 2)]
     hover_outlines [(4, "#fac", 0, 0), (2, "#fac", 2, 2)]
     insensitive_outlines [(4, "#fce", 0, 0), (2, "#fce", 2, 2)]
 
@@ -526,15 +533,6 @@ screen main_menu():
         ## contents of the main menu are in the navigation screen.
         use navigation
 
-    if gui.show_name:
-
-        vbox:
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
-
     if not persistent.ghost_menu:
         add "menu_particles"
         add "menu_particles"
@@ -552,6 +550,15 @@ screen main_menu():
         if persistent.playthrough != 4:
             add "menu_art_m"
         add "menu_fade"
+
+    if gui.show_name:
+
+        vbox:
+            text "[config.name!t]":
+                style "main_menu_title"
+
+            text "[config.version]":
+                style "main_menu_version"
 
     key "K_ESCAPE" action Quit(confirm=False)
 
@@ -717,7 +724,8 @@ style game_menu_label_text:
     font "gui/font/RifficFree-Bold.ttf"
     size gui.title_text_size
     color "#fff"
-    outlines [(6, "#b59", 0, 0), (3, "#b59", 2, 2)]
+    outlines [(6, text_outline_color, 0, 0), (3, text_outline_color, 2, 2)]
+    #outlines [(6, "#b59", 0, 0), (3, "#b59", 2, 2)]
     yalign 0.5
 
 style return_button:
@@ -1125,7 +1133,34 @@ screen history():
                     substitute False
         if not _history_list:
             label _("The dialogue history is empty.")
-
+            
+python early:
+    import renpy.text.textsupport as textsupport
+    from renpy.text.textsupport import TAG, PARAGRAPH
+    def filter_text_tags(s, allow=None, deny=None):
+        if (allow is None) and (deny is None):
+            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        if (allow is not None) and (deny is not None):
+            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        tokens = textsupport.tokenize(unicode(s))
+        rv = [ ]
+        for tokentype, text in tokens:
+            if tokentype == PARAGRAPH:
+                rv.append("\n")
+            elif tokentype == TAG:
+                kind = text.partition("=")[0]
+                if kind and (kind[0] == "/"):
+                    kind = kind[1:]
+                if allow is not None:
+                    if kind in allow:
+                        rv.append("{" + text + "}")
+                else:
+                    if kind not in deny:
+                        rv.append("{" + text + "}")
+            else:
+                rv.append(text)
+        return "".join(rv)
+ 
 style history_window is empty
 
 style history_name is gui_label

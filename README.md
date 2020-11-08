@@ -1,14 +1,18 @@
 # Welcome to the New Modification Club!
 
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
+
 The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
 
 **The DDLC Mod Template is meant for DDLC fan games and mods that use DDLC assets. 
-It is not meant for projects that does not use them, or code to be copied to your non-DDLC project. 
+It is not meant for projects that does not use them, or as code to be copied to your non-DDLC project. 
 Most code in this template are the IP of Team Salvato and may not be copied to non-DDLC fan projects or mods.**
 
-> For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**. **Only available after Version 2.3.0**
+> For a tutorial, download the packaged tutorial `DDLCModTemplate-2.X.X-Tutorial.zip` under **[Releases](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases)**. Only available after Version **2.3.0** and tutorial builds may have a delay of being released after the version has come out.
+
+> Android Support is only supported on Version **2.4.0** and higher. Refer to *guide.pdf* in the ZIP file for more information.
+
 ### Getting Started for Beginners (Ren'Py 6)
-Follow these steps to set up the template.
 
 1. Download and run the [Ren'Py 6.99.12 SDK](https://www.renpy.org/release/6.99.12). **(NOTE: DDLC does not work with newer Ren'Py versions unless upgraded, see below.)**
 2. Go to releases to download the [latest build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) of the template.
@@ -27,12 +31,21 @@ Follow these steps to set up the template for Ren'Py 7.
 5. Launch the project in Ren'Py. It should launch the game.
 6. Once you finished writing your script, navigate the Ren'Py menu & select "Build Distributions." Uncheck all and check "Ren'Py 7 DDLC Compliant Mod" and build the mod. This will create a cross-platform .ZIP file with files for your mod.
 
+### Getting Started For Android Porting/Modding
+Refer to *guide.pdf* in your ZIP folder for more information but make sure of these key points.
+1. Make sure that your package name in Ren'Py Launcher is the same as the package name you will use in `options.rpy`. Example: If your package name is named `com.yuri.storm`, your package name in Ren'Py Launcher under Android -> Configure must be `com.yuri.storm` as well. 
+2. It is wise to only change `sdc` to your name and leave everything as is in `options.rpy` under `define package_name`. It will grab your mod name via `build.name` and `com` is common use in Android applications. i.e. `"com.sdc." + build.name.lower()` to `com.monika." + build.name.lower()`
+
+More information about Android is listed in the Wiki or *guide.pdf*.
+
 ### Template Features
 1. Build Packaging on Ren'Py 6 or 7!
 2. Splash Screen when your mod is launched for the first time.
-4. Remastered RPY's to be exact replicas of DDLC's with explainations.
-5. Customizable! Use this as a starting point for any ideas you wish to create.
-6. MacOS/OS X and Linux `.app` and `.sh` support
+3. Remastered RPY's to be exact replicas of DDLC's with explainations.
+4. Customizable! Use this as a starting point for any ideas you wish to create.
+5. MacOS/OS X and Linux `.app` and `.sh` support.
+6. Full Android Support! Yes, everything DDLC (except `[currentuser]`) will work under Android.
+> Refer to *guide.pdf* for configuring your mod for Android.
 7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
 > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 
@@ -43,6 +56,7 @@ Follow these steps to set up the template for Ren'Py 7.
 4. Ren'Py 7 Mod Package Support!
 5. MacOS/OS X `.app` Building Support for Mac Users!
 6. Linux `.sh` Building Support for Linux Users!
+7. Android Support for porting mods or making mods under Android!
 
 ### Returned Features
 1. Ghost Menu (Dan's Spooky Easter Egg)
