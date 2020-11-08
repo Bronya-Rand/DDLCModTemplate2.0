@@ -219,6 +219,7 @@ style say_label:
     xalign gui.name_xalign
     yalign 0.5
     outlines [(3, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)]
+    #outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
 
 style say_dialogue:
     xpos gui.text_xpos
@@ -499,6 +500,7 @@ style navigation_button_text:
     font "gui/font/RifficFree-Bold.ttf"
     color "#fff"
     outlines [(4, text_outline_color, 0, 0), (2, text_outline_color, 2, 2)]
+    #outlines [(4, "#b59", 0, 0), (2, "#b59", 2, 2)]
     hover_outlines [(4, "#fac", 0, 0), (2, "#fac", 2, 2)]
     insensitive_outlines [(4, "#fce", 0, 0), (2, "#fce", 2, 2)]
 
@@ -531,15 +533,6 @@ screen main_menu():
         ## contents of the main menu are in the navigation screen.
         use navigation
 
-    if gui.show_name:
-
-        vbox:
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
-
     if not persistent.ghost_menu:
         add "menu_particles"
         add "menu_particles"
@@ -557,6 +550,15 @@ screen main_menu():
         if persistent.playthrough != 4:
             add "menu_art_m"
         add "menu_fade"
+
+    if gui.show_name:
+
+        vbox:
+            text "[config.name!t]":
+                style "main_menu_title"
+
+            text "[config.version]":
+                style "main_menu_version"
 
     key "K_ESCAPE" action Quit(confirm=False)
 
@@ -723,6 +725,7 @@ style game_menu_label_text:
     size gui.title_text_size
     color "#fff"
     outlines [(6, text_outline_color, 0, 0), (3, text_outline_color, 2, 2)]
+    #outlines [(6, "#b59", 0, 0), (3, "#b59", 2, 2)]
     yalign 0.5
 
 style return_button:
@@ -1057,7 +1060,7 @@ style pref_label_text:
     font "gui/font/RifficFree-Bold.ttf"
     size 24
     color "#fff"
-    outlines [(3, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)]
+    outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
     yalign 1.0
 
 style pref_vbox:
