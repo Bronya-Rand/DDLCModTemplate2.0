@@ -1,4 +1,6 @@
 # Options.rpy
+## This template version is 2.3.1. When asked to provide the template you are using,
+## give them this version number. DO NOT REMOVE OR CHANGE THIS.
 
 # This is where you will name your mod!
 # Change "DDLC Mod Template 2.0" to your mod name (e.g. "Yuri")
