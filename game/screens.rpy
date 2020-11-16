@@ -320,6 +320,8 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
+    idle_background Frame("gui/button/choice_idle_background.png", gui.choice_button_borders)
+    hover_background Frame("gui/button/choice_hover_background.png", gui.choice_button_borders)
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -363,6 +365,8 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
+    idle_background Frame("gui/button/choice_idle_background.png", gui.choice_button_borders)
+    hover_background Frame("gui/button/choice_hover_background.png", gui.choice_button_borders)
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -914,6 +918,8 @@ style page_button_text:
 
 style slot_button:
     properties gui.button_properties("slot_button")
+    idle_background Frame("gui/button/slot_idle_background.png", gui.choice_button_borders)
+    hover_background Frame("gui/button/slot_hover_background.png", gui.choice_button_borders)
 
 style slot_button_text:
     properties gui.button_text_properties("slot_button")
