@@ -1,5 +1,5 @@
-# Options.rpy
-## This template version is 2.3.1. When asked to provide the template you are using,
+﻿# Options.rpy
+## This template version is 2.3.1-u2. When asked to provide the template you are using,
 ## give them this version number. DO NOT REMOVE OR CHANGE THIS.
 
 # This is where you will name your mod!
@@ -121,7 +121,6 @@ define config.rollback_enabled = config.developer
 define config.menu_clear_layers = ["front"]
 define config.gl_test_image = "white"
 
-
 init python:
     if len(renpy.loadsave.location.locations) > 1: del(renpy.loadsave.location.locations[1])
     renpy.game.preferences.pad_enabled = False
@@ -142,31 +141,46 @@ init python:
         else:
             return (float(height) * (float(config.screen_width) / float(config.screen_height)), height)
 
-
-
-
-# Building Your Mod
+## Build configuration #########################################################
+##
+## This section controls how Ren'Py turns your project into distribution files.
 
 init python:
 
-    # This is where your mod gets built by Ren'Py!
-    # These are case-sensitive and matched against the actual filenames
-    # in your 'game' folder, with or without '/'
-    #
-    # '/' this is a directory seperator
-    # game/**.rpyc tells Ren'Py to grab all .rpyc's in the 'game' folder
-    # **.psd matches all .psd's in the mod project.
-    # game/mod_assets/** tells Ren'Py to grab all the files inside mod_assets
-    #
-    # If you don't want a file to be added to your RPA, classify it as None
-    # Example: build.classify("game/randomtext.txt", None)
+    ## The following functions take file patterns. File patterns are case-
+    ## insensitive, and matched against the path relative to the base directory,
+    ## with and without a leading /. If multiple patterns match, the first is
+    ## used.
+    ##
+    ## In a pattern:
+    ##
+    ## / is the directory separator.
+    ##
+    ## * matches all characters, except the directory separator.
+    ##
+    ## ** matches all characters, including the directory separator.
+    ##
+    ## For example, "*.txt" matches txt files in the base directory, "game/
+    ## **.ogg" matches ogg files in the game directory or any of its
+    ## subdirectories, and "**.psd" matches psd files anywhere in the project.
 
     # Code to Package your mod to a ZIP in Ren'Py
     build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compliant Mod")
-    build.package(build.directory_name + "Renpy7Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
+    build.package(build.directory_name + "Renpy7Mod",'zip','windows mac linux renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
 
     build.archive("scripts", 'mod')
     build.archive("mod_assets", 'mod')
+
+    ## Do not touch this. This is so Ren'Py can add the .sh file 
+    ## for Linux/Mac to run your mod
+    try:
+        build.renpy_patterns.remove((u'renpy.py', [u'all']))
+    except:
+        pass
+    build.classify_renpy("renpy.py", "renpy")
+
+    # To classify packages for both pc and android, make sure to add all to it like so
+    # Example: build.classify("game/**.pdf", "scripts all")
 
     build.classify("game/mod_assets/**", "mod_assets")
     build.classify("game/**.rpyc", "scripts")
@@ -189,7 +203,7 @@ init python:
     build.classify('script-regex.txt', None)
     build.classify('/game/10', None)
     build.classify('/game/cache/*.*', None)
-    build.classify('**.rpa',None)
+    build.classify('**.rpa', None)
     build.classify('README.html','mod')
 
     # Set's README.html as documentation
