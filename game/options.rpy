@@ -172,13 +172,22 @@ init python:
 
     # Code to Package your mod to a ZIP in Ren'Py
     build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compliant Mod")
-    build.package(build.directory_name + "Renpy7Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
+    build.package(build.directory_name + "Renpy7Mod",'zip','windows mac linux renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
 
     build.archive("scripts", 'mod')
     build.archive("mod_assets", 'mod')
 
+    ## Do not touch this. This is so Ren'Py can add the .sh file 
+    ## for Linux/Mac to run your mod
+    try:
+        build.renpy_patterns.remove((u'renpy.py', [u'all']))
+    except:
+        pass
+    build.classify_renpy("renpy.py", "renpy")
+
     # To classify packages for both pc and android, make sure to add all to it like so
     # Example: build.classify("game/**.pdf", "scripts all")
+    
     build.classify("game/mod_assets/**", "mod_assets all")
     build.classify("game/**.rpyc", "scripts all")
     build.classify("game/README.txt", None)
