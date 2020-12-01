@@ -1,6 +1,6 @@
 ﻿# Options.rpy
-## This template version is 2.4.1. When asked to provide the template you are using,
-## give them this version number. DO NOT REMOVE OR CHANGE THIS.
+## This template version is 2.4.2. When asked to provide the template you are using,
+## give them this version number. DO NOT REMOVE OR CHANGE THIS COMMENT.
    
 # This is where you will name your mod!
 # Change "DDLC Mod Template 2.0" to your mod name (e.g. "Yuri")
@@ -13,7 +13,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.4.1"
+define config.version = "2.4.2"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
@@ -210,7 +210,7 @@ init python:
     build.classify('script-regex.txt', None)
     build.classify('/game/10', None)
     build.classify('/game/cache/*.*', None)
-    build.classify('**.rpa',None)
+    build.classify('**.rpa', None)
     build.classify('README.html','mod all')
 
     # Set's README.html as documentation
