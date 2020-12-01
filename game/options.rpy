@@ -184,6 +184,8 @@ init python:
     except:
         pass
     build.classify_renpy("renpy.py", "renpy")
+    
+    #############################################################
 
     # To classify packages for both pc and android, make sure to add all to it like so
     # Example: build.classify("game/**.pdf", "scripts all")
