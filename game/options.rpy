@@ -183,7 +183,7 @@ init python:
         build.renpy_patterns.remove((u'renpy.py', [u'all']))
     except:
         pass
-    build.classify_renpy("renpy.py", "renpy")
+    build.classify_renpy("renpy.py", "renpy all")
     
     #############################################################
 
