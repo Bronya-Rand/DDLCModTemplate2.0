@@ -6,7 +6,10 @@
 init python:
     # Screen caps the current screen used by many functions
     def screenshot_srf():
-        srf = renpy.display.draw.screenshot(None, False)
+        if renpy.version_only(2) >= 4:
+            srf = renpy.display.draw.screenshot(None)
+        else:
+            srf = renpy.display.draw.screenshot(None, False)
         
         return srf
 
