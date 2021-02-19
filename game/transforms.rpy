@@ -275,6 +275,28 @@ transform l22:
 transform l11:
     leftin(640)
 
+# Makes the character fly in from the right
+transform r41:
+    rightin(200)
+transform r42:
+    rightin(493)
+transform r43:
+    rightin(786)
+transform r44:
+    rightin(1080)
+transform r31:
+    rightin(240)
+transform r32:
+    rightin(640)
+transform r33:
+    rightin(1040)
+transform r21:
+    rightin(400)
+transform r22:
+    rightin(880)
+transform r11:
+    rightin(640)
+
 # When MC opens his eyes to Sayori's face
 transform face(z=0.80, y=500):
     subpixel True
