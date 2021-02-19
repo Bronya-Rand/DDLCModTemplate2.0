@@ -1,5 +1,5 @@
 ﻿# Options.rpy
-## This template version is 2.4.4. When asked to provide the template you are using,
+## This template version is 2.4.4. When asked to provide the template version you are using,
 ## give them this version number. DO NOT REMOVE OR CHANGE THIS COMMENT.
    
 # This is where you will name your mod!
