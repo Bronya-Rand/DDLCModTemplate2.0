@@ -1,37 +1,26 @@
-## Welcome to GitHub Pages
+## Doki Doki Mod Template
 
-You can use the [editor on GitHub](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
+> This project is unafilliated with Team Salvato.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Features
+- Support for Ren'Py 6 or 7 Mod Building.
+- Team Salvato Compliant Splash Screen disclaimer when your mod is launched for the first time.
+- DDLC's exact RPY fiiles with explainations.
+- Customizable! Use this as a starting point for any ideas you wish to create.
+- MacOS/OS X and Linux `.app` and `.sh` support.
+- Full Android Support!
+  > Only available on Mod Template Versions 2.4.X or higher. Everything in DDLC (except `[currentuser]`) will work under Android. Refer to *guide.pdf* in the template's ZIP file to configure your mod for Android.
+- Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
+  > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode.
 
-### Markdown
+## Changes
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Version 2.4.4 (<u>Android Supported</u> Mod Template)
+- Added `rightin` transforms to `transforms.rpy`
+> Please read guide.pdf for Android building and such. Since 2.4.4 features a big update and this is a part of 2.4.0, old templates must be upgraded to better suit both Android and PC modding.
 
-```markdown
-Syntax highlighted code block
+Version 2.3.1 - Update 4 [2.3.1-u4] (<u>Non-Android Supported</u> Mod Template)
+- Added `rightin` transforms to `transforms.rpy`
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+For other version changes, refer to the [release](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) section of the DDLC Mod Template Github repository.
