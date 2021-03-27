@@ -1,4 +1,5 @@
 theme: jekyll-theme-slate
 layout: page
+show_downloads: true
 title: "Doki Doki Mod Template"
 description: "A new template for producing DDLC mods that adhere to Team Salvato's guidelines based off DDLC itself."
