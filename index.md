@@ -16,9 +16,10 @@ The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by
 
 ## Changes
 
-Version 2.4.4 (<u>Android Supported</u> Mod Template)
-- Added `rightin` transforms to `transforms.rpy`
-> Please read guide.pdf for Android building and such. Since 2.4.4 features a big update and this is a part of 2.4.0, old templates must be upgraded to better suit both Android and PC modding.
+Version 2.4.5 (<u>Android Supported</u> Mod Template)
+- Optimized Android code
+- Removed package_name in favor of environment variables.
+- Updated guide for 7.4.5.
 
 Version 2.3.1 - Update 4 [2.3.1-u4] (<u>Non-Android Supported</u> Mod Template)
 - Added `rightin` transforms to `transforms.rpy`
