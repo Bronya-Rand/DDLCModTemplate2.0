@@ -1,5 +1,5 @@
 ﻿# Options.rpy
-## This template version is 2.4.4. When asked to provide the template version you are using,
+## This template version is 2.4.5. When asked to provide the template version you are using,
 ## give them this version number. DO NOT REMOVE OR CHANGE THIS COMMENT.
    
 # This is where you will name your mod!
@@ -13,7 +13,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.4.4"
+define config.version = "2.4.5"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
@@ -23,12 +23,6 @@ define gui.about = _("")
 # The build name is ASCII only so no numbers, spaces, or semicolons.
 # Example: Doki Doki Yuri Time to DokiDokiYuriTime
 define build.name = "DDLCModTemplateTwo"
-
-# This is the package name of your build used to identify your app folder
-# for DDLC. Make sure this is the same as the package name defined when
-# you configured it in the Configure Tab within Android in Ren'Py Launcher.
-## All apps must follow com. but you can change sdc to your name.
-define package_name = "com.sdc." + build.name.lower() 
 
 # This configures whether your mod has sound effects (e.g. slap sound effects) or not.
 # It is best to leave this set to True default.
@@ -178,7 +172,7 @@ init python:
     build.archive("mod_assets", 'mod')
 
     ## Do not touch this. This is so Ren'Py can add the .sh file 
-    ## for Linux/Mac to run your mod
+    ## for Linux/Mac to run your mod.
     try:
         build.renpy_patterns.remove((u'renpy.py', [u'all']))
     except:
@@ -219,11 +213,3 @@ init python:
     build.documentation('README.html')
 
     build.include_old_themes = False
-
-    # Advanced Addons
-    # This section is for advanced build classifications to your mod that
-    # can be added to your mod. Note DDLC runs as normal and doesn't require this.
-    # This is either for compatibility issues or added features.
-
-    # Doki Doki Mod Manager metadata file
-    build.classify('ddmm-mod.json','mod')

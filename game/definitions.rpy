@@ -39,7 +39,7 @@ init python:
     def delete_character(name):
         import os
         if renpy.android:
-            try: os.remove(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/") + name + ".chr")
+            try: os.remove(os.environ['ANDROID_PUBLIC'] + "/characters/" + name + ".chr")
             except: pass
         else:
             try: os.remove(config.basedir + "/characters/" + name + ".chr")
@@ -48,14 +48,14 @@ init python:
     # Restores Character's CHR
     def restore_all_characters():
         if renpy.android:
-            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/monika.chr"))
-            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/monika.chr"), "wb").write(renpy.file("monika.chr").read())
-            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/natsuki.chr"))
-            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/natsuki.chr"), "wb").write(renpy.file("natsuki.chr").read())
-            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/yuri.chr"))
-            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/yuri.chr"), "wb").write(renpy.file("yuri.chr").read())
-            try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/sayori.chr"))
-            except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/sayori.chr"), "wb").write(renpy.file("sayori.chr").read())
+            try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/monika.chr")
+            except: open(os.environ['ANDROID_PUBLIC'] + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
+            try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr")
+            except: open(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
+            try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr")
+            except: open(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
+            try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr")
+            except: open(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
         else:
             try: renpy.file("../characters/monika.chr")
             except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())

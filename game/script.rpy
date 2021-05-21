@@ -2,11 +2,6 @@
 # This is the main script that DDLC/Ren'Py calls upon to start
 # your mod's story! 
 
-# Imports stuff needed for the android build of DDLC
-init python:
-    if renpy.android:
-        import os
-
 label start:
 
     # Configures your mod to use a ID to prevent users from cheating.
@@ -51,9 +46,6 @@ label start:
         # Make sure to change this when coding your mod, else your player will face a script error
 
         $ chapter = 0
-        call ch0_main
-
-        # 'call poem' calls the poemgame
         call poem
 
         # Day 1
@@ -86,12 +78,12 @@ label start:
         # writes 'hxppy thxughts.png' to the main directory if not found.
         python:
             if renpy.android:
-                # for android, the try and excepts must be formatted like so with this but replace
+                # For Android, the try and excepts must be formatted like so with this but replace
                 # hxppy thxughts.png with the file you want to write.
-                ## try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"))
-                ## except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"), "wb").write(renpy.file("hxppy thxughts.png").read())
-                try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"))
-                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/hxppy thxughts.png"), "wb").write(renpy.file("hxppy thxughts.png").read())
+                ## try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
+                ## except: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png"), "wb").write(renpy.file("hxppy thxughts.png").read())
+                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
+                except: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
             else:
                 try: renpy.file(config.basedir + "/hxppy thxughts.png")
                 except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
@@ -119,8 +111,12 @@ label start:
 
             call poem
             python:
-                try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/CAN YOU HEAR ME.txt"))
-                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/CAN YOU HEAR ME.txt"), "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
+                if renpy.android:
+                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
+                    except: open(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
+                else:
+                    try: renpy.file(config.basedir + "/CAN YOU HEAR ME.txt")
+                    except: open(config.basedir + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
 
             $ chapter = 1
             call ch21_main
@@ -129,8 +125,12 @@ label start:
 
             call poem(False)
             python:
-                try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt"))
-                except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt"), "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
+                if renpy.android:
+                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
+                    except: open(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
+                else:
+                    try: renpy.file(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
+                    except: open(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
 
             $ chapter = 2
             call ch22_main

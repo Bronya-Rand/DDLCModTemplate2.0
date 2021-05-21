@@ -217,19 +217,19 @@ init python:
         if renpy.android: #checks if the platform is android
             try:
                 # writes character files if missing and correct playthrough to Android/data/[your mod]/characters
-                if not os.access(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/"), os.F_OK):
-                    os.mkdir(os.path.realpath("/sdcard/Android/data/"+package_name+"") + "/characters")
+                if not os.access(os.environ['ANDROID_PUBLIC'] + "/characters/", os.F_OK):
+                    os.mkdir(os.environ['ANDROID_PUBLIC'] + "/characters")
                 if persistent.playthrough <= 2:
-                    try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/monika.chr"))
-                    except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"") + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
+                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/monika.chr")
+                    except: open(os.environ['ANDROID_PUBLIC'] +  "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
                 if persistent.playthrough <= 1 or persistent.playthrough == 4:
-                    try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/natsuki.chr"))
-                    except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"") + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
-                    try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/yuri.chr"))
-                    except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"") + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
+                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr")
+                    except: open(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
+                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr")
+                    except: open(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
                 if persistent.playthrough == 0 or persistent.playthrough == 4:
-                    try: file(os.path.realpath("/sdcard/Android/data/"+package_name+"/characters/sayori.chr"))
-                    except: open(os.path.realpath("/sdcard/Android/data/"+package_name+"") + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
+                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr")
+                    except: open(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
             except:
                 pass
         else:
