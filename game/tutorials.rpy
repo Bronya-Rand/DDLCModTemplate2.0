@@ -115,25 +115,34 @@ label tutorial_route_p1:
     m "Making a mod for the first time requires that you get a idea to type down."
     m "When you have the plot of your mod ready, it's time to add that to the game!"
     m "Let's do that right now."
+    if renpy_seven:
+        m 1c "Before we do, I am gonna state that since you are coding in Ren'Py 7, I am going to refer to it as 7.X.X."
+        m 3c "Since there are many Ren'Py 7 versions out there, this helps aleviate any confusion with what version to get."
+        m 2a "The X's just mean any number so it can be 7.3.5, 7.4.4, etc. I recommend that you get the latest version just in case."
+        m "Now back to the topic at hand."
     m "First of all, I suggest you get a coding application."
-    m "Editra...sucks and it can corrupt your mod files making you lose progress."
-    m "I recommend Visual Studio Code (VSC) to code your mod. It's available on Windows, Mac and Linux via {i}code.visualstudio.com/download{/i}."
-    m "Alternatively, if you want something on the go or lighter, you can use Notepad++ from {i}notepad-plus-plus.org/downloads/{/i}."
-    m "In this part, it is mostly VSC Based so you can skip if you are using Notepad++ or another coding app."
+    m 2n "Editra...sucks and it can corrupt your mod files making you lose progress."
+    m 2b "I recommend Visual Studio Code (VSC) to code your mod. It's available on Windows, Mac and Linux via {a=code.visualstudio.com/download}VSC's official site{/a}."
+    m "Alternatively, if you want something on the go or lighter, you can use Notepad++ from {a=notepad-plus-plus.org/downloads/}Notepad++'s own site{/a}."
+    m "Throughout this tutorial I am going to be using VSC so you can skip if you are using Notepad++ or another coding app."
     menu:
-        "Pick which coding program you will be using."
-        "Visual Studio Code":
+        m "So what is it going to be [player]?"
+        "Visual Studio Code (VSC)":
             $ persistent.vsc = True
             m "Alright then."
             m "Download Visual Studio Code and install it."
-            m "Once it's installed, launch it and find a box on the left bar."
-            m "Click it and search {i}Renpy{/i} and click the green install button below the result."
-            m "Afterwards, go to File, Open Folder, then go inside {i}renpy-6.99.12.4-sdk{/i} folder, then go inside your mod folder and click the {i}game{/i} folder once. Afterwards, click Open."
+            m "Once it's installed, launch it and find this box on the left-hand bar."
+            m "Click it and search {i}Renpy{/i} and click the Install button below the result."
+            m 2l "There may be 2 or more results that pop up but I recommend getting the the top result as that is what I use often."
+            if renpy_seven:
+                m "Afterwards, go to File, Open Folder, then go inside {i}renpy-7.X.X-sdk{/i} folder, then go inside your mod folder and click the {i}game{/i} folder once. Afterwards, click Open."
+            else:
+                m "Afterwards, go to File, Open Folder, then go inside {i}renpy-6.99.12.4-sdk{/i} folder, then go inside your mod folder and click the {i}game{/i} folder once. Afterwards, click Open."
         "Notepad++ or another program":
             $ persistent.vsc = False
             m "Alright then."
             m "Do note that you will have to access your mod folder from your chosen program."
-            m "Some may have it built in but go into the Ren'Py Launcher, select your mod name and click the game folder under Open Directory."
+            m "Some may have it built in but go into the Ren'Py Launcher, select your mod name and click the {i}game{/i} folder under Open Directory."
     m "Now you are inside your mod's game folder."
     m "Now let's make our first script!"
     if persistent.vsc:

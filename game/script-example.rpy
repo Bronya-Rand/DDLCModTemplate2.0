@@ -79,6 +79,7 @@ label example_chapter:
 
     default knows_python = False
     default knows_renpy = False
+    default renpy_seven = False
 
 
     menu:
@@ -171,7 +172,16 @@ label example_chapter:
             m 1k "Hopefully you'll find what you need to make your perfect game!"
 
     m 2b "Now that I know more about you and your project, we're really ready to get started!"
-    m "I've prepared a few lessons to help get you started!"
+    m 2l "Oh I almost forgot!"
+    menu:
+        m 2b "Are you planning to code your project on Ren'Py 7? If you don't know what that is, just stick with Ren'Py 6 for now."
+        "Ren'Py 6":
+            $ renpy_seven = False
+            m "Sticking with the original version. Got it!"
+        "Ren'Py 7":
+            $ renpy_seven = True
+            m "Alright. I'll have to format the lessons a small bit for that version."
+    m "I've prepared a few lessons to help get you started now!"
     m 2a "And when we're done, you'll have made your first mod."
 
     $ persistent.example_seen = True
@@ -179,4 +189,4 @@ label example_chapter:
     jump tutorial_selection
 
     return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
+
