@@ -525,7 +525,9 @@ label autoload:
         main_menu = False
         _in_replay = None
 
-    $ renpy.pop_call()
+        try: renpy.pop_call()
+        except: pass
+        
     jump expression persistent.autoload
 
 # starts the menu music once started
