@@ -7,7 +7,7 @@
 ## DO NOT MODIFY THIS FILE!
 
 label lockdown_check:
-    if renpy.version_tuple == (7, 4, 6):
+    if renpy.version_tuple == (7, 4, 6, 1693):
         scene black
         "{b}Warning:{/b} A recent bug was introduced with the release of \"Ren'Py 7.4.6\" that breaks DDLC transforms heavily."
         "Currently, there is no available fix for this issue. Due to this, the DDLC Mod Template has been disabled on this version of Ren'Py until further notice."
@@ -16,7 +16,7 @@ label lockdown_check:
         "Sorry for the modding inconvenience. Happy modding though!"
         $ renpy.quit()
 
-    if renpy.version_tuple > (7, 4, 5) and renpy.version_tuple != (7, 4, 6) and not lockdown_warning:
+    if renpy.version_tuple >= (7, 4, 5, 1621) and renpy.version_tuple != (7, 4, 6, 1693) and not lockdown_warning:
         scene black
         "{b}Warning:{/b} The DDLC Mod Template has detected that you are running the mod template under a version of Ren'Py that has not been tested on."
         "The last version of Ren'Py the mod template was tested on was \"Ren'Py 7.4.5\"."
