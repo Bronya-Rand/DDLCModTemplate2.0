@@ -273,13 +273,12 @@ label splashscreen:
                 "No, continue where I left off.":
                     $ restore_relevant_characters()
 
-        #python:
-            #if not firstrun:
-                #try:
-                    #with open(config.basedir + "/game/firstrun", "w") as f:
-                        #f.write("1")
-                #filepath = renpy.file("firstrun").name
-                #open(filepath, "a").close()
+    # Added this for 7.4.6 and to warn those on QA testing Ren'Py versions.
+    ## DO NOT MODIFY THESE THREE LINES.
+    default persistent.lockdown_warning = False
+
+    if not persistent.lockdown_warning:
+        call lockdown_check
 
     # Sets First Run to False to Show Disclaimer
     default persistent.first_run = False
@@ -504,7 +503,9 @@ label autoload:
         main_menu = False
         _in_replay = None
 
-    $ renpy.pop_call()
+        try: renpy.pop_call()
+        except: pass
+        
     jump expression persistent.autoload
 
 # starts the menu music once started
