@@ -2,7 +2,7 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-The **new** DDLC Mod Template is a mod template for the **original** Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods. The last version the template was tested and working on Ren'Py <u>7.4.5</u>. 
+The **new** DDLC Mod Template is a mod template for the **original** Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods. The last version the template was tested and working on Ren'Py <u>6.99.12.4</u> and <u>7.4.5</u>. 
 > This mod template will not work for Doki Doki Literature Club Plus. Development of a mod template for Doki Doki Literature Club Plus will take some time to be done if it's possible to mod the game.
 
 **The template is designed for Original DDLC fan games and mods that use DDLC assets. 
