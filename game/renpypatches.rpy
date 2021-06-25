@@ -7,3 +7,5 @@
 init -100 python:
     if renpy.version_tuple >= (7, 4, 6):
         import transformpatch
+        # Changes the path ATLTransform would normally go to the patched class.
+        renpy.display.motion.ATLTransform = transformpatch.ATLTransform
