@@ -15,8 +15,7 @@ label lockdown_check:
         "For now, if you want to mod DDLC in Ren'Py 7, you should mod under \"Ren'Py 7.4.5\" and wait until the template is tested on the latest version of Ren'Py from GanstaKingofSA."
         "Sorry for the modding inconvenience. Happy modding though!"
         $ renpy.quit()
-
-    if renpy.version_tuple >= (7, 4, 5, 1621) and renpy.version_tuple != (7, 4, 6, 1693) and not lockdown_warning:
+    elif renpy.version_tuple >= (7, 4, 5, 1621) and renpy.version_tuple != (7, 4, 6, 1693) and not persistent.lockdown_warning:
         scene black
         "{b}Warning:{/b} The DDLC Mod Template has detected that you are running the mod template under a version of Ren'Py that has not been tested on."
         "The last version of Ren'Py the mod template was tested on was \"Ren'Py 7.4.5\"."
@@ -24,7 +23,7 @@ label lockdown_check:
         menu:
             "By proceeding to mod DDLC under this version of Ren'Py, you agree that you have acknoledged this disclaimer and accept any possible bugs or errors that may be introduced."
             "I agree.":
-                $ lockdown_warning = True
+                $ persistent.lockdown_warning = True
                 "You have agreed to this disclaimer. You may now proceed to mod DDLC under this version of Ren'Py. Happy modding!"
                 return
             "I disagree.":
@@ -33,4 +32,6 @@ label lockdown_check:
                 "If you later decide to agree to the disclamer, you may run the Mod Template under this version again and agree to the disclaimer when asked."
                 "Sorry for the modding inconvenience. Happy modding though!"
                 $ renpy.quit()
+    else:
+        $ persistent.lockdown_warning = True
         return

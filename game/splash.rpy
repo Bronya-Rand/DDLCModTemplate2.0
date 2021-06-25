@@ -295,9 +295,11 @@ label splashscreen:
                     $ restore_relevant_characters()
 
     # Added this for 7.4.6 and to warn those on QA testing Ren'Py versions.
-    ## DO NOT MODIFY THESE TWO LINES.
-    default lockdown_warning = False
-    call lockdown_check
+    ## DO NOT MODIFY THESE THREE LINES.
+    default persistent.lockdown_warning = False
+
+    if not persistent.lockdown_warning:
+        call lockdown_check
 
     # Sets First Run to False to Show Disclaimer
     default persistent.first_run = False
