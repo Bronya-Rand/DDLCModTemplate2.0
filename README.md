@@ -15,7 +15,7 @@ Most code in this template are the IP of Team Salvato and may not be copied to n
 1. Download and run the [Ren'Py 6.99.12 SDK](https://www.renpy.org/release/6.99.12). 
     > DDLC does not work with newer Ren'Py versions unless it's upgraded. See **Getting Started for Advanced Users (Ren'Py 7)** for upgrading DDLC to Ren'Py 7.
 2. Go to releases to download the [latest build](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) of the template.
-3. Download DDLC from http://ddlc.moe or Steam & copy the *DDLC-1.1.1-pc* (`ddlc-mac` for <u>MacOS/OS X</u> or `Doki Doki Literature Club` for <u>Steam</u>) folder to the *renpy-6.99.12.4-sdk* folder. Rename the folder to your mod name.
+3. Download DDLC from [DDLC.moe](http://ddlc.moe) or Steam & copy the *DDLC-1.1.1-pc* (`ddlc-mac` for <u>MacOS/OS X</u> or `Doki Doki Literature Club` for <u>Steam</u>) folder to the *renpy-6.99.12.4-sdk* folder. Rename the folder to your mod name.
 4. Place the files withing the Mod Template's ZIP file into the DDLC folder you copied to. Accept any replaces if prompted. 
     > For MacOS/OS X, right click on `DDLC.app` within the *ddlc-mac* folder and click <u>Show Package Contents</u> then place the files within `Contents/Resources/autorun`. Accept any replaces if prompted. 
 5. Launch the project in Ren'Py. It should compile and launch the game.
