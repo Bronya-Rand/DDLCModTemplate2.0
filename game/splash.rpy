@@ -294,13 +294,10 @@ label splashscreen:
                 "No, continue where I left off.":
                     $ restore_relevant_characters()
 
-        #python:
-            #if not firstrun:
-                #try:
-                    #with open(config.basedir + "/game/firstrun", "w") as f:
-                        #f.write("1")
-                #filepath = renpy.file("firstrun").name
-                #open(filepath, "a").close()
+    # Added this for 7.4.6 and to warn those on QA testing Ren'Py versions.
+    ## DO NOT MODIFY THESE TWO LINES.
+    default lockdown_warning = False
+    call lockdown_check
 
     # Sets First Run to False to Show Disclaimer
     default persistent.first_run = False
