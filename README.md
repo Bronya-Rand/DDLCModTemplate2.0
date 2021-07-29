@@ -2,8 +2,12 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-The **new** DDLC Mod Template is a mod template for the **original** Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods. The last version the template was tested and working on Ren'Py <u>6.99.12.4</u> and <u>7.4.5</u>. 
-> This mod template will not work for Doki Doki Literature Club Plus. Development of a mod template for Doki Doki Literature Club Plus will take some time to be done if it's possible to mod the game.
+Latest Versions: [2.4.7 (Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.4.7) | [2.3.1-u6 (Non-Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u6)
+
+Supported on: Ren'Py <u>6.99.12.4</u> and Ren'Py <u>7.3.5 - 7.4.5</u>
+
+The **new** DDLC Mod Template is a mod template for the **original** Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
+> This mod template will not work for Doki Doki Literature Club Plus. It does not work on Ren'Py 7.4.6-7.4.7 due to a bug that breaks DDLC transforms heavily. For more information visit this Github issue [here](https://github.com/renpy/renpy/issues/2860).
 
 **The template is designed for Original DDLC fan games and mods that use DDLC assets. 
 It is not meant for projects that does not use them, or as code to be copied to your non-DDLC project. 
