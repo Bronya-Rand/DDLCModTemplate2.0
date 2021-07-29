@@ -46,6 +46,8 @@ label start:
         # Make sure to change this when coding your mod, else your player will face a script error
 
         $ chapter = 0
+        call ch0_main
+        
         call poem
 
         # Day 1
