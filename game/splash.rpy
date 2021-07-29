@@ -298,8 +298,11 @@ label splashscreen:
     ## DO NOT MODIFY THESE THREE LINES.
     default persistent.lockdown_warning = False
 
-    if not persistent.lockdown_warning:
-        call lockdown_check
+    if config.developer:
+        if not persistent.lockdown_warning:
+            call lockdown_check
+    else:
+        $ persistent.lockdown_warning = True
 
     # Sets First Run to False to Show Disclaimer
     default persistent.first_run = False
