@@ -7,7 +7,7 @@
 define persistent.demo = False
 define persistent.steam = ("steamapps" in config.basedir.lower())
 # Change this to True to enable Developer Mode
-define config.developer = False
+define config.developer = "auto"
 
 python early:
     import singleton
