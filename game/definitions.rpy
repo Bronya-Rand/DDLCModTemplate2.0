@@ -3,14 +3,10 @@
 # This section defines stuff for DDLC and your mod!
 # Use this as a starting point if you would like to override with your own.
 
-## Note: For Android, make sure to change the default package name of to 
-## your own package name in options.rpy under define package_name. 
-##Your package name is what you defined in Ren'Py Launcher in the Android section
-
 define persistent.demo = False
 define persistent.steam = ("steamapps" in config.basedir.lower())
 # Change this to True to enable Developer Mode
-define config.developer = False
+define config.developer = "auto"
 
 python early:
     import singleton
