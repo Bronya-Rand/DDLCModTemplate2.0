@@ -12,8 +12,8 @@ label start:
     # Controls what chapter the game starts for the poem game.
     $ chapter = 0
 
-    # This makes sure if the user quits during pause, 
-    # it is set to false after restarting the game. Precaution.
+    # Allows the player to dismiss or not based off config.developer 
+    # (located in definitions.rpy)
     $ _dismiss_pause = config.developer
 
     # Names of the Characters
