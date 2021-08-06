@@ -2,7 +2,7 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-Latest Versions: [2.4.7 (Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.4.7) | [2.3.1-u6 (Non-Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u6)
+Latest Versions: [2.4.8 (Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.4.8) | [2.3.1-u7 (Non-Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u7)
 
 Supported on: Ren'Py <u>6.99.12.4</u> and Ren'Py <u>7.3.5 - 7.4.5</u>
 
