@@ -253,25 +253,20 @@ label splashscreen:
             except:
                 pass
 
-
-    python:
-        firstrun = ""
-
-    if not firstrun:
-        if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
-            $ quick_menu = False
-            scene black
-            menu:
-                "A previous save file has been found. Would you like to delete your save data and start over?"
-                "Yes, delete my existing data.":
-                    "Deleting save data...{nw}"
-                    python:
-                        delete_all_saves()
-                        renpy.loadsave.location.unlink_persistent()
-                        renpy.persistent.should_save_persistent = False
-                        renpy.utter_restart()
-                "No, continue where I left off.":
-                    $ restore_relevant_characters()
+    if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
+        $ quick_menu = False
+        scene black
+        menu:
+            "A previous save file has been found. Would you like to delete your save data and start over?"
+            "Yes, delete my existing data.":
+                "Deleting save data...{nw}"
+                python:
+                    delete_all_saves()
+                    renpy.loadsave.location.unlink_persistent()
+                    renpy.persistent.should_save_persistent = False
+                    renpy.utter_restart()
+            "No, continue where I left off.":
+                $ restore_relevant_characters()
 
     # Added this for 7.4.6 and to warn those on QA testing Ren'Py versions.
     ## DO NOT MODIFY THESE THREE LINES.
