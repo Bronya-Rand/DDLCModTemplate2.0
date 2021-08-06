@@ -14,9 +14,9 @@ label lockdown_check:
     if renpy.version_tuple >= blacklisted_renpy_versions[0]:
         scene black
         "{b}Warning:{/b} A recent bug was introduced with the release of \"Ren'Py 7.4.6\" that breaks DDLC transforms heavily."
-        "This bug is semi-present still into Ren'Py 7.4.7 and higher."
-        "Currently, there is yet a fix to this issue. Due to this, the DDLC Mod Template has been disabled on this version of Ren'Py until further notice."
-        "For now, if you want to mod DDLC in Ren'Py 7, you should mod under {a=https://renpy.org/release/7.4.5}{i}Ren'Py 7.4.5{/i}{/a} and wait until the template is tested on the latest version of Ren'Py from GanstaKingofSA."
+        "This bug is semi-present still into Ren'Py 7.4.7 and higher with high uncertainty for future releases."
+        "Currently, there is yet no fix to this issue. Due to this, the DDLC Mod Template has been disabled on any Ren'Py version higher than 7.4.5."
+        "For now, if you want to mod DDLC in Ren'Py 7, you should mod under {a=https://renpy.org/release/7.4.5}{i}Ren'Py 7.4.5{/i}{/a} and wait until the issue is mitigated in a new release and is tested by GanstaKingofSA."
         "Sorry for the modding inconvenience. Happy modding though!"
         $ renpy.quit()
     # elif renpy.version_tuple >= (7, 4, 5, 1621) and renpy.version_tuple not in blacklisted_renpy_versions and not persistent.lockdown_warning:
