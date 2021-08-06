@@ -88,6 +88,12 @@ init python:
         renpy.pause(time)
         #_windows_hidden = False
 
+    # Assings the pronouns given to persistents for relaunch.
+    def finishPronoun():
+        if not pronoun1 and not pronoun2: return
+        persistent.pronoun1 = pronoun1
+        persistent.pronoun2 = pronoun2
+
 # Music
 
 # This section is where you can reference DDLC audio and add your own!
