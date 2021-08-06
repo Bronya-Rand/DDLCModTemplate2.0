@@ -8,10 +8,8 @@
 
 
 label lockdown_check:
-    python:
-        blacklisted_renpy_versions = [(7, 4, 6, 1693)]
 
-    if renpy.version_tuple >= blacklisted_renpy_versions[0]:
+    if renpy.version_tuple >= (7, 4, 6, 1693):
         scene black
         "{b}Warning:{/b} A recent bug was introduced with the release of \"Ren'Py 7.4.6\" that breaks DDLC transforms heavily."
         "This bug is semi-present still into Ren'Py 7.4.7 and higher with high uncertainty for future releases."
