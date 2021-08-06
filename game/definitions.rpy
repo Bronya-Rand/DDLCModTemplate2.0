@@ -1348,6 +1348,17 @@ define ny = Character('Nat & Yuri', what_prefix='"', what_suffix='"', ctc="ctc",
 
 define _dismiss_pause = config.developer
 
+# [BETA] Pronoun Variables
+## This section adds the feature to use player pronouns within the game text easily.
+## To use this feature, simply ask the user for their pronoun and use it here.
+## For capitalization, use pronoun1C or pronoun2C
+default persistent.pronoun1 = "he"
+default persistent.pronoun2 = "him"
+default pronoun1 = persistent.pronoun1
+default pronoun2 = persistent.pronoun2
+default pronoun1C = persistent.pronoun1.capitalize()
+default pronoun2C = persistent.pronoun2.capitalize()
+
 # Persistent Variables
 
 # These variables are load at game startup and exist on all saves.
