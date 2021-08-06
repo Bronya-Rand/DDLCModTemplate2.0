@@ -57,7 +57,7 @@ More information about Android is listed in the Wiki or *guide.pdf*.
 7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 8. [BETA] Pronoun Support! Allow users to identify with what pronoun they go by!
-    > This works best with `He/Him`, `She/Her`, and `They/Them` pronouns but this can be expanded on as much as you like. Use `finishPronoun()` after the user declares their pronouns for persistent saving.
+    > This works best with `He/Him`, `She/Her`, and `They/Them` pronouns but this can be expanded on as much as you like.
 
 ### Added Features
 1. Terra's In-Depth Poem Game Guide!
