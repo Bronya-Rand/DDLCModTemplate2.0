@@ -13,64 +13,68 @@ label pronoun_menu:
     menu:
         "What is your pronoun?"
         "He/Him":
-            $ pronoun1 = "he"
-            $ pronoun2 = "him"
-            $ pronoun1C = pronoun1.capitalize()
-            $ pronoun2C = pronoun2.capitalize()
-            $ persistent.pronoun1 = pronoun1
-            $ persistent.pronoun2 = pronoun2
+            $ he = "he"
+            $ him = "him"
+            $ are = "is"
+            $ hes = "he's"
+            $ heC = he.capitalize()
+            $ himC = him.capitalize()
+            $ areC = are.capitalize()
+            $ hesC = hes.capitalize()
 
             "Set Pronoun to He/Him."
             $ renpy.jump('pronoun_menu')
         "She/Her":
-            $ pronoun1 = "she"
-            $ pronoun2 = "her"
-            $ pronoun1C = pronoun1.capitalize()
-            $ pronoun2C = pronoun2.capitalize()
-            $ persistent.pronoun1 = pronoun1
-            $ persistent.pronoun2 = pronoun2
+            $ he = "she"
+            $ him = "her"
+            $ are = "is"
+            $ hes = "she's"
+            $ heC = he.capitalize()
+            $ himC = him.capitalize()
+            $ areC = are.capitalize()
+            $ hesC = hes.capitalize()
+            python:
+                finishPronouns()
 
             "Set Pronoun to She/Her."
             $ renpy.jump('pronoun_menu')
         "They/Them":
-            $ pronoun1 = "they"
-            $ pronoun2 = "them"
-            $ pronoun1C = pronoun1.capitalize()
-            $ pronoun2C = pronoun2.capitalize()
-            $ persistent.pronoun1 = pronoun1
-            $ persistent.pronoun2 = pronoun2
+            $ he = "they"
+            $ him = "them"
+            $ are = "are"
+            $ hes = "they're"
+            $ heC = he.capitalize()
+            $ himC = him.capitalize()
+            $ areC = are.capitalize()
+            $ hesC = hes.capitalize()
+            python:
+                finishPronouns()
 
             "Set Pronoun to They/Them."
             $ renpy.jump('pronoun_menu')
         "Current Pronoun":
-            if not pronoun1 and not pronoun2:
+            if not he:
                 "You have yet set a pronoun."
             else:
-                "Your current pronoun is [pronoun1C]/[pronoun2C]."
+                "Your current pronoun is [heC]/[himC]."
             $ renpy.jump('pronoun_menu')
         "Play a sample.":
-            if not pronoun1 and not pronoun2:
+            if not he:
                 "You have yet set a pronoun. Set one up before proceeding."
                 $ renpy.jump('pronoun_menu')
-            mc "My pronouns are [pronoun1]/[pronoun2]."
-            if pronoun1 == "they":
-                m "[pronoun1C] are here to learn about how dense [pronoun1] really are."
-            else:
-                m "[pronoun1C] is here to learn about how dense [pronoun1] really is."
-            s "Don't say mean things to [pronoun2]!"
-            n "I don't like the looks of [pronoun2]."
-            if pronoun1 == "they":
-                y "A-Are [pronoun1] going to be okay?"
-            else:
-                y "I-Is [pronoun1] going to be okay?"
+            mc "My pronouns are [he]/[him]."
+            m "[hesC] here to learn about how dense [he] really [are]."
+            s "Don't say mean things to [him]!"
+            n "I don't like the looks of [him]."
+            y "[areC[0]]-[areC] [he] going to be okay?"
             $ renpy.jump('pronoun_menu')
         "Clear Pronouns":
-            $ pronoun1 = ""
-            $ pronoun2 = ""
-            $ pronoun1C = ""
-            $ pronoun2C = ""
-            $ persistent.pronoun1 = pronoun1
-            $ persistent.pronoun2 = pronoun2
+            $ he = ""
+            $ him = ""
+            $ are = ""
+            $ hes = ""
+            python:
+                finishPronouns()
 
             "Cleared all Pronouns."
             $ renpy.jump('pronoun_menu')

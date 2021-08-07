@@ -88,6 +88,16 @@ init python:
         renpy.pause(time)
         #_windows_hidden = False
 
+    def finishPronouns():
+        heC = he.capitalize()
+        himC = him.capitalize()
+        areC = are.capitalize()
+        hesC = hes.capitalize()
+        persistent.he = he
+        persistent.him = him
+        persistent.are = are
+        persistent.hes = hes
+
 # Music
 
 # This section is where you can reference DDLC audio and add your own!
@@ -1365,13 +1375,19 @@ define _dismiss_pause = config.developer
 # [BETA] Pronoun Variables
 ## This section adds the feature to use player pronouns within the game text easily.
 ## To use this feature, simply ask the user for their pronoun and use it here.
-## For capitalization, use pronoun1C or pronoun2C
-default persistent.pronoun1 = "he"
-default persistent.pronoun2 = "him"
-default pronoun1 = persistent.pronoun1
-default pronoun2 = persistent.pronoun2
-default pronoun1C = persistent.pronoun1.capitalize()
-default pronoun2C = persistent.pronoun2.capitalize()
+## For capitalization, use heC, himC, areC and hesC
+default persistent.he = ""
+default persistent.him = ""
+default persistent.are = ""
+default persistent.hes = ""
+default he = persistent.he
+default him = persistent.him
+default are = persistent.are
+default hes = persistent.hes
+default heC = persistent.he.capitalize()
+default himC = persistent.him.capitalize()
+default areC = persistent.are.capitalize()
+default hesC = persistent.hes.capitalize()
 
 # Persistent Variables
 
