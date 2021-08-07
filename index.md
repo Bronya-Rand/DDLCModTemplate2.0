@@ -13,15 +13,15 @@ The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by
   > Only available on Mod Template Versions 2.4.X or higher. Everything in DDLC (except `[currentuser]`) will work under Android. Refer to *guide.pdf* in the template's ZIP file to configure your mod for Android.
 - Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
   > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode.
+- Pronoun Support! Use the given pronoun of the player in your script easily with not much hassle to change how your word your story!
 
 ## Changes
 
-Version 2.4.5 (<u>Android Supported</u> Mod Template)
-- Optimized Android code
-- Removed package_name in favor of environment variables.
-- Updated guide for 7.4.5.
+Version 2.4.8 (<u>Android Supported</u> Mod Template)
+- Added Pronoun Support to the template
+- Blacklisted all future Ren'Py Releases for the time being due to 7.4.6+ breaking DDLC transforms heavily.
 
-Version 2.3.1 - Update 4 [2.3.1-u4] (<u>Non-Android Supported</u> Mod Template)
-- Added `rightin` transforms to `transforms.rpy`
+Version 2.3.1 - Update 7 (<u>Standard</u> Mod Template)
+- Same features and updates as 2.4.8 minus Android.
 
 For other version changes, refer to the [release](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases) section of the DDLC Mod Template Github repository.
