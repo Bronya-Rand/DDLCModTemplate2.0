@@ -166,7 +166,7 @@ init python:
 
     # Code to Package your mod to a ZIP in Ren'Py
     build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compliant Mod")
-    build.package(build.directory_name + "Renpy7Mod",'zip','windows mac linux all',description="Ren'Py 7 DDLC Compliant Mod")
+    build.package(build.directory_name + "Renpy7Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
 
     build.archive("scripts", 'mod all')
     build.archive("mod_assets", 'mod all')
