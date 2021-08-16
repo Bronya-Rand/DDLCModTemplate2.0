@@ -166,10 +166,10 @@ init python:
 
     # Code to Package your mod to a ZIP in Ren'Py
     build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compliant Mod")
-    build.package(build.directory_name + "Renpy7Mod",'zip','windows mac linux renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
+    build.package(build.directory_name + "Renpy7Mod",'zip','windows mac linux all',description="Ren'Py 7 DDLC Compliant Mod")
 
-    build.archive("scripts", 'mod')
-    build.archive("mod_assets", 'mod')
+    build.archive("scripts", 'mod all')
+    build.archive("mod_assets", 'mod all')
 
     ## Do not touch this. This is so Ren'Py can add the .sh file 
     ## for Linux/Mac to run your mod.
@@ -186,12 +186,11 @@ init python:
     
     build.classify("game/mod_assets/**", "mod_assets all")
     build.classify("game/**.rpyc", "scripts all")
-    build.classify("game/README.txt", None)
+    build.classify("game/README.md", None)
     build.classify("game/**.txt", "scripts all")
     build.classify("game/**.chr", "scripts all")
-    build.classify("game/advanced_scripts/**","scripts all")
+    build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
     build.classify("game/tl/**", "scripts all") ## Translation Folder
-    build.classify("game/tutorial_route_answer/**", None)
 
     build.classify('**~', None)
     build.classify('**.bak', None)
