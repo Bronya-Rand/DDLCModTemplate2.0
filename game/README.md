@@ -25,6 +25,10 @@ This file contains the python classes, define, and definitions needed to show so
 
 This file controls the definitions used for the main menu and game interface such as color, audio to be played at startup, positions of text and other inteface elements and more. This is also where the android interface code is located in to define the interface for mobile users.
 
+### **lockdown_check.rpy** 
+
+This file was introduced in Version 2.4.6 of the mod template. This file makes the template lock itself from running unsupported Ren'Py versions or warn mod developers of untested Ren'Py versions. This is not part of DDLC.
+
 ### **monika.chr**, **natsuki.chr**, **sayori.chr** & **yuri.chr**
 
 These files are in the game directory so the game can re-add the characters files to the `characters` folder when the defines in `definitions.rpy` are called to restore them.
@@ -44,6 +48,10 @@ This file defines the Poem class and poems that are used in the poem sharing gam
 ### **poemwords.txt**
 
 This text file contains all the poem words, and points that the character likes said word to determine who's exclusive scene you get in the next day.
+
+### **pronoun_example.rpy**
+
+This file showcases a examole of the pronoun system implemented in Version 2.4.8 of the mod template for players that go by different pronouns. This is not part of DDLC.
 
 ### **screens.rpy**
 
