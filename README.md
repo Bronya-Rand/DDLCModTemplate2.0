@@ -4,7 +4,7 @@
 
 <u>Downloads</u>: [2.4.9 (Standard Template with Android Support)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.4.9) | [2.3.1-u8 (Standard Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u8)
 
-The **new** DDLC Mod Template is a mod template made by GanstaKingofSA for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4, 7.3.5 - 7.4.5 and 7.4.10.
+The **new** DDLC Mod Template is a mod template made by GanstaKingofSA for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4, 7.3.5 - 7.4.5 and 7.4.9 - 7.4.10.
 
 ### **<u>A request from the developer</u>**
 > If the template has been useful to you, please credit me in your mods' release. Not all mod tool developers are thanked as much as regular mod teams by people outside the modding community and it will be appreciated to credit those that put the effort into making modding easier for you to make your own mod for others to enjoy.
