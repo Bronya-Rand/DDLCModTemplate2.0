@@ -38,6 +38,7 @@ Refer to [*guide.pdf*](guide.pdf) for more in-depth information about making you
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 8. [BETA] Pronoun Support! Allow users to identify with what pronoun they go by!
     > See *pronoun_example.rpy* in the `game` folder for a example on how to use this feature.
+9. Better Blue Screens of Death! Make your own BSOD easily in-game now than ever on every operating system! (even Mac and Linux!)
 
 ### Added Features
 1. Terra's in-depth poem game guide!
