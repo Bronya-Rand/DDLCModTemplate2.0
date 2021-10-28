@@ -1,5 +1,5 @@
 ﻿# Options.rpy
-## This template version is 2.4.8. When asked to provide the template version you are using,
+## This template version is 2.4.9. When asked to provide the template version you are using,
 ## give them this version number. DO NOT REMOVE OR CHANGE THIS COMMENT.
    
 # This is where you will name your mod!
@@ -13,7 +13,7 @@ define gui.show_name = True
 # This is where you will input the version of your mod.
 # If you have multiple versions of your mod, this will be pretty useful to change.
 # If you are starting out, set this to "1.0"
-define config.version = "2.4.8"
+define config.version = "2.4.9"
 
 # This adds information about your mod in the About section.
 # DDLC does not have a about section so you can leave this blank.
