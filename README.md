@@ -2,9 +2,9 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-Latest Versions: [2.4.8 (Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.4.8) | [2.3.1-u7 (Non-Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u7)
+Latest Versions: [2.4.9 (Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.4.9) | [2.3.1-u8 (Non-Android Supported Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u8)
 
-Supported on: Ren'Py <u>6.99.12.4</u> and Ren'Py <u>7.3.5 - 7.4.5</u>
+Supported on: Ren'Py <u>6.99.12.4</u>, <u>7.3.5 - 7.4.5</u> and <u>7.4.9 - 7.4.10</u>
 
 The **new** DDLC Mod Template is a mod template for the **original** Doki Doki Literature Club by GanstaKingofSA that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods.
 > This mod template will not work for Doki Doki Literature Club Plus. It does not work on Ren'Py 7.4.6-7.4.7 due to a bug that breaks DDLC transforms heavily. For more information visit this Github issue [here](https://github.com/renpy/renpy/issues/2860).
@@ -42,7 +42,7 @@ Follow these steps to set up the template for Ren'Py 7.
 2. Splash Screen when your mod is launched for the first time.
 3. DDLC's exact RPY fiiles with explainations.
 4. Customizable! Use this as a starting point for any ideas you wish to create.
-5. MacOS/OS X and Linux `.app` and `.sh` support.
+5. MacOS and Linux `.sh` support.
 6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 7. [BETA] Pronoun Support! Allow users to identify with what pronoun they go by!
@@ -53,8 +53,9 @@ Follow these steps to set up the template for Ren'Py 7.
 2. Xcode Support for Mac OS/OS X by Alicerunsonfedora!
 3. NVL Support thanks to Yagamirai01!
 4. Ren'Py 7 Mod Package Support!
-5. MacOS/OS X `.app` Building Support for Mac Users!
+5. MacOS/OS X Building Support for Mac Users!
 6. Linux `.sh` Building Support for Linux Users!
+7. Better Blue Screens of Death! Make your own BSOD easily in-game now than ever on every operating system! (even Mac and Linux!)
 
 ### Returned Features
 1. Ghost Menu (Dan's Spooky Easter Egg)
