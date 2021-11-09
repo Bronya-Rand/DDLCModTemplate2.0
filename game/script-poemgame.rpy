@@ -10,6 +10,16 @@
 init python: #This whole block runs when DDLC is started (as opposed to when the poem minigame is called)
     import random
 
+    if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187): # Android Poem Game Check for 6.99
+        poem_txt = os.environ['ANDROID_PUBLIC'] + "/game/poemwords.txt"
+        try:
+            if not os.access(os.environ['ANDROID_PUBLIC'] + "/game/", os.F_OK):
+                os.mkdir(os.environ['ANDROID_PUBLIC'] + "/game")
+            file(poem_txt)
+        except: open(poem_txt, "wb").write(renpy.file("poemwords.txt").read())
+    else:
+        poem_txt = "poemwords.txt"
+
     # This class holds a word, and point values for each of the four heroines
     class PoemWord:
         def __init__(self, word, sPoint, nPoint, yPoint, glitch=False):
@@ -25,7 +35,7 @@ init python: #This whole block runs when DDLC is started (as opposed to when the
 
     # Building the word list
     full_wordlist = []
-    with renpy.file("poemwords.txt") as wordfile:
+    with renpy.file(poem_txt) as wordfile:
         for line in wordfile:
             # Ignore lines beginning with '#' and empty lines
             line = line.strip()
