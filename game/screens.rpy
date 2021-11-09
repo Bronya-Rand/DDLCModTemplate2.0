@@ -4,6 +4,9 @@
 
 init offset = -1
 
+# Enables the ability to add more settings in the game such as uncensored mode.
+default extra_settings = True
+
 ## Color Styles
 ################################################################################
 
@@ -946,7 +949,10 @@ screen preferences():
     use game_menu(_("Settings"), scroll="viewport"):
 
         vbox:
-            xoffset 50
+            if extra_settings:
+                xoffset 35
+            else:
+                xoffset 50
 
             hbox:
                 box_wrap True
@@ -956,7 +962,7 @@ screen preferences():
                     vbox:
                         style_prefix "radio"
                         label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
+                        textbutton _("Windowed") action Preference("display", "window")
                         textbutton _("Fullscreen") action Preference("display", "fullscreen")
                 if config.developer:
                     vbox:
@@ -972,6 +978,24 @@ screen preferences():
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                
+                if extra_settings:
+                    vbox:
+                        style_prefix "check"
+                        label _("Extra Settings")
+                        textbutton _("Uncensored Mode") action If(persistent.uncensored_mode, 
+                            ToggleField(persistent, "uncensored_mode"), 
+                            Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult\nor sensitive content in your playthrough.", 
+                                yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
+                                no_action=Hide("confirm")
+                            ))
+                        textbutton _("Let's Play Mode") action If(persistent.lets_play, 
+                            ToggleField(persistent, "lets_play"),
+                            [ToggleField(persistent, "lets_play"), Show("dialog", 
+                                message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that contains\nsensitive information or apply alternative\nstory options such as non-cover songs.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
+                                ok_action=Hide("dialog")
+                            )])
+                            
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
@@ -979,6 +1003,8 @@ screen preferences():
             null height (4 * gui.pref_spacing)
 
             hbox:
+                if extra_settings:
+                    xoffset 15
                 style_prefix "slider"
                 box_wrap True
 
@@ -994,7 +1020,9 @@ screen preferences():
                     bar value Preference("auto-forward time")
 
                 vbox:
-
+                    if extra_settings:
+                        xoffset 15
+                    
                     if config.has_music:
                         label _("Music Volume")
 

@@ -1389,6 +1389,10 @@ default himC = persistent.him.capitalize()
 default areC = persistent.are.capitalize()
 default hesC = persistent.hes.capitalize()
 
+# Extra Settings Variables
+default persistent.uncensored_mode = False
+default persistent.lets_play = False
+
 # Persistent Variables
 
 # These variables are load at game startup and exist on all saves.
