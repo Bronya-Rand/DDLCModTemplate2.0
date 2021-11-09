@@ -6,7 +6,7 @@
 ## and decompile them for the builds to work.
 init -100 python:
     if not renpy.android:
-        for archive in ['audio','images','scripts','fonts']:
+        for archive in ['audio','images','fonts']:
             if archive not in config.archives:
                 renpy.error("DDLC archive files not found in /game folder. Check your installation and try again.")
 
