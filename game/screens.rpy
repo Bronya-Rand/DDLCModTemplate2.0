@@ -1741,6 +1741,10 @@ init python:
 ##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the 
 ##                error. Defaults to libGLESv2.dll if no file name is given.
 ##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
+##
+## Examples:
+##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
+##     show screen bsod("TAKE_TWO_INTERACTIVE", rsod=True) 
 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
