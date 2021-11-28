@@ -985,7 +985,7 @@ screen preferences():
                         label _("Extra Settings")
                         textbutton _("Uncensored Mode") action If(persistent.uncensored_mode, 
                             ToggleField(persistent, "uncensored_mode"), 
-                            Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult\nor sensitive content in your playthrough.", 
+                            Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult or sensitive\ncontent in your playthrough.\n\nThis setting will be dependent on the modder if\nthey programmed these checks in their story.", 
                                 yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
                                 no_action=Hide("confirm")
                             ))
