@@ -53,6 +53,10 @@ This text file contains all the poem words, and points that the character likes 
 
 This file showcases a examole of the pronoun system implemented in Version 2.4.8 of the mod template for players that go by different pronouns. This is not part of DDLC.
 
+### **renpy_patches.rpy**
+
+This file was introduced in Version 2.5.X of the mod template. It's purpose is to patch problematic code that can affect DDLC/DDLC mods on certain versions of Ren'Py that is tied to the Ren'Py engine itself. DO NOT MODIFY THIS FILE WHATSOEVER UNLESS YOU KNOW WHAT IS IN IT.
+
 ### **screens.rpy**
 
 This file controls the main menu and settings interface look for images, transforms, styles and such in the original game. This should be the file you look into if you want to customize your menu to be something different.
