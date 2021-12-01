@@ -468,6 +468,8 @@ screen navigation():
 
             textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
 
+            textbutton _("Gallery") action [ShowMenu("gallery"), SensitiveIf(renpy.get_screen("gallery") == None)]
+
             if _in_replay:
 
                 textbutton _("End Replay") action EndReplay(confirm=True)
@@ -1694,6 +1696,22 @@ screen nvl_dialogue(dialogue):
                 text d.what:
                     id d.what_id
 
+## BSOD screen ##################################################################
+##
+## This screen is used to fake a BSOD/kernel panic on the players' computer 
+## on all platforms (Mobile devices defaults to the Linux BSOD).
+##
+## Syntax:
+##     bsodCode - The error code message you want to show the player. Defaults to 
+##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
+##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the 
+##                error. Defaults to libGLESv2.dll if no file name is given.
+##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
+##
+## Examples:
+##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
+##     show screen bsod("TAKE_TWO_INTERACTIVE", rsod=True) 
+
 init python:
     import subprocess
 
@@ -1730,27 +1748,11 @@ init python:
     if renpy.windows:
         osName = subprocess.check_output("wmic os get version", shell=True).replace("\r", "").replace(" ", "").replace("\n", "").replace("Version ", "")
 
-## BSOD screen ##################################################################
-##
-## This screen is used to fake BSOD/kernel panic a player's computer on all
-## platforms (Mobile devices defaults to the Linux BSOD).
-##
-## Syntax:
-##     bsodCode - The error code message you want to show the player. Defaults to 
-##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
-##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the 
-##                error. Defaults to libGLESv2.dll if no file name is given.
-##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
-##
-## Examples:
-##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
-##     show screen bsod("TAKE_TWO_INTERACTIVE", rsod=True) 
-
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
     layer "master"
 
-    if renpy.windows:
+    if not renpy.windows:
 
         if osName < "6.2.9200": # Windows 7
             
@@ -1857,7 +1859,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                             text "If you call a support person, give them this info:" style "bsod_win10_sub_text" 
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
         
-    elif renpy.macintosh:
+    elif not renpy.macintosh:
 
         add Solid("#222")
 
@@ -1919,73 +1921,68 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
     add Solid("#000000") at bsod_transition
 
-if renpy.windows:
-    style bsod_win7_text is gui_text
-    style bsod_win7_text:
-        font "C:/Windows/Fonts/lucon.ttf"
-        antialias False
-        size 13
-        line_leading 15
-        line_spacing -14
-        xsize 1279
-        outlines []
+style bsod_win7_text is gui_text
+style bsod_win7_text:
+    font "C:/Windows/Fonts/lucon.ttf"
+    antialias False
+    size 13
+    line_leading 15
+    line_spacing -14
+    xsize 1279
+    outlines []
 
-    style bsod_win8_text is gui_text
-    style bsod_win8_text:
-        font "C:/Windows/Fonts/segoeuil.ttf"
-        size 25
-        line_spacing 5
-        xsize 600
-        outlines []
+style bsod_win8_text is gui_text
+style bsod_win8_text:
+    font "C:/Windows/Fonts/segoeuil.ttf"
+    size 25
+    line_spacing 5
+    xsize 600
+    outlines []
 
-    style bsod_win8_sad_text is gui_text
-    style bsod_win8_sad_text is bsod_win8_text:
-        size 128
-        xpos -8
+style bsod_win8_sad_text is gui_text
+style bsod_win8_sad_text is bsod_win8_text:
+    size 128
+    xpos -8
 
-    style bsod_win8_sub_text is gui_text
-    style bsod_win8_sub_text is bsod_win8_text:
-        size 11
+style bsod_win8_sub_text is gui_text
+style bsod_win8_sub_text is bsod_win8_text:
+    size 11
 
-    style bsod_win10_text is bsod_win8_text
-    style bsod_win10_text:
-        font "C:/Windows/Fonts/segoeuil.ttf"
-        size 24
-        line_leading 3
-        line_spacing 0
-        xsize 800
-        outlines []
+style bsod_win10_text is bsod_win8_text
+style bsod_win10_text:
+    font "C:/Windows/Fonts/segoeuil.ttf"
+    size 24
+    line_leading 3
+    line_spacing 0
+    xsize 800
+    outlines []
 
-    style bsod_win10_info_text is bsod_win10_text
-    style bsod_win10_info_text:
-        size 16
+style bsod_win10_info_text is bsod_win10_text
+style bsod_win10_info_text:
+    size 16
 
-    style bsod_win10_sad_text is bsod_win10_text
-    style bsod_win10_sad_text:
-        size 136
-        xpos -8
+style bsod_win10_sad_text is bsod_win10_text
+style bsod_win10_sad_text:
+    size 136
+    xpos -8
 
-    style bsod_win10_sub_text is bsod_win10_text
-    style bsod_win10_sub_text:
-        size 11
+style bsod_win10_sub_text is bsod_win10_text
+style bsod_win10_sub_text:
+    size 11
 
-elif renpy.macintosh:
+style bsod_mac_text is gui_text
+style bsod_mac_text:
+    font gui.default_font
+    size 28
+    outlines []
+    line_spacing -30
 
-    style bsod_mac_text is gui_text
-    style bsod_mac_text:
-        font gui.default_font
-        size 28
-        outlines []
-        line_spacing -30
-
-else:
-
-    style bsod_linux_text is gui_text
-    style bsod_linux_text:
-        font "gui/font/F25_Bank_Printer.ttf"
-        size 15
-        outlines []
-        line_leading 5
+style bsod_linux_text is gui_text
+style bsod_linux_text:
+    font "gui/font/F25_Bank_Printer.ttf"
+    size 15
+    outlines []
+    line_leading 5
             
 transform bsod_transition:
     "black"
@@ -2058,3 +2055,54 @@ style nvl_button:
 style nvl_button_text:
     properties gui.button_text_properties("nvl_button")
 
+## Gallery screen ##################################################################
+##
+## This screen is used to make a gallery view of 
+## in-game art to the player in the main menu.
+##
+## Syntax:
+##     g.button - sets the button name
+##     g.image - declares the type of image being used
+##     g.transition - customizes fade-in/out of images
+##     g.make_button - makes a button with the button and image names to view
+##                     the given art.
+##
+## More info: https://renpy.org/doc/html/rooms.html?highlight=gallery#image-gallery
+
+init python:
+    g = Gallery() 
+
+    g.button("disclaimer_two")
+    g.image("warning2")
+    
+    g.transition = dissolve
+
+screen gallery:
+
+    tag menu
+
+    use game_menu(_("Gallery")):
+        
+        vpgrid:
+            id "gvp"
+            rows 2
+            cols 3
+            spacing 25
+            mousewheel True
+
+            xalign 0.5
+            yalign 0.5
+
+            # Call make_button to show a particular button.
+            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
+            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
+            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
+
+            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
+            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
+            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
+        
+        vbar value YScrollValue("gvp") xalign 0.99 ysize 560
+
+transform gallery_descale(img):
+    size(int(img[0] / 5), int(img[1] / 5))
