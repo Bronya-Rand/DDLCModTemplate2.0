@@ -21,11 +21,14 @@ init python:
         "Monika is watching you code."
     ]
 
+    def recolorize(path, blackCol, whiteCol="#fff"):
+        return im.MatrixColor(path, im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol) * im.matrix.saturation(7.0) * im.matrix.hue(29))
+
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
 
 # Main Menu Images
 image menu_logo:
-    "/mod_assets/DDLCModTemplateLogo.png"
+    "mod_assets/DDLCModTemplateLogo.png"
     subpixel True
     xcenter 240
     ycenter 120
@@ -34,12 +37,12 @@ image menu_logo:
 
 image menu_bg:
     topleft
-    "gui/menu_bg.png"
+    recolorize("gui/menu_bg.png", "#b59")
     menu_bg_move
 
 image game_menu_bg:
     topleft
-    "gui/menu_bg.png"
+    recolorize("gui/menu_bg.png", "#b59")
     menu_bg_loop
 
 image menu_fade:
@@ -121,7 +124,7 @@ image menu_art_s_glitch:
     menu_art_move(.8, 470, .8)
 
 image menu_nav:
-    "gui/overlay/main_menu.png"
+    recolorize("gui/overlay/main_menu.png", "#b59")
     menu_nav_move
 
 # Main Menu Effects

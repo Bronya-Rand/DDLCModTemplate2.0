@@ -140,7 +140,7 @@ style vslider:
 
 style frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background Frame(recolorize("gui/frame.png", "#b59"), gui.frame_borders, tile=gui.frame_tile)
 
 ################################################################################
 ## In-game screens
@@ -197,10 +197,10 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background Transform(recolorize("gui/textbox.png", "#b59"), xalign=0.5, yalign=1.0)
 
 style window_monika is window:
-    background Image("gui/textbox_monika.png", xalign=0.5, yalign=1.0)
+    background Transform(recolorize("gui/textbox_monika.png", "#b59"), xalign=0.5, yalign=1.0)
 
 style namebox:
     xpos gui.name_xpos
@@ -209,7 +209,7 @@ style namebox:
     ypos gui.name_ypos
     ysize gui.namebox_height
 
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
+    background Frame(recolorize("gui/namebox.png", "#b59"), gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
     padding gui.namebox_borders.padding
 
 style say_label:
@@ -700,7 +700,7 @@ style game_menu_outer_frame:
     bottom_padding 30
     top_padding 120
 
-    background "gui/overlay/game_menu.png"
+    background recolorize("gui/overlay/game_menu.png", "#b59")
 
 style game_menu_navigation_frame:
     xsize 280
@@ -1493,7 +1493,7 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame(recolorize("gui/frame.png", "#b59"), gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
