@@ -2057,25 +2057,10 @@ style nvl_button_text:
 
 ## Gallery screen ##################################################################
 ##
-## This screen is used to make a gallery view of 
-## in-game art to the player in the main menu.
+## This screen is used to make a gallery view of in-game 
+## art to the player in the main menu.
 ##
-## Syntax:
-##     g.button - sets the button name
-##     g.image - declares the type of image being used
-##     g.transition - customizes fade-in/out of images
-##     g.make_button - makes a button with the button and image names to view
-##                     the given art.
-##
-## More info: https://renpy.org/doc/html/rooms.html?highlight=gallery#image-gallery
-
-init python:
-    g = Gallery() 
-
-    g.button("disclaimer_two")
-    g.image("warning2")
-    
-    g.transition = dissolve
+## Syntax Examples in gallery.rpy.
 
 screen gallery:
 
@@ -2085,24 +2070,43 @@ screen gallery:
         
         vpgrid:
             id "gvp"
-            rows 2
-            cols 3
-            spacing 25
+            rows math.ceil(len(galleryList) / 3.0)
+
+            if len(galleryList) > 3:
+                cols 3
+            else:
+                cols len(galleryList)
+
+            xspacing 25
+            yspacing 50
             mousewheel True
 
             xalign 0.5
             yalign 0.5
 
-            # Call make_button to show a particular button.
-            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
-            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
-            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
+            for gl in galleryList:
 
-            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
-            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
-            add g.make_button("disclaimer_two", "bg/warning2.png") at gallery_descale(renpy.image_size("bg/warning2.png"))
-        
+                if gl.small_size:
+
+                    imagebutton: 
+                        idle gl.small_size 
+                        action ShowMenu("preview", gl.image)
+
         vbar value YScrollValue("gvp") xalign 0.99 ysize 560
+    
+    on "replaced" action With(Dissolve(0.5))
 
-transform gallery_descale(img):
-    size(int(img[0] / 5), int(img[1] / 5))
+screen preview(img):
+
+    tag menu
+        
+    vbox:
+        add img
+        
+    textbutton "X":
+        text_style "navigation_button_text"
+        xpos 0.97
+        ypos 0.005
+        action ShowMenu("gallery")
+
+    on "replaced" action With(Dissolve(0.5))
