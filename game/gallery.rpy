@@ -8,14 +8,15 @@ init python:
 
     class GalleryImage:
 
-        def __init__(self, image, small_size=None, name=None, sprite=False):
+        def __init__(self, image, small_size=None, name=None, sprite=False, watermark=False):
+            #The image variable name in the game
             self.file = image
-            
+            #The human readable name of the image
             if name:
                 self.name = name
             else:
                 self.name = image
-
+            #A condition to see if the image given is a sprite
             self.sprite = sprite
 
             if sprite:
@@ -27,6 +28,7 @@ init python:
                 )
 
                 if small_size:
+                    #A descaled version of the main image
                     self.small_size = small_size 
                 else:               
                     self.small_size = LiveComposite(
@@ -41,6 +43,9 @@ init python:
                     self.small_size = small_size 
                 else:     
                     self.small_size = Transform(image, size=(234, 132))
+                    
+            #A condition to see if we export a watermark version of the image
+            self.watermark = watermark
 
         def export(self):
             if renpy.android:
@@ -53,14 +58,21 @@ init python:
             if self.sprite:
                 renpy.show_screen("dialog", message="Sprites cannot be exported to the gallery folder. Please try another image.", ok_action=Hide("dialog"))
             else:
-                export = imgcore.get_registered_image(self.file).filename
+                try: 
+                    renpy.file(self.file)
+                    export = self.file
+                except:
+                    export = imgcore.get_registered_image(self.file).filename
                 
                 if renpy.android:
-                    with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", self.file + os.path.splitext(export)[-1]).replace("\\", "/"), "wb") as p:
+                    with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
                         p.write(renpy.file(export).read())
                 else:
-                    with open(os.path.join(config.basedir, "gallery", self.file + os.path.splitext(export)[-1]).replace("\\", "/"), "wb") as p:
-                        p.write(renpy.file(export).read())
+                    with open(os.path.join(config.basedir, "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]).replace("\\", "/"), "wb") as p:
+                        if self.watermark:
+                            p.write(renpy.file(os.path.splitext(export)[0] + "_watermark" + os.path.splitext(export)[-1]).read())
+                        else:
+                            p.write(renpy.file(export).read())
 
                 renpy.show_screen("dialog", message="Exported \"" + self.name + "\" to the gallery folder.", ok_action=Hide("dialog"))
 
@@ -83,26 +95,6 @@ init python:
     s1a = GalleryImage("sayori 1", sprite=True)
     galleryList.append(s1a)
 
-    m1a = GalleryImage("monika 1", sprite=True)
+    m1a = GalleryImage("monika 1", name="Monika", sprite=True)
     galleryList.append(m1a)
 
-    y1a = GalleryImage("yuri 1", sprite=True)
-    galleryList.append(y1a)
-
-    n1a = GalleryImage("natsuki 1", sprite=True)
-    galleryList.append(n1a)
-
-    m5a = GalleryImage("monika 5", name="Happy Monika", sprite=True)
-    galleryList.append(m5a)
-
-    cday = GalleryImage("bg class_day")
-    galleryList.append(cday)
-
-    clday = GalleryImage("bg club_day", name="Literature Club")
-    galleryList.append(clday)
-
-    co = GalleryImage("bg corridor")
-    galleryList.append(co)
-
-    h = GalleryImage("bg house")
-    galleryList.append(h)
