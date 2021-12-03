@@ -1057,6 +1057,14 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
+
+            if config.developer:  
+                hbox:
+                    vbox:
+                        textbutton _("Export Mod Icon as ICO"):
+                            action Function(saveIco, "mod_assets/DDLCModTemplateLogo.png")
+                            style "navigation_button"
+                            
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
                 xoffset -10 yoffset -10

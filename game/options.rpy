@@ -141,6 +141,28 @@ init python:
         else:
             return (float(height) * (float(config.screen_width) / float(config.screen_height)), height)
 
+    import pygame_sdl2
+    import os
+
+    def saveIco(filepath):
+        bmp = os.path.join(renpy.config.basedir, "icon.bmp").replace("\\", "/")
+        ico = os.path.join(renpy.config.basedir, "icon.ico").replace("\\", "/")
+
+        surf = pygame_sdl2.image.load(os.path.join(
+                renpy.config.gamedir, filepath
+                ).replace("\\", "/")
+            )
+        trans = pygame_sdl2.transform.scale(surf, (64, 64))
+        pygame_sdl2.image.save(trans, bmp)
+
+        if os.path.exists(ico):
+            os.remove(ico)
+
+        os.rename(os.path.join(renpy.config.basedir, "icon.bmp").replace("\\", "/"), 
+            os.path.join(renpy.config.basedir, "icon.ico").replace("\\", "/"))
+        
+        renpy.show_screen("dialog", message="Exported your mod logo as a icon successfully.", ok_action=Hide("dialog"))
+
 ## Build configuration #########################################################
 ##
 ## This section controls how Ren'Py turns your project into distribution files.
