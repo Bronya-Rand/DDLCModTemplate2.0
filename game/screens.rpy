@@ -290,14 +290,43 @@ style input:
 ## statement. The one parameter, items, is a list of objects, each with caption
 ## and action fields.
 ##
+## New as of 2.5.0
+##    - You may now pass through argurments to the menu options to colorize
+##      your menu as you like. Add (kwargs=[color hex or style name]) to your
+##      menu option name and you get different buttons! 
+##
+##      Ex: "Option 1 (kwargs="#00fbff")
+##
 ## http://www.renpy.org/doc/html/screen_special.html#choice
 
 screen choice(items):
     style_prefix "choice"
 
     vbox:
+
         for i in items:
-            textbutton i.caption action i.action
+            
+            if "kwarg=" in i.caption:
+
+                $ kwarg = i.caption.split("(kwarg=")[-1].replace(")", "")
+                $ caption = i.caption.replace(" (kwarg=" + kwarg + ")", "")
+
+                if "#" in kwarg:
+                    
+                    textbutton caption:
+                        idle_background Frame(im.MatrixColor("gui/button/choice_idle_background.png", im.matrix.desaturate() * im.matrix.colorize(kwarg, "#fff") * im.matrix.saturation(7.0)), gui.choice_button_borders)
+                        hover_background Frame(im.MatrixColor("gui/button/choice_idle_background.png", im.matrix.desaturate() * im.matrix.colorize(kwarg, "#fff") * im.matrix.saturation(7.0)), gui.choice_button_borders)
+                        action i.action
+
+                else:
+
+                    textbutton caption:
+                        style kwarg
+                        action i.action
+
+            else:
+
+                textbutton i.caption action i.action
 
 
 ## When this is true, menu captions will be spoken by the narrator. When false,
