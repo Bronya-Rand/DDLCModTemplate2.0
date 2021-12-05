@@ -314,8 +314,8 @@ screen choice(items):
                 if "#" in kwarg:
                     
                     textbutton caption:
-                        idle_background Frame(im.MatrixColor("gui/button/choice_idle_background.png", im.matrix.desaturate() * im.matrix.colorize(kwarg, "#fff") * im.matrix.saturation(7.0)), gui.choice_button_borders)
-                        hover_background Frame(im.MatrixColor("gui/button/choice_idle_background.png", im.matrix.desaturate() * im.matrix.colorize(kwarg, "#fff") * im.matrix.saturation(7.0)), gui.choice_button_borders)
+                        idle_background Frame(im.MatrixColor("gui/button/choice_idle_background.png", im.matrix.desaturate() * im.matrix.colorize(kwarg, "#fff") * im.matrix.saturation(18.5)), gui.choice_button_borders)
+                        hover_background Frame(im.MatrixColor("gui/button/choice_hover_background.png", im.matrix.desaturate() * im.matrix.colorize(kwarg, "#fff") * im.matrix.saturation(18.5)), gui.choice_button_borders)
                         action i.action
 
                 else:
