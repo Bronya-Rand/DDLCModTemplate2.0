@@ -39,14 +39,17 @@ screen achievements:
                     python:
                         currentVal = eval(selectedAchievement.persistent)
 
+                        if not currentVal:
+                            currentVal = False
+
                     if selectedAchievement.count:
                         add ConditionSwitch(
                                 currentVal >= selectedAchievement.maxCount, selectedAchievement.image, "True",
-                                selectedAchievement.locked) xsize 128 ysize 128
+                                selectedAchievement.locked) at achievement_scaler(128)
                     else:
                         add ConditionSwitch(
                                 currentVal, selectedAchievement.image, "True",
-                                selectedAchievement.locked) xsize 128 ysize 128
+                                selectedAchievement.locked) at achievement_scaler(128)
                 else:
                     null height 128
 
@@ -75,8 +78,7 @@ screen achievements:
             rows math.ceil(len(achievementList) / 6.0)
             cols 6
 
-            xspacing 25
-            yspacing 10
+            spacing 25
             mousewheel True
 
             xalign 0.5
@@ -87,6 +89,9 @@ screen achievements:
 
                 python:
                     currentVal = eval(al.persistent)
+
+                    if not currentVal:
+                        currentVal = False
 
                 if al.count:
                     
@@ -113,7 +118,7 @@ screen achievements:
             textbutton "Test Notif":
                 style "return_button"
                 xpos 0.8 ypos 1.1
-                action [ShowMenu("achievement_notify", startup), With(Dissolve(0.5))]
+                action [ShowMenu("achievement_notify", teaser), With(Dissolve(0.5))]
 
 screen achievement_notify(reward):
     
@@ -126,7 +131,7 @@ screen achievement_notify(reward):
         hbox:
             xalign 0.27
             yalign 0.5
-            add reward.image xsize 50 ysize 50
+            add reward.image at achievement_scaler(50)
             spacing 20
             vbox:
                 spacing 5
@@ -140,3 +145,6 @@ style achievements_text:
     color "#000"
     outlines []
     size 20
+
+transform achievement_scaler(x):
+    size(x, x)
