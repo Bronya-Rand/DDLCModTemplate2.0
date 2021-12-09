@@ -98,3 +98,95 @@ init python:
     m1a = GalleryImage("monika 1", name="Monika", sprite=True)
     galleryList.append(m1a)
 
+## Gallery screen ##################################################################
+##
+## This screen is used to make a gallery view of 
+## in-game art to the player in the main menu.
+##
+## Syntax:
+##     gl.image - the image declaration i.e. bg residential_day
+##     gl.small_size - g.image but scaled smaller
+##     gl.name - name of the image
+##     gl.sprite - set this to True if the image you are defining is a sprite
+##     gl.export - allows the player to export a BG/CG in the game to their PC
+##
+
+screen gallery:
+
+    tag menu
+
+    use game_menu(_("Gallery")):
+        
+        vpgrid:
+            id "gvp"
+
+            rows math.ceil(len(galleryList) / 3.0)
+
+            if len(galleryList) > 3:
+                cols 3
+            else:
+                cols len(galleryList)
+
+            xspacing 25
+            yspacing 50
+            mousewheel True
+
+            xalign 0.5
+            yalign 0.5
+
+            for gl in galleryList:
+
+                if gl.small_size:
+                    vbox:
+                        imagebutton: 
+                            idle gl.small_size 
+                            action [SetVariable("current_img", gl), ShowMenu("preview"), With(Dissolve(0.5))]
+                        text gl.name:
+                            xalign 0.5
+                            color "#555"
+                            outlines []
+                            size 14
+
+        vbar value YScrollValue("gvp") xalign 0.99 ysize 560
+
+screen preview():
+
+    tag menu
+
+    hbox:
+        add current_img.image yoffset 40
+    hbox:
+        add Solid("#fcf") ysize 40
+
+    hbox:
+        ypos 0.005
+        xalign 0.5
+        text current_img.name:
+            color "#000"
+            outlines[]
+            size 24 
+
+    hbox:
+        ypos 0.005
+        xalign 0.98
+        textbutton "E":
+            text_style "navigation_button_text"
+            action Function(current_img.export)
+
+        textbutton "X":
+            text_style "navigation_button_text"
+            action ShowMenu("gallery")
+
+    textbutton "<":
+        text_style "navigation_button_text"
+        xalign 0.0
+        yalign 0.5
+        action Function(next_image, True)
+
+    textbutton ">":
+        text_style "navigation_button_text"
+        xalign 1.0
+        yalign 0.5
+        action Function(next_image)
+
+    on "replaced" action With(Dissolve(0.5))
