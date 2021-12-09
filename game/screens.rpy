@@ -295,7 +295,7 @@ style input:
 ##      your menu as you like. Add (kwargs=[color hex or style name]) to your
 ##      menu option name and you get different buttons! 
 ##
-##      Ex: "Option 1 (kwargs="#00fbff")
+##      Examples: "Option 1 (kwargs=#00fbff)" | "Option 2 (kwargs=#00fbff, #6cffff)"
 ##
 ## http://www.renpy.org/doc/html/screen_special.html#choice
 
