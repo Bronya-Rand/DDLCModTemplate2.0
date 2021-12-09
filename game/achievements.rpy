@@ -118,7 +118,7 @@ screen achievements:
             textbutton "Test Notif":
                 style "return_button"
                 xpos 0.8 ypos 1.1
-                action [ShowMenu("achievement_notify", teaser), With(Dissolve(0.5))]
+                action [ShowMenu("achievement_notify", startup), With(Dissolve(0.5))]
 
 screen achievement_notify(reward):
     
