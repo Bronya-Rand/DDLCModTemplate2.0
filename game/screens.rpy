@@ -140,8 +140,7 @@ style vslider:
 
 style frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
-    #background Frame(recolorize("gui/frame.png", "#ffbde1"), gui.frame_borders, tile=gui.frame_tile)
+    background Frame(recolorize("gui/frame.png"), gui.frame_borders, tile=gui.frame_tile)
 
 ################################################################################
 ## In-game screens
@@ -199,11 +198,9 @@ style window:
     ysize gui.textbox_height
 
     background Transform("gui/textbox.png", xalign=0.5, yalign=1.0)
-    #background Transform(recolorize("gui/textbox.png", "#ffbde1"), xalign=0.5, yalign=1.0)
 
 style window_monika is window:
     background Transform("gui/textbox_monika.png", xalign=0.5, yalign=1.0)
-    #background Transform(recolorize("gui/textbox_monika.png", "#ffbde1"), xalign=0.5, yalign=1.0)
 
 style namebox:
     xpos gui.name_xpos
@@ -213,7 +210,6 @@ style namebox:
     ysize gui.namebox_height
 
     background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    #background Frame(recolorize("gui/namebox.png", "#ffbde1"), gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
     padding gui.namebox_borders.padding
 
 style say_label:
@@ -345,7 +341,7 @@ screen rigged_choice(items):
     vbox:
         for i in items:
             textbutton i.caption action i.action
-    
+
     timer 1.0/30.0 repeat True action Function(RigMouse)
 
 
@@ -704,8 +700,7 @@ style game_menu_outer_frame:
     bottom_padding 30
     top_padding 120
 
-    background "gui/overlay/game_menu.png"
-    #background recolorize("gui/overlay/game_menu.png", "#ffbde1")
+    background recolorize("gui/overlay/game_menu.png")
 
 style game_menu_navigation_frame:
     xsize 280
@@ -1144,7 +1139,7 @@ screen history():
                     substitute False
         if not _history_list:
             label _("The dialogue history is empty.")
-            
+
 python early:
     import renpy.text.textsupport as textsupport
     from renpy.text.textsupport import TAG, PARAGRAPH
@@ -1171,7 +1166,7 @@ python early:
             else:
                 rv.append(text)
         return "".join(rv)
- 
+
 style history_window is empty
 
 style history_name is gui_label
@@ -1498,8 +1493,7 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame("gui/frame.png", gui.confirm_frame_borders, tile=gui.frame_tile)
-    #background Frame(recolorize("gui/frame.png", "#ffbde1"), gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame(recolorize("gui/frame.png"), gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
@@ -1679,7 +1673,7 @@ init python:
     osName = ""
 
     def fakePercent(st, at, winver):
-        
+
         if int(0 + (st * 5)) < 100:
             percent = int(0 + (st * 5))
         else:
@@ -1704,7 +1698,7 @@ init python:
             cursor = 0
             return Text("   ", style="bsod_linux_text"), 0.5
 
-    
+
     if renpy.windows:
         osName = subprocess.check_output("wmic os get version", shell=True).replace("\r", "").replace(" ", "").replace("\n", "").replace("Version ", "")
 
@@ -1714,9 +1708,9 @@ init python:
 ## platforms (Mobile devices defaults to the Linux BSOD).
 ##
 ## Syntax:
-##     bsodCode - The error code message you want to show the player. Defaults to 
+##     bsodCode - The error code message you want to show the player. Defaults to
 ##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
-##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the 
+##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the
 ##                error. Defaults to libGLESv2.dll if no file name is given.
 ##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
 
@@ -1727,14 +1721,14 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
     if renpy.windows:
 
         if osName < "6.2.9200": # Windows 7
-            
+
             add Solid("#000082")
-            
+
             vbox:
 
                 style_prefix "bsod_win7"
 
-                text "A problem has been detected and Windows has been shut down to prevent damage to your computer." 
+                text "A problem has been detected and Windows has been shut down to prevent damage to your computer."
                 text "The problem seems to be caused by the following file: " + bsodFile.upper()
                 text bsodCode.upper()
                 text "If this is the first time you've seen this Stop error screen, restart your computer. If this screens appears again, follow these steps:"
@@ -1745,24 +1739,24 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 text "*** " + bsodFile.upper() + "  -  Address FBF92317 base at FBF102721, Datestamp 3d6dd67c"
 
         elif osName >= "6.2.9200" and osName < "10.0.10240": # Windows 8/8.1
-            
+
             add Solid("#1273aa")
 
             style_prefix "bsod_win8"
-            
+
             vbox:
 
                 xalign 0.5
                 yalign 0.4
 
                 text ":(" style "bsod_win8_sad_text"
-                text "Your PC ran into a problem and needs to restart." 
+                text "Your PC ran into a problem and needs to restart."
                 text "We're just collecting some error info, and then"
                 add DynamicDisplayable(fakePercent, 8)
                 text "If you'd like to know more, you can search online later for this error: " + bsodCode.upper() style "bsod_win8_sub_text"
-            
+
         else: # Windows 10 (up to 21H1)/Windows 11/Windows 11 RSOD
-            
+
             if osName >= "10.0.10240" and osName <= "10.0.22000":
 
                 add Solid("#0078d7")
@@ -1775,7 +1769,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                     python:
                         blackCol = "#0078d7"
 
-                else: 
+                else:
 
                     add Solid("#d40e0eff")
                     python:
@@ -1819,7 +1813,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
 
                     else:
-                        
+
                         vbox:
                             text "" line_leading -3
                             add im.MatrixColor("mod_assets/frame.png", im.matrix.colorize(blackCol, "#fff"), ) at bsod_qrcode(150)
@@ -1828,9 +1822,9 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                             spacing 4
                             text "For more information about this issue and possible fixes, visit" style "bsod_win10_info_text" line_leading 25
                             text "https://www.windows.com/stopcode\n" style "bsod_win10_info_text"
-                            text "If you call a support person, give them this info:" style "bsod_win10_sub_text" 
+                            text "If you call a support person, give them this info:" style "bsod_win10_sub_text"
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
-        
+
     elif renpy.macintosh:
 
         add Solid("#222")
@@ -1841,22 +1835,22 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
             style_prefix "bsod_mac"
             xalign 0.53
             yalign 0.51
-            
-            text "You need to restart your computer. Hold down the Power\n" 
+
+            text "You need to restart your computer. Hold down the Power\n"
             text "button until it turns off, then press the Power button again." line_spacing 25
             text "Redémarrez l'ordinateur. Enfoncez le bouton de démarrage\n"
             text "jusqu'à l'extinction, puis appuyez dessus une nouvelle fois." line_spacing 25
-            text "Debe reiniciar el o rdenador. Mantenga pulsado el botón de\n" 
+            text "Debe reiniciar el o rdenador. Mantenga pulsado el botón de\n"
             text "arranque hasta que se apague y luego vuelva a pulsarlo." line_spacing 25
-            text "Sie müssen den Computer neu starten. Halten Sie den\n" 
-            text "Ein-/Ausschalter gedrückt bis das Gerät ausgeschaltet ist\n" 
+            text "Sie müssen den Computer neu starten. Halten Sie den\n"
+            text "Ein-/Ausschalter gedrückt bis das Gerät ausgeschaltet ist\n"
             text "und drücken Sie ihn dann erneut." line_spacing 25
-            text "Devi riavviare il computer. Tieni premuto il pulsante di\n" 
-            text "accensione finché non si spegne, quindi premi di nuovo il\n" 
-            text "pulsante di accensione." 
+            text "Devi riavviare il computer. Tieni premuto il pulsante di\n"
+            text "accensione finché non si spegne, quindi premi di nuovo il\n"
+            text "pulsante di accensione."
 
     else:
-        
+
         add Solid("#000")
 
         vbox:
@@ -1960,7 +1954,7 @@ else:
         size 15
         outlines []
         line_leading 5
-            
+
 transform bsod_transition:
     "black"
     0.1
@@ -2031,4 +2025,3 @@ style nvl_button:
 
 style nvl_button_text:
     properties gui.button_text_properties("nvl_button")
-
