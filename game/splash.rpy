@@ -40,7 +40,7 @@ image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign
 
 # Main Menu Images
 image menu_logo:
-    "mod_assets/DDLCModTemplateLogo.png"
+    im.Composite((512, 512), (0, 0), recolorize("mod_assets/logo_bg.png"), (0, 0), "mod_assets/logo_fg.png")
     subpixel True
     xcenter 240
     ycenter 120
