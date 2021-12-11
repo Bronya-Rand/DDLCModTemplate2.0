@@ -33,7 +33,7 @@ init python:
         if (blackCol == "#ffbde1" and whiteCol == "#ffe6f4" and contr == 1.29) or (blackCol == "#ffdbf0" and whiteCol == "#fff" and contr == 1):
             return path
         else:
-            return im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr) * im.matrix.colorize("#00f", "#fff")
+            return im.MatrixColor(im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr)), im.matrix.colorize("#00f", "#fff")
                 * im.matrix.saturation(120)), im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
