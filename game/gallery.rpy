@@ -127,8 +127,7 @@ screen gallery:
             else:
                 cols len(galleryList)
 
-            xspacing 25
-            yspacing 50
+            spacing 25
             mousewheel True
 
             xalign 0.5
@@ -156,7 +155,7 @@ screen preview():
     hbox:
         add current_img.image yoffset 40
     hbox:
-        add Solid("#fcf") ysize 40
+        add Solid("#fcf") size(config.screen_width, 40)
 
     hbox:
         ypos 0.005
