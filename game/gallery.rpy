@@ -62,7 +62,7 @@ init python:
                     renpy.file(self.file)
                     export = self.file
                 except:
-                    export = imgcore.get_registered_image(self.file).filename
+                    export = get_registered_image(self.file).filename
                 
                 if renpy.android:
                     with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
@@ -88,6 +88,13 @@ init python:
         else:
             try: current_img = galleryList[index+1]
             except: current_img = galleryList[0]
+
+    def get_registered_image(name): # For Ren'Py 6 compatibility
+
+        if not isinstance(name, tuple):
+            name = tuple(name.split())
+
+        return imgcore.images.get(name)
 
     residential = GalleryImage("bg residential_day")
     galleryList.append(residential)
@@ -128,6 +135,7 @@ screen gallery:
                 cols len(galleryList)
 
             spacing 25
+            #yspacing 50
             mousewheel True
 
             xalign 0.5
