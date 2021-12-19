@@ -15,14 +15,6 @@ if sys.platform != "win32":
     import fcntl
 
 
-#in_renpy = False
-#try:
-#    import renpy
-#    in_renpy = True
-#except:
-#    pass
-
-
 class SingleInstanceException(Exception):
     pass
 
@@ -65,8 +57,7 @@ class SingleInstance(object):
             except OSError:
                 type, e, tb = sys.exc_info()
                 if e.errno == 13:
-                    logger.error(
-                        "Another instance is already running, quitting.")
+                    logger.warning("Another instance is already running, raising an exception.")
                     raise SingleInstanceException(error_message)
                 if logger:
                     logger.warning(e)
@@ -79,8 +70,7 @@ class SingleInstance(object):
             try:
                 fcntl.lockf(self.fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except IOError:
-                logger.warning(
-                    "Another instance is already running, quitting.")
+                logger.warning("Another instance is already running, raising an exception.")
                 raise SingleInstanceException(error_message)
         self.initialized = True
 
