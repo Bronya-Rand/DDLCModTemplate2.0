@@ -14,7 +14,7 @@ python early:
     # Import the singleton module from the tendo package to
     # ensure only one instance of the game is running
     import singleton
-    me = singleton.SingleInstance(error_message="Another instance of %s is already running." % build.name)
+    me = singleton.SingleInstance(error_message="Another instance of %s is already running." % config.name)
 
 init python:
     # Disable some keys
@@ -405,7 +405,7 @@ image sayori 5b = im.Composite((960, 960), (0, 0), "sayori/3b.png")
 image sayori 5c = im.Composite((960, 960), (0, 0), "sayori/3c.png")
 image sayori 5d = im.Composite((960, 960), (0, 0), "sayori/3d.png")
 
-# Casual Sayori (Seen during her confession)
+# Casual Sayori (seen during her confession)
 image sayori 1ba = im.Composite((960, 960), (0, 0), "sayori/1bl.png", (0, 0), "sayori/1br.png", (0, 0), "sayori/a.png")
 image sayori 1bb = im.Composite((960, 960), (0, 0), "sayori/1bl.png", (0, 0), "sayori/1br.png", (0, 0), "sayori/b.png")
 image sayori 1bc = im.Composite((960, 960), (0, 0), "sayori/1bl.png", (0, 0), "sayori/1br.png", (0, 0), "sayori/c.png")
