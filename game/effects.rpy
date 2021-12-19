@@ -4,7 +4,7 @@
 # Use this as a starting point if you would like to override with your own.
 
 init python:
-    # Screen caps the current screen used by many functions
+    # Screenshots the current screen into a Surface
     def screenshot_srf():
         if renpy.version_tuple[0] >= 7 and renpy.version_tuple[1] >= 4:
             srf = renpy.display.draw.screenshot(None)
@@ -21,7 +21,7 @@ init python:
         inv.blit(srf, (0,0), None, 2) 
         return inv
 
-    # This defines a display for the inverted screen
+    # This defines a displayable for the inverted screen
     class Invert(renpy.Displayable):
         def __init__(self, delay=0.0, screenshot_delay=0.0):
             super(Invert, self).__init__()
@@ -74,7 +74,7 @@ init python:
             elif st <= self.offTime and self.offset != 0:
                 self.offset = 0
     
-    # This defines a renpy displayable made up of `number` of screen tear
+    # This defines a Ren'Py displayable made up of `number` of screen tear
     # sections, that bounce back and forth, based on `ontimeMult` & `offtimeMult`
     # and set randomly by an amount between `offsetMin` & `offsetMax`
     class Tear(renpy.Displayable):
@@ -100,7 +100,7 @@ init python:
             for i in range(number+1):
                 self.pieces.append(TearPiece(tearpoints[i], tearpoints[i+1], offtimeMult, ontimeMult, offsetMin, offsetMax))
         
-        # Renders the display
+        # Renders the displayable
         def render(self, width, height, st, at):
             render = renpy.Render(self.width, self.height)
             render.blit(self.srf, (0,0))
@@ -111,7 +111,7 @@ init python:
             renpy.redraw(self, 0)
             return render
 
-# Defines the screen for Ren'Py
+# Defines a screen for the screen-tearing effect
 # By default, tear the screen into 10 pieces
 screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None):
     zorder 150
@@ -344,8 +344,8 @@ image blood_eye2:
     Blood("blood_particle", dripChance=0.005, numSquirts=0, burstSize=0).sm
 
 # AnimatedMask
-#These effects are used to animate the moving layers that create the "Space Background"
-#that appears outside the window in Act 3 with Monika.
+# These effects are used to animate the moving layers that create the "Space Background"
+# that appears outside the window in Act 3 with Monika.
 init python:
     import math
     class AnimatedMask(renpy.Displayable):
@@ -431,7 +431,7 @@ image bsod = LiveComposite((1280, 720), (0, 0), "bsod_1", (0, 0), "bsod_2")
 
 # Veins
 # This display creates a veiny border around the screen that shakes and pulses.
-# Used in Chapter 22 as party of a fainting affect that affects 1/3rd of playthroughs
+# Used in Act 2 Chapter 2 as party of a fainting affect that affects 1/3rd of playthroughs
 image veins:
     AnimatedMask("images/bg/veinmask.png", "images/bg/veinmask.png", "images/bg/veinmaskb.png", 0.15, 16, moving=False, speed=10.0, frequency=0.25, amount=0.1)
     xanchor 0.05 zoom 1.10
