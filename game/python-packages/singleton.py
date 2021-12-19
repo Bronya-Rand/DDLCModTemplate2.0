@@ -68,7 +68,10 @@ class SingleInstance(object):
                     logger.error(
                         "Another instance is already running, quitting.")
                     raise SingleInstanceException(error_message)
-                print(e.errno)
+                if logger:
+                    logger.warning(e)
+                else:
+                    print("Unloggable error: %s" % e)
                 raise
         else:  # non Windows
             self.fp = open(self.lockfile, 'w')
