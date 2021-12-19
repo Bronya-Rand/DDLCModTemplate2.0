@@ -110,7 +110,7 @@ image menu_art_m_ghost:
     zoom 1.00
     menu_art_move(1.00, 1000, 1.00)
 
-# Sayori Image In Act 2
+# Sayori Image in Act 2
 image menu_art_s_glitch:
     subpixel True
     "gui/menu_art_s_break.png"
@@ -206,11 +206,11 @@ image warning:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
-# Checks for missing character files
+# Checks for missing character files and restore them
 init python:
     if not persistent.do_not_delete:
         import os
-        if renpy.android: #checks if the platform is android
+        if renpy.android: # checks if the platform is android
             try:
                 # writes character files if missing and correct playthrough to Android/data/[your mod]/characters
                 if not os.access(os.environ['ANDROID_PUBLIC'] + "/characters/", os.F_OK):
