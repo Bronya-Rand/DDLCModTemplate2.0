@@ -11,12 +11,12 @@ if sys.platform != "win32":
     import fcntl
 
 
-in_renpy = False
-try:
-    import renpy
-    in_renpy = True
-except:
-    pass
+#in_renpy = False
+#try:
+#    import renpy
+#    in_renpy = True
+#except:
+#    pass
 
 
 class SingleInstanceException(Exception):
@@ -98,4 +98,4 @@ class SingleInstance(object):
             sys.exit(-1)
 
 logger = logging.getLogger("tendo.singleton")
-logger.addHandler(logging.StreamHandler(stream=in_renpy and renpy.display.log or None))
+logger.addHandler(logging.StreamHandler()) # stream=in_renpy and renpy.display.log or None))
