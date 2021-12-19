@@ -31,7 +31,8 @@ label start:
     # For glitched dialogue, use 'style.edited' than 'style.normal'
     $ style.say_dialogue = style.normal
 
-    # Controls whether Sayori is dead. Leave this alone unless needed.
+    # Controls whether Sayori is dead. This is a leftover from old versions of DDLC.
+    # Leave this alone unless needed.
     $ in_sayori_kill = None
     
     # Controls whether we allow skipping dialogue.
