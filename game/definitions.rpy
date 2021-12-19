@@ -3,35 +3,41 @@
 # This section defines stuff for DDLC and your mod!
 # Use this as a starting point if you would like to override with your own.
 
+# Leftover demo mode from Dan
 define persistent.demo = False
+# Determines if the game is the Steam version
 define persistent.steam = ("steamapps" in config.basedir.lower())
 # Change this to True to enable Developer Mode
 define config.developer = "auto"
 
 python early:
+    # Import the singleton module from the tendo package to
+    # ensure only one instance of the game is running
     import singleton
     me = singleton.SingleInstance()
 
 init python:
+    # Disable some keys
     config.keymap['game_menu'].remove('mouseup_3')
     config.keymap['hide_windows'].append('mouseup_3')
     config.keymap['self_voicing'] = []
     config.keymap['clipboard_voicing'] = []
     config.keymap['toggle_skip'] = []
+    # Make an audio channel for poems
     renpy.music.register_channel("music_poem", mixer="music", tight=True)
     
-    # Get's position of Music
+    # Gets position of the music playing in a channel
     def get_pos(channel='music'):
         pos = renpy.music.get_pos(channel=channel)
         if pos: return pos
         return 0
 
-    # Delete's All Saves
+    # Deletes all saves
     def delete_all_saves():
         for savegame in renpy.list_saved_games(fast=True):
             renpy.unlink_save(savegame)
 
-    # Delete's Characters
+    # Deletes a character
     def delete_character(name):
         import os
         if renpy.android:
@@ -41,7 +47,7 @@ init python:
             try: os.remove(config.basedir + "/characters/" + name + ".chr")
             except: pass
 
-    # Restores Character's CHR
+    # Restores the chr files of all characters
     def restore_all_characters():
         if renpy.android:
             try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/monika.chr")
@@ -62,7 +68,7 @@ init python:
             try: renpy.file("../characters/sayori.chr")
             except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
     
-    # Restores Characters if their playthough matches current run.
+    # Restores characters relevant to the current act (playthough).
     def restore_relevant_characters():
         restore_all_characters()
         if persistent.playthrough == 1 or persistent.playthrough == 2:
@@ -74,7 +80,8 @@ init python:
         elif persistent.playthrough == 4:
             delete_character("monika")
 
-    # Controls time.
+    # Pauses the game for a certain amount of time,
+    # or if time isn't specified, wait for player interaction
     def pause(time=None):
         #global _windows_hidden
         if not time:
@@ -88,6 +95,7 @@ init python:
         renpy.pause(time)
         #_windows_hidden = False
 
+    # Process the pronuons selected in the pronoun selection wizard
     def finishPronouns():
         heC = he.capitalize()
         himC = him.capitalize()
@@ -100,23 +108,23 @@ init python:
 
 # Music
 
-# This section is where you can reference DDLC audio and add your own!
-# audio. - tells Ren'Py this is sound
+# This references all audio from DDLC and your mod!
+# audio. - tells Ren'Py that we're resigtering a sound
 # t1 - tells Ren'Py the label of the music/sound file
 # <loop 22.073> - tells Ren'Py to loop the song at that time interval
 # "bgm/1.ogg" - location of your music
 define audio.t1 = "<loop 22.073>bgm/1.ogg" # Doki Doki Literature Club! - Main Theme
 define audio.t2 = "<loop 4.499>bgm/2.ogg" # Ohayou Sayori! - Sayori Theme
-define audio.t2g = "bgm/2g.ogg"
+define audio.t2g = "bgm/2g.ogg" # Glitched versions of Ohayou Sayori!
 define audio.t2g2 = "<from 4.499 loop 4.499>bgm/2.ogg"
 define audio.t2g3 = "<loop 4.492>bgm/2g2.ogg"
 define audio.t3 = "<loop 4.618>bgm/3.ogg" # Main Theme - In Game 
-define audio.t3g = "<to 15.255>bgm/3g.ogg"
+define audio.t3g = "<to 15.255>bgm/3g.ogg" # Glitched versions of Main Theme
 define audio.t3g2 = "<from 15.255 loop 4.618>bgm/3.ogg"
 define audio.t3g3 = "<loop 4.618>bgm/3g2.ogg"
 define audio.t3m = "<loop 4.618>bgm/3.ogg"
 define audio.t4 = "<loop 19.451>bgm/4.ogg" # Dreams of Love and Literature - Poem Game Theme
-define audio.t4g = "<loop 1.000>bgm/4g.ogg"
+define audio.t4g = "<loop 1.000>bgm/4g.ogg" # Glitched version of Dreams of Love and Literature
 define audio.t5 = "<loop 4.444>bgm/5.ogg" # Okay Everyone! - Sharing Poems Theme
 
 # Doki Poem Theme
@@ -125,14 +133,14 @@ define audio.tsayori = "<loop 4.444>bgm/5_sayori.ogg" # Okay Everyone! (Sayori)
 define audio.tnatsuki = "<loop 4.444>bgm/5_natsuki.ogg" # Okay Everyone! (Natsuki)
 define audio.tyuri = "<loop 4.444>bgm/5_yuri.ogg" # Okay Everyone! (Yuri)
 
-define audio.t5b = "<loop 4.444>bgm/5.ogg"
+define audio.t5b = "<loop 4.444>bgm/5.ogg" # Glitched versions of Okay Everyone!
 define audio.t5c = "<loop 4.444>bgm/5.ogg"
 define audio.t6 = "<loop 10.893>bgm/6.ogg" # Play With Me - Yuri/Natsuki Theme
-define audio.t6g = "<loop 10.893>bgm/6g.ogg"
+define audio.t6g = "<loop 10.893>bgm/6g.ogg" # Glitched versions of Play With Me
 define audio.t6r = "<to 39.817 loop 0>bgm/6r.ogg"
 define audio.t6s = "<loop 43.572>bgm/6s.ogg"
 define audio.t7 = "<loop 2.291>bgm/7.ogg" # Poem Panic - Argument Theme
-define audio.t7a = "<loop 4.316 to 12.453>bgm/7.ogg"
+define audio.t7a = "<loop 4.316 to 12.453>bgm/7.ogg" # Glitched versions of Poem Panic
 define audio.t7g = "<loop 31.880>bgm/7g.ogg"
 define audio.t8 = "<loop 9.938>bgm/8.ogg" # Daijoubu! - Argument Resolved Theme
 define audio.t9 = "<loop 3.172>bgm/9.ogg" # My Feelings - Emotional Theme
@@ -141,10 +149,10 @@ define audio.t10 = "<loop 5.861>bgm/10.ogg" # My Confession - Sayori Confession 
 define audio.t10y = "<loop 0>bgm/10-yuri.ogg"
 define audio.td = "<loop 36.782>bgm/d.ogg"
 
-define audio.m1 = "<loop 0>bgm/m1.ogg" # Just Monika. - Just Monika.
+define audio.m1 = "<loop 0>bgm/m1.ogg" # Just Monika - Just Monika.
 define audio.mend = "<loop 6.424>bgm/monika-end.ogg" # I Still Love You - Monika Post-Delete Theme
 
-define audio.ghostmenu = "<loop 0>bgm/ghostmenu.ogg"
+define audio.ghostmenu = "<loop 0>bgm/ghostmenu.ogg" # All kinds of SFXs
 define audio.g1 = "<loop 0>bgm/g1.ogg"
 define audio.g2 = "<loop 0>bgm/g2.ogg"
 define audio.hb = "<loop 0>bgm/heartbeat.ogg"
@@ -275,7 +283,7 @@ image glitch_color2:
         alpha 0.7
         linear 0.45 alpha 0
 
-# Character Definitions
+# Character Sprites Definitions
 
 # This is where the characters bodies and faces are defined.
 # They are defined by left half, right half and their head.
@@ -828,7 +836,7 @@ image natsuki 5bx = im.Composite((960, 960), (18, 22), "natsuki/x.png", (0, 0), 
 image natsuki 5by = im.Composite((960, 960), (18, 22), "natsuki/y.png", (0, 0), "natsuki/3b.png")
 image natsuki 5bz = im.Composite((960, 960), (18, 22), "natsuki/z.png", (0, 0), "natsuki/3b.png")
 
-# Beta Natsuki
+# These are unused
 image natsuki 1 = im.Composite((960, 960), (0, 0), "natsuki/1l.png", (0, 0), "natsuki/1r.png", (0, 0), "natsuki/1t.png")
 image natsuki 2 = im.Composite((960, 960), (0, 0), "natsuki/1l.png", (0, 0), "natsuki/2r.png", (0, 0), "natsuki/1t.png")
 image natsuki 3 = im.Composite((960, 960), (0, 0), "natsuki/2l.png", (0, 0), "natsuki/1r.png", (0, 0), "natsuki/1t.png")
@@ -929,7 +937,7 @@ image n_blackeyes = "images/natsuki/blackeyes.png"
 image n_eye = "images/natsuki/eye.png"
 
 # Yuri's Definitions
-# Sprites with 1y1 are Yuri's Yandere Sprites
+# Sprites with y are yandere variants
 image yuri 1 = im.Composite((960, 960), (0, 0), "yuri/1l.png", (0, 0), "yuri/1r.png", (0, 0), "yuri/a.png")
 image yuri 2 = im.Composite((960, 960), (0, 0), "yuri/1l.png", (0, 0), "yuri/2r.png", (0, 0), "yuri/a.png")
 image yuri 3 = im.Composite((960, 960), (0, 0), "yuri/2l.png", (0, 0), "yuri/2r.png", (0, 0), "yuri/a.png")
