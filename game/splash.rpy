@@ -1,7 +1,6 @@
 ## Splash.rpy
 
 # Checks to see if all of DDLC's files are inside for PC
-# You may remove 'scripts' if you recieve conflict with scripts.rpa
 ## Note: For building a mod for PC/Android, you must keep the DDLC RPAs 
 ## and decompile them for the builds to work.
 init -100 python:
@@ -25,7 +24,7 @@ image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign
 
 # Main Menu Images
 image menu_logo:
-    "/mod_assets/DDLCModTemplateLogo.png"
+    "mod_assets/DDLCModTemplateLogo.png"
     subpixel True
     xcenter 240
     ycenter 120
@@ -111,7 +110,7 @@ image menu_art_m_ghost:
     zoom 1.00
     menu_art_move(1.00, 1000, 1.00)
 
-# Sayori Image After Game 1st Restart
+# Sayori Image In Act 2
 image menu_art_s_glitch:
     subpixel True
     "gui/menu_art_s_break.png"
@@ -208,9 +207,6 @@ image warning:
     0.5
 
 # Checks for missing character files
-## Note: For Android, make sure to change the default package name of to 
-## your own package name in options.rpy under define package_name. 
-##Your package name is what you defined in Ren'Py Launcher in the Android section
 init python:
     if not persistent.do_not_delete:
         import os
@@ -363,7 +359,7 @@ label splashscreen:
 
     $ basedir = config.basedir.replace('\\', '/')
 
-    # Controls auto-load of certain scripts
+    # Jump to the label in persistent.autoload if it's not empty
     if persistent.autoload:
         jump autoload
 
@@ -490,7 +486,8 @@ label warningscreen:
 #     $ renpy.quit()
 #     return
 
-# Checks if Afterload is the same as the anticheat
+# Checks if the anticheat ID in the save is the same as
+# the anticheat ID in the persistent
 label after_load:
     $ config.allow_skipping = allow_skipping
     $ _dismiss_pause = config.developer
@@ -506,7 +503,7 @@ label after_load:
         $ renpy.utter_restart()
     return
 
-# Autoreloads the game 
+# Jump to the label in persistent.autoload
 label autoload:
     python:
         if "_old_game_menu_screen" in globals():
