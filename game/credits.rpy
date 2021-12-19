@@ -672,10 +672,10 @@ label credits2:
 
     # Fade to black and make the player quit
     label postcredits_loop:
-        # Make the game reload to the postcredits_loop when it restarts
+        # Make the game reload to this label when it restarts
         $ persistent.autoload = "postcredits_loop"
 
-        # Disable keys and skipping, again
+        # Disable keys and skipping in case the game is restarted
         $ config.keymap['game_menu'] = []
         $ config.keymap['hide_windows'] = []
         $ renpy.display.behavior.clear_keymap_cache()
