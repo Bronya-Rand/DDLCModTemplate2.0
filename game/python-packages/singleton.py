@@ -10,12 +10,14 @@ import tempfile
 if sys.platform != "win32":
     import fcntl
 
+
 in_renpy = False
 try:
     import renpy
     in_renpy = True
-expect:
+except:
     pass
+
 
 class SingleInstanceException(Exception):
     pass
