@@ -14,7 +14,7 @@ python early:
     # Import the singleton module from the tendo package to
     # ensure only one instance of the game is running
     import singleton
-    me = singleton.SingleInstance()
+    me = singleton.SingleInstance(error_message="Another instance of %s is already running." % build.name)
 
 init python:
     # Disable some keys
