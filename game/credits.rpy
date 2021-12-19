@@ -394,9 +394,10 @@ image end_glitch4:
 
 # Start of the actual credits scene
 label credits:
-    # Reloads DDLC to credits
+    # Makes the game reload to credits if it's restarted.
     $ persistent.autoload = "credits" 
     $ renpy.save_persistent()
+    # Disable some keys and skipping.
     $ config.keymap['game_menu'] = []
     $ config.keymap['hide_windows'] = []
     $ renpy.display.behavior.clear_keymap_cache()
@@ -459,7 +460,7 @@ label credits:
             linear 15 ypos -500
             repeat
 
-    # Play's Your Reality with Karaoke Lines
+    # Play the first 50 seconds of the credits theme (Your Reality) with karaoke lines
     pause 41
     scene black
     pause 0.5
@@ -484,8 +485,9 @@ label credits:
     pause 50
     jump credits2
 
-# This is where the credit scroll starts
+# This is where the credits roll starts
 label credits2:
+    # Chibi configs
     python:
         sayoriTime = renpy.random.random() * 4 + 4
         natsukiTime = renpy.random.random() * 4 + 4
@@ -506,19 +508,20 @@ label credits2:
         imagenum = 0
     scene black
     $ consolehistory = []
+    # Play the latter part of the credits theme
     play music "<from 50.0>bgm/credits.ogg" noloop
     $ starttime = datetime.datetime.now()
     pause 0.88
     show credits_logo
     pause 9.12
     # Each CG appears. If it has not been seen, it is grayed out. If it's
-    # not a perfect ending, the CG images are deleted after a few seconds
+    # not a perfect ending, the CG images are "deleted" after a few seconds
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     show expression ("credits_cg1" + lockedtext) as credits_image_1 at credits_scroll_right
     
-    # Actual names for Credits, where you plug in stuff
+    # Display the credits entries
     show credits_header "Concept & Game Design" as credits_header_1 at credits_text_scroll_left
     show credits_text "Dan Salvato" as credits_text_1 at credits_text_scroll_left
     
@@ -669,10 +672,10 @@ label credits2:
 
     # Fade to black and make the player quit
     label postcredits_loop:
-        # Game reloads to the postcredits_loop
+        # Make the game reload to the postcredits_loop when it restarts
         $ persistent.autoload = "postcredits_loop"
 
-        # Disables Main Menu, Quick Menu, Everything
+        # Disable keys and skipping, again
         $ config.keymap['game_menu'] = []
         $ config.keymap['hide_windows'] = []
         $ renpy.display.behavior.clear_keymap_cache()
@@ -687,6 +690,6 @@ label credits2:
         show poem_end
         $ pause()
         
-        # Fakes Error Corruption. Makes the player quit the game.
+        # Display fake error. Makes the player quit the game.
         call screen dialog(message="Error: Script file is missing or corrupt.\nPlease reinstall the game.", ok_action=Quit(confirm=False))
         return
