@@ -10,8 +10,14 @@ import tempfile
 if sys.platform != "win32":
     import fcntl
 
+in_renpy = False
+try:
+    import renpy
+    in_renpy = True
+expect:
+    pass
 
-class SingleInstanceException(BaseException):
+class SingleInstanceException(Exception):
     pass
 
 
@@ -31,7 +37,7 @@ class SingleInstance(object):
     Providing a flavor_id will augment the filename with the provided flavor_id, allowing you to create multiple singleton instances from the same file. This is particularly useful if you want specific functions to have their own singleton instances.
     """
 
-    def __init__(self, flavor_id="", lockfile=""):
+    def __init__(self, flavor_id="", lockfile="", error_message=None):
         self.initialized = False
         if lockfile:
             self.lockfile = lockfile
@@ -55,7 +61,7 @@ class SingleInstance(object):
                 if e.errno == 13:
                     logger.error(
                         "Another instance is already running, quitting.")
-                    raise SingleInstanceException()
+                    raise SingleInstanceException(error_message)
                 print(e.errno)
                 raise
         else:  # non Windows
@@ -66,7 +72,7 @@ class SingleInstance(object):
             except IOError:
                 logger.warning(
                     "Another instance is already running, quitting.")
-                raise SingleInstanceException()
+                raise SingleInstanceException(error_message)
         self.initialized = True
 
     def __del__(self):
@@ -90,4 +96,4 @@ class SingleInstance(object):
             sys.exit(-1)
 
 logger = logging.getLogger("tendo.singleton")
-logger.addHandler(logging.StreamHandler())
+logger.addHandler(logging.StreamHandler(stream=in_renpy and renpy.display.log or None))
