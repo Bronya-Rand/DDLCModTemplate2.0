@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+# NOTE: this is vendored
+
 import logging
 from multiprocessing import Process
 import os
@@ -95,7 +97,7 @@ class SingleInstance(object):
                 logger.warning(e)
             else:
                 print("Unloggable error: %s" % e)
-            sys.exit(-1)
+            raise SingleInstanceException("Failed to delete the lockfile.") from e
 
 logger = logging.getLogger("tendo.singleton")
 logger.addHandler(logging.StreamHandler()) # stream=in_renpy and renpy.display.log or None))
