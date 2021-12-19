@@ -1,18 +1,25 @@
 #! /usr/bin/env python
 
-import sys
-import os
-import tempfile
 import logging
+from multiprocessing import Process
+import os
+import sys
+import tempfile
+import unittest
+
+
+if sys.platform != "win32":
+    import fcntl
 
 
 class SingleInstanceException(BaseException):
     pass
 
 
-class SingleInstance:
+class SingleInstance(object):
 
-    """
+    """Class that can be instantiated only once per machine.
+
     If you want to prevent your script from running in parallel just instantiate SingleInstance() class. If is there another instance already running it will throw a `SingleInstanceException`.
 
     >>> import tendo
@@ -25,14 +32,15 @@ class SingleInstance:
     Providing a flavor_id will augment the filename with the provided flavor_id, allowing you to create multiple singleton instances from the same file. This is particularly useful if you want specific functions to have their own singleton instances.
     """
 
-    def __init__(self, flavor_id=""):
-        import sys
+    def __init__(self, flavor_id="", lockfile=""):
         self.initialized = False
-        basename = os.path.splitext(os.path.abspath(sys.argv[0]))[0].replace(
-            "/", "-").replace(":", "").replace("\\", "-") + '-%s' % flavor_id + '.lock'
-        # os.path.splitext(os.path.abspath(sys.modules['__main__'].__file__))[0].replace("/", "-").replace(":", "").replace("\\", "-") + '-%s' % flavor_id + '.lock'
-        self.lockfile = os.path.normpath(
-            tempfile.gettempdir() + '/' + basename)
+        if lockfile:
+            self.lockfile = lockfile
+        else:
+            basename = os.path.splitext(os.path.abspath(sys.argv[0]))[0].replace(
+                "/", "-").replace(":", "").replace("\\", "-") + '-%s' % flavor_id + '.lock'
+            self.lockfile = os.path.normpath(
+                tempfile.gettempdir() + '/' + basename)
 
         logger.debug("SingleInstance lockfile: " + self.lockfile)
         if sys.platform == 'win32':
@@ -52,7 +60,6 @@ class SingleInstance:
                 print(e.errno)
                 raise
         else:  # non Windows
-            import fcntl
             self.fp = open(self.lockfile, 'w')
             self.fp.flush()
             try:
@@ -64,8 +71,6 @@ class SingleInstance:
         self.initialized = True
 
     def __del__(self):
-        import sys
-        import os
         if not self.initialized:
             return
         try:
@@ -74,7 +79,6 @@ class SingleInstance:
                     os.close(self.fd)
                     os.unlink(self.lockfile)
             else:
-                import fcntl
                 fcntl.lockf(self.fp, fcntl.LOCK_UN)
                 # os.close(self.fp)
                 if os.path.isfile(self.lockfile):
@@ -97,5 +101,47 @@ def f(name):
     logger.setLevel(tmp)
     pass
 
+
+class testSingleton(unittest.TestCase):
+
+    def test_1(self):
+        me = SingleInstance(flavor_id="test-1")
+        del me  # now the lock should be removed
+        assert True
+
+    def test_2(self):
+        p = Process(target=f, args=("test-2",))
+        p.start()
+        p.join()
+        # the called function should succeed
+        assert p.exitcode == 0, "%s != 0" % p.exitcode
+
+    def test_3(self):
+        me = SingleInstance(flavor_id="test-3")  # noqa -- me should still kept
+        p = Process(target=f, args=("test-3",))
+        p.start()
+        p.join()
+        # the called function should fail because we already have another
+        # instance running
+        assert p.exitcode != 0, "%s != 0 (2nd execution)" % p.exitcode
+        # note, we return -1 but this translates to 255 meanwhile we'll
+        # consider that anything different from 0 is good
+        p = Process(target=f, args=("test-3",))
+        p.start()
+        p.join()
+        # the called function should fail because we already have another
+        # instance running
+        assert p.exitcode != 0, "%s != 0 (3rd execution)" % p.exitcode
+
+    def test_4(self):
+        lockfile = '/tmp/foo.lock'
+        me = SingleInstance(lockfile=lockfile)
+        assert me.lockfile == lockfile
+
+
 logger = logging.getLogger("tendo.singleton")
-logger.addHandler(logging.StreamHandler())
+
+if __name__ == "__main__":
+    logger.addHandler(logging.StreamHandler())
+    logger.setLevel(logging.DEBUG)
+    unittest.main()
