@@ -10,15 +10,6 @@ label lockdown_check:
 
     $ version = renpy.version()
 
-    if renpy.version_tuple >= (7, 4, 6, 1693) and renpy.version_tuple < (7, 4, 9, 2142):
-
-        scene black
-        "{b}Warning:{/b} A bug was introduced with the release of Ren'Py 7.4.6 that breaks DDLC transforms heavily."
-        "This bug is semi-present still into Ren'Py 7.4.7 up to 7.4.8."
-        "If you want to mod DDLC in Ren'Py 7, you should mod under {a=https://renpy.org/release/7.4.5}{i}Ren'Py 7.4.5{/i}{/a} or {a=https://renpy.org/release/7.4.9}{i}Ren'Py 7.4.9{/i}{/a}{a=https://renpy.org/release/7.4.10}{i}Ren'Py 7.4.10{/i}{/a}."
-        "Sorry for the modding inconvenience. Happy modding though!"
-        $ renpy.quit()
-
     if renpy.version_tuple > (7, 4, 10, 2178):
 
         scene black
