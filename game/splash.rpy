@@ -265,7 +265,13 @@ label splashscreen:
             try:
                 process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
             except:
-                pass
+                try:
+                    process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().split("\n") # For W11 builds > 22000
+                    for x in range(len(process_list)):
+                        process_list[x] += ".exe"
+                except:
+                    pass
+
             try:
                 for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
                     user = os.environ.get(name)
