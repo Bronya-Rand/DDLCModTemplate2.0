@@ -3,32 +3,36 @@
 # This defines the Monika Console that appears in the game when
 # Monika deletes characters
 
-# Use this as a starting point if you want to override this with your own.
-
-# The gray transparent overlay box on screen
+# This image makes a gray imagebox for the console in-game.
 image console_bg:
     "#333"
     topleft
     alpha 0.75 size (480,180)
 
-# Font for the console
+# This style declares the text appearance of the text shown in the console in-game.
 style console_text:
     font "gui/font/F25_Bank_Printer.ttf"
     color "#fff"
     size 18
     outlines []
 
-# Text Speed of the console
+# This style controls the text speed of text shown in the console in-game.
 style console_text_console is console_text:
     slow_cps 30
 
-# Additional Styling for the console
+# This variable stores the console input and output sent to the console in-game.
 default consolehistory = []
+
+# This image shows the console text in the console in-game.
 image console_text = ParameterizedText(style="console_text_console", anchor=(0,0), xpos=30, ypos=10)
+
+# This image shows the console's past commands in the console in-game.
 image console_history = ParameterizedText(style="console_text", anchor=(0,0), xpos=30, ypos=50)
+
+# This image shows a right arrow in the console for command input in the console in-game.
 image console_caret = Text(">", style="console_text", anchor=(0,0), xpos=5, ypos=10)
 
-# This defines the function that displays text in the console
+# This label calls the console used in-game for commands.
 label updateconsole(text="", history=""):
     show console_bg zorder 100
     show console_caret zorder 100
@@ -41,13 +45,13 @@ label updateconsole(text="", history=""):
     $ pause(0.5)
     return
 
-# This clears all console history from the console
+# This label clears all console history and commands from the console in-game.
 label updateconsole_clearall(text="", history=""):
     $ pause(len(text) / 30.0 + 0.5)
     $ pause(0.5)
     return
 
-# Beta console from Dan
+# This label is a left-over label for the console in-game from DDLC's development.
 label updateconsole_old(text="", history=""):
     $ starttime = datetime.datetime.now()
     $ textlength = len(text)
@@ -79,7 +83,7 @@ label updateconsole_old(text="", history=""):
 
         return
 
-# This adds passed text to the console history
+# This label adds certain text to the console history.
 label updateconsolehistory(text=""):
     if text:
         python:
@@ -90,7 +94,7 @@ label updateconsolehistory(text=""):
         show console_history "[consolehistorydisplay]" as chistory zorder 100
     return
 
-# Hides the whole console
+# This label hides the console in-game.
 label hideconsole:
     hide console_bg
     hide console_caret

@@ -2,14 +2,12 @@
 
 # This controls the ending of DDLC and your mod!
 
-# Use this as a starting point if want to override this with your own.
-
-# Import the datetime python library to calculate time.
+# This init python statement declares datetime to the game.
 init python:
     import datetime
 
-# This defines the CGs that are deleted after a few seconds.
-# These are the color CGs that are used in the base game.
+# These images shows the CGs seen in-game then deletes them after a
+# few seconds from the credits if the game isn't 100% complete.
 image credits_cg1:
     "images/cg/credits/1.png"
     size (640, 360)
@@ -70,7 +68,8 @@ image credits_cg10:
     8.6
     "images/menu/notfound.png"
 
-# These are the CGs that have not been seen (grayed-out)
+# These images shows the CGs not seen in-game then deletes them after a
+# few seconds from the credits.
 image credits_cg1_locked:
     "images/cg/credits/1b.png"
     size (640, 360)
@@ -131,8 +130,8 @@ image credits_cg10_locked:
     8.6
     "images/menu/notfound.png"
 
-# This defines the CG's that are not removed
-# if the user gets a perfect ending (100% Completion)
+# These images shows every CG in the game and does not
+# delete them from the credits if the game is 100% complete.
 image credits_cg1_clearall:
     "images/cg/credits/1.png"
     size (640, 360)
@@ -173,7 +172,7 @@ image credits_cg10_clearall:
     "images/cg/credits/10.png"
     size (640, 360)
 
-# DDLC Logo
+# This image shows the DDLC logo with certain transforms.
 image credits_logo:
     "gui/logo.png"
     truecenter
@@ -182,7 +181,7 @@ image credits_logo:
     4.5
     linear 2.0 alpha 0
 
-# Team Salvato Logo
+# This image shows the Team Salvato logo with certain transforms.
 image credits_ts:
     "images/bg/splash-white.png"
     xalign 0.5 yalign 0.6
@@ -191,7 +190,8 @@ image credits_ts:
     4.5
     linear 2.0 alpha 0
 
-# Style fonts for the credits
+# This style declares the text appearance of the work type
+# credits in the credits.
 style credits_header:
     font "gui/font/RifficFree-Bold.ttf"
     color "#ffaae6"
@@ -199,6 +199,8 @@ style credits_header:
     text_align 0.5
     outlines []
 
+# This style declares the text appearance of the person type
+# credits in the credits.
 style credits_text:
     font "gui/font/Halogen.ttf"
     color "#fff"
@@ -206,6 +208,8 @@ style credits_text:
     text_align 0.5
     outlines []
 
+# This style declares the text appearance of Monika's lyrics
+# shown in the credits in the credits.
 style monika_credits_text:
     font "gui/font/m1.ttf"
     color "#fff"
@@ -213,99 +217,124 @@ style monika_credits_text:
     text_align 0.5
     outlines []
 
+# This image shows the work-type credits text to the credits (Game Concept).
 image credits_header = ParameterizedText(style="credits_header", ypos=-40)
+
+# This image shows the person-type credits text to the credits (Dan Salvato).
 image credits_text = ParameterizedText(style="credits_text", ypos=40)
+
+# This image shows the Monika lyrics text in the credits.
 image monika_credits_text = ParameterizedText(style="monika_credits_text", xalign=0.5)
 
-# Credit animations to make the credits and images move.
+# This transform handles the credits scrolling animation in the credits.
 transform credits_scroll:
     subpixel True
     yoffset 740
     linear 15 yoffset -380
 
+# This transform handles the credits text scrolling animation in the credits.
 transform credits_text_scroll:
     anchor (0.5, 0.5) subpixel True
     yoffset 920
     linear 15 yoffset -200
 
+# This transform handles the credits chibi scrolling animation in the credits.
 transform credits_sticker_scroll:
     subpixel True
     yoffset 940
     7.8
     linear 15 yoffset -180
 
+# This transform handles the credits right scrolling animation in the credits.
 transform credits_scroll_right:
     xalign 0.9
     credits_scroll
 
+# This transform handles the credits left scrolling animation in the credits.
 transform credits_scroll_left:
     xalign 0.1
     credits_scroll
 
+# This transform handles the credits text right scrolling animation in the credits.
 transform credits_text_scroll_right:
     xpos 960
     credits_text_scroll
 
+# This transform handles the credits text left scrolling animation in the credits.
 transform credits_text_scroll_left:
     xpos 320
     credits_text_scroll
 
+# This transform handles the Sayori Chibi animation in the credits.
 transform credits_sticker_1:
     yanchor 1.00
     xalign 0.32
     credits_sticker_scroll
+
+# This transform handles the Natsuki Chibi animation in the credits.
 transform credits_sticker_2:
     yanchor 1.00
     xalign 0.44
     credits_sticker_scroll
+
+# This transform handles the Yuri Chibi animation in the credits.
 transform credits_sticker_3:
     yanchor 1.00
     xalign 0.56
     credits_sticker_scroll
+
+# This transform handles the Monika Chibi animation in the credits.
 transform credits_sticker_4:
     yanchor 1.00
     xalign 0.68
     credits_sticker_scroll
 
+# This variable handles the y position of the Monika lyrics in the credits.
 define credits_ypos = 250
 
-# This defines the text of Monika when singing Your Reality
+# These image transforms shows Monika's lyrics when she sings Your Reality in the credits
 image mcredits_1a:
     ypos credits_ypos
     xoffset -205
     "black"
     10.33
     Text("Every day,", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 13.0, ramplen=4, alpha=False)
+
 image mcredits_1b:
     ypos credits_ypos
     xoffset -35
     "black"
     11.75
     Text("I imagine a future where", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 12.0, ramplen=4, alpha=False)
+
 image mcredits_1c:
     ypos credits_ypos
     xoffset 170
     "black"
     13.76
     Text("I can be with you", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 15.0, ramplen=4, alpha=False)
+
 image mcredits_2a:
     ypos credits_ypos + 50
     xoffset -226
     "black"
     19.45
     Text("In my hand", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 13.0, ramplen=4, alpha=False)
+
 image mcredits_2b:
     ypos credits_ypos + 50
     xoffset -10
     "black"
     20.9
     Text(" is a pen that will write a poem", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 9.0, ramplen=4, alpha=False)
+
 image mcredits_2c:
     ypos credits_ypos + 50
     xoffset 225
     "black"
     23.27
     Text("of me and you", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 15.0, ramplen=4, alpha=False)
+
 
 image mcredits_3:
     ypos credits_ypos + 100
@@ -332,6 +361,7 @@ image mcredits_6a:
     "black"
     42.0
     Text(" What will it take", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 10.0, ramplen=4, alpha=False)
+
 image mcredits_6b:
     ypos credits_ypos + 250
     xoffset 85
@@ -345,11 +375,12 @@ image mcredits_7:
     48.62
     linear 1.5 alpha 1.0
 
+# This image is a left-over image for Monika's lyrics in-game from DDLC's development.
 image mcredits_1_test:
     ypos credits_ypos + 300
     Text("What will it take just to find that special day?", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 15.0, ramplen=4)
 
-# Glitch Images
+# These images shows the glitched Monika poem image shown in the credits.
 image end_glitch1:
     "bg/end-glitch1.jpg"
     alpha 0.0
@@ -392,19 +423,30 @@ image end_glitch4:
         linear 4 yoffset 0
         repeat
 
-# Start of the actual credits scene
+# This label starts the first part of the credits with Monika herself.
 label credits:
-    # Reloads DDLC to credits
+    # This variable declaration makes sure that the game reloads to the credits
+    # if they close the game.
     $ persistent.autoload = "credits" 
+
+    # This variable declaration saves the persistent data in the game to the save file.
     $ renpy.save_persistent()
+
+    # These variable declarations unmaps the game menu and hide window button and
+    # makes a new keymap cache.
     $ config.keymap['game_menu'] = []
     $ config.keymap['hide_windows'] = []
     $ renpy.display.behavior.clear_keymap_cache()
+
+    # These variable declarations makes it so the player can't skip or access the 
+    # quick menu in the credits file
     $ quick_menu = False
     $ config.skipping = False
     $ config.allow_skipping = False
+
     scene black
-    # Starts Monika's spoken dialogue
+
+    # This play statement starts Monika's spoken dialogue in the credits.
     play music "bgm/end-voice.ogg" noloop
 
     show noise zorder 9:
@@ -459,7 +501,6 @@ label credits:
             linear 15 ypos -500
             repeat
 
-    # Play's Your Reality with Karaoke Lines
     pause 41
     scene black
     pause 0.5
@@ -467,7 +508,10 @@ label credits:
     call updateconsole ("renpy.music.play(\"ddlc.ogg\")", "Playing audio \"ddlc.ogg\"...")
     pause 1.0
     call hideconsole
+    # This play statement starts Your Reality to 50 seconds in the credits.
     play music "<to 50.0>bgm/credits.ogg" noloop
+
+    # This section shows the small lyrics shown in the credits.
     show mcredits_1a zorder 50
     show mcredits_1b zorder 49
     show mcredits_1c zorder 48
@@ -484,7 +528,8 @@ label credits:
     pause 50
     jump credits2
 
-# This is where the credit scroll starts
+# This label starts the second part of the credits with development
+# information.
 label credits2:
     python:
         sayoriTime = renpy.random.random() * 4 + 4
@@ -511,14 +556,15 @@ label credits2:
     pause 0.88
     show credits_logo
     pause 9.12
-    # Each CG appears. If it has not been seen, it is grayed out. If it's
-    # not a perfect ending, the CG images are deleted after a few seconds
+
+    # These variable declarations and show statement determines whether a CG in the game
+    # is shown, grayed-out (locked) or shown and deleted afterwards.
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     show expression ("credits_cg1" + lockedtext) as credits_image_1 at credits_scroll_right
     
-    # Actual names for Credits, where you plug in stuff
+    # These show statements shows the work-type and person-type credits in the credits.
     show credits_header "Concept & Game Design" as credits_header_1 at credits_text_scroll_left
     show credits_text "Dan Salvato" as credits_text_1 at credits_text_scroll_left
     
@@ -655,7 +701,6 @@ label credits2:
     call updateconsole ("os.remove(\"game/script.rpy\")", "script.rpy deleted successfully.")
     $ pause(115.72 - (datetime.datetime.now() - starttime).total_seconds())
     
-    # Hides console and shows the Team Salvato Logo/Thank You
     call hideconsole
     show credits_ts
     show credits_text "made with love by":
@@ -667,12 +712,10 @@ label credits2:
     play sound page_turn
     show poem_end with Dissolve(1)
 
-    # Fade to black and make the player quit
+    # This label starts the end of the game loop with the ending poem
+    # or Dan's special letter and a fake game corruption error to quit the game.
     label postcredits_loop:
-        # Game reloads to the postcredits_loop
         $ persistent.autoload = "postcredits_loop"
-
-        # Disables Main Menu, Quick Menu, Everything
         $ config.keymap['game_menu'] = []
         $ config.keymap['hide_windows'] = []
         $ renpy.display.behavior.clear_keymap_cache()
@@ -680,13 +723,14 @@ label credits2:
         $ config.skipping = False
         $ config.allow_skipping = False
 
-        # Fade to black
         scene black
 
-        # Shows either Monika's or Dan's Goodbye Message
+        # This show statement either shows Monika's or Dan's Goodbye Message
         show poem_end
+        # This pause statement pauses for indefinite time.
         $ pause()
         
-        # Fakes Error Corruption. Makes the player quit the game.
+        # This call screen statement shows a fake error corruption message that
+        # makes the player quit the game.
         call screen dialog(message="Error: Script file is missing or corrupt.\nPlease reinstall the game.", ok_action=Quit(confirm=False))
         return
