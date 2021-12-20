@@ -1722,7 +1722,6 @@ screen nvl_dialogue(dialogue):
 
 init python:
     import subprocess
-    import platform
 
     cursor = 0
 
@@ -1754,8 +1753,8 @@ init python:
 
     
     if renpy.windows:
-        try: osVer = tuple(map(int, subprocess.check_output("wmic os get version", shell=True).replace("\r", "").replace(" ", "").replace("\n", "").replace("Version", "").split(".")))
-        except: osVer = tuple(map(int, platform.version().split("."))) or (6, 2, 9200)
+        try: osVer = tuple(map(int, subprocess.check_output("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", shell=True).split("."))) # Vista+
+        except: osVer = (5, 1, 2600) # XP (though who uses XP today?)
 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
