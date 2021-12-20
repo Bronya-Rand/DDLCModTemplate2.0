@@ -140,7 +140,8 @@ style vslider:
 
 style frame:
     padding gui.frame_borders.padding
-    background Frame(recolorize("gui/frame.png"), gui.frame_borders, tile=gui.frame_tile)
+    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    # background Frame(recolorize("gui/frame.png"), gui.frame_borders, tile=gui.frame_tile)
 
 ################################################################################
 ## In-game screens
@@ -700,7 +701,8 @@ style game_menu_outer_frame:
     bottom_padding 30
     top_padding 120
 
-    background recolorize("gui/overlay/game_menu.png")
+    background "gui/overlay/game_menu.png"
+    # background recolorize("gui/overlay/game_menu.png")
 
 style game_menu_navigation_frame:
     xsize 280
@@ -1493,7 +1495,8 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame(recolorize("gui/frame.png"), gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame("gui/frame.png", gui.confirm_frame_borders, tile=gui.frame_tile)
+    # background Frame(recolorize("gui/frame.png"), gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5

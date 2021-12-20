@@ -29,18 +29,15 @@ init python:
     # Example: recolorize("gui/menu_bg.png", "#bdfdff", "#e6ffff", 1)
 
     def recolorize(path, blackCol="#ffbde1", whiteCol="#ffe6f4", contr=1.29):
-        # Recolors assets only if values differ from default
-        if (blackCol == "#ffbde1" and whiteCol == "#ffe6f4" and contr == 1.29) or (blackCol == "#ffdbf0" and whiteCol == "#fff" and contr == 1):
-            return path
-        else:
-            return im.MatrixColor(im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr)), im.matrix.colorize("#00f", "#fff")
-                * im.matrix.saturation(120)), im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
+        return im.MatrixColor(im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr)), im.matrix.colorize("#00f", "#fff")
+            * im.matrix.saturation(120)), im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
 
 # Main Menu Images
 image menu_logo:
-    im.Composite((512, 512), (0, 0), recolorize("mod_assets/logo_bg.png"), (0, 0), "mod_assets/logo_fg.png")
+    "/mod_assets/DDLCModTemplateLogo.png"
+    # im.Composite((512, 512), (0, 0), recolorize("mod_assets/logo_bg.png"), (0, 0), "mod_assets/logo_fg.png")
     subpixel True
     xcenter 240
     ycenter 120
@@ -49,12 +46,14 @@ image menu_logo:
 
 image menu_bg:
     topleft
-    recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
+    "gui/menu_bg.png"
+    # recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
     menu_bg_move
 
 image game_menu_bg:
     topleft
-    recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
+    "gui/menu_bg.png"
+    # recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
     menu_bg_loop
 
 image menu_fade:
