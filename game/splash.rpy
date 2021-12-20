@@ -266,7 +266,7 @@ label splashscreen:
                 process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
             except:
                 try:
-                    process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().split("\n") # For W11 builds > 22000
+                    process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().replace("\r", "").split("\n") # For W11 builds > 22000
                     for x in range(len(process_list)):
                         process_list[x] += ".exe"
                 except:
@@ -319,22 +319,24 @@ label splashscreen:
         scene tos
         with Dissolve(1.0)
         pause 1.0
-        # You can edit this message but you MUST have say it's not affiliated with Team Salvato
-        # must finish the official game and has spoilers, and where to get DDLC from."
+
+        # You can edit this message but you MUST declare that your mod is unaffiliated with Team Salvato,
+        # requires that the player must finish DDLC before playing, has spoilers for DDLC, and where to 
+        # get DDLC's files."
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
         "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: https://ddlc.moe or on Steam."
+
         menu:
             "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
             "I agree.":
-                 pass
+                pass
+                
         $ persistent.first_run = True
         scene tos2
         with Dissolve(1.5)
         pause 1.0
         scene white
-
-        $ persistent.first_run = True
 
     ## Controls where Sayori Kill Early Starts Up.
     ## Commented out for mod safety reasons.
