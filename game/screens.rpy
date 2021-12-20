@@ -1722,9 +1722,9 @@ screen nvl_dialogue(dialogue):
 
 init python:
     import subprocess
+    import platform
 
     cursor = 0
-    osName = ""
 
     def fakePercent(st, at, winver):
         
@@ -1754,15 +1754,16 @@ init python:
 
     
     if renpy.windows:
-        osName = subprocess.check_output("wmic os get version", shell=True).replace("\r", "").replace(" ", "").replace("\n", "").replace("Version ", "")
+        try: osVer = tuple(map(int, subprocess.check_output("wmic os get version", shell=True).replace("\r", "").replace(" ", "").replace("\n", "").replace("Version", "").split(".")))
+        except: osVer = tuple(map(int, platform.version().split("."))) or (6, 2, 9200)
 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
     layer "master"
 
-    if not renpy.windows:
+    if renpy.windows:
 
-        if osName < "6.2.9200": # Windows 7
+        if osVer < (6, 2, 9200): # Windows 7
             
             add Solid("#000082")
             
@@ -1780,7 +1781,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 text "*** STOP: 0x00000051 (OXFD69420, 0x00000005, OXFBF92317" + ", 0x00000000)\n"
                 text "*** " + bsodFile.upper() + "  -  Address FBF92317 base at FBF102721, Datestamp 3d6dd67c"
 
-        elif osName >= "6.2.9200" and osName < "10.0.10240": # Windows 8/8.1
+        elif osVer < (10, 0, 10240): # Windows 8/8.1
             
             add Solid("#1273aa")
 
@@ -1799,7 +1800,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
             
         else: # Windows 10 (up to 21H1)/Windows 11/Windows 11 RSOD
             
-            if osName >= "10.0.10240" and osName <= "10.0.22000":
+            if osVer < (10, 0, 22000):
 
                 add Solid("#0078d7")
 
@@ -1826,7 +1827,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
                 text ":(" style "bsod_win10_sad_text"
 
-                if osName >= "10.0.10240" and osName < "10.0.22000":
+                if osVer < (10, 0, 22000):
 
                     text "Your PC ran into a problem and needs to restart. We're"
                     text "just collecting some error info, and then we'll restart for"
@@ -1842,7 +1843,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
                 hbox:
 
-                    if osName >= "10.0.10240" and osName < "10.0.22000":
+                    if osVer < (10, 0, 22000):
 
                         vbox:
                             text "" line_leading -3
