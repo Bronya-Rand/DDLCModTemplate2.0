@@ -2,7 +2,7 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-<u>Downloads</u>: [2.4.9 (Standard Template with Android Support)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.4.9) | [2.3.1-u8 (Standard Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u8)
+<u>Downloads</u>: [2.5.0 (Standard Template with Android Support)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.5.0) | [2.3.1-u9 (Standard Template)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/2.3.1-u9)
 
 The **new** DDLC Mod Template is a mod template made by GanstaKingofSA for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4, 7.3.5 - 7.4.5 and 7.4.9 - 7.4.10.
 
@@ -39,6 +39,8 @@ Refer to [*guide.pdf*](guide.pdf) for more in-depth information about making you
 8. [BETA] Pronoun Support! Allow users to identify with what pronoun they go by!
     > See *pronoun_example.rpy* in the `game` folder for a example on how to use this feature.
 9. Better Blue Screens of Death! Make your own BSOD easily in-game now than ever on every operating system! (even Mac and Linux!)
+10. Uncensored Mode! Allow more sensitive content to be shown in-game.
+11. Let's Play Mode! 
 
 ### Added Features
 1. Terra's in-depth poem game guide!
