@@ -1,4 +1,5 @@
 # Script.rpy
+
 # This is the main script that DDLC/Ren'Py calls upon to start
 # your mod's story! 
 

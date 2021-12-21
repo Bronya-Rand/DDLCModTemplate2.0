@@ -1,4 +1,4 @@
-# Poem_special.rpy
+## poem_special.rpy
 
 # This defines the special poems that the player might be shown to the player
 # Only three poems are ever shown to the player, at random
