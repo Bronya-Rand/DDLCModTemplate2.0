@@ -1,3 +1,6 @@
+## screens.rpy
+
+# This file declares all the screens and styles in DDLC.
 
 ## Initialization
 ################################################################################

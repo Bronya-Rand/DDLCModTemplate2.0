@@ -1,4 +1,4 @@
-## Splash.rpy
+## splash.rpy
 
 # Checks to see if all of DDLC's files are inside for PC
 # You may remove 'scripts' if you recieve conflict with scripts.rpa

@@ -1,13 +1,12 @@
-# Credits.rpy
+## credits.rpy
 
-# This controls the ending of DDLC and your mod!
+# This file controls the ending of DDLC and your mod!
 
-# This init python statement declares datetime to the game.
 init python:
     import datetime
 
-# These images shows the CGs seen in-game then deletes them after a
-# few seconds from the credits if the game isn't 100% complete.
+# These images shows the CGs seen in-game then deletes them after a few seconds
+# from the credits if the game isn't 100% complete.
 image credits_cg1:
     "images/cg/credits/1.png"
     size (640, 360)
@@ -68,8 +67,8 @@ image credits_cg10:
     8.6
     "images/menu/notfound.png"
 
-# These images shows the CGs not seen in-game then deletes them after a
-# few seconds from the credits.
+# These images shows the CGs not seen in-game then deletes them after a few seconds
+# from the credits.
 image credits_cg1_locked:
     "images/cg/credits/1b.png"
     size (640, 360)
@@ -130,8 +129,8 @@ image credits_cg10_locked:
     8.6
     "images/menu/notfound.png"
 
-# These images shows every CG in the game and does not
-# delete them from the credits if the game is 100% complete.
+# These images shows every CG in the game and does not delete them from THE
+# credits if the game is 100% complete.
 image credits_cg1_clearall:
     "images/cg/credits/1.png"
     size (640, 360)
@@ -190,8 +189,8 @@ image credits_ts:
     4.5
     linear 2.0 alpha 0
 
-# This style declares the text appearance of the work type
-# credits in the credits.
+# This style declares the text appearance of the work type credits text in the
+# credits.
 style credits_header:
     font "gui/font/RifficFree-Bold.ttf"
     color "#ffaae6"
@@ -199,8 +198,8 @@ style credits_header:
     text_align 0.5
     outlines []
 
-# This style declares the text appearance of the person type
-# credits in the credits.
+# This style declares the text appearance of the person type credits text in the
+# credits.
 style credits_text:
     font "gui/font/Halogen.ttf"
     color "#fff"
@@ -208,8 +207,7 @@ style credits_text:
     text_align 0.5
     outlines []
 
-# This style declares the text appearance of Monika's lyrics
-# shown in the credits in the credits.
+# This style declares the text appearance of Monika's lyrics text in the credits.
 style monika_credits_text:
     font "gui/font/m1.ttf"
     color "#fff"
@@ -292,7 +290,8 @@ transform credits_sticker_4:
 # This variable handles the y position of the Monika lyrics in the credits.
 define credits_ypos = 250
 
-# These image transforms shows Monika's lyrics when she sings Your Reality in the credits
+# These image transforms shows Monika's lyrics when she sings Your Reality in 
+# the credits.
 image mcredits_1a:
     ypos credits_ypos
     xoffset -205
@@ -375,7 +374,8 @@ image mcredits_7:
     48.62
     linear 1.5 alpha 1.0
 
-# This image is a left-over image for Monika's lyrics in-game from DDLC's development.
+# This image is a left-over image for Monika's lyrics in-game from DDLC's 
+# development.
 image mcredits_1_test:
     ypos credits_ypos + 300
     Text("What will it take just to find that special day?", style="monika_credits_text") with ImageDissolve("images/menu/wipeleft.png", 15.0, ramplen=4)
@@ -429,7 +429,8 @@ label credits:
     # if they close the game.
     $ persistent.autoload = "credits" 
 
-    # This variable declaration saves the persistent data in the game to the save file.
+    # This variable declaration saves the persistent data in the game to the 
+    # save file.
     $ renpy.save_persistent()
 
     # These variable declarations unmaps the game menu and hide window button and
@@ -528,8 +529,7 @@ label credits:
     pause 50
     jump credits2
 
-# This label starts the second part of the credits with development
-# information.
+# This label starts the second part of the credits with development information.
 label credits2:
     python:
         sayoriTime = renpy.random.random() * 4 + 4
@@ -557,14 +557,15 @@ label credits2:
     show credits_logo
     pause 9.12
 
-    # These variable declarations and show statement determines whether a CG in the game
-    # is shown, grayed-out (locked) or shown and deleted afterwards.
+    # These variable declarations and show statement determines whether a CG in 
+    # the game is shown, grayed-out (locked) or shown and deleted afterwards.
     $ lockedtext = "" if persistent.clear[imagenum] else "_locked"
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     show expression ("credits_cg1" + lockedtext) as credits_image_1 at credits_scroll_right
     
-    # These show statements shows the work-type and person-type credits in the credits.
+    # These show statements shows the work-type and person-type credits in the 
+    # credits.
     show credits_header "Concept & Game Design" as credits_header_1 at credits_text_scroll_left
     show credits_text "Dan Salvato" as credits_text_1 at credits_text_scroll_left
     
@@ -712,8 +713,8 @@ label credits2:
     play sound page_turn
     show poem_end with Dissolve(1)
 
-    # This label starts the end of the game loop with the ending poem
-    # or Dan's special letter and a fake game corruption error to quit the game.
+    # This label starts the end of the game loop with the ending poem or Dan's 
+    # special letter and a fake game corruption error to quit the game.
     label postcredits_loop:
         $ persistent.autoload = "postcredits_loop"
         $ config.keymap['game_menu'] = []
@@ -725,7 +726,7 @@ label credits2:
 
         scene black
 
-        # This show statement either shows Monika's or Dan's Goodbye Message
+        # This show statement either shows Monika's or Dan's Goodbye Message.
         show poem_end
         # This pause statement pauses for indefinite time.
         $ pause()

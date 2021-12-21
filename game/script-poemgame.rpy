@@ -1,11 +1,13 @@
-#Commented to absurdity, blame Terra.
-#
-#Worth noting how the game gets here in the first place:
-    #This script is called via "call poem" in script.rpy.
-    #All of the Act 1 instances are done simply with "call poem".
-    #Some of the Act 2 instances are done with "call poem (False)"
-        #This is how we get the abrupt cut-in to the mini-game in Act 2.
-#Images are defined after the main poem game loop.
+## script-poemgame.rpy
+
+# Commented to absurdity, blame Terra.
+
+# Worth noting how the game gets here in the first place:
+    # This script is called via "call poem" in script.rpy.
+    # All of the Act 1 instances are done simply with "call poem".
+    # Some of the Act 2 instances are done with "call poem (False)"
+        # This is how we get the abrupt cut-in to the mini-game in Act 2.
+# Images are defined after the main poem game loop.
 
 init python: #This whole block runs when DDLC is started (as opposed to when the poem minigame is called)
     import random

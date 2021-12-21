@@ -1,15 +1,14 @@
-# Glitchtext.rpy
+## glitchtext.rpy
 
-# This defines the glitched text that shows in DDLC
+# This file defines the glitched/corrupted text seen in DDLC.
 
-# Use this as a starting point if you would like to override with your own.
-
-# This defines a function that generates glitched text of how many characters are in text.
 init python:
     import random
 
     nonunicode = "¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽž"
 
+    # This function grabs a random amount of non-unicode letters based off
+    # the length requested and returns it to the game to be displayed.
     def glitchtext(length):
         output = ""
         for x in range(length):

@@ -1,4 +1,4 @@
-﻿# pronoun_example.rpy
+﻿## pronoun_example.rpy
 
 # This file serves as a example to the pronoun feature.
 # Use this as a example on how to use the pronoun feature.

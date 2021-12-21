@@ -1,7 +1,7 @@
-# Console.rpy
+## console.rpy
 
-# This defines the Monika Console that appears in the game when
-# Monika deletes characters
+# This file defines the Monika Console contents that appears in the game when
+# Monika deletes characters.
 
 # This image makes a gray imagebox for the console in-game.
 image console_bg:
@@ -29,7 +29,8 @@ image console_text = ParameterizedText(style="console_text_console", anchor=(0,0
 # This image shows the console's past commands in the console in-game.
 image console_history = ParameterizedText(style="console_text", anchor=(0,0), xpos=30, ypos=50)
 
-# This image shows a right arrow in the console for command input in the console in-game.
+# This image shows a right arrow in the console for command input in the console 
+# in-game.
 image console_caret = Text(">", style="console_text", anchor=(0,0), xpos=5, ypos=10)
 
 # This label calls the console used in-game for commands.

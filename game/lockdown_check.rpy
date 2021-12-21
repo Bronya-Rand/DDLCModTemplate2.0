@@ -1,9 +1,9 @@
 # Lockdown_check.rpy
 
-# This file is not part of DDLC. This file is mainly designed to 
-# warn new users about template issues with certain Ren'Py versions
-# or warn them about Quality Assurance with Ren'Py versions higher 
-# than the one the mod template was tested for.
+# This file is not part of DDLC. This file is mainly designed to warn new modders
+# about bugs with certain Ren'Py versions or warn them about QA issues with running 
+# Ren'Py versions higher than the one the mod template was tested for.
+
 ## DO NOT MODIFY THIS FILE! ##
 
 label lockdown_check:

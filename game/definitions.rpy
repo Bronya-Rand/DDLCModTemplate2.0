@@ -1,19 +1,19 @@
-# Definitions.rpy
+## definitions.rpy
 
-# This section defines stuff for DDLC and your mod!
+# This file defines important stuff for DDLC and your mod!
 
-# This variable declares if the game is a demo or not.
+# This variable declares if the mod is a demo or not.
 define persistent.demo = False
 
-# This variable declares whether the game is in the 'steamapps' folder.
+# This variable declares whether the mod is in the 'steamapps' folder.
 define persistent.steam = ("steamapps" in config.basedir.lower())
 
-# This variable declares whether Developer Mode is on or off in the game.
+# This variable declares whether Developer Mode is on or off in the mod.
 # "auto" will enable developer if the files are RPY/RPYCs and disable it if
-# it's in a RPA.
+# the files are in a RPA.
 define config.developer = "auto"
 
-# This python statement starts singleton to make sure only one copy of the game
+# This python statement starts singleton to make sure only one copy of the mod
 # is running.
 python early:
     import singleton
@@ -38,7 +38,7 @@ init python:
         if pos: return pos
         return 0
 
-    # This function deletes all the saves in the game made.
+    # This function deletes all the saves made in the mod.
     def delete_all_saves():
         for savegame in renpy.list_saved_games(fast=True):
             renpy.unlink_save(savegame)
@@ -54,7 +54,7 @@ init python:
             except: pass
 
     # This function restores all the character CHR files to the characters folder 
-    # given the playthrough number in the game.
+    # given the playthrough number in the mod.
     def restore_all_characters():
         if renpy.android:
             if persistent.playthrough != 4:
@@ -108,7 +108,7 @@ init python:
         persistent.hes = hes
 
 ## Music
-# This section declares the music available to be played in the game.
+# This section declares the music available to be played in the mod.
 # Syntax:
 #   audio. - This tells Ren'Py this is a audio variable.
 #   t1 - This tells Ren'Py the label of the music/sound file being declared.
@@ -166,7 +166,7 @@ define audio.page_turn = "sfx/pageflip.ogg"
 define audio.fall = "sfx/fall.ogg"
 
 ## Backgrounds
-# This section declares the backgrounds available to be shown in the game.
+# This section declares the backgrounds available to be shown in the mod.
 # To define a new color background, declare a new image statement like in this example:
 #     image blue = "X" where X is your color hex i.e. '#158353'
 # To define a new background, declare a new image statement like this instead:
@@ -293,7 +293,7 @@ image glitch_color2:
         linear 0.45 alpha 0
 
 # Characters
-# This is where the characters bodies and faces are defined in the game.
+# This is where the characters bodies and faces are defined in the mod.
 # They are defined by a left half, a right half and their head.
 # To define a new image, declare a new image statement like in this example:
 #     image sayori 1ca = im.Composite((960, 960), (0, 0), "mod_assets/sayori/1cl.png", (0, 0), "mod_assets/sayori/1cr.png", (0, 0), "sayori/a.png")
@@ -846,7 +846,7 @@ image natsuki 5by = im.Composite((960, 960), (18, 22), "natsuki/y.png", (0, 0), 
 image natsuki 5bz = im.Composite((960, 960), (18, 22), "natsuki/z.png", (0, 0), "natsuki/3b.png")
 
 # These image definitions are left-overs of certain Natsuki expressions 
-# found in the original 1.0 release of the game.
+# found in the original 1.0 release of DDLC.
 image natsuki 1 = im.Composite((960, 960), (0, 0), "natsuki/1l.png", (0, 0), "natsuki/1r.png", (0, 0), "natsuki/1t.png")
 image natsuki 2 = im.Composite((960, 960), (0, 0), "natsuki/1l.png", (0, 0), "natsuki/2r.png", (0, 0), "natsuki/1t.png")
 image natsuki 3 = im.Composite((960, 960), (0, 0), "natsuki/2l.png", (0, 0), "natsuki/1r.png", (0, 0), "natsuki/1t.png")
@@ -1398,7 +1398,7 @@ image monika g2:
     repeat
 
 ## Character Variables
-# This is where the characters are declared in the game.
+# This is where the characters are declared in the mod.
 # To define a new character with assets, declare a character variable like in this example:
 #   define e = DynamicCharacter('e_name', image='eileen', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 # To define a new character without assets, declare a character variable like this instead:
@@ -1435,12 +1435,12 @@ default areC = persistent.are.capitalize()
 default hesC = persistent.hes.capitalize()
 
 ## Extra Settings Variables
-# This section controls whether the game is censored or not or is in let's play mode.
+# This section controls whether the mod is censored or is in let's play mode.
 default persistent.uncensored_mode = False
 default persistent.lets_play = False
 
 ## Variables
-# This section declares variables on when the game runs for the first time on all saves.
+# This section declares variables when the mod runs for the first time on all saves.
 # To make a new persistent variable, make a new variable with the 'persistent.' in it's name
 # like in this example:
 #   default persistent.monika = 1

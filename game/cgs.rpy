@@ -1,7 +1,7 @@
 ## cgs.rpy
 
-# This file defines all the character graphics (CGs) in DDLC
-# such as Yuri's Chocolate CG and Natsuki's Manga CG.
+# This file defines all the character graphics (CGs) in DDLC such as Yuri's
+# Chocolate CG and Natsuki's Manga CG.
 
 ## Yuri's Chocolate CG [Yuri Route 2]
 # This is the background of the CG (Classroom Wall).
@@ -24,8 +24,8 @@ image y_cg2_nochoc:
     on hide:
         linear 0.5 alpha 0
 
-# This image transform adds some details to the CG to make the 
-# scene sparkle a bit more.
+# This image transform adds some details to the CG to make the scene sparkle
+# a bit more.
 image y_cg2_details:
     "images/cg/y_cg2_details.png"
     alpha 1.00
@@ -51,8 +51,8 @@ image y_cg2_exp3:
     on hide:
         linear 0.5 alpha 0
 
-# These image transform adds a dust layer to the CG to make the 
-# scene sparkle a bit more.
+# These image transform adds a dust layer to the CG to make the scene sparkle
+# a bit more.
 image y_cg2_dust1:
     "images/cg/y_cg2_dust1.png"
     subpixel True
@@ -255,7 +255,8 @@ image s_cg1:
 image s_cg2_base1:
     "images/cg/s_cg2_base1.png"
 
-# This is a alternative background and base of Sayori with a apple juice drink in her hand.
+# This is a alternative background and base of Sayori with a apple juice drink
+# in her hand.
 image s_cg2_base2:
     "images/cg/s_cg2_base2.png"
 
@@ -314,13 +315,15 @@ image y_kill = ConditionSwitch(
 
     )
 
-# This transform starts off the animation for the background in Sayori's hanging CG.
+# This transform starts off the animation for the background in Sayori's 
+# hanging CG.
 transform s_kill_bg_start:
     truecenter
     zoom 1.10
     linear 4 zoom 1.00
 
-# This transform starts off the animation for Sayori's hanging sprite in Sayori's hanging CG.
+# This transform starts off the animation for Sayori's hanging sprite in 
+# Sayori's hanging CG.
 transform s_kill_start:
     truecenter
     xalign 0.3 yalign 0.25 zoom 0.8
@@ -354,7 +357,8 @@ transform dizzy(m, t, subpixel=True):
         easein 1.0 * t yoffset 0
         repeat
 
-# This image transform zooms in on Sayori's hanging sprite in Sayori's hanging CG.
+# This image transform zooms in on Sayori's hanging sprite in Sayori's hanging
+# CG.
 image s_kill_zoom:
     contains:
         "s_kill"
@@ -362,7 +366,8 @@ image s_kill_zoom:
         zoom 2.0 xalign 0.5 yalign 0.05
     dizzy(1, 1.0)
 
-# This image transform zooms in on the glitched background in Sayori's hanging CG.
+# This image transform zooms in on the glitched background in Sayori's hanging
+# CG.
 image s_kill_bg2_zoom:
     contains:
         "s_kill_bg2"
@@ -382,7 +387,8 @@ image s_kill_bg2_zoom:
         linear 0.25 alpha 0.2
         repeat
 
-# This image transform zooms in on the glitched Sayori hanging sprite in Sayori's hanging CG.
+# This image transform zooms in on the glitched Sayori hanging sprite in 
+# Sayori's hanging CG.
 image s_kill2_zoom:
     contains:
         "s_kill2"
