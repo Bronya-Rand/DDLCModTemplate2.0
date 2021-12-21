@@ -1,3 +1,7 @@
+## gallery.rpy
+
+# This file is not part of DDLC. This file contains the code for the gallery
+# menu that shows backgrounds and sprites from your mod.
 
 init python:
     import math
@@ -6,18 +10,42 @@ init python:
     galleryList = []
     current_img = None
 
+    # This class declares the code to make a image for the gallery menu.
+    # Syntax:
+    #   image - This variable contains the path or image tag (sayori 1a) of the 
+    #           image.
+    #   small_size - This variable contain the path or image tag of a shorten version
+    #                   of the image in the gallery.
+    #   name - This variable contains the human-readable name of the image in the
+    #           gallery.
+    #   sprite - This variable checks if the image declared is a character sprite.
+    #   watermark - This variable checks if the exporter should export a watermarked image
+    #               of the image shown in the gallery.
+    #   locked - This variable checks if this image should not be included in the gallery
+    #               until it is shown in-game.
     class GalleryImage:
 
-        def __init__(self, image, small_size=None, name=None, sprite=False, watermark=False):
-            #The image variable name in the game
+        def __init__(self, image, small_size=None, name=None, sprite=False, watermark=False, locked=None):
+            # The image variable name in-game
             self.file = image
-            #The human readable name of the image
+
+            # The human readable name of the image
             if name:
                 self.name = name
             else:
                 self.name = image
-            #A condition to see if the image given is a sprite
+
+            # This condition sees if the image given is a sprite
             self.sprite = sprite
+
+            # This condition sees if the image is locked
+            if locked is not None:
+                self.locked = locked
+            else:
+                self.locked = not renpy.seen_image(image)
+
+            # A condition to see if we export a watermark version of the image
+            self.watermark = watermark
 
             if sprite:
 
@@ -27,8 +55,8 @@ init python:
                     Transform(image, zoom=0.75*0.95)
                 )
 
+                # A descaled version of the main image.
                 if small_size:
-                    #A descaled version of the main image
                     self.small_size = small_size 
                 else:               
                     self.small_size = LiveComposite(
@@ -37,17 +65,17 @@ init python:
                         Transform(image, zoom=0.137)
                     )
             else:
+                
                 self.image = Transform(image, size=(1280, 680))
 
                 if small_size:
                     self.small_size = small_size 
                 else:     
                     self.small_size = Transform(image, size=(234, 132))
-                    
-            #A condition to see if we export a watermark version of the image
-            self.watermark = watermark
 
+        # This function exports the selected image to the players' computer.
         def export(self):
+
             if renpy.android:
                 try: os.mkdir(os.environ['ANDROID_PUBLIC'] + "/gallery")
                 except: pass
@@ -76,6 +104,7 @@ init python:
 
                 renpy.show_screen("dialog", message="Exported \"" + self.name + "\" to the gallery folder.", ok_action=Hide("dialog"))
 
+    # This function advances to the next/previous image in the gallery.
     def next_image(back=False):
         global current_img
 
@@ -89,34 +118,41 @@ init python:
             try: current_img = galleryList[index+1]
             except: current_img = galleryList[0]
 
-    def get_registered_image(name): # For Ren'Py 6 compatibility
+    # For Ren'Py 6 compatibility. This function gets the image displayed in the
+    # gallery from from 'renpy.display.image'.
+    def get_registered_image(name): 
 
         if not isinstance(name, tuple):
             name = tuple(name.split())
 
         return imgcore.images.get(name)
 
-    residential = GalleryImage("bg residential_day")
+    # This section declares the images to be shown in the gallery. See the
+    # 'GalleryMenu' class syntax to declare a image to the gallery.
+    residential = GalleryImage("bg residential_day", locked=False)
     galleryList.append(residential)
 
-    s1a = GalleryImage("sayori 1", sprite=True)
+    s1a = GalleryImage("sayori 1", sprite=True, locked=False)
     galleryList.append(s1a)
 
-    m1a = GalleryImage("monika 1", name="Monika", sprite=True)
+    m1a = GalleryImage("monika 1", name="Monika", sprite=True, locked=False)
     galleryList.append(m1a)
 
-## Gallery screen ##################################################################
+## Gallery Screen #################################################################
 ##
-## This screen is used to make a gallery view of 
-## in-game art to the player in the main menu.
+## This screen is used to make a gallery view of in-game art to the player in 
+## the main menu.
 ##
 ## Syntax:
-##     gl.image - the image declaration i.e. bg residential_day
-##     gl.small_size - g.image but scaled smaller
-##     gl.name - name of the image
-##     gl.sprite - set this to True if the image you are defining is a sprite
-##     gl.export - allows the player to export a BG/CG in the game to their PC
-##
+##   gl.image - This variable contains the path or image tag (sayori 1a) of the 
+##              image.
+##   gl.small_size - This variable contain the path or image tag of a shorten version
+##                   of the image in the gallery.
+##   gl.name - This variable contains the human-readable name of the image in the
+##               gallery.
+##   gl.sprite - This variable checks if the image declared is a character sprite.
+##   gl.locked - This variable checks if this image should not be included in
+##               the gallery until it is shown in-game.
 
 screen gallery:
 
@@ -135,7 +171,6 @@ screen gallery:
                 cols len(galleryList)
 
             spacing 25
-            #yspacing 50
             mousewheel True
 
             xalign 0.5
@@ -143,7 +178,7 @@ screen gallery:
 
             for gl in galleryList:
 
-                if gl.small_size:
+                if not gl.locked:
                     vbox:
                         imagebutton: 
                             idle gl.small_size 
@@ -155,6 +190,10 @@ screen gallery:
                             size 14
 
         vbar value YScrollValue("gvp") xalign 0.99 ysize 560
+
+## Gallery Screen #################################################################
+##
+## This screen shows the currently selected screen to the player in-game.
 
 screen preview():
 
