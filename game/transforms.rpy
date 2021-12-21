@@ -1,6 +1,6 @@
 ## transforms.rpy
 
-# This defines the placements and animations in DDLC
+# This file defines the placements and animations in DDLC.
 
 # Base for other transforms (not used in the game)
 transform tcommon(x=640, z=0.80):
