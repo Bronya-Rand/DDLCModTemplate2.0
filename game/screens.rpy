@@ -1,3 +1,6 @@
+## screens.rpy
+
+# This file declares all the screens and styles in DDLC.
 
 ## Initialization
 ################################################################################
@@ -1057,6 +1060,14 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
+
+            if config.developer:  
+                hbox:
+                    vbox:
+                        textbutton _("Export Mod Icon as ICO"):
+                            action Function(saveIco, "mod_assets/DDLCModTemplateLogo.png")
+                            style "navigation_button"
+                            
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
                 xoffset -10 yoffset -10
@@ -1714,9 +1725,9 @@ screen nvl_dialogue(dialogue):
 
 init python:
     import subprocess
+    import platform
 
     cursor = 0
-    osName = ""
 
     def fakePercent(st, at, winver):
         
@@ -1746,15 +1757,16 @@ init python:
 
     
     if renpy.windows:
-        osName = subprocess.check_output("wmic os get version", shell=True).replace("\r", "").replace(" ", "").replace("\n", "").replace("Version ", "")
+        try: osVer = tuple(map(int, subprocess.check_output("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", shell=True).split("."))) # Vista+
+        except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (though who uses XP today?)
 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
     layer "master"
 
-    if not renpy.windows:
+    if renpy.windows:
 
-        if osName < "6.2.9200": # Windows 7
+        if osVer < (6, 2, 9200): # Windows 7
             
             add Solid("#000082")
             
@@ -1772,7 +1784,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 text "*** STOP: 0x00000051 (OXFD69420, 0x00000005, OXFBF92317" + ", 0x00000000)\n"
                 text "*** " + bsodFile.upper() + "  -  Address FBF92317 base at FBF102721, Datestamp 3d6dd67c"
 
-        elif osName >= "6.2.9200" and osName < "10.0.10240": # Windows 8/8.1
+        elif osVer < (10, 0, 10240): # Windows 8/8.1
             
             add Solid("#1273aa")
 
@@ -1791,7 +1803,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
             
         else: # Windows 10 (up to 21H1)/Windows 11/Windows 11 RSOD
             
-            if osName >= "10.0.10240" and osName <= "10.0.22000":
+            if osVer < (10, 0, 22000):
 
                 add Solid("#0078d7")
 
@@ -1818,7 +1830,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
                 text ":(" style "bsod_win10_sad_text"
 
-                if osName >= "10.0.10240" and osName < "10.0.22000":
+                if osVer < (10, 0, 22000):
 
                     text "Your PC ran into a problem and needs to restart. We're"
                     text "just collecting some error info, and then we'll restart for"
@@ -1834,7 +1846,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
                 hbox:
 
-                    if osName >= "10.0.10240" and osName < "10.0.22000":
+                    if osVer < (10, 0, 22000):
 
                         vbox:
                             text "" line_leading -3
@@ -2054,59 +2066,3 @@ style nvl_button:
 
 style nvl_button_text:
     properties gui.button_text_properties("nvl_button")
-
-## Gallery screen ##################################################################
-##
-## This screen is used to make a gallery view of in-game 
-## art to the player in the main menu.
-##
-## Syntax Examples in gallery.rpy.
-
-screen gallery:
-
-    tag menu
-
-    use game_menu(_("Gallery")):
-        
-        vpgrid:
-            id "gvp"
-            rows math.ceil(len(galleryList) / 3.0)
-
-            if len(galleryList) > 3:
-                cols 3
-            else:
-                cols len(galleryList)
-
-            xspacing 25
-            yspacing 50
-            mousewheel True
-
-            xalign 0.5
-            yalign 0.5
-
-            for gl in galleryList:
-
-                if gl.small_size:
-
-                    imagebutton: 
-                        idle gl.small_size 
-                        action ShowMenu("preview", gl.image)
-
-        vbar value YScrollValue("gvp") xalign 0.99 ysize 560
-    
-    on "replaced" action With(Dissolve(0.5))
-
-screen preview(img):
-
-    tag menu
-        
-    vbox:
-        add img
-        
-    textbutton "X":
-        text_style "navigation_button_text"
-        xpos 0.97
-        ypos 0.005
-        action ShowMenu("gallery")
-
-    on "replaced" action With(Dissolve(0.5))

@@ -1,6 +1,19 @@
-#File format: word,sPoint,nPoint,yPoint
+## poemwords.txt
 
-#Sayori's winning words
+# This file declares the poem words for each character for 
+# the poem writing mini-game.
+#
+# Syntax:
+#   word - This is where you put the poem word that you want to use for the
+#           poem game.
+#   sPoint - This is where you put how much Sayori likes this word from 1-3.
+#   nPoint - This is where you put how much Natsuki likes this word from 1-3.
+#   yPoint - This is where you put how much Yuri likes this word from 1-3.
+# Points:
+#   -1 - Dislikes this word | 2 - Okay with this word | 3 - Loves this word
+# Example: pizza, 3, 2, 1
+
+## Sayori's favorite words
 happiness,3,2,1
 sadness,3,2,1
 death,3,1,2
@@ -90,7 +103,7 @@ treasure,3,2,1
 bliss,3,2,1
 memories,3,2,1
 
-#Natsuki's words
+## Natsuki's favorite words
 cute,2,3,1
 fluffy,2,3,1
 pure,1,3,2
@@ -154,7 +167,7 @@ bunny,2,3,1
 anime,2,3,1
 jump,2,3,1
 
-#Yuri's words
+## Yuri's favorite words
 determination,1,1,3
 suicide,2,1,3
 imagination,2,1,3
