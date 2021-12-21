@@ -1,8 +1,14 @@
+## screens.rpy
+
+# This file declares all the screens and styles in DDLC.
 
 ## Initialization
 ################################################################################
 
 init offset = -1
+
+# Enables the ability to add more settings in the game such as uncensored mode.
+default extra_settings = True
 
 ## Color Styles
 ################################################################################
@@ -465,6 +471,8 @@ screen navigation():
                 textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
             textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
+
+            textbutton _("Gallery") action [ShowMenu("gallery"), SensitiveIf(renpy.get_screen("gallery") == None)]
 
             if _in_replay:
 
@@ -948,7 +956,10 @@ screen preferences():
     use game_menu(_("Settings"), scroll="viewport"):
 
         vbox:
-            xoffset 50
+            if extra_settings:
+                xoffset 35
+            else:
+                xoffset 50
 
             hbox:
                 box_wrap True
@@ -958,7 +969,7 @@ screen preferences():
                     vbox:
                         style_prefix "radio"
                         label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
+                        textbutton _("Windowed") action Preference("display", "window")
                         textbutton _("Fullscreen") action Preference("display", "fullscreen")
                 if config.developer:
                     vbox:
@@ -974,6 +985,24 @@ screen preferences():
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                
+                if extra_settings:
+                    vbox:
+                        style_prefix "check"
+                        label _("Extra Settings")
+                        textbutton _("Uncensored Mode") action If(persistent.uncensored_mode, 
+                            ToggleField(persistent, "uncensored_mode"), 
+                            Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult/sensitive\ncontent in your playthrough.\n\nThis setting will be dependent on the modder if\nthey programmed these checks in their story.", 
+                                yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
+                                no_action=Hide("confirm")
+                            ))
+                        textbutton _("Let's Play Mode") action If(persistent.lets_play, 
+                            ToggleField(persistent, "lets_play"),
+                            [ToggleField(persistent, "lets_play"), Show("dialog", 
+                                message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
+                                ok_action=Hide("dialog")
+                            )])
+                            
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
@@ -981,6 +1010,8 @@ screen preferences():
             null height (4 * gui.pref_spacing)
 
             hbox:
+                if extra_settings:
+                    xoffset 15
                 style_prefix "slider"
                 box_wrap True
 
@@ -996,7 +1027,9 @@ screen preferences():
                     bar value Preference("auto-forward time")
 
                 vbox:
-
+                    if extra_settings:
+                        xoffset 15
+                    
                     if config.has_music:
                         label _("Music Volume")
 
@@ -1029,6 +1062,14 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
+
+            if config.developer:  
+                hbox:
+                    vbox:
+                        textbutton _("Export Mod Icon as ICO"):
+                            action Function(saveIco, "mod_assets/DDLCModTemplateLogo.png")
+                            style "navigation_button"
+                            
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
                 xoffset -10 yoffset -10
@@ -1669,11 +1710,27 @@ screen nvl_dialogue(dialogue):
                 text d.what:
                     id d.what_id
 
+## BSOD screen ##################################################################
+##
+## This screen is used to fake a BSOD/kernel panic on the players' computer 
+## on all platforms (Mobile devices defaults to the Linux BSOD).
+##
+## Syntax:
+##     bsodCode - The error code message you want to show the player. Defaults to 
+##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
+##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the 
+##                error. Defaults to libGLESv2.dll if no file name is given.
+##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
+##
+## Examples:
+##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
+##     show screen bsod("TAKE_TWO_INTERACTIVE", rsod=True) 
+
 init python:
     import subprocess
+    import platform
 
     cursor = 0
-    osName = ""
 
     def fakePercent(st, at, winver):
 
@@ -1703,19 +1760,8 @@ init python:
 
 
     if renpy.windows:
-        osName = subprocess.check_output("wmic os get version", shell=True).replace("\r", "").replace(" ", "").replace("\n", "").replace("Version ", "")
-
-## BSOD screen ##################################################################
-##
-## This screen is used to fake BSOD/kernel panic a player's computer on all
-## platforms (Mobile devices defaults to the Linux BSOD).
-##
-## Syntax:
-##     bsodCode - The error code message you want to show the player. Defaults to
-##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
-##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the
-##                error. Defaults to libGLESv2.dll if no file name is given.
-##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
+        try: osVer = tuple(map(int, subprocess.check_output("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", shell=True).split("."))) # Vista+
+        except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (though who uses XP today?)
 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
@@ -1723,8 +1769,8 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
     if renpy.windows:
 
-        if osName < "6.2.9200": # Windows 7
-
+        if osVer < (6, 2, 9200): # Windows 7
+            
             add Solid("#000082")
 
             vbox:
@@ -1741,8 +1787,8 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 text "*** STOP: 0x00000051 (OXFD69420, 0x00000005, OXFBF92317" + ", 0x00000000)\n"
                 text "*** " + bsodFile.upper() + "  -  Address FBF92317 base at FBF102721, Datestamp 3d6dd67c"
 
-        elif osName >= "6.2.9200" and osName < "10.0.10240": # Windows 8/8.1
-
+        elif osVer < (10, 0, 10240): # Windows 8/8.1
+            
             add Solid("#1273aa")
 
             style_prefix "bsod_win8"
@@ -1759,9 +1805,9 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 text "If you'd like to know more, you can search online later for this error: " + bsodCode.upper() style "bsod_win8_sub_text"
 
         else: # Windows 10 (up to 21H1)/Windows 11/Windows 11 RSOD
-
-            if osName >= "10.0.10240" and osName <= "10.0.22000":
-
+            
+            if osVer < (10, 0, 22000):
+            
                 add Solid("#0078d7")
 
             else:
@@ -1787,7 +1833,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
                 text ":(" style "bsod_win10_sad_text"
 
-                if osName >= "10.0.10240" and osName < "10.0.22000":
+                if osVer < (10, 0, 22000):
 
                     text "Your PC ran into a problem and needs to restart. We're"
                     text "just collecting some error info, and then we'll restart for"
@@ -1803,7 +1849,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
                 hbox:
 
-                    if osName >= "10.0.10240" and osName < "10.0.22000":
+                    if osVer < (10, 0, 22000):
 
                         vbox:
                             text "" line_leading -3
@@ -1827,8 +1873,8 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                             text "https://www.windows.com/stopcode\n" style "bsod_win10_info_text"
                             text "If you call a support person, give them this info:" style "bsod_win10_sub_text"
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
-
-    elif renpy.macintosh:
+        
+    elif not renpy.macintosh:
 
         add Solid("#222")
 
@@ -1890,74 +1936,69 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
 
     add Solid("#000000") at bsod_transition
 
-if renpy.windows:
-    style bsod_win7_text is gui_text
-    style bsod_win7_text:
-        font "C:/Windows/Fonts/lucon.ttf"
-        antialias False
-        size 13
-        line_leading 15
-        line_spacing -14
-        xsize 1279
-        outlines []
+style bsod_win7_text is gui_text
+style bsod_win7_text:
+    font "C:/Windows/Fonts/lucon.ttf"
+    antialias False
+    size 13
+    line_leading 15
+    line_spacing -14
+    xsize 1279
+    outlines []
 
-    style bsod_win8_text is gui_text
-    style bsod_win8_text:
-        font "C:/Windows/Fonts/segoeuil.ttf"
-        size 25
-        line_spacing 5
-        xsize 600
-        outlines []
+style bsod_win8_text is gui_text
+style bsod_win8_text:
+    font "C:/Windows/Fonts/segoeuil.ttf"
+    size 25
+    line_spacing 5
+    xsize 600
+    outlines []
 
-    style bsod_win8_sad_text is gui_text
-    style bsod_win8_sad_text is bsod_win8_text:
-        size 128
-        xpos -8
+style bsod_win8_sad_text is gui_text
+style bsod_win8_sad_text is bsod_win8_text:
+    size 128
+    xpos -8
 
-    style bsod_win8_sub_text is gui_text
-    style bsod_win8_sub_text is bsod_win8_text:
-        size 11
+style bsod_win8_sub_text is gui_text
+style bsod_win8_sub_text is bsod_win8_text:
+    size 11
 
-    style bsod_win10_text is bsod_win8_text
-    style bsod_win10_text:
-        font "C:/Windows/Fonts/segoeuil.ttf"
-        size 24
-        line_leading 3
-        line_spacing 0
-        xsize 800
-        outlines []
+style bsod_win10_text is bsod_win8_text
+style bsod_win10_text:
+    font "C:/Windows/Fonts/segoeuil.ttf"
+    size 24
+    line_leading 3
+    line_spacing 0
+    xsize 800
+    outlines []
 
-    style bsod_win10_info_text is bsod_win10_text
-    style bsod_win10_info_text:
-        size 16
+style bsod_win10_info_text is bsod_win10_text
+style bsod_win10_info_text:
+    size 16
 
-    style bsod_win10_sad_text is bsod_win10_text
-    style bsod_win10_sad_text:
-        size 136
-        xpos -8
+style bsod_win10_sad_text is bsod_win10_text
+style bsod_win10_sad_text:
+    size 136
+    xpos -8
 
-    style bsod_win10_sub_text is bsod_win10_text
-    style bsod_win10_sub_text:
-        size 11
+style bsod_win10_sub_text is bsod_win10_text
+style bsod_win10_sub_text:
+    size 11
 
-elif renpy.macintosh:
+style bsod_mac_text is gui_text
+style bsod_mac_text:
+    font gui.default_font
+    size 28
+    outlines []
+    line_spacing -30
 
-    style bsod_mac_text is gui_text
-    style bsod_mac_text:
-        font gui.default_font
-        size 28
-        outlines []
-        line_spacing -30
-
-else:
-
-    style bsod_linux_text is gui_text
-    style bsod_linux_text:
-        font "gui/font/F25_Bank_Printer.ttf"
-        size 15
-        outlines []
-        line_leading 5
-
+style bsod_linux_text is gui_text
+style bsod_linux_text:
+    font "gui/font/F25_Bank_Printer.ttf"
+    size 15
+    outlines []
+    line_leading 5
+            
 transform bsod_transition:
     "black"
     0.1

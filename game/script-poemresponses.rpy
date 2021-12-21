@@ -1,78 +1,107 @@
 ## script-poemresponses.rpy
 
-# This is where the doki's respond to how good or crappy the MC's poem
-# Act 2 uses script-poemresponses2 but that is used as a hub for Act 2 responses to MC's poem
+# This is where the Doki's respond to how much they like your poem.
+# Act 2 uses script-poemresponses2 which is in 'original_scripts'.
+
 label poemresponse_start:
-    # default count of poems being read at the beginning of poem sharing
+    # These variables set the amount of poems read by the player and disables
+    # the skip transition.
     $ poemsread = 0
     $ skip_transition = False
+    
+    # This label loops the poem music and applies the screen transition of
+    # the poem responses.
     label poemresponse_loop:
-        # defaults skipping the poem sharing to false (no poem is shown)
+        # This variable disables skipping poems.
         $ skip_poem = False
-        # controls the audio played in the poem sharing. change t5 to a different audio track
-        # if you want to use a custom poem share track
+
+        # This if statement checks if we are playing music and the track playing 
+        # is not Okay Everyone.
         if renpy.music.get_playing() and not (renpy.music.get_playing() == audio.t5 or renpy.music.get_playing() == audio.t5c):
             $ renpy.music.play(audio.t5, fadeout=1.0, if_changed=True)
+        
+        # This if/else statement determines the wipeleft effect is applied to the
+        # screen transition or not.
         if skip_transition:
             scene bg club_day
         else:
             scene bg club_day
             with wipeleft_scene
         $ skip_transition = False
-        # controls if the track playing is the default track but if nothing is playing
+
+        # This if statement checks if no music is playing to play Okay Everyone.
         if not renpy.music.get_playing():
             play music t5
+
     label poemresponse_start2:
         $ skip_poem = False
-        # sends the poem response to another label
-        # if it's Act 2 else Act 1 responses
+        
+        # This if/else statement checks if we are in Act 2 to show Act 2 specific
+        # poems.
         if persistent.playthrough == 2:
             $ pt = "2"
         else:
             $ pt = ""
-        # MC's dialogue of who to share first or next
+
+        # This if/else statement determines what MC will say in the poem selection
+        # menu depending on how many poems you have read.
         if poemsread == 0:
             $ menutext = "Who should I show my poem to first?"
         else:
             $ menutext = "Who should I show my poem to next?"
-        # Main Menu of the Poem Responses
-        # You can add more boxes here by copy and pasting the others and changing
-        # their variables and text to that new character
+
+        ## Main Menu of the Poem Responses
         menu:
             "[menutext]"
 
+            # These statements will show each character as a option to share your
+            # poem with unless their conditions are met.
+
+            # This will show Sayori as a menu option IF you haven't shared your
+            # poem to her and you are in Act 1.
             "Sayori" if not s_readpoem and persistent.playthrough == 0:
+                # This variable sets that you have read Sayori's poem.
                 $ s_readpoem = True
                 if chapter == 1 and poemsread == 0:
                     "I'm definitely most comfortable sharing it with Sayori first."
                     "She's my good friend, after all."
+                # This call statement calls Sayori's poem response script.
                 call poemresponse_sayori
+
+            # This will show Natsuki as a menu option IF you haven't shared your
+            # poem to her.
             "Natsuki" if not n_readpoem:
                 $ n_readpoem = True
                 if chapter == 1 and poemsread == 0:
                     "I told Natsuki I was interested in her poems yesterday."
                     "It's probably only fair if I shared mine with her first."
                 call poemresponse_natsuki
+
+            # This will show Yuri as a menu option IF you haven't shared your
+            # poem to her and she didn't run away from you in Act 2.
             "Yuri" if not y_readpoem and not y_ranaway:
                 $ y_readpoem = True
                 if chapter == 1 and poemsread == 0:
                     "Yuri seems the most experienced, so I should start with her."
                     "I can trust her opinion to be fair."
                 call poemresponse_yuri
+
             "Monika" if not m_readpoem:
                 $ m_readpoem = True
                 if chapter == 1 and poemsread == 0:
                     "I should start with Monika."
                     "Yesterday she seemed eager to read my poem, and I want her to know I'm putting in effort."
                 call poemresponse_monika
-        # Adds a new poem read point per poem share
+
+        # This variable increases the poems read by 1.
         $ poemsread += 1
-        # Asks if poems shared is less than set value for Act 2 or Act 1
-        # Act 2 uses 3 while 1 uses 4. If true poem sharing loops to certain value until it's false
+        
+        # This if/else statement checks if we have not yet read 3 poems for Act 2 
+        # or if we are in Act 1 and haven't read 4 poems.
         if poemsread < 3 or (persistent.playthrough == 0 and poemsread < 4):
             jump poemresponse_loop
 
-    # defaults to poem responses
+    # These variables resets the read poem variables back to normal.
     $ s_readpoem = False
     $ n_readpoem = False
     $ y_readpoem = False
@@ -80,28 +109,29 @@ label poemresponse_start:
     $ poemsread = 0
     return
 
-# Everything below here under poemresponse_ is the script used per doki
-# All comments below Sayori applies to all doki's (Monika does not have a med value. only good or bad)
+# These labels calls each characters' poem response result given how much they
+# liked your poem.
 label poemresponse_sayori:
-    # default scene and pose
     scene bg club_day
     show sayori 1a zorder 2 at t11
     with wipeleft_scene
-    # default opinion
+    # This variable sets the default opinion to OK.
     $ poemopinion = "med"
-    # asks if the doki's appeal in the poem game was bad or -1. if true opinion is bad
+    
+    # This if/elif statement checks if Sayori's opinion of your poem was bad
+    # or good.
     if s_poemappeal[chapter - 1] < 0:
         $ poemopinion = "bad"
-    # asks if the doki's appeal in the poem game was good or 1. if true opinion is good else med or meh
     elif s_poemappeal[chapter - 1] > 0:
         $ poemopinion = "good"
-    # sets the label for the response to the chapter with their opinion
-    # If Act 2 is active it adds 2 to it (e.g Act 1 - ch2_n_bad | Act 2 - ch22_n_bad)
+    
+    # These variables sets the next scene chapter to be called based off the
+    # chapter and poem opinion and calls it.
     $ nextscene = "ch" + pt + str(chapter) + "_s_" + poemopinion
-    # calls nextscene which has the opinion of the doki for that chapter
     call expression nextscene
-    # asks if poem was not skipped. if true it calls the ending of the poem sharing
-    # if true it skips and returns to the poem response menu or to the normal game script
+    
+    # This if statement checks if we are not skipping the poems to call the
+    # end of the poem responses for Sayori depending on the chapter.
     if not skip_poem:
         $ nextscene = "ch" + pt + str(chapter) + "_s_end"
         call expression nextscene
@@ -111,13 +141,23 @@ label poemresponse_natsuki:
     scene bg club_day
     show natsuki 1c zorder 2 at t11
     with wipeleft_scene
+    # This variable sets the default opinion to OK.
     $ poemopinion = "med"
+    
+    # This if/elif statement checks if Natsuki's opinion of your poem was bad
+    # or good.
     if n_poemappeal[chapter - 1] < 0:
         $ poemopinion = "bad"
     elif n_poemappeal[chapter - 1] > 0:
         $ poemopinion = "good"
+
+    # These variables sets the next scene chapter to be called based off the
+    # chapter and poem opinion and calls it.
     $ nextscene = "ch" + pt + str(chapter) + "_n_" + poemopinion
     call expression nextscene
+
+    # This if statement checks if we are not skipping the poems to call the
+    # end of the poem responses for Natsuki depending on the chapter.
     if not skip_poem:
         $ nextscene = "ch" + pt + str(chapter) + "_n_end"
         call expression nextscene
@@ -127,38 +167,44 @@ label poemresponse_yuri:
     scene bg club_day
     show yuri 1a zorder 2 at t11
     with wipeleft_scene
+
     $ poemopinion = "med"
+    
     if y_poemappeal[chapter - 1] < 0:
         $ poemopinion = "bad"
     elif y_poemappeal[chapter - 1] > 0:
         $ poemopinion = "good"
+
     $ nextscene = "ch" + pt + str(chapter) + "_y_" + poemopinion
     call expression nextscene
+
     if not skip_poem:
         $ nextscene = "ch" + pt + str(chapter) + "_y_end"
         call expression nextscene
     return
 
-# Monika does not use ch2_m_good. instead it's ch2_m_start or Act 2 ch22_m_start
-# she does not not have a med opinion. only good or bad
+# NOTE: Monika does not use the good/bad/med poem opinion. Instead she just uses
+# 'chX_m_start' and 'chX_m_end' instead.
 label poemresponse_monika:
     scene bg club_day
     show monika 1a zorder 2 at t11
     with wipeleft_scene
+
     if m_poemappeal[chapter - 1] < 0:
         $ poemopinion = "bad"
     elif m_poemappeal[chapter - 1] > 0:
         $ poemopinion = "good"
+
     $ nextscene = "ch" + pt + str(chapter) + "_m_start"
     call expression nextscene
+
     if not skip_poem:
         $ nextscene = "ch" + pt + str(chapter) + "_m_end"
         call expression nextscene
     return
 
-# This is where the responses are said.
-# call showpoem calls the poem from poems.rpy to be displayed
-# img="yuri 3t" is the pose the doki should be when the scene happens hiddenly
+## Poem End Labels 
+# These labels define the end result of the poem sharing mini-game with the girls.
 label ch1_y_end:
     call showpoem (poem_y1, img="yuri 3t")
     y 3t "..."
@@ -234,7 +280,9 @@ label ch2_y_end:
     y "I wanted to express the way it feels for me to indulge in my more unusual hobbies..."
     y 2v "It's those sorts of things I'm usually forced to keep to myself."
     y "So, I sometimes enjoy writing about them."
-    # asks if Natsuki read your poem already or if she liked Day's 1 or 2 poems
+
+    # This if/else statement checks if you shared your poem to Natsuki already and
+    # if she loved the 1st or 2nd poem.
     if n_readpoem and (n_poemappeal[0] >= 0 or n_poemappeal[1] >= 0):
         mc "Huh, that's funny..."
         y 2e "...?"
@@ -267,9 +315,12 @@ label ch2_y_end:
         y 2h "I feel like everyone has a little something like that."
         y "The best we can do is respect each other and our individualities."
         y "Even if it's difficult sometimes, and some things make us uncomfortable..."
+
     y 1a "After all, if I hadn't learned to embrace my own weirdness, I would probably hate myself."
     y 2u "I-I might be ranting a little bit now..."
     y "...But I'm glad that you're a good listener."
+
+    # This if statement checks if Yuri's appeal to your poems is 2 or more.
     if y_appeal >= 2:
         y 2s "You're good at a lot of things..."
         y "Writing, listening..."
@@ -284,24 +335,34 @@ label ch2_y_end:
         "Yuri smiles sincerely at me."
         "For just a moment, her timidness seems to disappear."
     return
+
 label ch3_y_end:
-    # tells the game you shared with that doki 3 times
+    # This variable tells the game that you read Yuri's 3rd poem.
     $ y_read3 = True
-    # asks if Yuri liked all 3 poems. if true it jumps to a special response label
+    
+    # This if statement checks if Yuri's appeal is 3 or more to call her
+    # special poem instead.
     if y_appeal >= 3:
         jump ch3_y_end_special
+
     call showpoem (poem_y3, img="yuri 2v")
     y "Um..."
     y "I'm aware that the beach is kind of an inane thing to write about."
     y "But I did my best to take a metaphorical approach to it."
-    # asks if Natsuki read 3 times or liked all your poems
+
+    # This if/else statement checks if you did not read Natsuki's special poem
+    # or if her poem appeal is 3 or more.
     if not n_read3 or n_appeal >= 3:
         mc "You say that like you didn't even want to write about it..."
         y 2e "Oh, you haven't heard...?"
         y 2h "After yesterday, Natsuki and I...well..."
         y "It was...amusing that we wrote about something similar in such different ways."
         y "So, Natsuki wanted us to write about the same topic as each other again."
+
+        # This if statement checks if you read Natsuki's poem.
         if n_readpoem:
+            
+            # This if/else statement checks if you did not read Natsuki's special poem.
             if not n_read3:
                 mc "I see..."
                 "Natsuki didn't even let me read her poem, so I don't have much to contribute."
@@ -314,6 +375,7 @@ label ch3_y_end:
         y 3t "S-She did...?"
         y "She didn't say anything weird, did she?"
         y "She just wanted us to write about the same topic again..."
+
     y 2f "I suppose to better compare the differences in our writing styles...or thought processes."
     y 2w "Anyway, it was her idea...!"
     y "Knowing her, it's no surprise that she'd want to do something like that."
@@ -327,6 +389,7 @@ label ch3_y_end:
     mc "Yeah...I think I agree."
     mc "Thanks for sharing."
     return
+
 label ch3_y_end_special:
     call showpoem (poem_y3b, img="yuri 4b")
     "Finishing the poem, I start to hand it back to Yuri."
@@ -336,9 +399,11 @@ label ch3_y_end_special:
     mc "Ah--no, of course not."
     mc "I just...don't really know how I should respond."
     "Despite Yuri's poems usually being cryptic, it wasn't hard to figure out what this one was about."
+
     if n_read3:
         "Also, this clearly isn't the poem that Natsuki said she wrote about..."
         "...Meaning I'm probably the only one she's showing this to."
+    
     y 2v "I-I don't know if I'll be able to explain this one..."
     mc "That's fine."
     mc "I understand this one."
@@ -436,6 +501,7 @@ label ch2_n_end:
     n 1e "...But that just makes people stupid!"
     n "Who cares what someone likes, as long as they're not hurting anyone, and it makes them happy?"
     n 1q "I think people really need to learn to respect others for liking weird things..."
+
     if y_readpoem and (y_poemappeal[0] >= 0 or y_poemappeal[1] >= 0):
         mc "Huh, that's funny..."
         mc "Yuri wrote about something similar today."
@@ -463,6 +529,7 @@ label ch2_n_end:
         mc "Well, you're definitely right."
         mc "At least, I can relate to that."
         mc "And I'm sure a lot of other people can, too."
+
     if n_appeal >= 2:
         n 4h "You know..."
         n "I'm glad that you can appreciate this kind of writing..."
@@ -484,10 +551,13 @@ label ch2_n_end:
         n 4b "Remember that!"
         n "I'm gonna write a good one for tomorrow, too, so look forward to it."
     return
+
 label ch3_n_end:
     $ n_read3 = True
+
     if n_appeal >= 3:
         jump ch3_n_end_special
+
     call showpoem (poem_n3)
     n 2a "Yeah..."
     n "I felt like I kept writing about negative things, so I wanted to write something with a nice message for once."
@@ -499,7 +569,9 @@ label ch3_n_end:
         n "It's only because of what happened yesterday."
         n 5q "I mean, after Yuri and I realized we kind of wrote about the same thing..."
         n "She wanted to pick a topic and have us both write about it, or whatever."
+
         if y_readpoem:
+
             if not y_read3:
                 mc "I see..."
                 "I don't really have much to contribute here, since I didn't actually read Yuri's poem..."
@@ -520,6 +592,7 @@ label ch3_n_end:
     n "...But there's nothing wrong with doing that once in a while!"
     n "At the very least, it was good practice."
     return
+
 label ch3_n_end_special:
     call showpoem (poem_n3b)
     n 1q "..."
@@ -528,9 +601,11 @@ label ch3_n_end_special:
     n 1u "I won't...get mad."
     mc "No, it's not that I don't like it...!"
     mc "It was just...a little surprising to read."
+
     if y_read3:
         "This clearly isn't the poem that Yuri told me she had written..."
         "...Meaning I'm probably the only one she's showing this to."
+    
     mc "Er...I guess I'm not used to hearing such nice things coming from you..."
     n 1h "D-Don't just say that!"
     n 1n "Dummy..."
@@ -643,11 +718,13 @@ label ch2_s_end:
     "I wonder if this is one of those times?"
     "But seeing the passion in her eyes makes it hard for me to be pessimistic."
     return
+
 label ch3_s_end:
     return
 
 label ch1_m_end:
     call showpoem (poem_m1)
+
 label ch1_m_end2:
     m 1a "So...what do you think?"
     mc "Hmm...it's very...freeform, if that's what you call it."
@@ -709,6 +786,7 @@ label ch2_m_end:
     m 3b "...That's my advice for today!"
     m "Thanks for listening~"
     return
+
 label ch3_m_end:
     call showpoem (poem_m3)
     m 1a "You know..."
@@ -741,11 +819,14 @@ label ch3_m_end:
     m "Thanks for listening~"
     return
 
-
+## Poem Opinion Responses
+# This is where the characters will react to how they liked your poem from
+# good to OK to bad.
 label ch1_n_bad:
     n "..."
     mc "...?"
-    # asks if it's in Act 2 mode and if random number is 0. if true special scene happens
+    # This if statement checks if we are in Act 2 and if a random number from 0-2
+    # is 0 to trigger a special Act 2 screen.
     if persistent.playthrough == 2 and renpy.random.randint(0, 2) == 0:
         $ currentpos = get_pos()
         stop music
@@ -859,7 +940,7 @@ label ch1_n_good:
     return
 
 label ch2_n_bad:
-
+    # This if statement checks if Natsuki's opinion on your first poem was not good.
     if n_poemappeal[0] < 0:
         n "...Hm."
         n 2k "Well, I can admit that it's better than the last one."
@@ -868,8 +949,7 @@ label ch2_n_bad:
         n 2c "But I still don't like this at all."
         n "It's trying too hard to be serious."
         mc "Eh? What do you mean by that?"
-
-        # label if Nat hated your last poem in Day 3
+        
         label ch2_n_bad_sharedwithch3:
             n 4c "Poems don't need to be all deep-sounding to express something."
             n "It's going to just sound like you're forcing it unless you really don't suck at it."
@@ -892,11 +972,10 @@ label ch2_n_bad:
             "This is what I get for letting a younger girl step into my business."
             "Unless I was a mind reader, I was destined to be in a world of pain from the start."
             "At least Natsuki wasn't really the girl I was trying to impress in the first place..."
+            # This variable tells the mini-game we skipped the poem.
             $ skip_poem = True
             return
     else:
-
-
         n 1k "...Hm."
         n "I liked your last one better."
         mc "Eh? Really?"
@@ -917,12 +996,12 @@ label ch2_n_bad:
         return
 
 label ch2_n_med:
-
     if n_poemappeal[0] < 0:
         n "...Hm."
         n 2k "Well, I can admit that it's better than the last one."
         n "It's nice to see that you're putting in some effort."
         mc "That's good..."
+
         label ch2_n_med_shared:
             n 2c "Come to think of it, this kind of reminds me of Sayori's poem from yesterday..."
             mc "Eh? You think so?"
@@ -938,8 +1017,6 @@ label ch2_n_med:
             n "...Oh, yeah, I guess I'm supposed to show you my poem."
             n "Here."
             return
-
-
     elif n_poemappeal[0] == 0:
         n "...Hm."
         n 2k "Well, it's not really any worse than your last one."
@@ -956,8 +1033,6 @@ label ch2_n_med:
         "Something tells me Natsuki completely missed the point."
         jump ch2_n_med_shared
     else:
-
-
         n "...Hm."
         n 2c "Well, it's not terrible."
         n "But it's pretty disappointing after your last one."
@@ -967,7 +1042,7 @@ label ch2_n_med:
         jump ch2_n_med_shared
 
 label ch2_n_good:
-
+    # This if statement checks if Natsuki's opinion on your first poem was not good.
     if n_poemappeal[0] != 1:
         n 1h "..."
         "Natsuki reads my poem."
@@ -1107,13 +1182,16 @@ label ch2_n_good:
             show natsuki zorder 3 at f21
             n 12b "Ugh..."
             n "Never mind."
+
             if s_readpoem and y_readpoem:
                 "Well, I guess Natsuki has my poem now."
                 "Not that I really planned on keeping it."
             else:
-                # variable that tells Natsuki who hasn't gotten to read the poem
+                # This variable sets the person who hasn't read your poem
+                # to Sayori.
                 $ unfairto = "Sayori"
-                # if Sayori already read it, change to Yuri
+                # This if statement checks if Sayori read your poem to set
+                # the unfair variable to Yuri.
                 if s_readpoem:
                     $ unfairto = "Yuri"
                 show natsuki zorder 2 at t21
@@ -1141,16 +1219,15 @@ label ch2_n_good:
             return
 
 label ch3_n_bad:
-
     if n_poemappeal[0] < 0 and n_poemappeal[1] < 0:
-        label ch3_n_bad12_shared:
 
+        label ch3_n_bad12_shared:
             n 5x "Yeah, no thanks."
             mc "Eh? You didn't even--"
             n 5w "{i}Next!{/i}"
             $ skip_poem = True
             return
-
+        
     elif n_poemappeal[0] < 0 or n_poemappeal[1] < 0:
         n "..."
         n 2c "...Meh."
@@ -1160,7 +1237,6 @@ label ch3_n_bad:
         mc "What did I do wrong?"
         jump ch2_n_bad_sharedwithch3
     else:
-
         n "..."
         n 2r "Oh, man."
         n "This is seriously a step backwards."
@@ -1172,6 +1248,7 @@ label ch3_n_bad:
         n 5x "Gross."
         mc "Okay, okay."
         mc "Like you said, I'm allowed to try new things."
+
         label ch3_n_shared:
             show natsuki 5g
             mc "Why are you so emotionally invested in my poems, anyway?"
@@ -1207,9 +1284,10 @@ label ch3_n_bad:
             return
 
 label ch3_n_med:
-
+    # This if statement checks in Natsuki hated both your 1st and 2nd poem.
     if n_poemappeal[0] < 0 and n_poemappeal[1] < 0:
         jump ch3_n_bad12_shared
+    
     elif n_poemappeal[1] != 0:
         n "..."
         n 2k "...This one's alright."
@@ -1232,7 +1310,6 @@ label ch3_n_med:
         jump ch3_n_shared
 
 label ch3_n_good:
-
     if n_poemappeal[0] < 0 and n_poemappeal[1] < 0:
         jump ch3_n_bad12_shared
 
@@ -1325,11 +1402,9 @@ label ch3_n_good:
         mc "Okay, I will."
         return
 
-
     elif n_poemappeal[0] > 0 or n_poemappeal[1] > 0:
         jump ch2_n_good_sharedwithch3
     else:
-
         n "..."
         n 2k "...Finally!"
         mc "Eh?"
@@ -1372,6 +1447,7 @@ label ch1_s_bad:
     s 4a "It's fine, it's fine~"
     s "It's your first time."
     s "Besides..."
+
     label ch1_s_shared:
         s 1a "I'm really happy just that you wrote one."
         s "It just reminds me of how you're really a part of the club now~"
@@ -1462,6 +1538,7 @@ label ch2_s_bad:
     s "Ehehe..."
     mc "It's fine, it's fine."
     mc "After all, I still have no idea what kinds of writing you even like."
+
     label ch2_s_shared:
         s 1q "Yeah!"
         s "Me neither!"
@@ -1503,7 +1580,6 @@ label ch2_s_bad:
         return
 
 label ch2_s_med:
-
     if s_poemappeal[0] < 0:
         s "..."
         s 4x "Ooh!"
@@ -1513,6 +1589,7 @@ label ch2_s_med:
         mc "So it's at least better than yesterday's."
         s 1q "Uh-huh!"
         mc "Maybe I'm getting better at this, then."
+
         label ch2_s_med_shared:
             s 1a "Well, I'm not very good at figuring out if poems are good or bad..."
             s "But that's why I just go by my heart~"
@@ -1537,7 +1614,6 @@ label ch2_s_med:
         mc "That's not very helpful, you know..."
         jump ch2_s_med_shared
     else:
-
         s "..."
         s 4x "Ooh!"
         s "I like this one, [player]!"
@@ -1559,7 +1635,7 @@ label ch2_s_med:
         jump ch2_s_med_shared
 
 label ch2_s_good:
-
+    # This if statement checks if Sayori was OK or hated your first poem.
     if s_poemappeal[0] < 1:
         s 1n "..."
         s "...Oh my goodness!"
@@ -1597,7 +1673,6 @@ label ch2_s_good:
         s 4l "Ehehe..."
         jump ch2_s_med_shared
     else:
-
         s "..."
         s 1d "[player]..."
         s "I really love your poems."
@@ -1684,7 +1759,11 @@ label ch2_s_good:
         return
 
 label ch3_s_bad:
+    # This variable sets the character you wrote your poem to as Yuri.
     $ currentname = "Yuri"
+
+    # This if statement checks if Natsuki liked your poem more than Yuri to
+    # set 'currentname' to her.
     if n_poemappeal[2] > y_poemappeal[2]:
         $ currentname = "Natsuki"
     s "..."
@@ -1730,11 +1809,11 @@ label ch3_s_bad:
     $ skip_poem = True
     return
 
-
 label ch3_s_med:
     jump ch3_s_bad
 
 label ch3_s_good:
+    # This if statement checks if you didn't write your 1st and 2nd poems for Sayori.
     if poemwinner[0] != "sayori" and poemwinner[1] != "sayori":
         jump ch3_s_bad
     s 1d "..."
@@ -1839,6 +1918,7 @@ label ch1_y_bad:
     mc "It's fine, I really didn't notice."
     mc "What were you saying?"
     y 2u "Right...um..."
+    
     label ch1_y_shared:
         y 1a "It's just that there are specific writing habits that are usually typical of new writers."
         y "And having been through that myself, I kind of learned to pick up on them."
@@ -1910,9 +1990,7 @@ label ch1_y_good:
     y "This is the reason I was able to tell."
     jump ch1_y_shared
 
-
 label ch2_y_bad:
-
     if y_poemappeal[0] < 0:
         y "..."
         y 2h "Um..."
@@ -1952,7 +2030,6 @@ label ch2_y_bad:
         $ skip_poem = True
         return
     else:
-
         y 2a "Ah, is it my turn?"
         y "Let's see how it compares to yesterday's..."
         y "Mm..."
@@ -1997,7 +2074,6 @@ label ch2_y_bad:
             return
 
 label ch2_y_med:
-
     if y_poemappeal[0] <= 0:
         y 1a "Let's see what you've written for today."
         y "..."
@@ -2013,8 +2089,6 @@ label ch2_y_med:
         y "I know you're new to this, so don't worry so much if it seems like you can't get your poem to feel perfect."
         jump ch2_y_shared
     else:
-
-
         y 1a "Let's see what you've written for today."
         y "..."
         y "Mm..."
@@ -2026,7 +2100,6 @@ label ch2_y_med:
         jump ch2_y_shared
 
 label ch2_y_good:
-
     if y_poemappeal[0] < 1:
         y 1a "Let's see what you've written for today."
         y "..."
@@ -2076,7 +2149,6 @@ label ch2_y_good:
             y "If it's with you..."
             return
     else:
-
         y 1a "Let's see what you've written for today."
         y "..."
         y 2e "......"
@@ -2089,6 +2161,7 @@ label ch2_y_good:
 
 label ch3_y_bad:
     if y_poemappeal[0] < 0 and y_poemappeal[1] < 0:
+
         label ch3_y_bad12_shared:
             y 4b "..."
             "Yuri doesn't look too enthusiastic about spending time with me..."
@@ -2096,6 +2169,7 @@ label ch3_y_bad:
             "But I should leave her be for now."
             $ skip_poem = True
             return
+
     elif y_poemappeal[1] < 0 or y_poemappeal[0] < 0:
         y 1i "..."
         y "...I see."
@@ -2196,6 +2270,7 @@ label ch3_y_bad:
 label ch3_y_med:
     if y_poemappeal[0] < 0 and y_poemappeal[1] < 0:
         jump ch3_y_bad12_shared
+
     elif y_poemappeal[0] < 1 or y_poemappeal[1] < 1:
         y "..."
         y 1a "Well done, [player]."
@@ -2234,6 +2309,7 @@ label ch3_y_med:
 label ch3_y_good:
     if y_poemappeal[0] < 0 and y_poemappeal[1] < 0:
         jump ch3_y_bad12_shared
+        
     if y_poemappeal[1] < 1:
         y "..."
         y 2u "[player]..."
@@ -2272,6 +2348,7 @@ label ch3_y_good:
         y 2v "..."
         "For some reason, Yuri doesn't respond."
         mc "Yuri...?"
+
         label ch3_y_good_shared:
             if not renpy.music.get_playing(channel='music') == audio.t9:
                 play music t9 fadeout 1.0
@@ -2365,9 +2442,6 @@ label ch3_y_good:
         y "Well..."
         jump ch3_y_good_shared
 
-# Monika is a bit different in this department
-# As mentioned she uses _m_start to begin
-
 label ch1_m_start:
     m 1b "Hi, [player]!"
     m "Having a good time so far?"
@@ -2391,11 +2465,12 @@ label ch1_m_start:
     mc "Yeah, that's true."
     "I hand Monika my poem."
     m 2a "...Mhm!"
-    # determines the next scene by who won the poemgame and their appeal number
+
+    # This variable and call expression statement sets the 'nextscene' variable to
+    # the character you wrote your poem to and calls it.
     $ nextscene = "m_" + poemwinner[0] + "_" + str(eval(poemwinner[0][0] + "_appeal"))
     call expression nextscene
 
-    # this plays after Monika voices on the tone of your poem to which specific doki
     mc "I'm sure I'll end up trying different things a lot."
     mc "It could take a while before I feel comfortable doing this."
     m 1k "That's okay!"
@@ -2419,7 +2494,8 @@ label ch1_m_start:
 
 label ch2_m_start:
     m 1b "Hi again, [player]!"
-    # If Nat shared her poem and ran, Monika already read it and plays a special script
+
+    # This if statement checks if Monika read your poem when sharing with Natsuki.
     if n_poemearly:
         $ n_poemearly = False
         m "That was kind of silly with Natsuki earlier, wasn't it?"
@@ -2443,6 +2519,7 @@ label ch2_m_start:
         "I give my poem to Monika."
         m "..."
         m "...Alright!"
+
         $ nextscene = "m_" + poemwinner[1] + "_" + str(eval(poemwinner[1][0] + "_appeal"))
         call expression nextscene
 
@@ -2462,7 +2539,7 @@ label ch3_m_start:
     m "But whatever you do, I'm sure it'll turn out great."
     m "It would also make me happy to see."
     m 2k "Ahaha!"
-    # If Nat shared her poem and ran, Monika already read it and plays a special script for chapter 3
+
     if n_poemearly:
         $ n_poemearly = False
         m 1a "Anyway, I already read your poem, but you can go ahead and read mine now."
@@ -2481,8 +2558,9 @@ label ch3_m_start:
         mc "Alright..."
         return
 
-# All of Monika's responses to the poem per Doki and appeal level
-
+## Monika Character Poem Responses
+# These labels contain Monika's responses to each character you wrote your poem to
+# and the chapter of the mod.
 label m_natsuki_1:
     m 2b "I like it, [player]!"
     mc "Really...?"
