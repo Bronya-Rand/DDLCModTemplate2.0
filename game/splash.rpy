@@ -1,51 +1,65 @@
 ## splash.rpy
 
-# Checks to see if all of DDLC's files are inside for PC
-# You may remove 'scripts' if you recieve conflict with scripts.rpa
-## Note: For building a mod for PC/Android, you must keep the DDLC RPAs 
-## and decompile them for the builds to work.
+# This is where the splashscreen, disclaimer and menu code reside in.
+
+# This python statement checks that 'audio.rpa', 'fonts.rpa' and 'images.rpa'
+# are in the game folder.
+# Note: For building a mod for PC/Android, you must keep the DDLC RPAs 
+# and decompile them for the builds to work.
 init -100 python:
     if not renpy.android:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
                 renpy.error("DDLC archive files not found in /game folder. Check your installation and try again.")
 
-# Splash Message
+## Splash Message
+# This python statement is where the splash messages reside in.
 init python:
     menu_trans_time = 1
-    # Default message everyone sees in the game
-    splash_message_default = "This game is an unofficial fan game, unaffiliated with Team Salvato."
-    # Used sometimes to change splash messages if called upon
+    # This variable is the default splash message that people will see when
+    # the game launches.
+    splash_message_default = "This game is an unofficial fan game that is unaffiliated with Team Salvato."
+    # This array variable stores different kinds of splash messages you can use
+    # to show to the player on startup.
     splash_messages = [
         "Please support Doki Doki Literature Club.",
         "Monika is watching you code."
     ]
 
+# This image text shows the splash message when the game loads.
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
 
-# Main Menu Images
+## Main Menu Images
+# These image transforms store the images and positions of the game logo,
+# the menu character sprites and main menu/pause menu screen images.
+
+# This image shows the DDLC logo in the normal DDLC position.
 image menu_logo:
-    "/mod_assets/DDLCModTemplateLogo.png"
+    "mod_assets/DDLCModTemplateLogo.png"
     subpixel True
     xcenter 240
     ycenter 120
     zoom 0.60
     menu_logo_move
 
+# This image shows the main menu polka-dot image.
 image menu_bg:
     topleft
     "gui/menu_bg.png"
     menu_bg_move
 
+# This image shows the pause menu polka-dot image.
 image game_menu_bg:
     topleft
     "gui/menu_bg.png"
     menu_bg_loop
 
+# This image transform shows the white fading effect in the main menu.
 image menu_fade:
     "white"
     menu_fadeout
 
+# These images show each respective characters' menu sprite and positions/animations.
 image menu_art_y:
     subpixel True
     "gui/menu_art_y.png"
@@ -78,7 +92,8 @@ image menu_art_m:
     zoom 1.00
     menu_art_move(1.00, 1000, 1.00)
 
-# Ghost Main Menu Images
+# These images are the same as above but ghost themed for the secret ghost menu
+# that appears rarely in-game .
 image menu_art_y_ghost:
     subpixel True
     "gui/menu_art_y_ghost.png"
@@ -111,7 +126,7 @@ image menu_art_m_ghost:
     zoom 1.00
     menu_art_move(1.00, 1000, 1.00)
 
-# Sayori Image After Game 1st Restart
+# This image sprite shows a glitched Sayori menu sprite after Act 1 finishes.
 image menu_art_s_glitch:
     subpixel True
     "gui/menu_art_s_break.png"
@@ -120,12 +135,17 @@ image menu_art_s_glitch:
     zoom 0.68
     menu_art_move(.8, 470, .8)
 
+# This image shows the main menu screen in the main/pause menu.
 image menu_nav:
     "gui/overlay/main_menu.png"
     menu_nav_move
 
-# Main Menu Effects
+## Main Menu Effects
+# These transforms and image transform store the effects that appear in the
+# main menu on startup.
 
+# This image transform shows a particle burst effect image to the main menu when
+# the game starts.
 image menu_particles:
     2.481
     xpos 224
@@ -133,9 +153,11 @@ image menu_particles:
     ParticleBurst("gui/menu_particle.png", explodeTime=0, numParticles=40, particleTime=2.0, particleXSpeed=3, particleYSpeed=3).sm
     particle_fadeout
 
+# This transform fades out the particle effects of the main menu
 transform particle_fadeout:
     easeout 1.5 alpha 0
 
+# This transform moves the polka-dot menu background to the upper-left.
 transform menu_bg_move:
     subpixel True
     topleft
@@ -148,6 +170,7 @@ transform menu_bg_move:
         time 0.65
         ease_cubic 2.5 ypos -500
 
+# This transform loops the polka-dot moving effect.
 transform menu_bg_loop:
     subpixel True
     topleft
@@ -156,24 +179,29 @@ transform menu_bg_loop:
         linear 3.0 xoffset -100 yoffset -100
         repeat
 
+# This transform moves the menu logo down to it's intended placement in-game.
 transform menu_logo_move:
     subpixel True
     yoffset -300
     time 1.925
     easein_bounce 1.5 yoffset 0
 
+# This transform moves the main menu screen in-game to be visible.
 transform menu_nav_move:
     subpixel True
     xoffset -500
     time 1.5
     easein_quint 1 xoffset 0
 
+# This transform fades out the main menu screen. 
 transform menu_fadeout:
     easeout 0.75 alpha 0
     time 2.481
     alpha 0.4
     linear 0.5 alpha 0
 
+# This transform takes in a z-axis, x-axis and zoom numbers and moves the menu
+# sprites to where they appear in the game.
 transform menu_art_move(z, x, z2):
     subpixel True
     yoffset 0 + (1200 * z)
@@ -186,8 +214,8 @@ transform menu_art_move(z, x, z2):
         pause 0.75
         ease 1.5 zoom z2 xoffset 0
 
-# Team Salvato Splash Screen
-
+## Team Salvato Splash Screen
+# This image stores the Tean Salvato logo image that appears when the game starts.
 image intro:
     truecenter
     "white"
@@ -197,8 +225,8 @@ image intro:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
-# Special Mod Message Text
-
+# This image is a left over from DDLC's development that shows the splash message
+# when the game starts.
 image warning:
     truecenter
     "white"
@@ -207,60 +235,25 @@ image warning:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
-# Checks for missing character files
-## Note: For Android, make sure to change the default package name of to 
-## your own package name in options.rpy under define package_name. 
-##Your package name is what you defined in Ren'Py Launcher in the Android section
+# This init python statement checks if the character files are present in-game
+# and writes them to the characters folder depending on the playthrough.
 init python:
     if not persistent.do_not_delete:
-        import os
-        if renpy.android: #checks if the platform is android
-            try:
-                # writes character files if missing and correct playthrough to Android/data/[your mod]/characters
-                if not os.access(os.environ['ANDROID_PUBLIC'] + "/characters/", os.F_OK):
-                    os.mkdir(os.environ['ANDROID_PUBLIC'] + "/characters")
-                if persistent.playthrough <= 2:
-                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/monika.chr")
-                    except: open(os.environ['ANDROID_PUBLIC'] +  "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
-                if persistent.playthrough <= 1 or persistent.playthrough == 4:
-                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr")
-                    except: open(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
-                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr")
-                    except: open(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
-                if persistent.playthrough == 0 or persistent.playthrough == 4:
-                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr")
-                    except: open(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
-            except:
-                pass
-        else:
-            try:
-                if not os.access(config.basedir + "/characters/", os.F_OK):
-                    os.mkdir(config.basedir + "/characters")
-                if persistent.playthrough <= 2:
-                    try: renpy.file("../characters/monika.chr")
-                    except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
-                if persistent.playthrough <= 1 or persistent.playthrough == 4:
-                    try: renpy.file("../characters/natsuki.chr")
-                    except: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
-                    try: renpy.file("../characters/yuri.chr")
-                    except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
-                if persistent.playthrough == 0 or persistent.playthrough == 4:
-                    try: renpy.file("../characters/sayori.chr")
-                    except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
-            except:
-                pass
+        restore_all_characters()
 
-# Startup Disclaimer Images
+## These images are the background images shown in-game during the disclaimer.
 image tos = "bg/warning.png"
 image tos2 = "bg/warning2.png"
 
-# Startup Disclaimer
-
+## Startup Disclaimer
+# This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
-    # Grabs current username of the PC on Windows
+    # This python statement grabs the username of the PC and process list 
+    # on Windows.
     python:
         process_list = []
         currentuser = ""
+
         if renpy.windows:
             try:
                 process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
@@ -280,9 +273,13 @@ label splashscreen:
             except:
                 pass
 
+    # This if statement checks if we have passed the disclaimer and that the
+    # current version of the mod equals the old one or the autoload is set to 
+    # the post-credit loop.
     if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
         $ quick_menu = False
         scene black
+
         menu:
             "A previous save file has been found. Would you like to delete your save data and start over?"
             "Yes, delete my existing data.":
@@ -295,24 +292,20 @@ label splashscreen:
             "No, continue where I left off.":
                 $ restore_relevant_characters()
 
-    # Added this for 7.4.6 and to warn those on QA testing Ren'Py versions.
-    ## DO NOT MODIFY THESE THREE LINES.
+    # These variables and if statements are for the lockdown feature introduced
+    # in 2.4.6 of the template. DO NOT MODIFY THESE LINES.
     default persistent.lockdown_warning = False
 
-    if config.developer:
-        if not persistent.lockdown_warning:
+    if not persistent.lockdown_warning:
+        if config.developer:
             call lockdown_check
-    else:
-        $ persistent.lockdown_warning = True
+        else:
+            $ persistent.lockdown_warning = True
 
-    # Sets First Run to False to Show Disclaimer
+    ## This sets the first run variable to False to show the disclaimer.
     default persistent.first_run = False
 
-    # Startup Disclaimer
-
     if not persistent.first_run:
-        python:
-            restore_all_characters()
         $ quick_menu = False
         scene white
         pause 0.5
@@ -338,8 +331,10 @@ label splashscreen:
         pause 1.0
         scene white
 
-    ## Controls where Sayori Kill Early Starts Up.
-    ## Commented out for mod safety reasons.
+    # This python statement controls whether the Sayori Kill Early screen shows in-game.
+    # This feature has been commented out for mod safety reasons but can be used
+    # if needed.
+
     # python:
     #     s_kill_early = None
     #     if persistent.playthrough == 0:
@@ -359,29 +354,41 @@ label splashscreen:
     #             except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
 
 
-    # Controls Special Poems at random on startup
+    # This if statement controls which special poems are shown to the player in-game.
     if not persistent.special_poems:
         python hide:
+            # This variable sets a array of zeroes to assign poem numbers.
             persistent.special_poems = [0,0,0]
+            
+            # This sets the range of poem numbers to pick from.
             a = range(1,12)
+
+            # This for loop loops 3 times (array number of special_poems) and
+            # assigns a random number to the array.
             for i in range(3):
                 b = renpy.random.choice(a)
                 persistent.special_poems[i] = b
+                # This line makes sure we remove the number chosen from the range
+                # list to avoid duplicates.
                 a.remove(b)
 
+    # This variable makes sure the path of the base directory is Linux/macOS/Unix 
+    # based than Windows as Python/Ren'Py prefers this placement.
     $ basedir = config.basedir.replace('\\', '/')
 
-    # Controls auto-load of certain scripts
+    # This if statement checks whether we have a auto-load set to load it than
+    # start the game screen as-new.
     if persistent.autoload:
         jump autoload
 
-    # Team Salvato/Splash Message
-
+    # This variable sets skipping to False for the splash screen.
     $ config.allow_skipping = False
 
-    ## Shows the ghost menu if the user is lucky to roll it
+    # This if statement checks if we are in Act 2, have not seen the ghost menu
+    # before and a random number is 0 from 0-63.
     if persistent.playthrough == 2 and not persistent.seen_ghost_menu and renpy.random.randint(0, 63) == 0:
         show black
+        # These variables set the splash and menu screen to be a ghost menu.
         $ config.main_menu_music = audio.ghostmenu
         $ persistent.seen_ghost_menu = True
         $ persistent.ghost_menu = True
@@ -392,8 +399,10 @@ label splashscreen:
         $ config.allow_skipping = True
         return
 
-    ## Commented out for mod safety reasons.
-    ## Sayori Early Death Easter Egg
+    # This if statement checks if 'sayori.chr' was deleted after the disclaimer
+    # was made. This feature has been commented out for mod safety reasons but
+    # can be used if needed.
+
     # if s_kill_early:
     #     show black
     #     play music "bgm/s_kill_early.ogg"
@@ -464,15 +473,17 @@ label splashscreen:
     $ config.allow_skipping = True
     return
 
-# Warning Screen
+# This label is a left-over from DDLC's development that hides the Team Salvato
+# logo and shows the splash message.
 label warningscreen:
     hide intro
     show warning
     pause 3.0
 
-## If Monika.chr is deleted, this would play instead of the regular Chapter 1
-## From Script-CH0.rpy
-## Commented out for mod safety reasons.
+# This label is used when 'monika.chr' is deleted when the game starts Day 1 of
+# Act 1. This feature has been commented out for mod safety reasons but can be
+# used if needed.
+
 # label ch0_kill:
 #     $ s_name = "Sayori"
 #     show sayori 1b zorder 2 at t11
@@ -498,7 +509,7 @@ label warningscreen:
 #     $ renpy.quit()
 #     return
 
-# Checks if Afterload is the same as the anticheat
+# This label checks if the save loaded matches the anti-cheat stored in the save.
 label after_load:
     $ config.allow_skipping = allow_skipping
     $ _dismiss_pause = config.developer
@@ -514,7 +525,7 @@ label after_load:
         $ renpy.utter_restart()
     return
 
-# Autoreloads the game 
+# This label loads the label saved in the autoload variable. 
 label autoload:
     python:
         if "_old_game_menu_screen" in globals():
@@ -535,12 +546,14 @@ label autoload:
         
     jump expression persistent.autoload
 
-# starts the menu music once started
+# This label sets the main menu music to Doki Doki Literature Club before the
+# menu starts
 label before_main_menu:
     $ config.main_menu_music = audio.t1
     return
 
-# Basic Quit.
+# This label is a left-over from DDLC's development that quits the game but shows
+# a close-up Monika face before doing so.
 label quit:
     if persistent.ghost_menu:
         hide screen main_menu

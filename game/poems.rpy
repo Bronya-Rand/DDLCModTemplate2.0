@@ -1,24 +1,28 @@
-# Poems.rpy
+## poems.rpy
 
-# This defines all the poems in the game
-# Use this as a starting point if you would like to override with your own.
+# This file defines all the poems in the game that can be shown to the player
+# by the girls in the poem sharing mini-game.
 
-# Defines the Poems by the follow fields:
-# author - The name of the author, each has a defined styles
-# title - The title of the poem
-# text - the poem's text as a blockquote
-# yuri_2 - This uses the creepy style for yuri's second act2 poem
-# yuri_3 - This uses Yuri's madness style for her third act2 poem
 init python:
+    # This class defines the poems for the poem sharing mini-game.
+    # Syntax:
+    #   author - This variable contains the characters' name.
+    #   title - This variable contains the title of the poem.
+    #   text - This variable contains the poem lines for the poem.
+    #   yuri_2 - This variable checks if this is Yuri's 2nd poem in Act 2 to
+    #               make it look creepy.
+    #   yuri_3 - This variable checks if this is Yuri's 3rd poem in Act 2 to 
+    #               make it look extra creepy.
     class Poem:
         def __init__(self, author="", title="", text="", yuri_2=False, yuri_3=False):
-            self.author = author
+            self.author = author.lower()
             self.title = title
             self.text = text
             self.yuri_2 = yuri_2
             self.yuri_3 = yuri_3
 
-# All poems are defined here
+    # These variables declare each poem for the characters' in the game for
+    # the poem sharing mini-game.
     poem_y1 = Poem(
     author = "yuri",
     title = "Ghost Under the Light",
@@ -593,6 +597,7 @@ After all,
 Not all good times must come to an end."""
     )
 
+# These images define the poem paper to use given the players' playthrough.
 image paper = "images/bg/poem.jpg"
 image paper_glitch = LiveComposite((1280, 720), (0, 0), "paper_glitch1", (0, 0), "paper_glitch2")
 image paper_glitch1 = "images/bg/poem-glitch1.png"
@@ -605,7 +610,8 @@ image paper_glitch2:
         0.05
         repeat
 
-
+# These transforms define the effects when the poem is shown and when the
+# player finishes reading it to dissolve back to the main script.
 transform paper_in:
     truecenter
     alpha 0
@@ -615,16 +621,35 @@ transform paper_out:
     alpha 1
     linear 1.0 alpha 0
 
+## Poem Screen ################################################################
+##
+## This screen is used to make the poems appear during the poem sharing mini-game.
+## 
+## Syntax:
+##  currentpoem - This variable defines the current poem selected to be shown.
+##      currentpoem.author - This variable stores the author of the poem.
+##      currentpoem.title - This variable stores the poem title of the poem.
+##      currentpoem.text - This variable stores the poem lines of the poem.
+##      currentpoem.yuri_2 - This variable stores whether this is Yuri's 2nd 
+##                              poem in Act 2.
+##      currentpoem.yuri_3 - This variable stores whether this is Yuri's 3nd 
+##                              poem in Act 2.
+##  paper - This variable defines which poem paper to use given the players'
+##              playthrough.
 screen poem(currentpoem, paper="paper"):
     style_prefix "poem"
+
     vbox:
         add paper
+
     viewport id "vp":
         child_size (710, None)
         mousewheel True
         draggable True
+
         has vbox
         null height 40
+
         if currentpoem.author == "yuri":
             if currentpoem.yuri_2:
                 text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text"
@@ -638,27 +663,30 @@ screen poem(currentpoem, paper="paper"):
             text "[currentpoem.title]\n\n[currentpoem.text]" style "natsuki_text"
         elif currentpoem.author == "monika":
             text "[currentpoem.title]\n\n[currentpoem.text]" style "monika_text"
+
         null height 100
+
     vbar value YScrollValue(viewport="vp") style "poem_vbar"
 
-
-
+# This style controls the position of the poem vertical box.
 style poem_vbox:
     xalign 0.5
+
+# This style controls the viewport of the poem lines to add scrolling for
+# larger poems.
 style poem_viewport:
     xanchor 0
     xsize 720
     xpos 280
+
+# This style controls the position of the poem vertical box.
 style poem_vbar is vscrollbar:
     xpos 1000
     yalign 0.5
 
     ysize 700
 
-
-
-
-
+# These styles controls the appearance of the poem text by who wrote the poem.
 style yuri_text:
     font "gui/font/y1.ttf"
     size 32
@@ -698,42 +726,66 @@ style monika_text:
     color "#000"
     outlines []
 
+# This label shows the poem to the player during the poem sharing mini-game.
 label showpoem(poem=None, music=True, track=None, revert_music=True, img=None, where=i11, paper=None):
     if poem == None:
         return
+
     play sound page_turn
+
     if music:
+        # This variable grabs the current position of the music playing.
         $ currentpos = get_pos()
+        # This if/else statement declares a variable that plays the given characters'
+        # version of Okay Everyone.
         if track:
             $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>" + track
         else:
             $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>bgm/5_" + poem.author + ".ogg"
+
+        # These variables stop the normal Okay Everyone track and plays the characters'
+        # version of the track instead.
         stop music fadeout 2.0
         $ renpy.music.play(audio.t5b, channel="music_poem", fadein=2.0, tight=True)
+
+    # These variables hide the textbox and stops auto-forward.
     window hide
     $ renpy.game.preferences.afm_enable = False
+
+    # This if/else statement determines whether to show a alternative poem paper
+    # if it is declared in the label statement.
     if paper:
         show screen poem(poem, paper=paper)
     else:
         show screen poem(poem)
+
+    # This statement determines if this is the player's first poem to show a
+    # tutorial to dismiss the poem.
     if not persistent.first_poem:
         $ persistent.first_poem = True
         $ renpy.save_persistent()
         show expression "gui/poem_dismiss.png" as poem_dismiss:
             xpos 1050 ypos 590
     with Dissolve(1)
+
     $ pause()
+
+    # This if statement checks if a character image was declared to give a
+    # different characters' expression after the poem is read.
     if img:
         $ renpy.hide(poem.author)
         $ renpy.show(img, at_list=[where])
+
+    # These variables hide the poem screen.
     hide screen poem
     hide poem_dismiss
     with Dissolve(.5)
     window auto
+
+    # This if statement reverts the music back to normal if declared.
     if music and revert_music:
         $ currentpos = get_pos(channel="music_poem")
         $ audio.t5c = "<from " + str(currentpos) + " loop 4.444>bgm/5.ogg"
         stop music_poem fadeout 2.0
         $ renpy.music.play(audio.t5c, fadein=2.0)
     return
-

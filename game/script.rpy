@@ -1,65 +1,73 @@
-# Script.rpy
+## script.rpy
 
-# This is the main script that DDLC/Ren'Py calls upon to start
+# This is the main script that Ren'Py calls upon to start
 # your mod's story! 
 
 label start:
 
-    # Configures your mod to use a ID to prevent users from cheating.
-    # Leave this as default and only change the value 'persistent.anticheat' has
-    # in definitions.rpy if you want to change it
+    # This label configures the anticheat number for the game after Act 1.
+    # It is recommended to leave this as-is and use the following in your script:
+    #   $ persistent.anticheat = renpy.random.randint(X, Y) 
+    #   X - The minimum number | Y - The maximum number
     $ anticheat = persistent.anticheat
 
-    # Controls what chapter the game starts for the poem game.
+    # This variable sets the chapter number to 0 to use in the mod.
     $ chapter = 0
 
-    # Allows the player to dismiss or not based off config.developer 
-    # (located in definitions.rpy)
+    # This variable controls whether the player can dismiss a pause in-game.
     $ _dismiss_pause = config.developer
 
-    # Names of the Characters
-    # To add a character -> $ mi_name = "Mike". Don't forget to
-    # add them also in definitions.rpy!
+    ## Names of the Characters
+    # These variables set up the names of the characters in the game.
+    # To add a character, use the following example below: 
+    #   $ mi_name = "Mike". 
+    # Don't forget to add the character to 'definitions.rpy'!
     $ s_name = "???"
     $ m_name = "Girl 3"
     $ n_name = "Girl 2"
     $ y_name = "Girl 1"
 
-    # Controls whether we have a menu in the textbox or not.
+    # This variable controls whether the quick menu in the textbox is enabled.
     $ quick_menu = True
 
-    # Controls whether we want normal or glitched dialogue
-    # For glitched dialogue, use 'style.edited' than 'style.normal'
+    # This variable c ontrols whether we want normal or glitched dialogue
+    # For glitched dialogue, use 'style.edited'.
     $ style.say_dialogue = style.normal
 
-    # Controls whether Sayori is dead. Leave this alone unless needed.
+    # This variable controls whether Sayori is dead. It is recommended to leave
+    # this as-is.
     $ in_sayori_kill = None
     
-    # Controls whether we allow skipping dialogue.
+    # These variables controls whether the player can skip dialogue or transitions.
     $ allow_skipping = True
     $ config.allow_skipping = True
 
-    # Start of the script
-    # 'persistent.playthrough' controls the playthrough number the player is on
+    ## The Main Part of the Script
+    # This is where your script code is called!
+    # 'persistent.playthrough' controls the playthrough number the player is on i.e (Act 1, 2, 3, 4)
     if persistent.playthrough == 0:
-        # '$ chapter = 0' controls the chapter number the game is on for the poem game.
-        # 'call tutorial_selection' controls what label to call from in your script files
-        # Make sure to change this when coding your mod, else your player will face a script error
 
+        # This variable sets the chapter number to X depending on the chapter
+        # your player is experiencing ATM.
         $ chapter = 0
+
+        # This call statement calls your script label to be played.
         call ch0_main
         
+        # This call statement calls the poem mini-game to be played.
         call poem
 
-        # Day 1
+        ## Day 1
         $ chapter = 1
         call ch1_main
-        # 'call poemresponse_start' calls the poem response game
+
+        # This call statement calls the poem sharing minigame to be played.
         call poemresponse_start
         call ch1_end
 
         call poem
 
+        ## Day 2
         $ chapter = 2
         call ch2_main
         call poemresponse_start
@@ -67,52 +75,51 @@ label start:
 
         call poem
 
+        ## Day 3
         $ chapter = 3
         call ch3_main
         call poemresponse_start
         call ch3_end
 
+        ## Day 4
         $ chapter = 4
         call ch4_main
 
-        ## try: renpy.file(config.basedir + "/hxppy thxughts.png") checks if there is a file
-        # where DDLC.exe (.app/.sh for MacOS/Linux) called 'hxppy thxughts.png'
-        ## except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
-        # writes 'hxppy thxughts.png' to the main directory if not found.
+        # This python statement writes a file from within the game to the game folder
+        # or to the Android/data/[modname]/files/game folder.
         python:
             if renpy.android:
-                # For Android, the try and excepts must be formatted like so with this but replace
-                # hxppy thxughts.png with the file you want to write.
-                ## try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
-                ## except: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png"), "wb").write(renpy.file("hxppy thxughts.png").read())
                 try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
                 except: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
             else:
                 try: renpy.file(config.basedir + "/hxppy thxughts.png")
                 except: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+
+        ## Day 5
         $ chapter = 5
         call ch5_main
 
-        #ends the game (not credits)
+        # This call statement ends the game but doesn't play the credits.
         call endgame
-
         return
 
     elif persistent.playthrough == 1:
         $ chapter = 0
         call ch10_main
-        # jump calls upon a label. like call but won't ever return
-        # back here.
+        
+        # This jump statement jumps over to Act 2 from Act 1.
         jump playthrough2
 
 
     elif persistent.playthrough == 2:
+        ## Day 1 - Act 2
         $ chapter = 0
         call ch20_main
 
         label playthrough2:
 
             call poem
+
             python:
                 if renpy.android:
                     try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
@@ -121,12 +128,15 @@ label start:
                     try: renpy.file(config.basedir + "/CAN YOU HEAR ME.txt")
                     except: open(config.basedir + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
 
+            ## Day 2 - Act 2
             $ chapter = 1
             call ch21_main
             call poemresponse_start
             call ch21_end
 
+            # This call statement calls the poem mini-game with no transition.
             call poem(False)
+
             python:
                 if renpy.android:
                     try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
@@ -135,24 +145,27 @@ label start:
                     try: renpy.file(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
                     except: open(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
 
+            ## Day 3 - Act 2
             $ chapter = 2
             call ch22_main
             call poemresponse_start
             call ch22_end
 
-            # 'call poem(False)' calls the poemgame but with no fancy transitions
             call poem(False)
 
+            ## Day 4 - Act 2
             $ chapter = 3
             call ch23_main
-            # if y_appeal >= 3: checks if our appeal with Yuri is > or = to 3
-            # if yes then it calls a special poem response game, else normal.
+
+            # This if statement calls either a special poem response game or play
+            # as normal.
             if y_appeal >= 3:
                 call poemresponse_start2
             else:
                 call poemresponse_start
-            # this is old Dan leftover code when DDLC was a demo.
-            # if you wanted to you can re-use it as a demo showcase of your own mod.
+
+            # This if statement is leftover code from DDLC where if your game is
+            # a demo that it ends the game fully.
             if persistent.demo:
                 stop music fadeout 2.0
                 scene black with dissolve_cg
@@ -160,7 +173,6 @@ label start:
                 return
 
             call ch23_end
-
             return
 
     elif persistent.playthrough == 3:
@@ -168,11 +180,12 @@ label start:
 
     elif persistent.playthrough == 4:
 
+        ## Day 1 - Act 4
         $ chapter = 0
         call ch40_main
         jump credits
 
-# the end label of the game. Not the credits.    
+# This label is where the game 'ends' during Act 1.
 label endgame(pause_length=4.0):
     $ quick_menu = False
     stop music fadeout 2.0
@@ -182,4 +195,3 @@ label endgame(pause_length=4.0):
     pause pause_length
     $ quick_menu = True
     return
-

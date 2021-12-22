@@ -138,7 +138,7 @@ init python:
     m1a = GalleryImage("monika 1", name="Monika", sprite=True, locked=False)
     galleryList.append(m1a)
 
-## Gallery Screen #################################################################
+## Gallery Screen #############################################################
 ##
 ## This screen is used to make a gallery view of in-game art to the player in 
 ## the main menu.
