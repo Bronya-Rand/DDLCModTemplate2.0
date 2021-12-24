@@ -1,4 +1,4 @@
-﻿## This template version is 2.4.9. When asked to provide the template version
+﻿## This template version is 3.0.0. When asked to provide the template version
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
@@ -130,11 +130,12 @@ init python:
         else:
             return (float(height) * (float(config.screen_width) / float(config.screen_height)), height)
 
-    # This function saves your mods' logo as a ICO file for Windows building with a custom icon.
-    import pygame_sdl2
-    import os
-
+    # This function saves your mods' logo as a ICO file for Windows building with 
+    # a custom icon.
     def saveIco(filepath):
+        import pygame_sdl2
+        import os
+        
         bmp = os.path.join(renpy.config.basedir, "icon.bmp").replace("\\", "/")
         ico = os.path.join(renpy.config.basedir, "icon.ico").replace("\\", "/")
 
@@ -158,7 +159,6 @@ init python:
 ## This section controls how Ren'Py turns your project into distribution files.
 
 init python:
-
     ## The following variables take file patterns. File patterns are case-
     ## insensitive, and matched against the path relative to the base directory,
     ## with and without a leading /. If multiple patterns match, the first is
@@ -184,16 +184,20 @@ init python:
     build.archive("scripts", 'mod all')
     build.archive("mod_assets", 'mod all')
 
-    ## Do not touch this. This is so Ren'Py can add the .sh file for Linux and macOS 
-    ## to run your mod. 
+    # Do not touch these lines. This is so Ren'Py can add your mods' py file
+    # and a special launcher for Linux and macOS to run your mod. 
+    try: 
+        build.renpy_patterns.remove(('renpy.py', ['all']))
+        build.classify_renpy("renpy.py", "renpy all")
+    except: pass
+    
     try:
-        build.renpy_patterns.remove((u'renpy.py', [u'all']))
-    except:
-        pass
-    build.classify_renpy("renpy.py", "renpy all")
+        build.early_base_patterns.remove(('*.sh', None))
+        build.classify("LinuxLauncher.sh", "linux mac") ## Linux Launcher Script
+        build.classify("*.sh", None)
+    except: pass
     
     #############################################################
-
     # These variables classify packages for PC and Android platforms.
     # Make sure to add 'all' to your build.classify variable if you are planning
     # to build your mod on Android like in this example.
@@ -206,7 +210,6 @@ init python:
     build.classify("game/**.chr", "scripts all")
     build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
     build.classify("game/tl/**", "scripts all") ## Translation Folder
-    build.classify("LinuxLauncher.sh", "linux") ## Linux Launcher Script
 
     build.classify('**~', None)
     build.classify('**.bak', None)
@@ -223,7 +226,7 @@ init python:
     build.classify('/game/cache/*.*', None)
     build.classify('**.rpa', None)
     build.classify('README.html','mod all')
-
+   
     # This sets' README.html as documentation
     build.documentation('README.html')
 
