@@ -206,6 +206,7 @@ init python:
     build.classify("game/**.chr", "scripts all")
     build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
     build.classify("game/tl/**", "scripts all") ## Translation Folder
+    build.classify("LinuxLauncher.sh", "linux") ## Linux Launcher Script
 
     build.classify('**~', None)
     build.classify('**.bak', None)
