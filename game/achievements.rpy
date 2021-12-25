@@ -1,3 +1,9 @@
+## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+
+## achievements.rpy
+
+# This file is not part of DDLC. This file contains the code for the achievements
+# menu and notification that shows your progress throughout the mod.
 
 init python:
     import math
@@ -5,21 +11,60 @@ init python:
     achievementList = []
     selectedAchievement = None
 
+    # This class declares the code to make a achievement.
+    # Syntax:
+    #   name - This variable contains the human-readable name of the achievement.
+    #   description - This variable contains the human-readable description of your
+    #                   achievement.
+    #   image - This variable contains the path or image tag of the achievement.
+    #   persistent - This variable contain the name of a in-game variable to check if the
+    #                   achievement has been completed or not.
+    #   count - This variable checks if the achievement declared requires a number to match.
+    #   maxCount - This variable stores the maxCount a achievement needs to be completed.
     class Achievements:
 
         def __init__(self, name, description, image, persistent, count=False, maxCount=100):
+            # The human readable name of the achievement.
             self.name = name
+
+            # The description of the achievement.
             self.description = description
+
+            # The image variable or path of the achievement image.
             self.image = image
+
+            # The image variable or path of the achievement image if the 
+            # achievement hasn't been unlocked.
             self.locked = im.MatrixColor(image, im.matrix.desaturate())
+
+            # A condition to see if a set number is needed to unlock the achievement.
             self.count = count
+
+            # The name of the variable to check if it's T/F | meets the maxCount or more.
             self.persistent = persistent
+            
+            # The max number of items the user needs to unlock the achievements.
             self.maxCount = maxCount
 
+    # This section declares the achievements. See the 'Achievements' class
+    # syntax to declare one.
     startup = Achievements("Welcome to DDLC!", "Thanks for accepting the TOS.",
             "gui/logo.png", "persistent.first_run")
     achievementList.append(startup)
 
+## Achievements Screen #############################################################
+##
+## This screen is used to make a achievements view of all possible achievements
+## the mod has in the main menu.
+##
+## Syntax:
+##   al.image - This variable contains the path or image tag of the achievement.
+##   al.locked - This variable contains the locked image of the achievement.
+##   al.persistent - This variable contains the name of the in-game variable to check
+##                      if the achievement is completed or not.
+##   al.maxCount - This variable contains the number needed for the achievement to be
+##                  unlocked.
+##   gl.description - This variable contains the description of the achievement.
 screen achievements:
 
     tag menu
@@ -28,6 +73,8 @@ screen achievements:
         
         style_prefix "achievements"
 
+        # This vbox is responsible for the achievement display above the list
+        # of possible achievements to display the selected achievements' info.
         vbox:
             xpos 0.26
             ypos -0.1
@@ -73,6 +120,7 @@ screen achievements:
                     else:
                         null height 128
 
+        # This vpgrid is responsible for the list of achievements in the game.
         vpgrid:
             id "avp"
             rows math.ceil(len(achievementList) / 6.0)
@@ -112,7 +160,7 @@ screen achievements:
         textbutton "?":
             style "return_button"
             xpos 0.99 ypos 1.1
-            action ShowMenu("dialog", "{b}Help{/b}\n Gray icons indicate that this achievement is locked.\nContinue your progress in [config.name]\nto unlock all the achievements possible.", ok_action=Hide("dialog"))
+            action ShowMenu("dialog", "{b}Help{/b}\nGray icons indicate that this achievement is locked.\nContinue your progress in [config.name]\nto unlock all the achievements possible.", ok_action=Hide("dialog"))
 
         if config.developer:
             textbutton "Test Notif":
@@ -120,6 +168,13 @@ screen achievements:
                 xpos 0.8 ypos 1.1
                 action [ShowMenu("achievement_notify", startup), With(Dissolve(0.5))]
 
+## Achievements Notify Screen #############################################################
+##
+## This screen is used to notify a user of a unlocked achievement.
+##
+## Syntax:
+##   reward.image - This variable contains the path or image tag of the achievement.
+##   reward.name - This variable contains the locked image of the achievement.
 screen achievement_notify(reward):
     
     style_prefix "achievements"
