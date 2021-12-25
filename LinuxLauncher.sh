@@ -1,5 +1,8 @@
 #!/bin/sh
 
+## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+# Based off the original renpy.sh file with Ren'Py 6 removal patch applied.
+
 # The directory containing this shell script - an absolute path.
 ROOT=$(dirname "$SCRIPT")
 ROOT=$(cd "$ROOT"; pwd)

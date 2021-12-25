@@ -1,4 +1,6 @@
-﻿## pronoun_example.rpy
+﻿## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+
+## pronoun_example.rpy
 
 # This file serves as a example to the pronoun feature.
 # Use this as a example on how to use the pronoun feature.

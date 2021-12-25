@@ -1,4 +1,6 @@
-# Lockdown_check.rpy
+## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+
+## lockdown_check.rpy
 
 # This file is not part of DDLC. This file is mainly designed to warn new modders
 # about bugs with certain Ren'Py versions or warn them about QA issues with running 

@@ -2,7 +2,7 @@
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
-# Options.rpy
+## options.rpy
 
 # This file customizes what your mod is and and how it starts and builds!
 

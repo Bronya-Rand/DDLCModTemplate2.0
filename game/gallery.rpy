@@ -1,3 +1,5 @@
+## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+
 ## gallery.rpy
 
 # This file is not part of DDLC. This file contains the code for the gallery
