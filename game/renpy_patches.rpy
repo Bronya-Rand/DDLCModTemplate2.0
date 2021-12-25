@@ -1,4 +1,6 @@
-# Renpy_patches.rpy
+## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+
+## renpy_patches.rpy
 
 # This file is not part of DDLC. This file is mainly designed to 
 # patch certain versions of Ren'Py that break DDLC/DDLC mods by
