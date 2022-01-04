@@ -21,12 +21,12 @@ init python:
         "Monika is watching you code."
     ]
 
-    # New in 2.5.0/3.0.0
-    # This recolor function allows you to recolor the GUI of DDLC easily without replacing
-    # the in-game assets.
-
-    # Syntax to use: recolorize("path/to/your/image", "#color1hex", "#color2hex", contrast value)
-    # Example: recolorize("gui/menu_bg.png", "#bdfdff", "#e6ffff", 1.25)
+    ### New in 3.0.0
+    ## This recolor function allows you to recolor the GUI of DDLC easily without replacing
+    ## the in-game assets.
+    ##
+    ## Syntax to use: recolorize("path/to/your/image", "#color1hex", "#color2hex", contrast value)
+    ## Example: recolorize("gui/menu_bg.png", "#bdfdff", "#e6ffff", 1.25)
 
     def recolorize(path, blackCol, whiteCol="#fff", contr=1.29):
         return im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr) * im.matrix.colorize("#00f", "#fff") * im.matrix.saturation(120)), 
