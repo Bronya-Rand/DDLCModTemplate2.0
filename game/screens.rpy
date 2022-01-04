@@ -290,7 +290,7 @@ style input:
 ## statement. The one parameter, items, is a list of objects, each with caption
 ## and action fields.
 ##
-## New as of 2.5.0
+## New as of 3.0.0
 ##    - You may now pass through argurments to the menu options to colorize
 ##      your menu as you like. Add (kwargs=[color hex or style name]) to your
 ##      menu option name and you get different buttons! 
