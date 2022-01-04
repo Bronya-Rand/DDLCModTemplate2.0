@@ -1709,8 +1709,7 @@ screen nvl_dialogue(dialogue):
 
 ## BSOD screen ##################################################################
 ## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this feature only for DDLC mods and not for DDLC patchers,
-## unofficial fixes and more without permission.
+## You may only use this feature only for DDLC mods.
 ##
 ## This screen is used to fake a BSOD/kernel panic on the players' computer 
 ## on all platforms (Mobile devices defaults to the Linux BSOD).
