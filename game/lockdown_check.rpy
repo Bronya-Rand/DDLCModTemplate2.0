@@ -1,4 +1,4 @@
-## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
 
 ## lockdown_check.rpy
 
