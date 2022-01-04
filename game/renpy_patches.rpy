@@ -1,4 +1,5 @@
-## Copyright 2019-2021 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## This file may only be used if the author is credited in text by name.
 
 ## renpy_patches.rpy
 
