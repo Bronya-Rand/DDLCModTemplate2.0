@@ -248,30 +248,41 @@ image tos2 = "bg/warning2.png"
 ## Startup Disclaimer
 # This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
-    # This python statement grabs the username of the PC and process list 
-    # on Windows.
+    # This python statement grabs the username and process list of the PC.
     python:
         process_list = []
         currentuser = ""
 
         if renpy.windows:
-            try:
-                process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
+            try: process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
             except:
                 try:
                     process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().replace("\r", "").split("\n") # For W11 builds > 22000
+                    
                     for x in range(len(process_list)):
                         process_list[x] += ".exe"
-                except:
-                    pass
-
+                except: pass            
             try:
                 for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
                     user = os.environ.get(name)
                     if user:
                         currentuser = user
-            except:
-                pass
+            except: pass
+
+        else:
+            try:
+                process_list = subprocess.check_output("ps -a --format cmd", shell=True).split(b"\n")
+
+                for x in range(len(process_list)):
+                    process_list[x] = process_list[x].decode()
+                process_list.pop(0)
+            except: pass
+
+            try: 
+                user = subprocess.check_output("whoami", shell=True).capitalize().replace("\n", "")
+                if user:
+                    currentuser = user
+            except: pass
 
     # This if statement checks if we have passed the disclaimer and that the
     # current version of the mod equals the old one or the autoload is set to 
