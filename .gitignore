@@ -9,3 +9,4 @@ game/cache
 game/saves
 .vscode
 .DS_Store
+errors.txt
