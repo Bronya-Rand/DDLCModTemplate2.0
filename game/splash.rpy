@@ -15,6 +15,8 @@ init -100 python:
 ## Splash Message
 # This python statement is where the splash messages reside in.
 init python:
+    import re
+
     menu_trans_time = 1
     # This variable is the default splash message that people will see when
     # the game launches.
@@ -25,6 +27,17 @@ init python:
         "Please support Doki Doki Literature Club.",
         "Monika is watching you code."
     ]
+
+    def process_check(stream_list):
+        if not renpy.windows:
+            for x in range(len(stream_list)):
+                stream_list[x] = stream_list[x].replace(".exe", "")
+        
+        for x in range(len(stream_list)):
+            for y in range(len(process_list)):
+                if re.match(r"^" + stream_list[x] + r"\b", process_list[y]):
+                    return True
+        return False
 
 # This image text shows the splash message when the game loads.
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
@@ -262,27 +275,22 @@ label splashscreen:
                     for x in range(len(process_list)):
                         process_list[x] += ".exe"
                 except: pass            
-            try:
-                for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
-                    user = os.environ.get(name)
-                    if user:
-                        currentuser = user
-            except: pass
-
         else:
             try:
-                process_list = subprocess.check_output("ps -a --format cmd", shell=True).split(b"\n")
-
+                try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).split(b"\n") # Linux
+                except: process_list = subprocess.check_output("ps -A -o command", shell=True).split(b"\n") # MacOS
+                
                 for x in range(len(process_list)):
-                    process_list[x] = process_list[x].decode()
+                    process_list[x] = process_list[x].decode().split("/")[-1]
                 process_list.pop(0)
             except: pass
 
-            try: 
-                user = subprocess.check_output("whoami", shell=True).capitalize().replace("\n", "")
+        try:
+            for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
+                user = os.environ.get(name)
                 if user:
                     currentuser = user
-            except: pass
+        except: pass
 
     # This if statement checks if we have passed the disclaimer and that the
     # current version of the mod equals the old one or the autoload is set to 
