@@ -332,8 +332,9 @@ label splashscreen:
         with Dissolve(1.0)
         pause 1.0
 
-        # You can edit this message but you MUST declare that your mod is unaffiliated with Team Salvato,
-        # requires that the player must finish DDLC before playing, has spoilers for DDLC, and where to 
+        # You can edit this message but you MUST declare that your mod is 
+        # unaffiliated with Team Salvato, requires that the player must 
+        # finish DDLC before playing, has spoilers for DDLC, and where to 
         # get DDLC's files."
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
@@ -344,15 +345,24 @@ label splashscreen:
             "I agree.":
                 pass
                 
-        $ persistent.first_run = True
+        #$ persistent.first_run = True
         scene tos2
         with Dissolve(1.5)
         pause 1.0
+
+        # This if statement checks if we are running any common streaming/recording 
+        # software so the game can enable Let's Play Mode automatically and notify
+        # the user about it if extra settings are enabled.
+        if extra_settings:
+            if process_check(["obs32.exe", "obs64.exe", "obs.exe", "xsplit.core.exe", "livehime.exe", "pandatool.exe", "yymixer.exe", "douyutool.exe", "huomaotool.exe", "BlueTool"]):
+                $ persistent.lets_play = True
+                call screen dialog("Let's Play Mode has been enabled automatically.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.\n\n To turn off Let's Play Mode, visit Settings and\nuncheck Let's Play Mode.", 
+                    [Hide("dialog"), Return()])
         scene white
 
-    # This python statement controls whether the Sayori Kill Early screen shows in-game.
-    # This feature has been commented out for mod safety reasons but can be used
-    # if needed.
+    # This python statement controls whether the Sayori Kill Early screen shows 
+    # in-game. This feature has been commented out for mod safety reasons but can 
+    # be used if needed.
 
     # python:
     #     s_kill_early = None
