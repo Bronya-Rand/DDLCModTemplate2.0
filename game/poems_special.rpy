@@ -26,7 +26,9 @@ image poem_end = ConditionSwitch(
     "True", "poem_special/poem_end.png")
 
 # This label shows the special poems the player can see during their playthrough
-# of the mod.
+# of the mod. 
+# To use this, use 'call poem_special(X) where X is the poem number to show from'
+# the poem list above.
 label poem_special(poem=1):
     $ quick_menu = False
     play sound page_turn
@@ -34,7 +36,7 @@ label poem_special(poem=1):
     if poem == 7:
         show poem_special7a as ps with Dissolve(1.0)
     else:
-        show expression "poem_special" + str(poem) with Dissolve(1.0)
+        show expression "poem_special" + str(poem) as ps with Dissolve(1.0)
 
     $ pause()
 
