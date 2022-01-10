@@ -134,7 +134,6 @@ init python:
     # a custom icon.
     def saveIco(filepath):
         import pygame_sdl2
-        import os
         
         bmp = os.path.join(renpy.config.basedir, "icon.bmp").replace("\\", "/")
         ico = os.path.join(renpy.config.basedir, "icon.ico").replace("\\", "/")
