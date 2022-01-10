@@ -10,7 +10,8 @@ init -2 python:
     # This sets the resolution of DDLC to 1280x720p
     gui.init(1280, 720)
 
-## GUI Config Variables
+## GUI Sounds
+# These variables set the sound effects for the GUI elements in the game.
 define -2 gui.hover_sound = "gui/sfx/hover.ogg" # Hover Sound Effect
 define -2 gui.activate_sound = "gui/sfx/select.ogg" # Click Sound Effect
 define -2 gui.activate_sound_glitch = "gui/sfx/select_glitch.ogg" # Glitched Sound Effect

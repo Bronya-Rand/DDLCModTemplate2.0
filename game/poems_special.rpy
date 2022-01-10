@@ -27,7 +27,7 @@ image poem_end = ConditionSwitch(
 
 # This label shows the special poems the player can see during their playthrough
 # of the mod. 
-# To use this, use 'call poem_special(X) where X is the poem number to show from'
+# To use this, use 'call poem_special(X)' where X is the poem number to show from
 # the poem list above.
 label poem_special(poem=1):
     $ quick_menu = False
