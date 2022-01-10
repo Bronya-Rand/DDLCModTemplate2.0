@@ -45,7 +45,6 @@ init python:
 
     # This function deletes a given character name from the characters folder.
     def delete_character(name):
-        import os
         if renpy.android:
             try: os.remove(os.environ['ANDROID_PUBLIC'] + "/characters/" + name + ".chr")
             except: pass
@@ -53,33 +52,29 @@ init python:
             try: os.remove(config.basedir + "/characters/" + name + ".chr")
             except: pass
 
-    # This function restores all the character CHR files to the characters folder 
-    # given the playthrough number in the mod.
+    # These functions restores all the character CHR files to the characters folder 
+    # given the playthrough number in the mod and list of characters to restore.
+    def restore_character(names):
+        if type(names) != list:
+            raise Exception("'names' parameter must be a list. Example: [\"monika\", \"sayori\"].")
+
+        for x in names:
+            if renpy.android:
+                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/" + x + ".chr")
+                except: open(os.environ['ANDROID_PUBLIC'] + "/characters/" + x + ".chr", "wb").write(renpy.file(x + ".chr").read())
+            else:
+                try: renpy.file("../characters/" + x + ".chr")
+                except: open(config.basedir + "/characters/" + x + ".chr", "wb").write(renpy.file(x + ".chr").read())
+
     def restore_all_characters():
-        if renpy.android:
-            if persistent.playthrough != 4:
-                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/monika.chr")
-                except: open(os.environ['ANDROID_PUBLIC'] + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
-            elif persistent.playthrough != 3:
-                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr")
-                except: open(os.environ['ANDROID_PUBLIC'] + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
-                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr")
-                except: open(os.environ['ANDROID_PUBLIC'] + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
-            elif persistent.playthrough != 1 or persistent.playthrough != 2 or persistent.playthrough != 3:
-                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr")
-                except: open(os.environ['ANDROID_PUBLIC'] + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
+        if persistent.playthrough == 0:
+            restore_character(["monika", "sayori", "natsuki", "yuri"])
+        elif persistent.playthrough == 1 or persistent.playthrough == 2:
+            restore_character(["monika", "natsuki", "yuri"])
+        elif persistent.playthrough == 3:
+            restore_character(["monika"])
         else:
-            if persistent.playthrough != 4:
-                try: renpy.file("../characters/monika.chr")
-                except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
-            elif persistent.playthrough != 3:
-                try: renpy.file("../characters/natsuki.chr")
-                except: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
-                try: renpy.file("../characters/yuri.chr")
-                except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
-            elif persistent.playthrough != 1 or persistent.playthrough != 2 or persistent.playthrough != 3:
-                try: renpy.file("../characters/sayori.chr")
-                except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
+            restore_character(["sayori", "natsuki", "yuri"])
     
     # This function is obsolete as all characters now restores only
     # relevant characters to the characters folder.
@@ -98,10 +93,6 @@ init python:
     # This function sets up the pronouns of the user for 
     # they, them, are, and they are phrases in game for dialogue.
     def finishPronouns():
-        heC = he.capitalize()
-        himC = him.capitalize()
-        areC = are.capitalize()
-        hesC = hes.capitalize()
         persistent.he = he
         persistent.him = him
         persistent.are = are
@@ -1429,10 +1420,10 @@ default he = persistent.he
 default him = persistent.him
 default are = persistent.are
 default hes = persistent.hes
-default heC = persistent.he.capitalize()
-default himC = persistent.him.capitalize()
-default areC = persistent.are.capitalize()
-default hesC = persistent.hes.capitalize()
+default he_capital = he.capitalize()
+default him_capital = him.capitalize()
+default are_capital = are.capitalize()
+default hes_capital = hes.capitalize()
 
 ## Extra Settings Variables
 # This section controls whether the mod is censored or is in let's play mode.
