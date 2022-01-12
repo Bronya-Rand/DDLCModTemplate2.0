@@ -12,7 +12,7 @@ label lockdown_check:
 
     $ version = renpy.version()
 
-    if renpy.version_tuple > (7, 4, 10, 2178):
+    if renpy.version_tuple > (7, 4, 11, 2266):
 
         scene black
         "{b}Warning:{/b} The version of Ren'Py you are trying to mod DDLC on has not been tested for modding compatibility."
@@ -20,7 +20,7 @@ label lockdown_check:
         "Running DDLC or your DDLC mod on a higher version than the one tested may introduce bugs and other game breaking features."
         
         menu:
-            "By continuing to run your mod on [version!q], you acknoledge that you have read this warning message and understand the possible problems that can happen on a untested Ren'Py version."
+            "By continuing to run your mod on [version!q], you acknoledge this disclaimer and the possible problems that can happen on a untested Ren'Py version."
             "I agree.":
                 $ persistent.lockdown_warning = True
                 return
