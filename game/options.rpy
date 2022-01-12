@@ -192,7 +192,7 @@ init python:
     
     try:
         build.early_base_patterns.remove(('*.sh', None))
-        build.classify("LinuxLauncher.sh", "linux mac") ## Linux Launcher Script
+        build.classify("LinuxLauncher.sh", "linux") ## Linux Launcher Script
         build.classify("*.sh", None)
     except: pass
     
@@ -225,6 +225,7 @@ init python:
     build.classify('/game/cache/*.*', None)
     build.classify('**.rpa', None)
     build.classify('README.html','mod all')
+    build.classify('README.linux', 'linux')
    
     # This sets' README.html as documentation
     build.documentation('README.html')
