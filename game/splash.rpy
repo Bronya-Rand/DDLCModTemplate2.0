@@ -28,6 +28,17 @@ init python:
         "Monika is watching you code."
     ]
 
+    ### New in 3.0.0
+    ## This recolor function allows you to recolor the GUI of DDLC easily without replacing
+    ## the in-game assets.
+    ##
+    ## Syntax to use: recolorize("path/to/your/image", "#color1hex", "#color2hex", contrast value)
+    ## Example: recolorize("gui/menu_bg.png", "#bdfdff", "#e6ffff", 1.25)
+
+    def recolorize(path, blackCol, whiteCol="#fff", contr=1.29):
+        return im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr) * im.matrix.colorize("#00f", "#fff") * im.matrix.saturation(120)), 
+            im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
+
     def process_check(stream_list):
         if not renpy.windows:
             for x in range(len(stream_list)):
@@ -59,12 +70,14 @@ image menu_logo:
 image menu_bg:
     topleft
     "gui/menu_bg.png"
+    #recolorize("gui/menu_bg.png", "#ffbde1")
     menu_bg_move
 
 # This image shows the pause menu polka-dot image.
 image game_menu_bg:
     topleft
     "gui/menu_bg.png"
+    #recolorize("gui/menu_bg.png", "#ffbde1")
     menu_bg_loop
 
 # This image transform shows the white fading effect in the main menu.
@@ -151,6 +164,7 @@ image menu_art_s_glitch:
 # This image shows the main menu screen in the main/pause menu.
 image menu_nav:
     "gui/overlay/main_menu.png"
+    #recolorize("gui/overlay/main_menu.png", "#ffbde1")
     menu_nav_move
 
 ## Main Menu Effects
