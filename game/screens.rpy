@@ -1918,7 +1918,7 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                             text "If you call a support person, give them this info:" style "bsod_win10_sub_text"
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
         
-    elif not renpy.macintosh:
+    elif renpy.macintosh:
 
         add Solid("#222")
 
