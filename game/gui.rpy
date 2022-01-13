@@ -86,9 +86,6 @@ define -2 gui.main_menu_background = "menu_bg"
 # This sets background for the pause/game menu
 define -2 gui.game_menu_background = "game_menu_bg"
 
-# This controls whether we show the name and version of the game in the menu.
-define -2 gui.show_name = False
-
 ## Dialogue
 # These variables set the dialogue box positions and placement in-game.
 

@@ -391,34 +391,6 @@ screen rigged_choice(items):
     timer 1.0/30.0 repeat True action Function(RigMouse)
 
 
-## When this is true, menu captions will be spoken by the narrator. When false,
-## menu captions will be displayed as empty buttons.
-define config.narrator_menu = True
-
-
-style choice_vbox is vbox
-style choice_button is button
-style choice_button_text is button_text
-
-style choice_vbox:
-    xalign 0.5
-    ypos 270
-    yanchor 0.5
-
-    spacing gui.choice_spacing
-
-style choice_button is default:
-    properties gui.button_properties("choice_button")
-    hover_sound gui.hover_sound
-    activate_sound gui.activate_sound
-    idle_background Frame("gui/button/choice_idle_background.png", gui.choice_button_borders)
-    hover_background Frame("gui/button/choice_hover_background.png", gui.choice_button_borders)
-
-style choice_button_text is default:
-    properties gui.button_text_properties("choice_button")
-    outlines []
-
-
 ## Quick Menu screen ###########################################################
 ##
 ## The quick menu is displayed in-game to provide easy access to the out-of-game

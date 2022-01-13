@@ -163,7 +163,7 @@ init python:
 ##   gl.locked - This variable checks if this image should not be included in
 ##               the gallery until it is shown in-game.
 
-screen gallery:
+screen gallery():
 
     tag menu
 

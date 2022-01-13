@@ -67,7 +67,7 @@ init python:
 ##   al.maxCount - This variable contains the number needed for the achievement to be
 ##                  unlocked.
 ##   gl.description - This variable contains the description of the achievement.
-screen achievements:
+screen achievements():
 
     tag menu
 
