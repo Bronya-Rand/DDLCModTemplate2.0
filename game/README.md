@@ -5,78 +5,88 @@ This file was introduced in Version 3.0.0 of the mod template. This file contain
 
 ### **cgs.rpy**
 
-This file contains the defintions for the CGs in the original game to be called on when needed.
+This file defines all the character graphics (CGs) in DDLC such as Yuri's Chocolate CG and Natsuki's Manga CG.
 
 ### **console.rpy**
 
-This file contains the definitions and label calls needed to prompt Monika's "Python Console" from within the game.
+This file defines the Monika Console contents that appears in the game when Monika deletes characters.
 
 ### **credits.rpy**
 
-This file contains the definitions, text and label calls needed to play the credits of the game when the game is finished.
+This file controls the ending of DDLC and your mod!
 
 ### **definitions.rpy**
 
-This file contains the definitions and python defines to define the character's images, the background, music, variables, and story python code to execute in the game when needed.
+This file defines important stuff for DDLC and your mod!
 
 ### **effects.rpy**
 
-This file contains the python classes, define, and definitions needed to show some different effects in the game like blood and such.
+This file defines all the effects in DDLC used in Act 2.
+
+### **gallery.rpy**
+
+This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the gallery menu that shows backgrounds and sprites from your mod.
+
+### **glitchtext.rpy**
+
+This file defines the glitched/corrupted text seen in DDLC.
 
 ### **gui.rpy**
 
-This file controls the definitions used for the main menu and game interface such as color, audio to be played at startup, positions of text and other inteface elements and more. This is also where the android interface code is located in to define the interface for mobile users.
+This file defines all the positions, colors, paths and more of DDLC's GUI interface.
 
 ### **lockdown_check.rpy** 
 
-This file was introduced in Version 2.4.6 of the mod template. This file makes the template lock itself from running unsupported Ren'Py versions or warn mod developers of untested Ren'Py versions. This is not part of DDLC.
+This file was introduced in Version 2.4.6 of the mod template. This file is mainly designed to warn new modders about bugs with certain Ren'Py versions or warn them about QA issues with running Ren'Py versions higher than the one the mod template was tested for.
 
 ### **monika.chr**, **natsuki.chr**, **sayori.chr** & **yuri.chr**
 
-These files are in the game directory so the game can re-add the characters files to the `characters` folder when the defines in `definitions.rpy` are called to restore them.
+These files are in the game directory so the game can re-add the characters files to the `characters` folder when needed.
 
 ### **options.rpy**
 
-This file contains options that can be changed to customize your game. This file also includes the build options used when exporting your game for others to download.
+This file customizes what your mod is and and how it starts and builds!
 
 ### **poems_special.rpy**
 
-This file defines the images and label calls needed to display the special poems that are prompted in Act 2 of the original game. Make sure if you add a new special poem to change line 361 to how many additional poems you added i.e. 2 new poems would make line 361 be `a = range(1,14)`.
+This file defines the special poems that the player can see during Act 2. Only three poems are ever shown to the player which are selected at random by `splash.rpy`.
 
 ### **poems.rpy**
 
-This file defines the Poem class and poems that are used in the poem sharing game in the original game and the labels to show the poem to the user.
+This file defines all the poems in the game that can be shown to the player by the girls in the poem sharing mini-game.
 
 ### **poemwords.txt**
 
-This text file contains all the poem words, and points that the character likes said word to determine who's exclusive scene you get in the next day.
+This file declares the poem words for each character for the poem writing mini-game.
 
 ### **pronoun_example.rpy**
 
-This file showcases a examole of the pronoun system implemented in Version 2.4.8 of the mod template for players that go by different pronouns. This is not part of DDLC.
+This file was introduced in Version 2.4.8 of the mod template. This file serves as a example to the pronoun feature and how to use it.
+
+### **renpy_patches.rpy**
+
+This file was introduced in Version 2.5.X of the mod template. It's purpose is to patch problematic code that can affect DDLC/DDLC mods on certain versions of Ren'Py that is tied to the Ren'Py engine itself. DO NOT MODIFY THIS FILE WHATSOEVER UNLESS YOU KNOW WHAT IS IN IT.
 
 ### **screens.rpy**
 
-This file controls the main menu and settings interface look for images, transforms, styles and such in the original game. This should be the file you look into if you want to customize your menu to be something different.
+This file declares all the screens and styles in DDLC.
 
 ### **script-poemgame.rpy**
 
-This is where the game runs all the code needed to play the poem game in the original game.
+This file is where the game runs all the code needed to play the poem game in the original game.
 
 ### **script-poemresponses.rpy**
 
-This is where the game runs all the code needed to play the poem sharing game in the original game. `script-poemresponses2.rpy` is mainly additional text for the game in Act 2 in response to your poems there and is located in `original_scripts`.
+This is where the Doki's respond to how much they like your poem. Act 2 uses script-poemresponses2 which is in 'original_scripts'.
 
 ### **script.rpy**
 
-This is used to call scripts and set defaults to the game on startup. It should not include any actual events or scripting; only logic and calling other labels. 
-**This is the place to start for building your mod.**
+This file is the main script that Ren'Py calls upon to start your mod's story! 
 
 ### **splash.rpy**
 
-This splash screen is the first thing that DDLC will show the player. It also defines a lot of the behavior when first loading the game, such as checking for character files and 
-jumping to scenes currently in progress.
+This file is where the splashscreen, disclaimer and menu code reside in.
 
 ### **transforms.rpy**
 
-This file defines the transfors and transition code used in the game to position characters, prepare a new scene with a transition effect and more.
+This file defines the placements and animations in DDLC.
