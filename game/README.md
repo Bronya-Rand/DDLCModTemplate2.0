@@ -1,5 +1,7 @@
 # Explanation of the RPY files 
-The '.rpy' files in the game folder are copies of important script files found in DDLC's `scripts.rpa` archive that are necessary to change for the most basic modding projects.
+
+### **achievements.rpy**
+This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the achievements menu and notification that shows your progress throughout the mod.
 
 ### **cgs.rpy**
 
