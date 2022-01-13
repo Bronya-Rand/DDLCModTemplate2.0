@@ -376,8 +376,8 @@ init python:
         gui.text_size = 24
         gui.name_text_size = 24
         gui.notify_text_size = 24
-        gui.interface_text_size = 24
-        gui.button_text_size = 24
+        gui.interface_text_size = 26
+        gui.button_text_size = 26
         gui.label_text_size = 28
 
         ## Dialogue Box/Name Box Positions, Heights and Alignments.
