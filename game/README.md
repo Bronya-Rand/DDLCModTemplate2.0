@@ -1,5 +1,8 @@
 # Explanation of the RPY files 
 
+### **achievements.rpy**
+This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the achievements menu and notification that shows your progress throughout the mod.
+
 ### **cgs.rpy**
 
 This file defines all the character graphics (CGs) in DDLC such as Yuri's Chocolate CG and Natsuki's Manga CG.

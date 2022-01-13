@@ -485,6 +485,7 @@ screen navigation():
 
             textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
+             textbutton _("Achievements") action [ShowMenu("achievements"), SensitiveIf(renpy.get_screen("achievements") == None)]
             #textbutton _("About") action ShowMenu("about")
 
             if renpy.variant("pc"):
