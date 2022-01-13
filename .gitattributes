@@ -1,0 +1,16 @@
+* text=auto
+
+# Mod Template Code/Text Stuff
+*.rpy text
+*.sh text
+*.html text
+*.linux text
+*.txt text
+*.py text
+yuri.chr text
+
+# Mod Template Binary Stuff
+sayori.chr binary
+natsuki.chr binary
+monika.chr binary
+*.png binary
