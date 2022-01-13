@@ -60,6 +60,10 @@ This file declares the poem words for each character for the poem writing mini-g
 
 This file was introduced in Version 2.4.8 of the mod template. This file serves as a example to the pronoun feature and how to use it.
 
+### **renpy_patches.rpy**
+
+This file was introduced in Version 2.5.X of the mod template. It's purpose is to patch problematic code that can affect DDLC/DDLC mods on certain versions of Ren'Py that is tied to the Ren'Py engine itself. DO NOT MODIFY THIS FILE WHATSOEVER UNLESS YOU KNOW WHAT IS IN IT.
+
 ### **screens.rpy**
 
 This file declares all the screens and styles in DDLC.
