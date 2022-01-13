@@ -7,6 +7,5 @@ log.txt
 traceback.txt
 game/cache
 game/saves
-.vscode
 .DS_Store
 errors.txt
