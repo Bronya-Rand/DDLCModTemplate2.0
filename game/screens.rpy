@@ -313,10 +313,10 @@ screen choice(items):
 
         for i in items:
             
-            if "kwarg=" in i.caption:
+            if "kwargs=" in i.caption:
 
-                $ kwarg = i.caption.split("(kwarg=")[-1].replace(")", "")
-                $ caption = i.caption.replace(" (kwarg=" + kwarg + ")", "")
+                $ kwarg = i.caption.split("(kwargs=")[-1].replace(")", "")
+                $ caption = i.caption.replace(" (kwargs=" + kwarg + ")", "")
 
                 if "#" in kwarg:
                     
@@ -513,6 +513,8 @@ screen navigation():
 
             textbutton _("Gallery") action [ShowMenu("gallery"), SensitiveIf(renpy.get_screen("gallery") == None)]
 
+            textbutton _("Achievements") action [ShowMenu("achievements"), SensitiveIf(renpy.get_screen("achievements") == None)]
+
             if _in_replay:
 
                 textbutton _("End Replay") action EndReplay(confirm=True)
@@ -525,7 +527,6 @@ screen navigation():
 
             textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
-             textbutton _("Achievements") action [ShowMenu("achievements"), SensitiveIf(renpy.get_screen("achievements") == None)]
             #textbutton _("About") action ShowMenu("about")
 
             if renpy.variant("pc"):
