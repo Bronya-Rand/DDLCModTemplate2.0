@@ -168,7 +168,7 @@ screen achievements:
             textbutton "Test Notif":
                 style "return_button"
                 xpos 0.8 ypos 1.1
-                action [ShowMenu("achievement_notify", startup), With(Dissolve(0.5))]
+                action ShowMenu("achievement_notify", startup)
 
 ## Achievements Notify Screen #############################################################
 ##
@@ -180,11 +180,12 @@ screen achievements:
 screen achievement_notify(reward):
     
     style_prefix "achievements"
-    frame:
+
+    frame at achievement_notif_transition:
         xsize 300
         ysize 100
         xpos 0.4
-        
+
         hbox:
             xalign 0.27
             yalign 0.5
@@ -205,3 +206,7 @@ style achievements_text:
 
 transform achievement_scaler(x):
     size(x, x)
+
+transform achievement_notif_transition:
+    alpha 0.0
+    linear 0.5 alpha 1.0
