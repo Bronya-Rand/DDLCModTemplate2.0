@@ -9,9 +9,7 @@ define persistent.demo = False
 define persistent.steam = ("steamapps" in config.basedir.lower())
 
 # This variable declares whether Developer Mode is on or off in the mod.
-# "auto" will enable developer if the files are RPY/RPYCs and disable it if
-# the files are in a RPA.
-define config.developer = "auto"
+define config.developer = False
 
 # This python statement starts singleton to make sure only one copy of the mod
 # is running.
