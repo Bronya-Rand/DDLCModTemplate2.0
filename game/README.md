@@ -65,7 +65,7 @@ This file was introduced in Version 2.4.8 of the mod template. This file serves 
 
 ### **renpy_patches.rpy**
 
-This file was introduced in Version 2.5.X of the mod template. It's purpose is to patch problematic code that can affect DDLC/DDLC mods on certain versions of Ren'Py that is tied to the Ren'Py engine itself. DO NOT MODIFY THIS FILE WHATSOEVER UNLESS YOU KNOW WHAT IS IN IT.
+This file was introduced in Version 3.0.0 of the mod template. It's purpose is to patch problematic code that can affect DDLC/DDLC mods on certain versions of Ren'Py that is tied to the Ren'Py engine itself.
 
 ### **screens.rpy**
 
