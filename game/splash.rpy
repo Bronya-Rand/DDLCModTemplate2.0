@@ -35,9 +35,9 @@ init python:
     ## Syntax to use: recolorize("path/to/your/image", "#color1hex", "#color2hex", contrast value)
     ## Example: recolorize("gui/menu_bg.png", "#bdfdff", "#e6ffff", 1.25)
 
-    def recolorize(path, blackCol, whiteCol="#fff", contr=1.29):
-        return im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr) * im.matrix.colorize("#00f", "#fff") * im.matrix.saturation(120)), 
-            im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
+    def recolorize(path, blackCol="#ffbde1", whiteCol="#ffe6f4", contr=1.29):
+        return im.MatrixColor(im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr)), im.matrix.colorize("#00f", "#fff")
+            * im.matrix.saturation(120)), im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
 
     def process_check(stream_list):
         if not renpy.windows:
@@ -59,7 +59,8 @@ image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign
 
 # This image shows the DDLC logo in the normal DDLC position.
 image menu_logo:
-    "mod_assets/DDLCModTemplateLogo.png"
+    "/mod_assets/DDLCModTemplateLogo.png"
+    # im.Composite((512, 512), (0, 0), recolorize("mod_assets/logo_bg.png"), (0, 0), "mod_assets/logo_fg.png")
     subpixel True
     xcenter 240
     ycenter 120
@@ -70,14 +71,14 @@ image menu_logo:
 image menu_bg:
     topleft
     "gui/menu_bg.png"
-    #recolorize("gui/menu_bg.png", "#ffbde1")
+    # recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
     menu_bg_move
 
 # This image shows the pause menu polka-dot image.
 image game_menu_bg:
     topleft
     "gui/menu_bg.png"
-    #recolorize("gui/menu_bg.png", "#ffbde1")
+    # recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
     menu_bg_loop
 
 # This image transform shows the white fading effect in the main menu.
@@ -586,7 +587,7 @@ label autoload:
 
         try: renpy.pop_call()
         except: pass
-        
+
     jump expression persistent.autoload
 
 # This label sets the main menu music to Doki Doki Literature Club before the
