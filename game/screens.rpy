@@ -489,6 +489,7 @@ screen navigation():
 
             textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
+             textbutton _("Achievements") action [ShowMenu("achievements"), SensitiveIf(renpy.get_screen("achievements") == None)]
             #textbutton _("About") action ShowMenu("about")
 
             if renpy.variant("pc"):
@@ -1714,6 +1715,9 @@ screen nvl_dialogue(dialogue):
                     id d.what_id
 
 ## BSOD screen ##################################################################
+## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
+## unofficial fixes, etc.
 ##
 ## This screen is used to fake a BSOD/kernel panic on the players' computer 
 ## on all platforms (Mobile devices defaults to the Linux BSOD).
@@ -1727,7 +1731,7 @@ screen nvl_dialogue(dialogue):
 ##
 ## Examples:
 ##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
-##     show screen bsod("TAKE_TWO_INTERACTIVE", rsod=True) 
+##     show screen bsod("EILEEN_EXCEPTION_NOT_HANDLED", rsod=True) 
 
 init python:
     import subprocess

@@ -15,6 +15,8 @@ init -100 python:
 ## Splash Message
 # This python statement is where the splash messages reside in.
 init python:
+    import re
+
     menu_trans_time = 1
     # This variable is the default splash message that people will see when
     # the game launches.
@@ -36,6 +38,17 @@ init python:
     def recolorize(path, blackCol, whiteCol="#fff", contr=1.29):
         return im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr) * im.matrix.colorize("#00f", "#fff") * im.matrix.saturation(120)), 
             im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
+
+    def process_check(stream_list):
+        if not renpy.windows:
+            for x in range(len(stream_list)):
+                stream_list[x] = stream_list[x].replace(".exe", "")
+        
+        for x in range(len(stream_list)):
+            for y in range(len(process_list)):
+                if re.match(r"^" + stream_list[x] + r"\b", process_list[y]):
+                    return True
+        return False
 
 # This image text shows the splash message when the game loads.
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
@@ -262,30 +275,36 @@ image tos2 = "bg/warning2.png"
 ## Startup Disclaimer
 # This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
-    # This python statement grabs the username of the PC and process list 
-    # on Windows.
+    # This python statement grabs the username and process list of the PC.
     python:
         process_list = []
         currentuser = ""
 
         if renpy.windows:
-            try:
-                process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
+            try: process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
             except:
                 try:
                     process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().replace("\r", "").split("\n") # For W11 builds > 22000
+                    
                     for x in range(len(process_list)):
                         process_list[x] += ".exe"
-                except:
-                    pass
-
+                except: pass            
+        else:
             try:
-                for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
-                    user = os.environ.get(name)
-                    if user:
-                        currentuser = user
-            except:
-                pass
+                try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).split(b"\n") # Linux
+                except: process_list = subprocess.check_output("ps -A -o command", shell=True).split(b"\n") # MacOS
+                
+                for x in range(len(process_list)):
+                    process_list[x] = process_list[x].decode().split("/")[-1]
+                process_list.pop(0)
+            except: pass
+
+        try:
+            for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
+                user = os.environ.get(name)
+                if user:
+                    currentuser = user
+        except: pass
 
     # This if statement checks if we have passed the disclaimer and that the
     # current version of the mod equals the old one or the autoload is set to 
@@ -327,8 +346,9 @@ label splashscreen:
         with Dissolve(1.0)
         pause 1.0
 
-        # You can edit this message but you MUST declare that your mod is unaffiliated with Team Salvato,
-        # requires that the player must finish DDLC before playing, has spoilers for DDLC, and where to 
+        # You can edit this message but you MUST declare that your mod is 
+        # unaffiliated with Team Salvato, requires that the player must 
+        # finish DDLC before playing, has spoilers for DDLC, and where to 
         # get DDLC's files."
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
@@ -339,15 +359,24 @@ label splashscreen:
             "I agree.":
                 pass
                 
-        $ persistent.first_run = True
+        #$ persistent.first_run = True
         scene tos2
         with Dissolve(1.5)
         pause 1.0
+
+        # This if statement checks if we are running any common streaming/recording 
+        # software so the game can enable Let's Play Mode automatically and notify
+        # the user about it if extra settings are enabled.
+        if extra_settings:
+            if process_check(["obs32.exe", "obs64.exe", "obs.exe", "xsplit.core.exe", "livehime.exe", "pandatool.exe", "yymixer.exe", "douyutool.exe", "huomaotool.exe", "BlueTool"]):
+                $ persistent.lets_play = True
+                call screen dialog("Let's Play Mode has been enabled automatically.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.\n\n To turn off Let's Play Mode, visit Settings and\nuncheck Let's Play Mode.", 
+                    [Hide("dialog"), Return()])
         scene white
 
-    # This python statement controls whether the Sayori Kill Early screen shows in-game.
-    # This feature has been commented out for mod safety reasons but can be used
-    # if needed.
+    # This python statement controls whether the Sayori Kill Early screen shows 
+    # in-game. This feature has been commented out for mod safety reasons but can 
+    # be used if needed.
 
     # python:
     #     s_kill_early = None

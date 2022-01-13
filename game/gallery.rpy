@@ -1,3 +1,7 @@
+## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
+## unofficial fixes, etc.
+
 ## gallery.rpy
 
 # This file is not part of DDLC. This file contains the code for the gallery
@@ -93,9 +97,14 @@ init python:
                     export = get_registered_image(self.file).filename
                 
                 if renpy.android:
+
                     with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
-                        p.write(renpy.file(export).read())
+                        if self.watermark:
+                            p.write(renpy.file(os.path.splitext(export)[0] + "_watermark" + os.path.splitext(export)[-1]).read())
+                        else:
+                            p.write(renpy.file(export).read())
                 else:
+                    
                     with open(os.path.join(config.basedir, "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]).replace("\\", "/"), "wb") as p:
                         if self.watermark:
                             p.write(renpy.file(os.path.splitext(export)[0] + "_watermark" + os.path.splitext(export)[-1]).read())
