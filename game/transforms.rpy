@@ -1,8 +1,8 @@
-# Transforms.rpy
+## transforms.rpy
 
-# This defines the placements and animations in DDLC
+# This file defines the placements and animations in DDLC.
 
-# Base for other transforms (not used in the game)
+# This transform sizes the character properly at the given X position.
 transform tcommon(x=640, z=0.80):
     yanchor 1.0 subpixel True
     on show:
@@ -21,7 +21,7 @@ transform tcommon(x=640, z=0.80):
 transform tinstant(x=640, z=0.80):
     xcenter x yoffset 0 zoom z*1.00 alpha 1.00 yanchor 1.0 ypos 1.03
 
-# This pulls out the character that is talking and makes them bigger
+# This transform makes the character zoom in when they talk.
 transform focus(x=640, z=0.80):
     yanchor 1.0 ypos 1.03 subpixel True
     on show:
@@ -37,30 +37,31 @@ transform focus(x=640, z=0.80):
         parallel:
             easein .15 yoffset 0
 
-# This causes the character to sink down
+# This transform causes the character to sink down on the screen.
 transform sink(x=640, z=0.80):
     xcenter x yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
     easein .5 ypos 1.06
 
-# This makes the character jump
+# This transform makes the character jump for a bit
 transform hop(x=640, z=0.80):
     xcenter x yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
     easein .1 yoffset -20
     easeout .1 yoffset 0
 
-# Like hop but for a character that is focused
+# This transform makes the character jump and be in focus at the same time.
 transform hopfocus(x=640, z=0.80):
     xcenter x yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.05 alpha 1.00 subpixel True
     easein .1 yoffset -21
     easeout .1 yoffset 0
 
-# This causes the character to dip down for a second and come back up
+# This causes the character to sink down from the screen then come back up.
 transform dip(x=640, z=0.80):
     xcenter x yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
     easein .25 yoffset 25
     easeout .25 yoffset 0
 
-# This causes the character to wobble from side to side and up and down
+# This transform causes the character to wobble on-screen.
+# This might be a left-over transform from DDLC's development for Natsuki's Closet CG.
 transform panic(x=640, z=0.80):
     xcenter x yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
     parallel:
@@ -73,33 +74,39 @@ transform panic(x=640, z=0.80):
         easeout .3 xoffset 0
         repeat
 
-# This causes the character to fly in
+# This transform causes the character to "fly in" (enter the scene) from the left.
 transform leftin(x=640, z=0.80):
     xcenter -300 yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
     easein .25 xcenter x
 
+# This transform causes the character to "fly in" (enter the scene) from the right.
 transform rightin(x=640, z=0.80):
     xcenter 2000 yoffset 0 yanchor 1.0 ypos 1.03 zoom z*1.00 alpha 1.00 subpixel True
     easein .25 xcenter x
 
-# This hides the character
+# This transform hides the character from the screen.
 transform thide(z=0.80):
     subpixel True
     transform_anchor True
     on hide:
 
         easein .25 zoom z*0.95 alpha 0.00 yoffset -20
+
+# This transform hides the character by moving them to the left.
 transform lhide:
     subpixel True
     on hide:
         easeout .25 xcenter -300
 
+# This transform hides the character by moving them to the left.
 transform rhide:
     subpixel True
     on hide:
         easeout .25 xcenter 2000
 
-# Normal positioning and animation based on how many characters
+# These transforms have the characters stand still at a given position given
+# how many characters are on screen and which character number they are.
+#     Example for Monika with 2 other girls; being in between them: t32
 transform t41:
     tcommon(200)
 transform t42:
@@ -121,7 +128,7 @@ transform t22:
 transform t11:
     tcommon(640)
 
-# Makes the character pop in 
+# These transforms makes the character pop in.
 transform i41:
     tinstant(200)
 transform i42:
@@ -143,7 +150,7 @@ transform i22:
 transform i11:
     tinstant(640)
 
-# Makes the character the focus
+# These transforms makes the character be the main focus on-screen.
 transform f41:
     focus(200)
 transform f42:
@@ -165,7 +172,7 @@ transform f22:
 transform f11:
     focus(640)
 
-# Makes the character sink
+# These transforms makes the character sink downwards.
 transform s41:
     sink(200)
 transform s42:
@@ -187,7 +194,7 @@ transform s22:
 transform s11:
     sink(640)
 
-# Makes the character hop
+# These transforms makes the character hop.
 transform h41:
     hop(200)
 transform h42:
@@ -209,7 +216,7 @@ transform h22:
 transform h11:
     hop(640)
 
-# Makes the character in focus, hop
+# These transforms makes the character hop and be in focus at the same time.
 transform hf41:
     hopfocus(200)
 transform hf42:
@@ -231,7 +238,7 @@ transform hf22:
 transform hf11:
     hopfocus(640)
 
-# Makes the character dip
+# These transforms makes the character dip down the screen, then come back up.
 transform d41:
     dip(200)
 transform d42:
@@ -253,7 +260,7 @@ transform d22:
 transform d11:
     dip(640)
 
-# Makes the character fly in from the left
+# These transforms makes the character fly in from the left.
 transform l41:
     leftin(200)
 transform l42:
@@ -275,7 +282,7 @@ transform l22:
 transform l11:
     leftin(640)
 
-# Makes the character fly in from the right
+# These transforms makes the character fly in from the right.
 transform r41:
     rightin(200)
 transform r42:
@@ -297,7 +304,7 @@ transform r22:
 transform r11:
     rightin(640)
 
-# When MC opens his eyes to Sayori's face
+# This transform acts as in your eyes are opening up to see where you are at.
 transform face(z=0.80, y=500):
     subpixel True
     xcenter 640
@@ -305,7 +312,7 @@ transform face(z=0.80, y=500):
     yoffset y
     zoom z*2.00
 
-# Fade for a new CG
+# This transform fades the screen for CGs to be shown/hidden.
 transform cgfade:
     on show:
         alpha 0.0
@@ -314,7 +321,7 @@ transform cgfade:
         alpha 1.0
         linear 0.5 alpha 0.0
 
-# A little wiggle for Natsuki in the closet
+# This transform causes Natsuki to wiggle on screen when she panics in her closet CG.
 transform n_cg2_wiggle:
     subpixel True
     xoffset 0
@@ -327,69 +334,72 @@ transform n_cg2_wiggle:
     easein 0.15 xoffset -5
     ease 0.15 xoffset 0
 
+# This transform loop repeats the wiggle effect each second.
 transform n_cg2_wiggle_loop:
     n_cg2_wiggle
     1.0
     repeat
 
-# Zoom after falling where MC sees Natsuki's face
+# This transform causes Natsuki's face to be very close to your face during her 
+# closet CG route.
 transform n_cg2_zoom:
     subpixel True
     truecenter
     xoffset 0
     easeout 0.20 zoom 2.5 xoffset 200
 
-# Controls the default dissolve speed
+# This variable defines the effect used by 'dissolve' by characters.
 define dissolve = Dissolve(0.25)
 
-# Special dissolves for CGs and Scenes
+# These variables define Dissolve(X) for CGs and scenes.
 define dissolve_cg = Dissolve(0.75)
 define dissolve_scene = Dissolve(1.0)
 
-# Dissolves the whole scene
+# This variable makes the screen dissolve itself to black to show another scene later.
 define dissolve_scene_full = MultipleTransition([
     False, Dissolve(1.0),
     Solid("#000"), Pause(1.0),
     Solid("#000"), Dissolve(1.0),
     True])
 
-
-# Dissolves out from black for start of a new scene
+# This variable dissolves the screen for a bit then shows the next scene afterwards.
 define dissolve_scene_half = MultipleTransition([
     Solid("#000"), Pause(1.0),
     Solid("#000"), Dissolve(1.0),
     True])
 
-# Fade out to black
+# This variable makes the screen shut to black; like your eyes closing themselves.
 define close_eyes = MultipleTransition([
     False, Dissolve(0.5),
     Solid("#000"), Pause(0.25),
     True])
 
-# Fade out from black
+# This variable makes the screen show the scene in return; like your eyes opening themselves.
 define open_eyes = MultipleTransition([
     False, Dissolve(0.5),
     True])
 
-# Sudden Darkness
+# This variable makes the screen instantly hide to black.
 define trueblack = MultipleTransition([
     Solid("#000"), Pause(0.25),
     Solid("#000")
     ])
 
-# Controls `wipeleft`'s wipe
+# This variable makes the current character hide by wiping their sprite off-screen.
 define wipeleft = ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64)
 
-# Wipes to black and then to a new scene
+# This variable makes the current scene wipe to black, then shows another scene.
 define wipeleft_scene = MultipleTransition([
     False, ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64),
     Solid("#000"), Pause(0.25),
     Solid("#000"), ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64),
     True])
 
+# This variable is possibly a left-over from DDLC's development.
+# This variable pauses the game for .25 seconds.
 define tpause = Pause(0.25)
 
-# White noises and effects
+# This image transform causes a noise animation to play out.
 image noise:
     truecenter
     "images/bg/noise1.jpg"
@@ -430,28 +440,28 @@ image noise:
     yzoom 1
     repeat
 
-# Makes a noise overlay transparent
+# This transform causes the noise effect to appear 25% transparent.
 transform noise_alpha:
     alpha 0.25
 
-# Have the noise fade in to 40%
+# This transform causes the noise effect to appear for a bit then disappear.
 transform noisefade(t=0):
     alpha 0.0
     t
     linear 5.0 alpha 0.40
 
-# Vignette around the edge of the screen
+# This image adds a vignette image for a vignette effect.
 image vignette:
     truecenter
     "images/bg/vignette.png"
 
-# Have the vignette fade in
+# This transform has the vignette effect fade in.
 transform vignettefade(t=0):
     alpha 0.0
     t
     linear 25.0 alpha 1.00
 
-# A random flicker in and out of Vignette
+# This transform has the vignette effect flicker on-screen.
 transform vignetteflicker(t=0):
     alpha 0.0
     t + 2.030
@@ -467,6 +477,7 @@ transform vignetteflicker(t=0):
     parallel:
         easeout 20 zoom 3.0
 
+# This transform causes the screen layer to flicker.
 transform layerflicker(t=0):
     truecenter
     t + 2.030
@@ -484,7 +495,7 @@ transform layerflicker(t=0):
         easeout_bounce 0.3 xalign 0.4
         repeat
 
-# Rewind Effect used in Act 2
+# This transform applies the rewind effect seen in Act 2.
 transform rewind:
     truecenter
     zoom 1.20
@@ -497,7 +508,8 @@ transform rewind:
         easeout_bounce 0.33 yalign 0.45
         repeat
 
-# Heartbeat effect used with Yandere Yuri and the Final Act
+# These transforms applies a heartbeat effect on-the screen in some random
+# playthroughs of DDLC.
 transform heartbeat:
     heartbeat2(1)
 
@@ -516,7 +528,8 @@ transform heartbeat2(m):
         easeout_bounce 0.3 xalign 0.5 - 0.02 * m
         repeat
 
-# Motion for Yuri's Eyes
+# This transform and function controls the animation of Yuri's eyes
+# moving during Act 2.
 transform yuripupils_move:
     function yuripupils_function
 
@@ -526,7 +539,8 @@ init python:
         trans.yoffset = 3 + random.random() * 6 - 3
         return random.random() * 1.2 + 0.3
 
-# Have a character pop in instantly with a given transparency
+# This transform makes the character appear on top with a transparency 
+# for a bit during Act 2.
 transform malpha(a=1.00):
     i11
     alpha a
