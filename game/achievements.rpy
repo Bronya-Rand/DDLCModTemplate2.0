@@ -177,6 +177,9 @@ screen achievements():
 ## Syntax:
 ##   reward.image - This variable contains the path or image tag of the achievement.
 ##   reward.name - This variable contains the locked image of the achievement.
+## 
+## To call on this menu, do 'show screen achievement_notify(X)' where X is the achievement in question itself.
+## Make sure to set the variable assign to it or else it will show up as locked.
 screen achievement_notify(reward):
     
     style_prefix "achievements"
