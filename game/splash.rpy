@@ -267,6 +267,7 @@ image warning:
 # and writes them to the characters folder depending on the playthrough.
 init python:
     if not persistent.do_not_delete:
+        import os
         if renpy.android:
             if not os.access(os.environ['ANDROID_PUBLIC'] + "/characters/", os.F_OK):
                 os.mkdir(os.environ['ANDROID_PUBLIC'] + "/characters")
