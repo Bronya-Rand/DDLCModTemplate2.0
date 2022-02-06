@@ -14,7 +14,7 @@ define config.name = "DDLC Mod Template"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "3.0.0"
+define config.version = "3.0.1"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
