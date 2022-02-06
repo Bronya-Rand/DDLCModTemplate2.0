@@ -2109,7 +2109,7 @@ screen extras():
                     yalign 0.5
                     imagebutton:
                         idle Transform("mod_assets/gallery.png")
-                        hover Text('View all the image content available for the mod!', style="extras_text")
+                        hover Text("View all the image content available for the mod!", style="extras_text")
                         action ShowMenu("gallery")
 
             frame:
@@ -2121,20 +2121,21 @@ screen extras():
                     yalign 0.5
                     imagebutton:
                         idle Transform("mod_assets/achievements.png")
-                        hover Text('View all the achievements you can obtain!', style="extras_text")
+                        hover Text("View all the achievements you can obtain!", style="extras_text")
                         action ShowMenu("achievements")
 
-            frame:
-                xsize 180
-                ysize 160
+            # For DDLC OST-Player Use
+            # frame:
+            #     xsize 180
+            #     ysize 160
 
-                vbox:
-                    xalign 0.5
-                    yalign 0.5
-                    imagebutton:
-                        idle Transform("mod_assets/ost_player.png")
-                        hover Text('Play the mods\' soundtrack alongside your music in-game!', style="extras_text")
-                        action [ShowMenu("new_music_room"), Function(ost_start)]
+            #     vbox:
+            #         xalign 0.5
+            #         yalign 0.5
+            #         imagebutton:
+            #             idle Transform("mod_assets/ost_player.png")
+            #             hover Text("Play the mods' soundtrack alongside your music in-game!", style="extras_text")
+            #             action [ShowMenu("new_music_room"), Function(ost_start)]
 
 style extras_text:
     color "#000"
