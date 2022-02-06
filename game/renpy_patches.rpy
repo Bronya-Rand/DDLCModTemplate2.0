@@ -8,6 +8,11 @@
 # patching the Ren'Py engine at startup.
 ### DO NOT MODIFY THIS FILE WHATSOEVER! ###
 
+python early:
+    import os
+    os.environ['wmic process get Description'] = "powershell (Get-Process).ProcessName"
+    os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
+
 init -1 python:
     # Patches the Monika Space Room Effects
     if renpy.version_tuple >= (7, 4, 5, 1648):
