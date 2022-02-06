@@ -22,14 +22,17 @@ init python:
     #                   of the image in the gallery.
     #   name - This variable contains the human-readable name of the image in the
     #           gallery.
+    #   artist - This variable contains the human-readable author name of the image.
     #   sprite - This variable checks if the image declared is a character sprite.
     #   watermark - This variable checks if the exporter should export a watermarked image
     #               of the image shown in the gallery.
-    #   locked - This variable checks if this image should not be included in the gallery
-    #               until it is shown in-game.
+    #   unlocked - This variable checks if this image should be included in the gallery
+    #               or until it is shown in-game.
+    #   locked - DEPRECIATED for unlocked. This variable was used to lock a image from 
+    #               the gallery.
     class GalleryImage:
 
-        def __init__(self, image, small_size=None, name=None, sprite=False, watermark=False, locked=None):
+        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, watermark=False, unlocked=True, locked=None):
             # The image variable name in-game
             self.file = image
 
@@ -39,14 +42,17 @@ init python:
             else:
                 self.name = image
 
+            # The human readable author of the image
+            self.artist = artist
+
             # This condition sees if the image given is a sprite
             self.sprite = sprite
 
-            # This condition sees if the image is locked
-            if locked is not None:
-                self.locked = locked
+            # A condition to see if the image should be shown
+            if unlocked and locked != True:
+                self.unlocked = True
             else:
-                self.locked = not renpy.seen_image(image)
+                self.unlocked = renpy.seen_image(image)
 
             # A condition to see if we export a watermark version of the image
             self.watermark = watermark
@@ -122,10 +128,19 @@ init python:
             index = index + 1
 
         if back:
+            while not galleryList[index-1].unlocked:
+                index = index - 1
             current_img = galleryList[index-1]
         else:
-            try: current_img = galleryList[index+1]
-            except: current_img = galleryList[0]
+            try: 
+                while not galleryList[index+1].unlocked:
+                    index = index + 1
+                current_img = galleryList[index+1]
+            except: 
+                index = 0
+                while not galleryList[index].unlocked:
+                    index = index + 1
+                current_img = galleryList[index]
 
     # For Ren'Py 6 compatibility. This function gets the image displayed in the
     # gallery from from 'renpy.display.image'.
@@ -138,13 +153,16 @@ init python:
 
     # This section declares the images to be shown in the gallery. See the
     # 'GalleryMenu' class syntax to declare a image to the gallery.
-    residential = GalleryImage("bg residential_day", locked=False)
+    residential = GalleryImage("bg residential_day")
     galleryList.append(residential)
 
-    s1a = GalleryImage("sayori 1", sprite=True, locked=False)
+    s1a = GalleryImage("sayori 1", sprite=True, unlocked=True)
     galleryList.append(s1a)
 
-    m1a = GalleryImage("monika 1", name="Monika", sprite=True, locked=False)
+    s3a = GalleryImage("sayori 3", sprite=True, unlocked=False)
+    galleryList.append(s3a)
+
+    m1a = GalleryImage("monika 1", name="Monika", artist="Satchely", sprite=True)
     galleryList.append(m1a)
 
 ## Gallery Screen #############################################################
@@ -160,9 +178,8 @@ init python:
 ##   gl.name - This variable contains the human-readable name of the image in the
 ##               gallery.
 ##   gl.sprite - This variable checks if the image declared is a character sprite.
-##   gl.locked - This variable checks if this image should not be included in
+##   gl.unlocked - This variable checks if this image should not be included in
 ##               the gallery until it is shown in-game.
-
 screen gallery():
 
     tag menu
@@ -187,16 +204,22 @@ screen gallery():
 
             for gl in galleryList:
 
-                if not gl.locked:
+                if gl.unlocked:
                     vbox:
                         imagebutton: 
                             idle gl.small_size 
                             action [SetVariable("current_img", gl), ShowMenu("preview"), With(Dissolve(0.5))]
-                        text gl.name:
+                        text "[gl.name]":
                             xalign 0.5
                             color "#555"
                             outlines []
                             size 14
+                        if gl.artist:
+                            text "Artist: [gl.artist]":
+                                xalign 0.5
+                                color "#555"
+                                outlines []
+                                size 14
 
         vbar value YScrollValue("gvp") xalign 0.99 ysize 560
 
@@ -216,7 +239,7 @@ screen preview():
     hbox:
         ypos 0.005
         xalign 0.5
-        text current_img.name:
+        text "[current_img.name]":
             color "#000"
             outlines[]
             size 24 
