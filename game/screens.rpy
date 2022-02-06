@@ -482,10 +482,8 @@ screen navigation():
                 textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
             textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
-
-            textbutton _("Gallery") action [ShowMenu("gallery"), SensitiveIf(renpy.get_screen("gallery") == None)]
-
-            textbutton _("Achievements") action [ShowMenu("achievements"), SensitiveIf(renpy.get_screen("achievements") == None)]
+            
+            textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
 
             if _in_replay:
 
@@ -2085,3 +2083,60 @@ style nvl_button:
 
 style nvl_button_text:
     properties gui.button_text_properties("nvl_button")
+
+screen extras():
+
+    tag menu
+
+    use game_menu(_("Extras")):
+        style_prefix "extras"
+
+        vpgrid:
+            id "extras"
+            rows 1
+            cols 3
+            spacing 25
+            mousewheel True
+
+            xpos 0.25
+            ypos 0.8
+            
+            frame:
+                xsize 180
+                ysize 160
+                vbox:
+                    xalign 0.5
+                    yalign 0.5
+                    imagebutton:
+                        idle Transform("mod_assets/gallery.png")
+                        hover Text('View all the image content available for the mod!', style="extras_text")
+                        action ShowMenu("gallery")
+
+            frame:
+                xsize 180
+                ysize 160
+
+                vbox:
+                    xalign 0.5
+                    yalign 0.5
+                    imagebutton:
+                        idle Transform("mod_assets/achievements.png")
+                        hover Text('View all the achievements you can obtain!', style="extras_text")
+                        action ShowMenu("achievements")
+
+            frame:
+                xsize 180
+                ysize 160
+
+                vbox:
+                    xalign 0.5
+                    yalign 0.5
+                    imagebutton:
+                        idle Transform("mod_assets/ost_player.png")
+                        hover Text('Play the mods\' soundtrack alongside your music in-game!', style="extras_text")
+                        action [ShowMenu("new_music_room"), Function(ost_start)]
+
+style extras_text:
+    color "#000"
+    outlines []
+    size 20
