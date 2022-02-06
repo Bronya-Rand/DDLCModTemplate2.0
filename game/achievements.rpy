@@ -71,7 +71,7 @@ screen achievements():
 
     tag menu
 
-    use game_menu(_("Achievements")):
+    use game_menu(_("Awards")):
         
         style_prefix "achievements"
 
