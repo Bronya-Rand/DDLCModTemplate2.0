@@ -482,7 +482,7 @@ screen navigation():
                 textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
             textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
-            
+
             textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
 
             if _in_replay:
@@ -2092,15 +2092,17 @@ screen extras():
         style_prefix "extras"
 
         vpgrid:
-            id "extras"
+            id "ext"
+
             rows 1
-            cols 3
+            cols 2
+
             spacing 25
             mousewheel True
 
-            xpos 0.25
-            ypos 0.8
-            
+            xalign 0.5
+            yalign 0.5
+
             frame:
                 xsize 180
                 ysize 160
@@ -2109,7 +2111,7 @@ screen extras():
                     yalign 0.5
                     imagebutton:
                         idle Transform("mod_assets/gallery.png")
-                        hover Text("View all the image content available for the mod!", style="extras_text")
+                        hover Text('View all the image content available for the mod!', style="extras_text")
                         action ShowMenu("gallery")
 
             frame:
@@ -2121,10 +2123,9 @@ screen extras():
                     yalign 0.5
                     imagebutton:
                         idle Transform("mod_assets/achievements.png")
-                        hover Text("View all the achievements you can obtain!", style="extras_text")
+                        hover Text('View all the achievements you can obtain!', style="extras_text")
                         action ShowMenu("achievements")
 
-            # For DDLC OST-Player Use
             # frame:
             #     xsize 180
             #     ysize 160
@@ -2134,8 +2135,10 @@ screen extras():
             #         yalign 0.5
             #         imagebutton:
             #             idle Transform("mod_assets/ost_player.png")
-            #             hover Text("Play the mods' soundtrack alongside your music in-game!", style="extras_text")
+            #             hover Text('Play the mods\' soundtrack alongside your music in-game!', style="extras_text")
             #             action [ShowMenu("new_music_room"), Function(ost_start)]
+
+        vbar value YScrollValue("ext") xalign 0.99 ysize 560
 
 style extras_text:
     color "#000"
