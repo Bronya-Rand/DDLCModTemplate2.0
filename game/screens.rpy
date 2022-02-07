@@ -2095,10 +2095,10 @@ screen extras():
             vpgrid id "ext":
 
                 rows 1
-                cols 3
+                cols 2
                     
                 xalign 0.5
-                yalign 0.1 + (3/10.)
+                yalign 0.4
 
                 spacing 18
 
