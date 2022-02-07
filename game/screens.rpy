@@ -2089,56 +2089,55 @@ screen extras():
     tag menu
 
     use game_menu(_("Extras")):
-        style_prefix "extras"
 
-        vpgrid:
-            id "ext"
+        fixed:
+            
+            vpgrid id "ext":
 
-            rows 1
-            cols 2
+                rows 1
+                cols 3
+                    
+                xalign 0.5
+                yalign 0.1 + (3/10.)
 
-            spacing 25
-            mousewheel True
+                spacing 18
 
-            xalign 0.5
-            yalign 0.5
+                frame:
+                    xsize 180
+                    ysize 160
+                    vbox:
+                        xalign 0.5
+                        yalign 0.5
+                        imagebutton:
+                            idle Transform("mod_assets/gallery.png")
+                            hover Text('View all the image content available for the mod!', style="extras_text")
+                            action ShowMenu("gallery")
 
-            frame:
-                xsize 180
-                ysize 160
-                vbox:
-                    xalign 0.5
-                    yalign 0.5
-                    imagebutton:
-                        idle Transform("mod_assets/gallery.png")
-                        hover Text('View all the image content available for the mod!', style="extras_text")
-                        action ShowMenu("gallery")
+                frame:
+                    xsize 180
+                    ysize 160
 
-            frame:
-                xsize 180
-                ysize 160
+                    vbox:
+                        xalign 0.5
+                        yalign 0.5
+                        imagebutton:
+                            idle Transform("mod_assets/achievements.png")
+                            hover Text('View all the achievements you can obtain!', style="extras_text")
+                            action ShowMenu("achievements")
 
-                vbox:
-                    xalign 0.5
-                    yalign 0.5
-                    imagebutton:
-                        idle Transform("mod_assets/achievements.png")
-                        hover Text('View all the achievements you can obtain!', style="extras_text")
-                        action ShowMenu("achievements")
+                # frame:
+                #     xsize 180
+                #     ysize 160
 
-            # frame:
-            #     xsize 180
-            #     ysize 160
+                #     vbox:
+                #         xalign 0.5
+                #         yalign 0.5
+                #         imagebutton:
+                #             idle Transform("mod_assets/ost_player.png")
+                #             hover Text('Play the mods\' soundtrack alongside your music in-game!', style="extras_text")
+                #             action [ShowMenu("new_music_room"), Function(ost_start)]
 
-            #     vbox:
-            #         xalign 0.5
-            #         yalign 0.5
-            #         imagebutton:
-            #             idle Transform("mod_assets/ost_player.png")
-            #             hover Text('Play the mods\' soundtrack alongside your music in-game!', style="extras_text")
-            #             action [ShowMenu("new_music_room"), Function(ost_start)]
-
-        vbar value YScrollValue("ext") xalign 0.99 ysize 560
+            vbar value YScrollValue("ext") xalign 0.99 ysize 560
 
 style extras_text:
     color "#000"
