@@ -186,42 +186,44 @@ screen gallery():
 
     use game_menu(_("Gallery")):
         
-        vpgrid:
-            id "gvp"
+        fixed:
 
-            rows math.ceil(len(galleryList) / 3.0)
+            vpgrid:
+                id "gvp"
 
-            if len(galleryList) > 3:
-                cols 3
-            else:
-                cols len(galleryList)
+                rows math.ceil(len(galleryList) / 3.0)
 
-            spacing 25
-            mousewheel True
+                if len(galleryList) > 3:
+                    cols 3
+                else:
+                    cols len(galleryList)
 
-            xalign 0.5
-            yalign 0.5
+                spacing 25
+                mousewheel True
 
-            for gl in galleryList:
+                xalign 0.5
+                yalign 0.5
 
-                if gl.unlocked:
-                    vbox:
-                        imagebutton: 
-                            idle gl.small_size 
-                            action [SetVariable("current_img", gl), ShowMenu("preview"), With(Dissolve(0.5))]
-                        text "[gl.name]":
-                            xalign 0.5
-                            color "#555"
-                            outlines []
-                            size 14
-                        if gl.artist:
-                            text "Artist: [gl.artist]":
+                for gl in galleryList:
+
+                    if gl.unlocked:
+                        vbox:
+                            imagebutton: 
+                                idle gl.small_size 
+                                action [SetVariable("current_img", gl), ShowMenu("preview"), With(Dissolve(0.5))]
+                            text "[gl.name]":
                                 xalign 0.5
                                 color "#555"
                                 outlines []
                                 size 14
+                            if gl.artist:
+                                text "Artist: [gl.artist]":
+                                    xalign 0.5
+                                    color "#555"
+                                    outlines []
+                                    size 14
 
-        vbar value YScrollValue("gvp") xalign 0.99 ysize 560
+            vbar value YScrollValue("gvp") xalign 0.99 ysize 560
 
 ## Gallery Screen #################################################################
 ##
