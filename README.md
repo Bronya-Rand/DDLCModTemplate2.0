@@ -7,7 +7,7 @@
 The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.4.11.
 
 ### **Disclaimer**
-The template can be downloaded/forked **ONLY** to create DDLC mods or submit fixes via a Pull Request. You may not use the template for unofficial DDLC patchers, fixes, etc.
+The template can be downloaded/forked to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
 
 ### *A request from the developer*
 > If the template has helped you a lot, please credit me by name in your work. Thank your fellow mod tool makers for making mods easier to make!
@@ -23,7 +23,7 @@ The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 3. DDLC's exact RPY files with explainations.
 5. macOS `.app` and Linux support via `LinuxLauncher.sh`.
 6. Android Support! Now you can make your mod work* on mobile phones and tablets!
-    > \* - Only if your mod uses simple script code or DDLC functions. More complicated code may require some adjustments to get working. See *guide.pdf* or visit the DDMC Discord for help if you can't get your mod to run.
+    > \* - If your mod uses simple script code or DDLC functions. More complex code or non-mobile friendly features may require some adjustments to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
 7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 8. [BETA] Pronoun Support! Allow players to identify with what pronoun they go by!
@@ -37,6 +37,7 @@ The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 14. Different Menu Button Colors! Have different colored buttons in the menu prompt to your hearts content.
 15. Automatic GUI Coloring! Color the GUI in the game to whatever you like without editing the asset files themselves! 
 16. Export your mod logo as a ICO file for your executables! (Windows Only)
+17. Extras Menu! Add additional button options to your game for additional button options!
 17. Terra's in-depth Poem Game guide!
 18. NVL Support thanks to Yagamirai01!
 19. Patches for several Ren'Py releases and Windows features.
@@ -50,17 +51,17 @@ The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 
 ### Getting Started for Beginners (Ren'Py 6)
 Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Legacy.html) in order to install the mod template.
-> Once you finished writing your script, select *Build Distributions*. Uncheck all the options and check only `Ren'Py 6 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform .ZIP file with files for your mod.
+> Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 6 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Mod* ZIP file with your mod files.
 
 ### Getting Started for Advanced Users (Ren'Py 7)
 Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
-> Once you finished writing your script, select *Build Distributions*. Uncheck all the options and check only `Ren'Py 7 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform .ZIP file with files for your mod.
+> Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 7 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Renpy7Mod* ZIP file with your mod files.
 
 ### Getting Started For Android Porting/Modding (Versions 2.4.0 and higher)
 Refer to [*guide.pdf*](guide.pdf) for more in-depth information about making your mod work on Android.
 > For older templates, refer to the PDF in your templates' ZIP file as the latest guide may not match your current template.
 
-This template is included with [DDMMaker](https://github.com/GanstaKingofSA/DDLC-ModMaker/releases), a Ren'Py SDK to build only DDLC mods.
+This template is included with [DDMMaker](https://github.com/GanstaKingofSA/DDLC-ModMaker/releases), a Ren'Py SDK designed to make DDLC mods.
 
 Copyright © 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
 
