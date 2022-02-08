@@ -1732,7 +1732,7 @@ screen nvl_dialogue(dialogue):
 ## Syntax:
 ##     bsodCode - The error code message you want to show the player. Defaults to 
 ##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
-##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the 
+##     bsodFile (Windows 7 Only) - The fake file name that caused the 
 ##                error. Defaults to libGLESv2.dll if no file name is given.
 ##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
 ##
