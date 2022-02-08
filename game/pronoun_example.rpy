@@ -1,6 +1,6 @@
 ﻿## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
-## unofficial fixes, etc.
+## You may only use this file/feature only for DDLC mods or translations. You
+## may not use this for DDLC patchers, unofficial fixes, etc.
 
 ## pronoun_example.rpy
 
