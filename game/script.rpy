@@ -88,7 +88,10 @@ label start:
         # This python statement writes a file from within the game to the game folder
         # or to the Android/data/[modname]/files/game folder.
         python:
-            if renpy.android:
+            if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
+                try: file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
+                except: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+            elif renpy.android:
                 try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
                 except: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
             else:
@@ -115,13 +118,14 @@ label start:
         ## Day 1 - Act 2
         $ chapter = 0
         call ch20_main
-
         label playthrough2:
-
             call poem
 
             python:
-                if renpy.android:
+                if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
+                    try: file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
+                    except: open(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
+                elif renpy.android:
                     try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
                     except: open(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
                 else:
@@ -138,7 +142,10 @@ label start:
             call poem(False)
 
             python:
-                if renpy.android:
+                if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
+                    try: file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
+                    except: open(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
+                elif renpy.android:
                     try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
                     except: open(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
                 else:
@@ -179,7 +186,6 @@ label start:
         jump ch30_main
 
     elif persistent.playthrough == 4:
-
         ## Day 1 - Act 4
         $ chapter = 0
         call ch40_main
