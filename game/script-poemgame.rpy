@@ -37,18 +37,24 @@ init python: # This whole block runs when DDLC is started (as opposed to when th
     POEM_DISLIKE_THRESHOLD = 29
     POEM_LIKE_THRESHOLD = 45
 
+    def readPoemFile(file):
+        with file as wordfile:
+            for line in wordfile:
+                # Ignore lines beginning with '#' and empty lines
+                line = line.strip()
+
+                if line == '' or line[0] == '#': continue
+
+                # File format: word,sPoint,nPoint,yPoint
+                x = line.split(',')
+                full_wordlist.append(PoemWord(x[0], float(x[1]), float(x[2]), float(x[3])))
+
     # Building the word list
     full_wordlist = []
-    with renpy.file(poem_txt) as wordfile:
-        for line in wordfile:
-            # Ignore lines beginning with '#' and empty lines
-            line = line.strip()
-
-            if line == '' or line[0] == '#': continue
-
-            # File format: word,sPoint,nPoint,yPoint
-            x = line.split(',')
-            full_wordlist.append(PoemWord(x[0], float(x[1]), float(x[2]), float(x[3])))
+    if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187): 
+        readPoemFile(file(poem_txt))
+    else:
+        readPoemFile(renpy.file(poem_txt))
 
     seen_eyes_this_chapter = False
     sayoriTime = renpy.random.random() * 4 + 4
@@ -100,6 +106,7 @@ init python: # This whole block runs when DDLC is started (as opposed to when th
             monikaTime = renpy.random.random() * 4 + 4
             return None
         return 0
+
 ##############These functions define random movements for the stickers.#######
     def randomMoveSayori(trans, st, at):
         global sayoriPos
@@ -190,8 +197,6 @@ init python: # This whole block runs when DDLC is started (as opposed to when th
         return 0
 
 ##################################################################################
-
-
 label poem(transition=True):
     stop music fadeout 2.0
     if persistent.playthrough == 3: #Takes us to the glitched notebook if we're in Just Monika Mode.
