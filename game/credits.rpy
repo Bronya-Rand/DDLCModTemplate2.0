@@ -717,6 +717,7 @@ label credits2:
     # special letter and a fake game corruption error to quit the game.
     label postcredits_loop:
         $ persistent.autoload = "postcredits_loop"
+        $ renpy.save_persistent()
         $ config.keymap['game_menu'] = []
         $ config.keymap['hide_windows'] = []
         $ renpy.display.behavior.clear_keymap_cache()

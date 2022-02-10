@@ -98,12 +98,6 @@ style prompt_text is gui_text:
     color gui.text_color
     size gui.interface_text_size
 
-
-#style bar:
-#    ysize gui.bar_size
-#    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-#    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
-
 style vbar:
     xsize gui.bar_size
     top_bar Frame("gui/bar/top.png", gui.vbar_borders, tile=gui.bar_tile)
@@ -127,11 +121,6 @@ style vscrollbar:
     thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
     unscrollable "hide"
     bar_invert True
-
-#style vscrollbar:
-#    xsize gui.scrollbar_size
-#    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-#    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
 
 style slider:
     ysize 18
@@ -453,6 +442,7 @@ init python:
     def FinishEnterName():
         if not player: return
         persistent.playername = player
+        renpy.save_persistent()
         renpy.hide_screen("name_input")
         renpy.jump_out_of_context("start")
 
@@ -550,8 +540,7 @@ screen main_menu():
         add "menu_bg"
         add "menu_art_y"
         add "menu_art_n"
-        frame:
-            pass
+        frame
 
         ## The use statement includes another screen inside this one. The actual
         ## contents of the main menu are in the navigation screen.
@@ -1197,20 +1186,25 @@ screen history():
 python early:
     import renpy.text.textsupport as textsupport
     from renpy.text.textsupport import TAG, PARAGRAPH
+
     def filter_text_tags(s, allow=None, deny=None):
         if (allow is None) and (deny is None):
             raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
         if (allow is not None) and (deny is not None):
             raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        
         tokens = textsupport.tokenize(unicode(s))
         rv = [ ]
+        
         for tokentype, text in tokens:
             if tokentype == PARAGRAPH:
                 rv.append("\n")
             elif tokentype == TAG:
                 kind = text.partition("=")[0]
+                
                 if kind and (kind[0] == "/"):
                     kind = kind[1:]
+                
                 if allow is not None:
                     if kind in allow:
                         rv.append("{" + text + "}")
@@ -1219,6 +1213,7 @@ python early:
                         rv.append("{" + text + "}")
             else:
                 rv.append(text)
+        
         return "".join(rv)
 
 style history_window is empty
@@ -1457,11 +1452,6 @@ screen name_input(message, ok_action):
 
             input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
             hbox:
                 xalign 0.5
                 spacing 100
@@ -1521,18 +1511,27 @@ screen confirm(message, yes_action, no_action):
             yalign .5
             spacing 30
 
-            if in_sayori_kill and message == layout.QUIT:
-                add "confirm_glitch" xalign 0.5
+            ## This if-else statement either shows a normal textbox or
+            ## glitched textbox if you are in Sayori's Death Scene and are
+            ## quitting the game.
+            # if in_sayori_kill and message == layout.QUIT:
+            #     add "confirm_glitch" xalign 0.5
 
-            else:
-                label _(message):
-                    style "confirm_prompt"
-                    xalign 0.5
+            # else:
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
 
             hbox:
                 xalign 0.5
                 spacing 100
 
+                ## This if-else statement disables quitting from the quit box
+                ## if you are in Sayori's Death Scene, else normal box.
+                # if in_sayori_kill and message == layout.QUIT:
+                #     textbutton _("Yes") action NullAction()
+                #     textbutton _("No") action Hide("confirm")
+                # else:
                 textbutton _("Yes") action yes_action
                 textbutton _("No") action no_action
 
@@ -2110,7 +2109,7 @@ screen extras():
                         yalign 0.5
                         imagebutton:
                             idle Transform("mod_assets/gallery.png")
-                            hover Text('View all the image content available for the mod!', style="extras_text")
+                            hover Text('Gallery', style="extras_text")
                             action ShowMenu("gallery")
 
                 frame:
@@ -2122,7 +2121,7 @@ screen extras():
                         yalign 0.5
                         imagebutton:
                             idle Transform("mod_assets/achievements.png")
-                            hover Text('View all the achievements you can obtain!', style="extras_text")
+                            hover Text('Awards', style="extras_text")
                             action ShowMenu("achievements")
 
                 # frame:
@@ -2134,7 +2133,7 @@ screen extras():
                 #         yalign 0.5
                 #         imagebutton:
                 #             idle Transform("mod_assets/ost_player.png")
-                #             hover Text('Play the mods\' soundtrack alongside your music in-game!', style="extras_text")
+                #             hover Text('DDLC OST-Player', style="extras_text")
                 #             action [ShowMenu("new_music_room"), Function(ost_start)]
 
             vbar value YScrollValue("ext") xalign 0.99 ysize 560

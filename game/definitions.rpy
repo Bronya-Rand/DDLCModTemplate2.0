@@ -81,12 +81,18 @@ init python:
 
     # This function pauses the time for a certain amount of time or indefinite.
     def pause(time=None):
+        global _windows_hidden
+
         if not time:
+            _windows_hidden = True
             renpy.ui.saybehavior(afm=" ")
             renpy.ui.interact(mouse='pause', type='pause', roll_forward=None)
+            _windows_hidden = False
             return
         if time <= 0: return
+        _windows_hidden = True
         renpy.pause(time)
+        _windows_hidden = False
 
     # This function sets up the pronouns of the user for 
     # they, them, are, and they are phrases in game for dialogue.
@@ -187,6 +193,7 @@ image bg club_day2: # Glitched Club BG
         "bg club_day"
     choice:
         "bg/club-skill.png"
+
 image bg closet = "bg/closet.png" # The closet BG
 image bg bedroom = "bg/bedroom.png" # MC's Room BG
 image bg sayori_bedroom = "bg/sayori_bedroom.png" # Sayori's Room BG
