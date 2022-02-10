@@ -10,7 +10,7 @@ init -100 python:
     if not renpy.android:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
-                renpy.error("DDLC archive files not found in /game folder. Check your installation and try again.")
+                raise Exception("DDLC RPA files were not found in the game folder. Check your installation and try again.")
 
 ## Splash Message
 # This python statement is where the splash messages reside in.
@@ -562,18 +562,56 @@ label warningscreen:
 
 # This label checks if the save loaded matches the anti-cheat stored in the save.
 label after_load:
+    $ restore_all_characters()
     $ config.allow_skipping = allow_skipping
     $ _dismiss_pause = config.developer
     $ persistent.ghost_menu = False
     $ style.say_dialogue = style.normal
 
+    ## This 'if' statement makes sure if we are in Yuri's death CG in
+    ## Act 2 to bring us back to the scene at a given time.
+    # if persistent.yuri_kill > 0 and persistent.autoload == "yuri_kill_2":
+    #     if persistent.yuri_kill >= 1380:
+    #         $ persistent.yuri_kill = 1440
+    #     elif persistent.yuri_kill >= 1180:
+    #         $ persistent.yuri_kill = 1380
+    #     elif persistent.yuri_kill >= 1120:
+    #         $ persistent.yuri_kill = 1180
+    #     elif persistent.yuri_kill >= 920:
+    #         $ persistent.yuri_kill = 1120
+    #     elif persistent.yuri_kill >= 720:
+    #         $ persistent.yuri_kill = 920
+    #     elif persistent.yuri_kill >= 660:
+    #         $ persistent.yuri_kill = 720
+    #     elif persistent.yuri_kill >= 460:
+    #         $ persistent.yuri_kill = 660
+    #     elif persistent.yuri_kill >= 260:
+    #         $ persistent.yuri_kill = 460
+    #     elif persistent.yuri_kill >= 200:
+    #         $ persistent.yuri_kill = 260
+    #     else:
+    #         $ persistent.yuri_kill = 200
+    #     jump expression persistent.autoload
+
+    ## use a 'elif' here than 'if' if you uncommented the code above.
+    ## This statement checks if the anticheat number is equal to the 
+    ## anticheat number in the save file, else it errors out.
     if anticheat != persistent.anticheat:
         stop music
         scene black
         "The save file could not be loaded."
         "Are you trying to cheat?"
-
+        $ m_name = "Monika"
+        show monika 1 at t11
+        if persistent.playername == "":
+            m "You're so funny."
+        else:
+            m "You're so funny, [persistent.playername]."
         $ renpy.utter_restart()
+    else:
+        if persistent.playthrough == 0 and not persistent.first_load and not config.developer:
+            $ persistent.first_load = True
+            call screen dialog("Hint: You can use the \"Skip\" button to\nfast-forward through text you've already read.", ok_action=Return())
     return
 
 # This label loads the label saved in the autoload variable. 
@@ -592,10 +630,34 @@ label autoload:
         main_menu = False
         _in_replay = None
 
-        try: renpy.pop_call()
-        except: pass
-
+        if renpy.get_return_stack():
+        $ renpy.pop_call()
     jump expression persistent.autoload
+
+## This label is used when the game starts to direct back to
+## Yuri's Death CG from the main menu.
+# label autoload_yurikill:
+#     if persistent.yuri_kill >= 1380:
+#         $ persistent.yuri_kill = 1440
+#     elif persistent.yuri_kill >= 1180:
+#         $ persistent.yuri_kill = 1380
+#     elif persistent.yuri_kill >= 1120:
+#         $ persistent.yuri_kill = 1180
+#     elif persistent.yuri_kill >= 920:
+#         $ persistent.yuri_kill = 1120
+#     elif persistent.yuri_kill >= 720:
+#         $ persistent.yuri_kill = 920
+#     elif persistent.yuri_kill >= 660:
+#         $ persistent.yuri_kill = 720
+#     elif persistent.yuri_kill >= 460:
+#         $ persistent.yuri_kill = 660
+#     elif persistent.yuri_kill >= 260:
+#         $ persistent.yuri_kill = 460
+#     elif persistent.yuri_kill >= 200:
+#         $ persistent.yuri_kill = 260
+#     else:
+#         $ persistent.yuri_kill = 200
+#     jump expression persistent.autoload
 
 # This label sets the main menu music to Doki Doki Literature Club before the
 # menu starts
