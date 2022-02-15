@@ -175,8 +175,11 @@ init python:
 
     # These variables declare the packages to build your mod that is Team Salvato
     # IPG compliant. Do not mess with these variables whatsoever.
-    build.package(build.directory_name + "Mod",'zip','mod',description="Ren'Py 6 DDLC Compliant Mod")
-    build.package(build.directory_name + "Renpy7Mod",'zip','windows linux mac renpy mod',description="Ren'Py 7 DDLC Compliant Mod")
+    if renpy.version_tuple == (6, 99, 12, 4, 2187):
+        build.package(build.directory_name + "Mod", 'zip', 'mod', description="Ren'Py 6 DDLC Compliant Mod")
+    elif renpy.version_tuple >= (7, 3, 5, 606):
+        build.package(build.directory_name + "Renpy7Mod", 'zip', 'windows linux mac renpy mod',
+        description="Ren'Py 7 DDLC Compliant Mod")
 
     # These variables declare the archives that will be made to your packaged mod.
     # To add another archive, make a build.archive variable like in this example:
