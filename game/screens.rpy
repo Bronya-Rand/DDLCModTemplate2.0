@@ -1516,7 +1516,6 @@ screen confirm(message, yes_action, no_action):
             ## quitting the game.
             # if in_sayori_kill and message == layout.QUIT:
             #     add "confirm_glitch" xalign 0.5
-
             # else:
             label _(message):
                 style "confirm_prompt"
