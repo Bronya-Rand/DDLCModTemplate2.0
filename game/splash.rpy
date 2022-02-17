@@ -3,7 +3,7 @@
 # This is where the splashscreen, disclaimer and menu code reside in.
 
 # This python statement checks that 'audio.rpa', 'fonts.rpa' and 'images.rpa'
-# are in the game folder.
+# are in the game folder and if the project is in a cloud folder (OneDrive).
 # Note: For building a mod for PC/Android, you must keep the DDLC RPAs 
 # and decompile them for the builds to work.
 init -100 python:
@@ -11,6 +11,8 @@ init -100 python:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
                 raise Exception("DDLC RPA files were not found in the game folder. Check your installation and try again.")
+        if "OneDrive" in config.basedir:
+            raise Exception("DDLC mod projects cannot be run from a cloud folder. Move your project to another location and try again.")
 
 ## Splash Message
 # This python statement is where the splash messages reside in.
@@ -34,7 +36,6 @@ init python:
     ##
     ## Syntax to use: recolorize("path/to/your/image", "#color1hex", "#color2hex", contrast value)
     ## Example: recolorize("gui/menu_bg.png", "#bdfdff", "#e6ffff", 1.25)
-
     def recolorize(path, blackCol="#ffbde1", whiteCol="#ffe6f4", contr=1.29):
         return im.MatrixColor(im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr)), im.matrix.colorize("#00f", "#fff")
             * im.matrix.saturation(120)), im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
@@ -263,8 +264,8 @@ image warning:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
-# This init python statement checks if the character files are present in-game
-# and writes them to the characters folder depending on the playthrough.
+## This init python statement checks if the character files are present in-game
+## and writes them to the characters folder depending on the playthrough.
 init python:
     if not persistent.do_not_delete:
         import os
@@ -281,9 +282,9 @@ image tos = "bg/warning.png"
 image tos2 = "bg/warning2.png"
 
 ## Startup Disclaimer
-# This label calls the disclaimer screen that appears when the game starts.
+## This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
-    # This python statement grabs the username and process list of the PC.
+    ## This python statement grabs the username and process list of the PC.
     python:
         process_list = []
         currentuser = ""
@@ -314,9 +315,9 @@ label splashscreen:
                     currentuser = user
         except: pass
 
-    # This if statement checks if we have passed the disclaimer and that the
-    # current version of the mod equals the old one or the autoload is set to 
-    # the post-credit loop.
+    ## This if statement checks if we have passed the disclaimer and that the
+    ## current version of the mod equals the old one or the autoload is set to 
+    ## the post-credit loop.
     if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
         $ quick_menu = False
         scene black
@@ -333,8 +334,8 @@ label splashscreen:
             "No, continue where I left off.":
                 $ restore_relevant_characters()
 
-    # These variables and if statements are for the lockdown feature introduced
-    # in 2.4.6 of the template. DO NOT MODIFY THESE LINES.
+    ## These variables and if statements are for the lockdown feature introduced
+    ## in 2.4.6 of the template. DO NOT MODIFY THESE LINES.
     default persistent.lockdown_warning = False
 
     if not persistent.lockdown_warning:
@@ -354,10 +355,10 @@ label splashscreen:
         with Dissolve(1.0)
         pause 1.0
 
-        # You can edit this message but you MUST declare that your mod is 
-        # unaffiliated with Team Salvato, requires that the player must 
-        # finish DDLC before playing, has spoilers for DDLC, and where to 
-        # get DDLC's files."
+        ## You can edit this message but you MUST declare that your mod is 
+        ## unaffiliated with Team Salvato, requires that the player must 
+        ## finish DDLC before playing, has spoilers for DDLC, and where to 
+        ## get DDLC's files."
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
         "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: https://ddlc.moe or on Steam."
@@ -372,9 +373,9 @@ label splashscreen:
         with Dissolve(1.5)
         pause 1.0
 
-        # This if statement checks if we are running any common streaming/recording 
-        # software so the game can enable Let's Play Mode automatically and notify
-        # the user about it if extra settings are enabled.
+        ## This if statement checks if we are running any common streaming/recording 
+        ## software so the game can enable Let's Play Mode automatically and notify
+        ## the user about it if extra settings are enabled.
         if extra_settings:
             if process_check(["obs32.exe", "obs64.exe", "obs.exe", "xsplit.core.exe", "livehime.exe", "pandatool.exe", "yymixer.exe", "douyutool.exe", "huomaotool.exe"]):
                 $ persistent.lets_play = True
@@ -382,10 +383,9 @@ label splashscreen:
                     [Hide("dialog"), Return()])
         scene white
 
-    # This python statement controls whether the Sayori Kill Early screen shows 
-    # in-game. This feature has been commented out for mod safety reasons but can 
-    # be used if needed.
-
+    ## This python statement controls whether the Sayori Kill Early screen shows 
+    ## in-game. This feature has been commented out for mod safety reasons but can 
+    ## be used if needed.
     # python:
     #     s_kill_early = None
     #     if persistent.playthrough == 0:
@@ -405,7 +405,7 @@ label splashscreen:
     #             except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
 
 
-    # This if statement controls which special poems are shown to the player in-game.
+    ## This if statement controls which special poems are shown to the player in-game.
     if not persistent.special_poems:
         python hide:
             # This variable sets a array of zeroes to assign poem numbers.
@@ -423,20 +423,20 @@ label splashscreen:
                 # list to avoid duplicates.
                 a.remove(b)
 
-    # This variable makes sure the path of the base directory is Linux/macOS/Unix 
-    # based than Windows as Python/Ren'Py prefers this placement.
+    ## This variable makes sure the path of the base directory is Linux/macOS/Unix 
+    ## based than Windows as Python/Ren'Py prefers this placement.
     $ basedir = config.basedir.replace('\\', '/')
 
-    # This if statement checks whether we have a auto-load set to load it than
-    # start the game screen as-new.
+    ## This if statement checks whether we have a auto-load set to load it than
+    ## start the game screen as-new.
     if persistent.autoload:
         jump autoload
 
-    # This variable sets skipping to False for the splash screen.
+    ## This variable sets skipping to False for the splash screen.
     $ config.allow_skipping = False
 
-    # This if statement checks if we are in Act 2, have not seen the ghost menu
-    # before and a random number is 0 from 0-63.
+    ## This if statement checks if we are in Act 2, have not seen the ghost menu
+    ## before and a random number is 0 from 0-63.
     if persistent.playthrough == 2 and not persistent.seen_ghost_menu and renpy.random.randint(0, 63) == 0:
         show black
         # These variables set the splash and menu screen to be a ghost menu.
@@ -450,10 +450,9 @@ label splashscreen:
         $ config.allow_skipping = True
         return
 
-    # This if statement checks if 'sayori.chr' was deleted after the disclaimer
-    # was made. This feature has been commented out for mod safety reasons but
-    # can be used if needed.
-
+    ## This if statement checks if 'sayori.chr' was deleted after the disclaimer
+    ## was made. This feature has been commented out for mod safety reasons but
+    ## can be used if needed.
     # if s_kill_early:
     #     show black
     #     play music "bgm/s_kill_early.ogg"
@@ -524,17 +523,16 @@ label splashscreen:
     $ config.allow_skipping = True
     return
 
-# This label is a left-over from DDLC's development that hides the Team Salvato
-# logo and shows the splash message.
+## This label is a left-over from DDLC's development that hides the Team Salvato
+## logo and shows the splash message.
 label warningscreen:
     hide intro
     show warning
     pause 3.0
 
-# This label is used when 'monika.chr' is deleted when the game starts Day 1 of
-# Act 1. This feature has been commented out for mod safety reasons but can be
-# used if needed.
-
+## This label is used when 'monika.chr' is deleted when the game starts Day 1 of
+## Act 1. This feature has been commented out for mod safety reasons but can be
+## used if needed.
 # label ch0_kill:
 #     $ s_name = "Sayori"
 #     show sayori 1b zorder 2 at t11
@@ -560,7 +558,7 @@ label warningscreen:
 #     $ renpy.quit()
 #     return
 
-# This label checks if the save loaded matches the anti-cheat stored in the save.
+## This label checks if the save loaded matches the anti-cheat stored in the save.
 label after_load:
     $ restore_all_characters()
     $ config.allow_skipping = allow_skipping
@@ -614,7 +612,7 @@ label after_load:
             call screen dialog("Hint: You can use the \"Skip\" button to\nfast-forward through text you've already read.", ok_action=Return())
     return
 
-# This label loads the label saved in the autoload variable. 
+## This label loads the label saved in the autoload variable. 
 label autoload:
     python:
         if "_old_game_menu_screen" in globals():
@@ -630,7 +628,10 @@ label autoload:
         main_menu = False
         _in_replay = None
 
-        if renpy.get_return_stack():
+    # if persistent.yuri_kill > 0 and persistent.autoload == "yuri_kill_2":
+    #     $ persistent.yuri_kill += 200
+
+    if renpy.get_return_stack():
         $ renpy.pop_call()
     jump expression persistent.autoload
 
@@ -659,14 +660,14 @@ label autoload:
 #         $ persistent.yuri_kill = 200
 #     jump expression persistent.autoload
 
-# This label sets the main menu music to Doki Doki Literature Club before the
-# menu starts
+## This label sets the main menu music to Doki Doki Literature Club before the
+## menu starts.
 label before_main_menu:
     $ config.main_menu_music = audio.t1
     return
 
-# This label is a left-over from DDLC's development that quits the game but shows
-# a close-up Monika face before doing so.
+## This label is a left-over from DDLC's development that quits the game but shows
+## a close-up Monika face before doing so.
 label quit:
     if persistent.ghost_menu:
         hide screen main_menu
