@@ -1,23 +1,23 @@
-# Welcome to the **New** Modification Club!
+# Bienvenidos al **nuevo** club de modificacion!
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-[<u>Download the Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/3.0.1)
+[<u>Descarga el Mod Template aqui!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/3.0.1)
 
-The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.4.11.
+El **nuevo** DDLC Mod Template es un mod template hecho por Azariel Del Carmen (GanstaKingofSA) para el juego *Doki Doki Literature Club (DDLC)* que se adhiere al los [reglas de Equipo Salvato](http://teamsalvato.com/ip-guidelines/) para modificaciones hecho en Ren'Py 6.99.12.4 y 7.3.5 - 7.4.11.
 
-### **Disclaimer**
-The template can be downloaded/forked to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
+### **Descargo de responsabilidad**
+Solo pueres descargar/hacer fork este template para crear modificaciones a DDLC, hacer traduciones para otro languajes (con credito de nombre) o enviar correcciones por medio de un Pull Request. No puedes usar este template para hacer parches al DDLC que no son oficial, etc.
 
-### *A request from the developer*
-> If the template has helped you a lot, please credit me by name in your work. Thank your fellow mod tool makers for making mods easier to make!
+### *Una solicitud del desarrollador*
+> Si este template te ayudado mucho, por favor que me dan credito a mi por nombre en tu projecto. Da las gracias a su desarrolladores de modificaciones por hacer modificaciones a DDLC mas fácil!
 
-### Team Salvato Disclaimer
-The template is designed for original DDLC fan games and mods that use DDLC assets under Ren'Py. It is not meant for non-DDLC projects. 
-Most code in this template is the property of Team Salvato and may not be copied to non-DDLC fan projects, mods and DDLC projects not on the Ren'Py engine.
-The DDLC Mod Template is not afilliated in anyway with Team Salvato.
+### Descargo de responsabilidad de Equipo Salvato
+Este template esta hecho por juegos aficionados de DDLC y modificaciones de DDLC que usan contenido de el juego original abajo de Ren'Py. No esta hecho para projectos que no son projectos de DDLC or modificaciones del el juego. 
+La mayoría del código en este template es la propiedad de Equipo Salvato y no se puede copiar el codigo a projectos que no son projectos de DDLC, modificaciones y projectos que no estan hecho abajo de Ren'Py.
+El DDLC Mod Template no esta asociado con Equipo Salvato.
 
-### Template Features
+### Características
 1. Build Packaging on Ren'Py 6 or 7!
 2. Team Salvato Compliant Splash Screen.
 3. DDLC's exact RPY files with explainations.
