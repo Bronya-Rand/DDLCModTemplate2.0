@@ -4,7 +4,7 @@
 
 [<u>Descarga el Mod Template aqui!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/3.0.1)
 
-El **nuevo** DDLC Mod Template es un mod template hecho por Azariel Del Carmen (GanstaKingofSA) para el juego *Doki Doki Literature Club (DDLC)* que se adhiere al los [reglas de Equipo Salvato](http://teamsalvato.com/ip-guidelines/) para modificaciones hecho en Ren'Py 6.99.12.4 y 7.3.5 - 7.4.11.
+El **nuevo** DDLC Mod Template es un mod template hecho por Azariel Del Carmen (GanstaKingofSA) para el juego *Doki Doki Literature Club (DDLC)* que se adhiere al los [reglas de Team Salvato](http://teamsalvato.com/ip-guidelines/) para modificaciones hecho en Ren'Py 6.99.12.4 y 7.3.5 - 7.4.11.
 
 ### **Descargo de responsabilidad**
 Solo pueres descargar/hacer fork este template para crear modificaciones a DDLC, hacer traduciones para otro languajes (con credito de nombre) o enviar correcciones por medio de un Pull Request. No puedes usar este template para hacer parches al DDLC que no son oficial, etc.
@@ -12,18 +12,18 @@ Solo pueres descargar/hacer fork este template para crear modificaciones a DDLC,
 ### *Una solicitud del desarrollador*
 > Si este template te ayudado mucho, por favor que me dan credito a mi por nombre en tu projecto. Da las gracias a su desarrolladores de modificaciones por hacer modificaciones a DDLC mas fácil!
 
-### Descargo de responsabilidad de Equipo Salvato
+### Descargo de responsabilidad de Team Salvato
 Este template esta hecho por juegos aficionados de DDLC y modificaciones de DDLC que usan contenido de el juego original abajo de Ren'Py. No esta hecho para projectos que no son projectos de DDLC or modificaciones del el juego. 
-La mayoría del código en este template es la propiedad de Equipo Salvato y no se puede copiar el codigo a projectos que no son projectos de DDLC, modificaciones y projectos que no estan hecho abajo de Ren'Py.
-El DDLC Mod Template no esta asociado con Equipo Salvato.
+La mayoría del código en este template es la propiedad de Team Salvato y no se puede copiar el codigo a projectos que no son projectos de DDLC, modificaciones y projectos que no estan hecho abajo de Ren'Py.
+El DDLC Mod Template no esta asociado con Team Salvato.
 
 ### Características
-1. Build Packaging on Ren'Py 6 or 7!
-2. Team Salvato Compliant Splash Screen.
-3. DDLC's exact RPY files with explainations.
-5. macOS `.app` and Linux support via `LinuxLauncher.sh`.
-6. Android Support! Now you can make your mod work* on mobile phones and tablets!
-    > \* - If your mod uses simple script code or DDLC functions. More complex code or non-mobile friendly features may require some adjustments to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
+1. Empaquetar modificaciones en Ren'Py 6 o 7!
+2. Pantalla de inicio compatible con las reglas de Team Salvato.
+3. Archivos RPY que son réplicas a DDLC con explicaciones.
+5. Supporte para macOS `.app` y Linux usando `LinuxLauncher.sh`.
+6. Supporte para Android! Ahora ya puedes hacer tu modificacion desponible a un telephono movil!*
+    > \* - Si tu modificaciones usa codigo simple o functiones del juego oficial. Codigo complicado o que no son compatibles para telephono movils' necesitarán unos cambios para empenzar el mod. Ve *guide.pdf* o visita el DDMC Discord para mas ayuda.
 7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
 8. [BETA] Pronoun Support! Allow players to identify with what pronoun they go by!
