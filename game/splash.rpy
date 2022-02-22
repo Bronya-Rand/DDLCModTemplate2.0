@@ -10,9 +10,9 @@ init -100 python:
     if not renpy.android:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
-                raise Exception("DDLC RPA files were not found in the game folder. Check your installation and try again.")
+                raise Exception("Archivos RPA de DDLC no puede se encontrados. Revisa su installacion y impienza de nuevo.")
         if "OneDrive" in config.basedir:
-            raise Exception("DDLC mod projects cannot be run from a cloud folder. Move your project to another location and try again.")
+            raise Exception("Modificaciónes de DDLC no se puede correr en un carpeta de la nuve. Mueve tu modificación a otro carpeta y impienza de nuevo.")
 
 ## Splash Message
 # This python statement is where the splash messages reside in.
@@ -22,12 +22,12 @@ init python:
     menu_trans_time = 1
     # This variable is the default splash message that people will see when
     # the game launches.
-    splash_message_default = "This game is an unofficial fan game that is unaffiliated with Team Salvato."
+    splash_message_default = "Este juego es un juego no oficial que no esta affiliada con Team Salvato."
     # This array variable stores different kinds of splash messages you can use
     # to show to the player on startup.
     splash_messages = [
-        "Please support Doki Doki Literature Club.",
-        "Monika is watching you code."
+        "Por favor da suporte a Doki Doki Literature Club.",
+        "Monika esta viendo tu trabajo."
     ]
 
     ### New in 3.0.0
@@ -359,13 +359,13 @@ label splashscreen:
         ## unaffiliated with Team Salvato, requires that the player must 
         ## finish DDLC before playing, has spoilers for DDLC, and where to 
         ## get DDLC's files."
-        "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
-        "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
-        "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: https://ddlc.moe or on Steam."
+        "[config.name] es un modificación aficionado de el juego Doki Doki Literature Club que no es affiliado en qualquier forma con Team Salvato."
+        "Esta diseñado para jugar solo despues que terminas el juego official y contiene revelaciónes de el juego official."
+        "Archivos de el juego Doki Doki Literature Club son requeidos para jugar este modificación y se puede descargar gratis a: https://ddlc.moe o Steam."
 
         menu:
-            "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
-            "I agree.":
+            "Si jueges [config.name] acceptas que has completado Doki Doki Literature Club y acceptas qualquier revelacióne que contiene este modificación."
+            "Accepto.":
                 pass
 
         $ persistent.first_run = True
@@ -379,7 +379,7 @@ label splashscreen:
         if extra_settings:
             if process_check(["obs32.exe", "obs64.exe", "obs.exe", "xsplit.core.exe", "livehime.exe", "pandatool.exe", "yymixer.exe", "douyutool.exe", "huomaotool.exe"]):
                 $ persistent.lets_play = True
-                call screen dialog("Let's Play Mode has been enabled automatically.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.\n\n To turn off Let's Play Mode, visit Settings and\nuncheck Let's Play Mode.", 
+                call screen dialog("Modo Let's Play se a prendido automaticamente.\nEste modo permite omitir informacion\nprivada o applicar opciones alternativas.\n\nEste modo esta dependido si el creador\napplico el modo el este modificación\n\nPara apagar Modo Let's Play, ve a Configuracion y\ndesmarcar Modo Let's Play.", 
                     [Hide("dialog"), Return()])
         scene white
 

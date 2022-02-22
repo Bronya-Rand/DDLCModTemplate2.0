@@ -1,8 +1,8 @@
 
-To start this mod on Linux, start the mod by running './LinuxLauncher.sh' (without quotes) instead
-of running it via DDLC.sh or the mod's own SH file. This new SH file fixes a issue with mods running
-on Linux due to a import error by old Ren'Py 6 files.
+Para correr este modificación en Linux, empienza el modification con './LinuxLauncher.sh' (sin "'s) en lugar de
+correr DDLC.sh o la modificación's propio archivo SH. Este nuevo archivo SH arregla una problema con modificaciónes abajo
+Linux por un error de importacion de los viejos archivos de Ren'Py 6.
 
-If you get a error with the SH file, make sure it's set to LF and not CRLF via a Text Editor.
+Si tienes un error con el archivo SH, verifique que le archivo esta guardado en modo LF y no modo CRLF con un editor de texto.
 
-That is all. Happy mod playing!
+Esto es todo. Feliz entretenimiento de el modificación!
