@@ -17,52 +17,52 @@ Este template esta hecho por juegos aficionados de DDLC y modificaciones de DDLC
 La mayoría del código en este template es la propiedad de Team Salvato y no se puede copiar el codigo a projectos que no son projectos de DDLC, modificaciones y projectos que no estan hecho abajo de Ren'Py.
 El DDLC Mod Template no esta asociado con Team Salvato.
 
-### Características
-1. Empaquetar modificaciones en Ren'Py 6 o 7!
+### Funciónes del Template
+1. Empaque modificaciones en Ren'Py 6 o 7!
 2. Pantalla de inicio compatible con las reglas de Team Salvato.
 3. Archivos RPY que son réplicas a DDLC con explicaciones.
-5. Supporte para macOS `.app` y Linux usando `LinuxLauncher.sh`.
-6. Supporte para Android! Ahora ya puedes hacer tu modificacion desponible a un telephono movil!*
+5. Suporte para macOS `.app` y Linux usando `LinuxLauncher.sh`.
+6. Suporte para Android! Ahora ya puedes hacer tu modificacion desponible a un telephono movil!*
     > \* - Si tu modificaciones usa codigo simple o functiones del juego oficial. Codigo complicado o que no son compatibles para telephono movils' necesitarán unos cambios para empenzar el mod. Ve *guide.pdf* o visita el DDMC Discord para mas ayuda.
-7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
-    > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-8. [BETA] Pronoun Support! Allow players to identify with what pronoun they go by!
-    > See *pronoun_example.rpy* in the `game` folder for a example on how to use this feature.
-9. Better Blue Screens of Death! Make your own BSOD easily in-game on every operating system! 
-10. Uncensored Mode! Allow more sensitive content to be shown in-game.
-11. Let's Play Mode (Streamer Mode)! A better alternative to hide streamer information and more!
-12. Gallery Menu! Allow players to see the work you have done in-game and export it*!
-    > \* - Exporting may be disabled or set to watermark only in the code.
-13. Achievements Menu! Set up achievements in your mod for players to complete your mod in full!
-14. Different Menu Button Colors! Have different colored buttons in the menu prompt to your hearts content.
-15. Automatic GUI Coloring! Color the GUI in the game to whatever you like without editing the asset files themselves! 
-16. Export your mod logo as a ICO file for your executables! (Windows Only)
-17. Extras Menu! Add additional button options to your game for additional button options!
-17. Terra's in-depth Poem Game guide!
-18. NVL Support thanks to Yagamirai01!
-19. Patches for several Ren'Py releases and Windows features.
+7. Suporte para Xcode! Abre este projecto en Xcode y puedes cambiar, empacar, y correr tu modificacion sin abrir el Ren'Py Launcher! 
+    > Note: Necisitas cambiar tu locación de `RENPY_TOOL` y el locación del aplicación Ren'Py en el configuracion de Xcode. [Aprende más &rsaquo;](XCODE.md)
+8. [BETA] Suporte para pronombres! Deja que el jugador se identifique con el pronombre que ellos usan!
+    > Ver *pronoun_example.rpy* en el carpeta `game` por un ejemplo a como usar este función.
+9. Mejor Pantallas de Muerte! Hace tu propio pantalla de muerte facilmente en tu modificacion para qualquier sistema operativo! 
+10. Modo sin Censura! Permite que contenido mas sensible aparecer en tu modificacion.
+11. Modo Let's Play (Modo Streamer)! Un mejor alternativa para esconder informacion privada de un streamer y más!
+12. Gallería! Deja los jugadores ver el trabajo que tu has hecho y exporta la!*
+    > \* - Exportacion puede se apagado or cambiado a modo watermark en el codigo.
+13. Premios! Pon premios en tu modificacion para que jugadores completa tu modificacion al 100%!
+14. Differente colores de buttones en el indicador de menú!
+15. Coloración automática de el GUI! Colorea la GUI en el juego como quieras sin editar los archivos!
+16. Exporta tu logo de modificacion como un archivo ICO para tu ejecutables! (Solo Windows)
+17. Menu de Extras! Pon buttones addicionales a tu modificacion for mas contento!
+17. Un guia del el juego de poem hecho por Terra!
+18. Suporte de NVL gracias a Yagamirai01!
+19. Cambios para unos versiones de Ren'Py y Windows.
 
-### Returned Features
-1. Ghost Menu. (Dan's spooky easter egg)
-2. Sayori Kill Script. (If you delete Sayori before the game starts, a new screen takes over)
-3. Monika Kill Script. (If you delete Monika after the game loads, a new script plays out)
-4. Special Poems! (The random poems in DDLC that appear in Act 2)
-5. Poem Responses! (The Doki's respond to your poems!)
+### Funciónes Regresados
+1. Menu Fantasma (Un huevo de pascua espeluznante de Dan Salvato)
+2. Codigo de la muerte de Sayori (Si borras Sayori antes que el juego empienza, un nuevo pantalla aparesce)
+3. Codigo de la muerte de Monika (If borras Monika despues que el juego empienza, un nuevo capitulo empienza)
+4. Poemas especiales! (Los poemas mescladas en DDLC que aparece en Acto 2)
+5. Respuestas al poema! (Las chicas responde a tu poemas)
 
-### Getting Started for Beginners (Ren'Py 6)
-Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Legacy.html) in order to install the mod template.
-> Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 6 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Mod* ZIP file with your mod files.
+### Empezando para Principiantes (Ren'Py 6)
+Sigue los instruciones [aqui](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Legacy.html) para instalar el template.
+> Cuando terminas tu projecto en completo, seleciona *Build Distributions*. Desmarque todas las opciones, marque solo `Mod Compatible con DDLC para Ren'Py 6` y has click a <u>Build</u>. Esto crear un archivo ZIP con los archivos de tu modificacion.
 
-### Getting Started for Advanced Users (Ren'Py 7)
-Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
-> Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 7 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Renpy7Mod* ZIP file with your mod files.
+### Empezando para Usuarios Avanzados (Ren'Py 7)
+Sigue los instruciones [aqui](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Recent.html) para instalar el template.
+> Cuando terminas tu projecto en completo, seleciona *Build Distributions*. Desmarque todas las opciones, marque solo `Mod Compatible con DDLC para Ren'Py 7` y has click a <u>Build</u>. Esto crear un archivo ZIP con los archivos de tu modificacion.
 
-### Getting Started For Android Porting/Modding (Versions 2.4.0 and higher)
-Refer to [*guide.pdf*](guide.pdf) for more in-depth information about making your mod work on Android.
-> For older templates, refer to the PDF in your templates' ZIP file as the latest guide may not match your current template.
+### Empezando para portacion/modifcacion de Android (Versiones 2.4.0 y adelante)
+Refiere a [*guide.pdf*](guide.pdf) para mas informacion sobre como hacer tu modifcacion listo para Android.
+> Para templates viejo, refiere al PDF en el archivo ZIP de tu template.
 
-This template is included with [DDMMaker](https://github.com/GanstaKingofSA/DDLC-ModMaker/releases), a Ren'Py SDK designed to make DDLC mods.
+Este template is incluido con [DDMMaker](https://github.com/GanstaKingofSA/DDLC-ModMaker/releases), un Ren'Py SDK hecho para hacer modifcaciones de DDLC (Solo en Ingles).
 
-Copyright © 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+© 2019-2022 Azariel Del Carmen (GanstaKingofSA). Todo derechos reservados.
 
-Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato (Dan Salvato LLC). Copyright © 2017 Team Salvato. All rights reserved.
+Doki Doki Literature Club (DDLC), el codigo de DDLC, es la properidad de Team Salvato (Dan Salvato LLC). © 2017 Team Salvato. Todo derechos reservados.
