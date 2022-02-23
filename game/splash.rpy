@@ -12,9 +12,12 @@ init -100 python:
             if archive not in config.archives:
                 raise Exception("DDLC RPA files were not found in the game folder. Check your installation and try again.")
 
-        for x in config.basedir.replace("\\", "/").split("/"):
-            if x == "OneDrive":
-                raise Exception("DDLC mod projects cannot be run from a cloud folder. Move your project to another location and try again.")
+        if renpy.windows:
+            try:
+                onedrive_path = os.environ["OneDrive"]
+                if onedrive_path in config.basedir:
+                    raise Exception("DDLC mods/mod projects cannot be run from a cloud folder. Move your mod/mod project to another location and try again.")
+            except: pass
 
 ## Splash Message
 # This python statement is where the splash messages reside in.
