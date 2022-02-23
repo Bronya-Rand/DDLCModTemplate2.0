@@ -1,6 +1,6 @@
 ## script.rpy
 
-# Este es el código principal que Ren'Py llama al iniciar
+# Este es el script principal que Ren'Py llama al iniciar
 # la historia de tu mod! 
 
 label start:
@@ -14,7 +14,7 @@ label start:
     # Esta variable cambia el número de capítulo a 0 para usarlo en el mod.
     $ chapter = 0
 
-    # Esta variable controla cuando el jugador puede pausar mientaras juega.
+    # Esta variable controla cuando el jugador puede pausar mientras juega.
     $ _dismiss_pause = config.developer
 
     ## Nombres de los personajes
@@ -43,22 +43,21 @@ label start:
     $ config.allow_skipping = True
 
     ## La parte principal del código
-    ######################################################################
-    # This is where your script code is called!
-    # 'persistent.playthrough' controls the playthrough number the player is on i.e (Act 1, 2, 3, 4)
+    # Aqui es donde el código de tu script es llamado!
+    # 'persistent.playthrough' controla el número de acto en el que el jugador está, ejemplo:(Acto 1, 2, 3, 4)
     if persistent.playthrough == 0:
 
-        # This variable sets the chapter number to X depending on the chapter
-        # your player is experiencing ATM.
+        # Esta variable establece el numero de capitulo a X dependiendo del capitulo
+        # que tu jugador está viviendo al momento.
         $ chapter = 0
 
-        # This call statement calls your script label to be played.
+        # Esta sentencia llama a la rama de tu script para ser reproducida.
         call ch0_main
         
-        # This call statement calls the poem mini-game to be played.
+        # Esta sentencia llama al minijuego del poema para ser reproducido.
         call poem
 
-        ## Day 1
+        ## Día 1
         $ chapter = 1
         call ch1_main
 
