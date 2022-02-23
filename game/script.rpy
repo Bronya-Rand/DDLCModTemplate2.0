@@ -1,32 +1,32 @@
 ## script.rpy
 
-# This is the main script that Ren'Py calls upon to start
-# your mod's story! 
+# Este es el script principal que Ren'Py llama al iniciar
+# la historia de tu mod! 
 
 label start:
 
-    # This label configures the anticheat number for the game after Act 1.
-    # It is recommended to leave this as-is and use the following in your script:
+    # Esta rama configura el número anti-trampa para el juego despues del Acto 1.
+    # Es recomendable dejar esto como está y utilizar lo siguiente para tu script:
     #   $ persistent.anticheat = renpy.random.randint(X, Y) 
-    #   X - The minimum number | Y - The maximum number
+    #   X - El número mínimo | Y - El número máximo
     $ anticheat = persistent.anticheat
 
-    # This variable sets the chapter number to 0 to use in the mod.
+    # Esta variable cambia el número de capítulo a 0 para usarlo en el mod.
     $ chapter = 0
 
-    # This variable controls whether the player can dismiss a pause in-game.
+    # Esta variable controla cuando el jugador puede controlar una pausa jugando.
     $ _dismiss_pause = config.developer
 
-    ## Names of the Characters
-    # These variables set up the names of the characters in the game.
-    # To add a character, use the following example below: 
+    ## Nombres de los personajes
+    # Estas variables establecen los nombres de los personajes en el juego.
+    # Para añadir un personaje, utiliza el siguiente ejempo a continuación: 
     #   $ mi_name = "Mike". 
-    # Don't forget to add the character to 'definitions.rpy'!
+    # No se te olvide añadir el personaje a 'definitions.rpy'!
     $ s_name = "???"
     $ m_name = "Girl 3"
     $ n_name = "Girl 2"
     $ y_name = "Girl 1"
-
+######
     # This variable controls whether the quick menu in the textbox is enabled.
     $ quick_menu = True
 
