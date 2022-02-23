@@ -1,6 +1,6 @@
 ## script.rpy
 
-# Este es el script principal que Ren'Py llama al iniciar
+# Este es el código principal que Ren'Py llama al iniciar
 # la historia de tu mod! 
 
 label start:
@@ -14,7 +14,7 @@ label start:
     # Esta variable cambia el número de capítulo a 0 para usarlo en el mod.
     $ chapter = 0
 
-    # Esta variable controla cuando el jugador puede controlar una pausa jugando.
+    # Esta variable controla cuando el jugador puede pausar mientaras juega.
     $ _dismiss_pause = config.developer
 
     ## Nombres de los personajes
@@ -26,23 +26,24 @@ label start:
     $ m_name = "Girl 3"
     $ n_name = "Girl 2"
     $ y_name = "Girl 1"
-######
-    # This variable controls whether the quick menu in the textbox is enabled.
+
+    # Esta variable controla cuando el menú rapido en la caja de texto esta activado.
     $ quick_menu = True
 
-    # This variable c ontrols whether we want normal or glitched dialogue
+    # Esta variable controla cuando queramos dialogo normal o dialogo con glitches.
     # For glitched dialogue, use 'style.edited'.
     $ style.say_dialogue = style.normal
 
-    # This variable controls whether Sayori is dead. It is recommended to leave
-    # this as-is.
+    # Esta variable controla cuando Sayori está muerta. Es recomendable dejarlo
+    # como está.
     $ in_sayori_kill = None
     
-    # These variables controls whether the player can skip dialogue or transitions.
+    # Esta variable controla cuando el jugador puede saltarse dialogo o transiciones.
     $ allow_skipping = True
     $ config.allow_skipping = True
 
-    ## The Main Part of the Script
+    ## La parte principal del código
+    ######################################################################
     # This is where your script code is called!
     # 'persistent.playthrough' controls the playthrough number the player is on i.e (Act 1, 2, 3, 4)
     if persistent.playthrough == 0:
