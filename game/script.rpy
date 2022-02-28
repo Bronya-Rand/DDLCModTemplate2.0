@@ -61,13 +61,13 @@ label start:
         $ chapter = 1
         call ch1_main
 
-        # This call statement calls the poem sharing minigame to be played.
+        # Esta sentencia llama al minijuego de compartir poemas para ser reproducido.
         call poemresponse_start
         call ch1_end
 
         call poem
 
-        ## Day 2
+        ## Día 2
         $ chapter = 2
         call ch2_main
         call poemresponse_start
@@ -75,13 +75,13 @@ label start:
 
         call poem
 
-        ## Day 3
+        ## Día 3
         $ chapter = 3
         call ch3_main
         call poemresponse_start
         call ch3_end
 
-        ## Day 4
+        ## Día 4
         $ chapter = 4
         call ch4_main
 
