@@ -5,7 +5,12 @@
 # This file is not part of DDLC. This file is mainly designed to 
 # patch certain versions of Ren'Py that break DDLC/DDLC mods by
 # patching the Ren'Py engine at startup.
-### DO NOT MODIFY THIS FILE WHATSOEVER! ###
+
+## Enables OpenGL2 in the mod.
+## Change this to True to enable it or False to disable.
+default enable_gl2 = False
+
+### DO NOT MODIFY ANYTHING BEYOND THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING! ###
 
 python early:
     import os
@@ -13,11 +18,14 @@ python early:
     os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
 
 init -1 python:
-    # Patches the Monika Space Room Effects
+    ## Patches the Monika Space Room Effects however it might disable
+    ## OpenGL2 for some mods that use it.
     if renpy.version_tuple >= (7, 4, 5, 1648):
-        config.gl2 = False
+        # Checks if the user/modder specifically asks to enable OpenGL2.
+        if not enable_gl2:
+            config.gl2 = False
 
-    # Patches the 7.4.6 - 7.4.8 transform bugs. 
+    ## Patches the 7.4.6 - 7.4.8 transform bugs. 
     if renpy.version_tuple >= (7, 4, 6, 1693) and renpy.version_tuple < (7, 4, 9, 2142):
 
         class NewSceneLists(renpy.display.core.SceneLists):
@@ -103,6 +111,6 @@ init -1 python:
         
         renpy.display.core.SceneLists.add = NewSceneLists.add
 
-    # Fixes a issue where some transitions (menu bg) reset themselves
+    ## Fixes a issue where some transitions (menu bg) reset themselves
     if renpy.version_tuple >= (7, 4, 7, 1862):
         config.atl_start_on_show = False 

@@ -1065,7 +1065,10 @@ screen preferences():
 
             if config.developer:  
                 hbox:
+                    box_wrap True
                     vbox:
+                        style_prefix "export"
+                        label _("Developer Options")
                         textbutton _("Export Mod Icon as ICO"):
                             action Function(saveIco, "mod_assets/DDLCModTemplateLogo.png")
                             style "navigation_button"
@@ -1100,6 +1103,11 @@ style slider_pref_vbox is pref_vbox
 
 style mute_all_button is check_button
 style mute_all_button_text is check_button_text
+
+style export_button is gui_button
+style export_button_text is radio_button_text
+style export_label is pref_label
+style export_label_text is pref_label_text
 
 style pref_label:
     top_margin gui.pref_spacing
