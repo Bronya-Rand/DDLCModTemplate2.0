@@ -1,6 +1,6 @@
 ## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this file/feature only for DDLC mods or translations. You
-## may not use this for DDLC patchers, unofficial fixes, etc.
+## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
+## unofficial fixes, etc.
 
 ## gallery.rpy
 
@@ -10,9 +10,10 @@
 init python:
     import math
     import renpy.display.image as imgcore
+    from collections import OrderedDict 
 
-    galleryList = []
-    current_img = None
+    galleryList = None 
+    current_img_name = None
 
     # This class declares the code to make a image for the gallery menu.
     # Syntax:
@@ -33,6 +34,8 @@ init python:
     class GalleryImage:
 
         def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, watermark=False, unlocked=True, locked=None):
+            global galleryList 
+
             # The image variable name in-game
             self.file = image
 
@@ -83,6 +86,11 @@ init python:
                 else:     
                     self.small_size = Transform(image, size=(234, 132))
 
+            if galleryList is None:
+                galleryList = OrderedDict([(self.name, self)])
+            else:
+                galleryList[self.name] = self
+
         # This function exports the selected image to the players' computer.
         def export(self):
 
@@ -117,30 +125,25 @@ init python:
                         else:
                             p.write(renpy.file(export).read())
 
-                renpy.show_screen("dialog", message="Exported \"" + self.name + "\" to the gallery folder.", ok_action=Hide("dialog"))
+                renpy.show_screen("dialog", message='Exported "%s" to the gallery folder.' % self.name, ok_action=Hide("dialog"))
 
     # This function advances to the next/previous image in the gallery.
     def next_image(back=False):
-        global current_img
+        global current_img_name
 
-        index = 0
-        while current_img != galleryList[index]:
-            index = index + 1
+        # Create a new list from the keys
+        all_keys = list(galleryList.keys())
 
-        if back:
-            while not galleryList[index-1].unlocked:
-                index = index - 1
-            current_img = galleryList[index-1]
-        else:
-            try: 
-                while not galleryList[index+1].unlocked:
-                    index = index + 1
-                current_img = galleryList[index+1]
-            except: 
-                index = 0
-                while not galleryList[index].unlocked:
-                    index = index + 1
-                current_img = galleryList[index]
+        # Get the current key as index
+        current_index = all_keys.index(current_img_name)
+
+        # Get the next key as index
+        next_index = current_index - 1 if back else current_index + 1
+
+        try: 
+            all_keys[next_index]
+            current_img_name = all_keys[next_index]
+        except IndexError: current_img_name = all_keys[0]
 
     # For Ren'Py 6 compatibility. This function gets the image displayed in the
     # gallery from from 'renpy.display.image'.
@@ -154,16 +157,10 @@ init python:
     # This section declares the images to be shown in the gallery. See the
     # 'GalleryMenu' class syntax to declare a image to the gallery.
     residential = GalleryImage("bg residential_day")
-    galleryList.append(residential)
 
-    s1a = GalleryImage("sayori 1", sprite=True, unlocked=True)
-    galleryList.append(s1a)
-
-    s3a = GalleryImage("sayori 3", sprite=True, unlocked=False)
-    galleryList.append(s3a)
+    s1a = GalleryImage("sayori 1", sprite=True)
 
     m1a = GalleryImage("monika 1", name="Monika", artist="Satchely", sprite=True)
-    galleryList.append(m1a)
 
 ## Gallery Screen #############################################################
 ##
@@ -178,8 +175,9 @@ init python:
 ##   gl.name - This variable contains the human-readable name of the image in the
 ##               gallery.
 ##   gl.sprite - This variable checks if the image declared is a character sprite.
-##   gl.unlocked - This variable checks if this image should not be included in
+##   gl.locked - This variable checks if this image should not be included in
 ##               the gallery until it is shown in-game.
+
 screen gallery():
 
     tag menu
@@ -204,14 +202,14 @@ screen gallery():
                 xalign 0.5
                 yalign 0.5
 
-                for gl in galleryList:
+                for name, gl in galleryList.items():
 
                     if gl.unlocked:
                         vbox:
                             imagebutton: 
-                                idle gl.small_size 
-                                action [SetVariable("current_img", gl), ShowMenu("preview"), With(Dissolve(0.5))]
-                            text "[gl.name]":
+                                idle gl.small_size
+                                action [SetVariable("current_img_name", name), ShowMenu("preview"), With(Dissolve(0.5))]
+                            text "[name]": 
                                 xalign 0.5
                                 color "#555"
                                 outlines []
@@ -233,15 +231,15 @@ screen preview():
 
     tag menu
 
-    hbox:
-        add current_img.image yoffset 40
+    hbox: 
+        add galleryList[current_img_name].image yoffset 40
     hbox:
         add Solid("#fcf") size(config.screen_width, 40)
 
     hbox:
         ypos 0.005
-        xalign 0.5
-        text "[current_img.name]":
+        xalign 0.5 
+        text current_img_name: 
             color "#000"
             outlines[]
             size 24 
@@ -251,7 +249,7 @@ screen preview():
         xalign 0.98
         textbutton "E":
             text_style "navigation_button_text"
-            action Function(current_img.export)
+            action Function(galleryList[current_img_name].export) 
 
         textbutton "X":
             text_style "navigation_button_text"
