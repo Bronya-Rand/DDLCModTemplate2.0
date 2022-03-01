@@ -21,14 +21,6 @@ python early:
     os.environ['wmic process get Description'] = "powershell (Get-Process).ProcessName"
     os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
 
-init -100 python:
-    if renpy.windows:
-        try:
-            onedrive_path = os.environ["OneDrive"]
-            if onedrive_path in config.basedir:
-                raise Exception("DDLC mods/mod projects cannot be run from a cloud folder. Move your mod/mod project to another location and try again.")
-        except: pass
-
 init -1 python:
     ## Patches the 7.4.6 - 7.4.8 transform bugs. 
     if renpy.version_tuple >= (7, 4, 6, 1693) and renpy.version_tuple < (7, 4, 9, 2142):
@@ -119,14 +111,3 @@ init -1 python:
     ## Fixes a issue where some transitions (menu bg) reset themselves
     if renpy.version_tuple >= (7, 4, 7, 1862):
         config.atl_start_on_show = False 
-
-init 1 python:
-    def patched_screenshot():
-        if renpy.version_tuple > (7, 3, 5, 606):
-            srf = renpy.display.draw.screenshot(None)
-        else:
-            srf = renpy.display.draw.screenshot(None, False)
-        
-        return srf
-
-    screenshot_srf = patched_screenshot
