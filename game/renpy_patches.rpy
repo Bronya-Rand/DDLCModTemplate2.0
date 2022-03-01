@@ -6,25 +6,30 @@
 # patch certain versions of Ren'Py that break DDLC/DDLC mods by
 # patching the Ren'Py engine at startup.
 
-## Enables OpenGL2 in the mod.
-## Change this to True to enable it or False to disable.
-default enable_gl2 = False
+init -1 python:
+    ## Patches the Monika Space Room Effects however it might disable
+    ## OpenGL2 for some mods that use it. If you do use OpenGL 2, comment
+    ## these two lines out.
+    if renpy.version_tuple >= (7, 4, 5, 1648):
+        config.gl2 = False
 
-### DO NOT MODIFY ANYTHING BEYOND THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING! ###
+### DO NOT MODIFY ANYTHING BEYOND THIS POINT ###
 
+## Patches 'wmic' environment variables with 'powershell' instead.
 python early:
     import os
     os.environ['wmic process get Description'] = "powershell (Get-Process).ProcessName"
     os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
 
-init -1 python:
-    ## Patches the Monika Space Room Effects however it might disable
-    ## OpenGL2 for some mods that use it.
-    if renpy.version_tuple >= (7, 4, 5, 1648):
-        # Checks if the user/modder specifically asks to enable OpenGL2.
-        if not enable_gl2:
-            config.gl2 = False
+init -100 python:
+    if renpy.windows:
+        try:
+            onedrive_path = os.environ["OneDrive"]
+            if onedrive_path in config.basedir:
+                raise Exception("DDLC mods/mod projects cannot be run from a cloud folder. Move your mod/mod project to another location and try again.")
+        except: pass
 
+init -1 python:
     ## Patches the 7.4.6 - 7.4.8 transform bugs. 
     if renpy.version_tuple >= (7, 4, 6, 1693) and renpy.version_tuple < (7, 4, 9, 2142):
 
@@ -114,3 +119,14 @@ init -1 python:
     ## Fixes a issue where some transitions (menu bg) reset themselves
     if renpy.version_tuple >= (7, 4, 7, 1862):
         config.atl_start_on_show = False 
+
+init 1 python:
+    def patched_screenshot():
+        if renpy.version_tuple > (7, 3, 5, 606):
+            srf = renpy.display.draw.screenshot(None)
+        else:
+            srf = renpy.display.draw.screenshot(None, False)
+        
+        return srf
+
+    screenshot_srf = patched_screenshot
