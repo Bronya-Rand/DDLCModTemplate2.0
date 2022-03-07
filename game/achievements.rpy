@@ -9,8 +9,9 @@
 
 init python:
     import math
+    from collections import OrderedDict 
 
-    achievementList = []
+    achievementList = None
     selectedAchievement = None
 
     # This class declares the code to make a achievement.
@@ -26,6 +27,8 @@ init python:
     class Achievements:
 
         def __init__(self, name, description, image, persistent, count=False, maxCount=100):
+            global achievementList
+            
             # The human readable name of the achievement.
             self.name = name
 
@@ -48,11 +51,15 @@ init python:
             # The max number of items the user needs to unlock the achievements.
             self.maxCount = maxCount
 
+            if achievementList is None:
+                achievementList = OrderedDict([(self.name, self)])
+            else:
+                achievementList[self.name] = self
+
     # This section declares the achievements. See the 'Achievements' class
     # syntax to declare one.
     startup = Achievements("Welcome to DDLC!", "Thanks for accepting the TOS.",
             "gui/logo.png", "persistent.first_run")
-    achievementList.append(startup)
 
 ## Achievements Screen #############################################################
 ##
@@ -139,7 +146,7 @@ screen achievements():
                 yalign 0.85
                 ysize 410
 
-                for al in achievementList:
+                for name, al in achievementList.items():
 
                     python:
                         currentVal = eval(al.persistent)
