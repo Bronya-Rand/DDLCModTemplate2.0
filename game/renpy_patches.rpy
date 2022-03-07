@@ -6,11 +6,7 @@
 # patch certain versions of Ren'Py that break DDLC/DDLC mods by
 # patching the Ren'Py engine at startup.
 
-## Enables OpenGL2 in the mod.
-## Change this to True to enable it or False to disable.
-default enable_gl2 = False
-
-### DO NOT MODIFY ANYTHING BEYOND THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING! ###
+### DO NOT MODIFY ANYTHING BEYOND THIS POINT EXCEPT FOR 'enable_gl2'! ###
 
 python early:
     import os
@@ -18,6 +14,10 @@ python early:
     os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
 
 init -1 python:
+    ## Enables OpenGL2 in the mod.
+    ## Change this to True to enable it or False to disable.
+    enable_gl2 = False
+
     ## Patches the Monika Space Room Effects however it might disable
     ## OpenGL2 for some mods that use it.
     if renpy.version_tuple >= (7, 4, 5, 1648):
