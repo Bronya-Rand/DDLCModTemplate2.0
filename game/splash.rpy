@@ -515,16 +515,15 @@ label splashscreen:
     $ splash_message = splash_message_default
     $ config.main_menu_music = audio.t1
     $ renpy.music.play(config.main_menu_music)
-    $ starttime = datetime.datetime.now()
     show intro with Dissolve(0.5, alpha=True)
-    $ pause(3.0 - (datetime.datetime.now() - starttime).total_seconds())
-    hide intro with Dissolve(max(0, 3.5 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
+    $ pause(2.5)
+    hide intro with Dissolve(0.5, alpha=True)
     if persistent.playthrough == 2 and renpy.random.randint(0, 3) == 0:
         $ splash_message = renpy.random.choice(splash_messages)
-    show splash_warning "[splash_message]" with Dissolve(max(0, 4.0 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
-    $ pause(6.0 - (datetime.datetime.now() - starttime).total_seconds())
-    hide splash_warning with Dissolve(max(0, 6.5 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
-    $ pause(6.5 - (datetime.datetime.now() - starttime).total_seconds())
+    show splash_warning "[splash_message]" with Dissolve(0.5, alpha=True)
+    $ pause(1.5)
+    hide splash_warning with Dissolve(0.5, alpha=True)
+    $ pause(0.5)
     $ config.allow_skipping = True
     return
 
