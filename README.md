@@ -6,33 +6,31 @@
 
 The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.4.11.
 
-### **Disclaimer**
-The template can be downloaded/forked to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
+## Note
+> If you use this template, you must keep the stock presplash image or include the `Template provided by GanstaKingofSA` image in a custom presplash image (that is readable to players) along with thanks in your `credits.txt` file or credits scene.
 
-### *A request from the developer*
-> If the template has helped you a lot, please credit me by name in your work. Thank your fellow mod tool makers for making mods easier to make!
+> The template can be downloaded/forked/used to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
 
 ### Team Salvato Disclaimer
-The template is designed for original DDLC fan games and mods that use DDLC assets under Ren'Py. It is not meant for non-DDLC projects. 
-Most code in this template is the property of Team Salvato and may not be copied to non-DDLC fan projects, mods and DDLC projects not on the Ren'Py engine.
+> The template code/files are designed for original DDLC fan games and mods that use DDLC assets with Ren'Py. It is not meant for non-DDLC projects. 
 The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 
 ### Template Features
 1. Build Packaging on Ren'Py 6 or 7!
-2. Team Salvato Compliant Splash Screen.
+2. Team Salvato compliant splash screen.
 3. DDLC's exact RPY files with explainations.
 5. macOS `.app` and Linux support via `LinuxLauncher.sh`.
-6. Android Support! Now you can make your mod work* on mobile phones and tablets!
-    > \* - If your mod uses simple script code or DDLC functions. More complex code or non-mobile friendly features may require some adjustments to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
+6. Android Support! Bring your mod over to a mobile platform!\*
+    > If your mod uses simple code or DDLC functions. More complex code or non-mobile friendly features may require some adjustments to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
 7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-8. [BETA] Pronoun Support! Allow players to identify with what pronoun they go by!
+8. [BETA] Pronoun Support! Allow players to identify with the pronoun they go by!
     > See *pronoun_example.rpy* in the `game` folder for a example on how to use this feature.
 9. Better Blue Screens of Death! Make your own BSOD easily in-game on every operating system! 
 10. Uncensored Mode! Allow more sensitive content to be shown in-game.
 11. Let's Play Mode (Streamer Mode)! A better alternative to hide streamer information and more!
-12. Gallery Menu! Allow players to see the work you have done in-game and export it*!
-    > \* - Exporting may be disabled or set to watermark only in the code.
+12. Gallery Menu! Allow players to see the work you have done in-game and export it!\*
+    > Exporting may be disabled or set to watermark only in the code.
 13. Achievements Menu! Set up achievements in your mod for players to complete your mod in full!
 14. Different Menu Button Colors! Have different colored buttons in the menu prompt to your hearts content.
 15. Automatic GUI Coloring! Color the GUI in the game to whatever you like without editing the asset files themselves! 

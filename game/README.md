@@ -1,8 +1,5 @@
 # Explanation of the RPY files 
 
-### **achievements.rpy**
-This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the achievements menu and notification that shows your progress throughout the mod.
-
 ### **cgs.rpy**
 
 This file defines all the character graphics (CGs) in DDLC such as Yuri's Chocolate CG and Natsuki's Manga CG.
@@ -23,10 +20,6 @@ This file defines important stuff for DDLC and your mod!
 
 This file defines all the effects in DDLC used in Act 2.
 
-### **gallery.rpy**
-
-This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the gallery menu that shows backgrounds and sprites from your mod.
-
 ### **glitchtext.rpy**
 
 This file defines the glitched/corrupted text seen in DDLC.
@@ -34,10 +27,6 @@ This file defines the glitched/corrupted text seen in DDLC.
 ### **gui.rpy**
 
 This file defines all the positions, colors, paths and more of DDLC's GUI interface.
-
-### **lockdown_check.rpy** 
-
-This file was introduced in Version 2.4.6 of the mod template. This file is mainly designed to warn new modders about bugs with certain Ren'Py versions or warn them about QA issues with running Ren'Py versions higher than the one the mod template was tested for.
 
 ### **monika.chr**, **natsuki.chr**, **sayori.chr** & **yuri.chr**
 
@@ -58,10 +47,6 @@ This file defines all the poems in the game that can be shown to the player by t
 ### **poemwords.txt**
 
 This file declares the poem words for each character for the poem writing mini-game.
-
-### **pronoun_example.rpy**
-
-This file was introduced in Version 2.4.8 of the mod template. This file serves as a example to the pronoun feature and how to use it.
 
 ### **renpy_patches.rpy**
 

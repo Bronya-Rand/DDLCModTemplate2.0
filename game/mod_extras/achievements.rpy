@@ -1,11 +1,8 @@
 ## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this file/feature only for DDLC mods or translations. You
-## may not use this for DDLC patchers, unofficial fixes, etc.
 
 ## achievements.rpy
-
-# This file is not part of DDLC. This file contains the code for the achievements
-# menu and notification that shows your progress throughout the mod.
+# This file contains the code for the achievements menu and notification that 
+# shows your progress throughout the mod.
 
 init python:
     import math

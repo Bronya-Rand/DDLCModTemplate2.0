@@ -1,11 +1,8 @@
 ## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
-## unofficial fixes, etc.
 
-## gallery.rpy
-
-# This file is not part of DDLC. This file contains the code for the gallery
-# menu that shows backgrounds and sprites from your mod.
+# gallery.rpy
+# This file contains the code for the gallery menu that shows backgrounds and 
+# sprites from your mod.
 
 init python:
     import math

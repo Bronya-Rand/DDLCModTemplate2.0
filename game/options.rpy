@@ -130,29 +130,6 @@ init python:
         else:
             return (float(height) * (float(config.screen_width) / float(config.screen_height)), height)
 
-    # This function saves your mods' logo as a ICO file for Windows building with 
-    # a custom icon.
-    def saveIco(filepath):
-        import pygame_sdl2
-        
-        bmp = os.path.join(renpy.config.basedir, "icon.bmp").replace("\\", "/")
-        ico = os.path.join(renpy.config.basedir, "icon.ico").replace("\\", "/")
-
-        surf = pygame_sdl2.image.load(os.path.join(
-                renpy.config.gamedir, filepath
-                ).replace("\\", "/")
-            )
-        trans = pygame_sdl2.transform.scale(surf, (64, 64))
-        pygame_sdl2.image.save(trans, bmp)
-
-        if os.path.exists(ico):
-            os.remove(ico)
-
-        os.rename(os.path.join(renpy.config.basedir, "icon.bmp").replace("\\", "/"), 
-            os.path.join(renpy.config.basedir, "icon.ico").replace("\\", "/"))
-        
-        renpy.show_screen("dialog", message="Exported your mod logo as a icon successfully.", ok_action=Hide("dialog"))
-
 ## Build configuration #########################################################
 ##
 ## This section controls how Ren'Py turns your project into distribution files.
@@ -177,14 +154,14 @@ init python:
     # IPG compliant. Do not mess with these variables whatsoever.
     if renpy.version_tuple == (6, 99, 12, 4, 2187):
         build.package(build.directory_name + "Mod", 'zip', 'mod', description="Ren'Py 6 DDLC Compliant Mod")
-    elif renpy.version_tuple >= (7, 3, 5, 606):
+    else:
         build.package(build.directory_name + "Renpy7Mod", 'zip', 'windows linux mac renpy mod',
         description="Ren'Py 7 DDLC Compliant Mod")
 
     # These variables declare the archives that will be made to your packaged mod.
     # To add another archive, make a build.archive variable like in this example:
-    build.archive("scripts", 'mod all')
-    build.archive("mod_assets", 'mod all')
+    build.archive("scripts", 'mod')
+    build.archive("mod_assets", 'mod')
 
     # Do not touch these lines. This is so Ren'Py can add your mods' py file
     # and a special launcher for Linux and macOS to run your mod. 
@@ -212,6 +189,7 @@ init python:
     build.classify("game/**.chr", "scripts all")
     build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
     build.classify("game/tl/**", "scripts all") ## Translation Folder
+    build.classify("game/mod_extras/**.rpyc", "scripts") ## Extra Features
 
     build.classify('**~', None)
     build.classify('**.bak', None)

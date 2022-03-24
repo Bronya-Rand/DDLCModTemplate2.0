@@ -94,14 +94,6 @@ init python:
         renpy.pause(time)
         _windows_hidden = False
 
-    # This function sets up the pronouns of the user for 
-    # they, them, are, and they are phrases in game for dialogue.
-    def finishPronouns():
-        persistent.he = he
-        persistent.him = him
-        persistent.are = are
-        persistent.hes = hes
-
 ## Music
 # This section declares the music available to be played in the mod.
 # Syntax:
