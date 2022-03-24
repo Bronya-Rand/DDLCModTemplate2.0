@@ -7,7 +7,7 @@
 The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.4.11.
 
 ## Note
-> If you use this template, you must keep the stock presplash image or include the `Template provided by GanstaKingofSA` image in a custom presplash image (that is readable to players) along with thanks in your `credits.txt` file or credits scene.
+> If you use this template, you must keep the stock presplash image or include the `Template provided by GanstaKingofSA` image (found [here](.github/IMAGES/TemplateMadeLogo.png)) in a custom presplash image that is readable to players along with thanks in your `credits.txt` file or credits scene.
 
 > The template can be downloaded/forked/used to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
 
