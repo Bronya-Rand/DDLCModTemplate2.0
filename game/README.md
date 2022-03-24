@@ -1,4 +1,16 @@
-# Explanation of the RPY files 
+# Explanation of the following files in here
+
+## mod_assets
+
+This folder stores all your images, music/sfx, and more relating to your mod
+
+## mod_extras
+
+This folder was introduced in Version 3.0.1 of the mod template. This folder stores the extra content that is available for modders to use i.e. Gallery/Achievements.
+
+## python-packages
+
+This folder contains the needed Python package files needed to run DDLC or a mod
 
 ### **cgs.rpy**
 
@@ -47,6 +59,10 @@ This file defines all the poems in the game that can be shown to the player by t
 ### **poemwords.txt**
 
 This file declares the poem words for each character for the poem writing mini-game.
+
+### **presplash.png**
+
+This image was introduced in Version 3.0.0 of the mod template. This image is mandatory for modders to use as a thanksfor the work on this template; either in a stock template image or custom image with the name credit image visible on it (which can be found [here](../.github/IMAGES/TemplateMadeLogo.png)).
 
 ### **renpy_patches.rpy**
 
