@@ -1,7 +1,16 @@
-# Explanation of the RPY files 
+# Explanation of the following files in here
 
-### **achievements.rpy**
-This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the achievements menu and notification that shows your progress throughout the mod.
+## mod_assets
+
+This folder stores all your images, music/sfx, and more relating to your mod
+
+## mod_extras
+
+This folder was introduced in Version 3.0.1 of the mod template. This folder stores the extra content that is available for modders to use i.e. Gallery/Achievements.
+
+## python-packages
+
+This folder contains the needed Python package files needed to run DDLC or a mod
 
 ### **cgs.rpy**
 
@@ -23,10 +32,6 @@ This file defines important stuff for DDLC and your mod!
 
 This file defines all the effects in DDLC used in Act 2.
 
-### **gallery.rpy**
-
-This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the gallery menu that shows backgrounds and sprites from your mod.
-
 ### **glitchtext.rpy**
 
 This file defines the glitched/corrupted text seen in DDLC.
@@ -34,10 +39,6 @@ This file defines the glitched/corrupted text seen in DDLC.
 ### **gui.rpy**
 
 This file defines all the positions, colors, paths and more of DDLC's GUI interface.
-
-### **lockdown_check.rpy** 
-
-This file was introduced in Version 2.4.6 of the mod template. This file is mainly designed to warn new modders about bugs with certain Ren'Py versions or warn them about QA issues with running Ren'Py versions higher than the one the mod template was tested for.
 
 ### **monika.chr**, **natsuki.chr**, **sayori.chr** & **yuri.chr**
 
@@ -59,9 +60,9 @@ This file defines all the poems in the game that can be shown to the player by t
 
 This file declares the poem words for each character for the poem writing mini-game.
 
-### **pronoun_example.rpy**
+### **presplash.png**
 
-This file was introduced in Version 2.4.8 of the mod template. This file serves as a example to the pronoun feature and how to use it.
+This image was introduced in Version 3.0.0 of the mod template. This image is mandatory for modders to use as a thanksfor the work on this template; either in a stock template image or custom image with the name credit image visible on it (which can be found [here](../.github/IMAGES/TemplateMadeLogo.png)).
 
 ### **renpy_patches.rpy**
 

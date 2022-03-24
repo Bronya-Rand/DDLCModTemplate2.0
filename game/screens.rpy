@@ -98,12 +98,6 @@ style prompt_text is gui_text:
     color gui.text_color
     size gui.interface_text_size
 
-
-#style bar:
-#    ysize gui.bar_size
-#    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-#    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
-
 style vbar:
     xsize gui.bar_size
     top_bar Frame("gui/bar/top.png", gui.vbar_borders, tile=gui.bar_tile)
@@ -127,11 +121,6 @@ style vscrollbar:
     thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
     unscrollable "hide"
     bar_invert True
-
-#style vscrollbar:
-#    xsize gui.scrollbar_size
-#    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-#    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
 
 style slider:
     ysize 18
@@ -453,6 +442,7 @@ init python:
     def FinishEnterName():
         if not player: return
         persistent.playername = player
+        renpy.save_persistent()
         renpy.hide_screen("name_input")
         renpy.jump_out_of_context("start")
 
@@ -483,9 +473,7 @@ screen navigation():
 
             textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
 
-            textbutton _("Gallery") action [ShowMenu("gallery"), SensitiveIf(renpy.get_screen("gallery") == None)]
-
-            textbutton _("Achievements") action [ShowMenu("achievements"), SensitiveIf(renpy.get_screen("achievements") == None)]
+            textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
 
             if _in_replay:
 
@@ -552,8 +540,7 @@ screen main_menu():
         add "menu_bg"
         add "menu_art_y"
         add "menu_art_n"
-        frame:
-            pass
+        frame
 
         ## The use statement includes another screen inside this one. The actual
         ## contents of the main menu are in the navigation screen.
@@ -1075,13 +1062,6 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
-
-            if config.developer:  
-                hbox:
-                    vbox:
-                        textbutton _("Export Mod Icon as ICO"):
-                            action Function(saveIco, "mod_assets/DDLCModTemplateLogo.png")
-                            style "navigation_button"
                             
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
@@ -1199,20 +1179,25 @@ screen history():
 python early:
     import renpy.text.textsupport as textsupport
     from renpy.text.textsupport import TAG, PARAGRAPH
+
     def filter_text_tags(s, allow=None, deny=None):
         if (allow is None) and (deny is None):
             raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
         if (allow is not None) and (deny is not None):
             raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+        
         tokens = textsupport.tokenize(unicode(s))
         rv = [ ]
+        
         for tokentype, text in tokens:
             if tokentype == PARAGRAPH:
                 rv.append("\n")
             elif tokentype == TAG:
                 kind = text.partition("=")[0]
+                
                 if kind and (kind[0] == "/"):
                     kind = kind[1:]
+                
                 if allow is not None:
                     if kind in allow:
                         rv.append("{" + text + "}")
@@ -1221,6 +1206,7 @@ python early:
                         rv.append("{" + text + "}")
             else:
                 rv.append(text)
+        
         return "".join(rv)
 
 style history_window is empty
@@ -1426,14 +1412,6 @@ style history_label_text:
 ## Additional screens
 ################################################################################
 
-
-## Confirm screen ##############################################################
-##
-## The confirm screen is called when Ren'Py wants to ask the player a yes or no
-## question.
-##
-## http://www.renpy.org/doc/html/screen_special.html#confirm
-
 screen name_input(message, ok_action):
 
     ## Ensure other screens do not get input while this screen is displayed.
@@ -1459,11 +1437,6 @@ screen name_input(message, ok_action):
 
             input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
             hbox:
                 xalign 0.5
                 spacing 100
@@ -1505,6 +1478,12 @@ image confirm_glitch:
     pause 0.02
     repeat
 
+## Confirm screen ##############################################################
+##
+## The confirm screen is called when Ren'Py wants to ask the player a yes or no
+## question.
+##
+## http://www.renpy.org/doc/html/screen_special.html#confirm
 screen confirm(message, yes_action, no_action):
 
     ## Ensure other screens do not get input while this screen is displayed.
@@ -1523,18 +1502,26 @@ screen confirm(message, yes_action, no_action):
             yalign .5
             spacing 30
 
-            if in_sayori_kill and message == layout.QUIT:
-                add "confirm_glitch" xalign 0.5
-
-            else:
-                label _(message):
-                    style "confirm_prompt"
-                    xalign 0.5
+            ## This if-else statement either shows a normal textbox or
+            ## glitched textbox if you are in Sayori's Death Scene and are
+            ## quitting the game.
+            # if in_sayori_kill and message == layout.QUIT:
+            #     add "confirm_glitch" xalign 0.5
+            # else:
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
 
             hbox:
                 xalign 0.5
                 spacing 100
 
+                ## This if-else statement disables quitting from the quit box
+                ## if you are in Sayori's Death Scene, else normal box.
+                # if in_sayori_kill and message == layout.QUIT:
+                #     textbutton _("Yes") action NullAction()
+                #     textbutton _("No") action Hide("confirm")
+                # else:
                 textbutton _("Yes") action yes_action
                 textbutton _("No") action no_action
 
@@ -1722,310 +1709,6 @@ screen nvl_dialogue(dialogue):
 
                 text d.what:
                     id d.what_id
-
-## BSOD screen ##################################################################
-## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
-## unofficial fixes, etc.
-##
-## This screen is used to fake a BSOD/kernel panic on the players' computer 
-## on all platforms (Mobile devices defaults to the Linux BSOD).
-##
-## Syntax:
-##     bsodCode - The error code message you want to show the player. Defaults to 
-##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
-##     bsodFile (Windows 7 and Linux Only) - The fake file name that caused the 
-##                error. Defaults to libGLESv2.dll if no file name is given.
-##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
-##
-## Examples:
-##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
-##     show screen bsod("EILEEN_EXCEPTION_NOT_HANDLED", rsod=True) 
-
-init python:
-    import subprocess
-    import platform
-
-    cursor = 0
-
-    def fakePercent(st, at, winver):
-
-        if int(0 + (st * 5)) < 100:
-            percent = int(0 + (st * 5))
-        else:
-            percent = 100
-
-        if winver == 8:
-            d = Text("we'll restart for you. (" + str(percent) + "% complete)\n", style="bsod_win8_text", size=26)
-        else:
-            d = Text(str(percent) + "% complete", style="bsod_win10_text", line_leading=25)
-
-        if percent < 100:
-            return d, renpy.random.randint(1, 3)
-        else:
-            return d, None
-
-    def constantCursor(st, at):
-        global cursor
-        if cursor == 0:
-            cursor = 1
-            return Text("  _", style="bsod_linux_text"), 0.5
-        else:
-            cursor = 0
-            return Text("   ", style="bsod_linux_text"), 0.5
-
-
-    if renpy.windows:
-        try: osVer = tuple(map(int, subprocess.check_output("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", shell=True).split("."))) # Vista+
-        except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (though who uses XP today?)
-
-screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
-
-    layer "master"
-
-    if renpy.windows:
-
-        if osVer < (6, 2, 9200): # Windows 7
-            
-            add Solid("#000082")
-
-            vbox:
-
-                style_prefix "bsod_win7"
-
-                text "A problem has been detected and Windows has been shut down to prevent damage to your computer."
-                text "The problem seems to be caused by the following file: " + bsodFile.upper()
-                text bsodCode.upper()
-                text "If this is the first time you've seen this Stop error screen, restart your computer. If this screens appears again, follow these steps:"
-                text "Check to make sure any new hardware or software is properly installed. If this is a new installation, ask your hardware or software manufacturer for any Windows updates you might need."
-                text "If problems continue, disable or remove any newly installed hardware or software. Disable BIOS memory options such as caching or shadowing. If you need to use Safe Mode to remove or disable components, restart your computer, press F8 to select Advanced Startup Options, and then select Safe Mode."
-                text "Technical information:"
-                text "*** STOP: 0x00000051 (OXFD69420, 0x00000005, OXFBF92317" + ", 0x00000000)\n"
-                text "*** " + bsodFile.upper() + "  -  Address FBF92317 base at FBF102721, Datestamp 3d6dd67c"
-
-        elif osVer < (10, 0, 10240): # Windows 8/8.1
-            
-            add Solid("#1273aa")
-
-            style_prefix "bsod_win8"
-
-            vbox:
-
-                xalign 0.5
-                yalign 0.4
-
-                text ":(" style "bsod_win8_sad_text"
-                text "Your PC ran into a problem and needs to restart."
-                text "We're just collecting some error info, and then"
-                add DynamicDisplayable(fakePercent, 8)
-                text "If you'd like to know more, you can search online later for this error: " + bsodCode.upper() style "bsod_win8_sub_text"
-
-        else: # Windows 10 (up to 21H1)/Windows 11/Windows 11 RSOD
-            
-            if osVer < (10, 0, 22000):
-            
-                add Solid("#0078d7")
-
-            else:
-
-                if not rsod:
-
-                    add Solid("#000000")
-                    python:
-                        blackCol = "#0078d7"
-
-                else:
-
-                    add Solid("#d40e0eff")
-                    python:
-                        blackCol = "#f00"
-
-            style_prefix "bsod_win10"
-
-            vbox:
-
-                xalign 0.3
-                yalign 0.3
-
-                text ":(" style "bsod_win10_sad_text"
-
-                if osVer < (10, 0, 22000):
-
-                    text "Your PC ran into a problem and needs to restart. We're"
-                    text "just collecting some error info, and then we'll restart for"
-                    text "you."
-
-                else:
-
-                    text "Your device ran into a problem and needs to restart."
-                    text "We're just collecting some error info, and then you can"
-                    text "restart."
-
-                add DynamicDisplayable(fakePercent, 10)
-
-                hbox:
-
-                    if osVer < (10, 0, 22000):
-
-                        vbox:
-                            text "" line_leading -3
-                            add im.MatrixColor("mod_assets/frame.png", im.matrix.colorize("#0078d7", "#fff"), ) at bsod_qrcode(100)
-                        vbox:
-                            xpos 0.03
-                            spacing 4
-                            text "For more information about this issue and possible fixes, visit https://www.windows.com/stopcode" style "bsod_win10_info_text" line_leading 25
-                            text "If you call a support person, give them this info:" style "bsod_win10_sub_text" line_leading 25
-                            text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
-
-                    else:
-
-                        vbox:
-                            text "" line_leading -3
-                            add im.MatrixColor("mod_assets/frame.png", im.matrix.colorize(blackCol, "#fff"), ) at bsod_qrcode(150)
-                        vbox:
-                            xpos 0.03
-                            spacing 4
-                            text "For more information about this issue and possible fixes, visit" style "bsod_win10_info_text" line_leading 25
-                            text "https://www.windows.com/stopcode\n" style "bsod_win10_info_text"
-                            text "If you call a support person, give them this info:" style "bsod_win10_sub_text"
-                            text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
-        
-    elif renpy.macintosh:
-
-        add Solid("#222")
-
-        add im.MatrixColor("mod_assets/DDLCModTemplateLogo.png", im.matrix.desaturate() * im.matrix.brightness(-0.36)) at bsod_qrcode(440) xalign 0.5 yalign 0.54
-        vbox:
-
-            style_prefix "bsod_mac"
-            xalign 0.53
-            yalign 0.51
-
-            text "You need to restart your computer. Hold down the Power\n"
-            text "button until it turns off, then press the Power button again." line_spacing 25
-            text "Redémarrez l'ordinateur. Enfoncez le bouton de démarrage\n"
-            text "jusqu'à l'extinction, puis appuyez dessus une nouvelle fois." line_spacing 25
-            text "Debe reiniciar el o rdenador. Mantenga pulsado el botón de\n"
-            text "arranque hasta que se apague y luego vuelva a pulsarlo." line_spacing 25
-            text "Sie müssen den Computer neu starten. Halten Sie den\n"
-            text "Ein-/Ausschalter gedrückt bis das Gerät ausgeschaltet ist\n"
-            text "und drücken Sie ihn dann erneut." line_spacing 25
-            text "Devi riavviare il computer. Tieni premuto il pulsante di\n"
-            text "accensione finché non si spegne, quindi premi di nuovo il\n"
-            text "pulsante di accensione."
-
-    else:
-
-        add Solid("#000")
-
-        vbox:
-            style_prefix "bsod_linux"
-
-            text "metaverse-pci.c:v[config.version] 9/22/2017 Metaverse Enterprise Solutions\n"
-            text "  https://www.metaverse-enterprise.com/network/metaverse-pci.html"
-            text "hda0: METAVERSE ENTERPRISE VIRTUAL HARDDISK, ATA DISK drive"
-            text "ide0 at 0x1f0 - 0x1f7, 0x3f6 on irq 14"
-            text "hdc: METAVERSE ENTERPRISE VIRTUAL CD-ROM, ATAPI CD/DVD-ROM drive"
-            text "ide1 at 0x444 - 0x910, 0x211 on irq 15"
-            text "fd0: METAVERSE ENTERPRISE VIRTUAL FLOPPY, ATA FLOPPY drive"
-            text "ide2 at 0x7363-0x6e6565, 0x4569 on irq 16"
-            text "ACPI: PCI Interrupt Link [[LNKC]] ebabked at IRQ 10"
-            text "ACPI: PCI Interrupt 0000:00:03:.0[[A]] -> Link [[LNKC]] -> GSI 10 (level, low) -> IRQ 10"
-            text "eno1: Metaverse Enterprise LIB-0922 found at 0xc453, IRQ 10, 09:10:21:86:75:30"
-            text "hda: max request size: 512KiB"
-            text "hda: 2147483648 sectors (1 TB) w/256KiB Cache, CHS=178/255/63, (U)DMA"
-            text "hda: hda1"
-            text "hdc: ATAPI 4x CD-ROM drive, 512kB Cache, (U)DMA"
-            text "Uniform CD-ROM driver Revision: 3.20"
-            text "Done."
-            text "Begin: DDLC.so"
-            text "Done."
-            text "DDLC.so: global natsukiTime undeclared."
-            text "DDLC.so: global sayoriTime undeclared."
-            text "DDLC.so: global yuriTime undeclared."
-            text "DDLC.so: global monikaTime undeclared."
-            text "DDLC.so: SUCCESS."
-            text "Begin: DDLC.so -> linux-4.12.14"
-            text "/init: /init: 151: " + bsodCode.upper() + ": 0xforce=panic"
-            text "Kernel panic - not syncing: Attempted to kill init!"
-            add DynamicDisplayable(constantCursor)
-
-    add Solid("#000000") at bsod_transition
-
-style bsod_win7_text is gui_text
-style bsod_win7_text:
-    font "C:/Windows/Fonts/lucon.ttf"
-    antialias False
-    size 13
-    line_leading 15
-    line_spacing -14
-    xsize 1279
-    outlines []
-
-style bsod_win8_text is gui_text
-style bsod_win8_text:
-    font "C:/Windows/Fonts/segoeuil.ttf"
-    size 25
-    line_spacing 5
-    xsize 600
-    outlines []
-
-style bsod_win8_sad_text is gui_text
-style bsod_win8_sad_text is bsod_win8_text:
-    size 128
-    xpos -8
-
-style bsod_win8_sub_text is gui_text
-style bsod_win8_sub_text is bsod_win8_text:
-    size 11
-
-style bsod_win10_text is bsod_win8_text
-style bsod_win10_text:
-    font "C:/Windows/Fonts/segoeuil.ttf"
-    size 24
-    line_leading 3
-    line_spacing 0
-    xsize 800
-    outlines []
-
-style bsod_win10_info_text is bsod_win10_text
-style bsod_win10_info_text:
-    size 16
-
-style bsod_win10_sad_text is bsod_win10_text
-style bsod_win10_sad_text:
-    size 136
-    xpos -8
-
-style bsod_win10_sub_text is bsod_win10_text
-style bsod_win10_sub_text:
-    size 11
-
-style bsod_mac_text is gui_text
-style bsod_mac_text:
-    font gui.default_font
-    size 28
-    outlines []
-    line_spacing -30
-
-style bsod_linux_text is gui_text
-style bsod_linux_text:
-    font "gui/font/F25_Bank_Printer.ttf"
-    size 15
-    outlines []
-    line_leading 5
-            
-transform bsod_transition:
-    "black"
-    0.1
-    yoffset 250
-    0.1
-    yoffset 500
-    0.1
-    yoffset 750
-
-transform bsod_qrcode(x):
-    size(x,x)
 
 ## This controls the maximum number of NVL-mode entries that can be displayed at
 ## once.

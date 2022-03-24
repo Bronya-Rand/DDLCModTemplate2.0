@@ -1,16 +1,14 @@
 ## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
-## unofficial fixes, etc.
 
 ## achievements.rpy
-
-# This file is not part of DDLC. This file contains the code for the achievements
-# menu and notification that shows your progress throughout the mod.
+# This file contains the code for the achievements menu and notification that 
+# shows your progress throughout the mod.
 
 init python:
     import math
+    from collections import OrderedDict 
 
-    achievementList = []
+    achievementList = None
     selectedAchievement = None
 
     # This class declares the code to make a achievement.
@@ -26,6 +24,8 @@ init python:
     class Achievements:
 
         def __init__(self, name, description, image, persistent, count=False, maxCount=100):
+            global achievementList
+            
             # The human readable name of the achievement.
             self.name = name
 
@@ -48,11 +48,15 @@ init python:
             # The max number of items the user needs to unlock the achievements.
             self.maxCount = maxCount
 
+            if achievementList is None:
+                achievementList = OrderedDict([(self.name, self)])
+            else:
+                achievementList[self.name] = self
+
     # This section declares the achievements. See the 'Achievements' class
     # syntax to declare one.
     startup = Achievements("Welcome to DDLC!", "Thanks for accepting the TOS.",
             "gui/logo.png", "persistent.first_run")
-    achievementList.append(startup)
 
 ## Achievements Screen #############################################################
 ##
@@ -70,94 +74,97 @@ init python:
 screen achievements():
 
     tag menu
+    style_prefix "achievements"
 
-    use game_menu(_("Achievements")):
-        
-        style_prefix "achievements"
+    use game_menu(_("Awards")):
 
-        # This vbox is responsible for the achievement display above the list
-        # of possible achievements to display the selected achievements' info.
-        vbox:
-            xpos 0.26
-            ypos -0.1
+        fixed:
+            # This vbox is responsible for the achievement display above the list
+            # of possible achievements to display the selected achievements' info.
+            vbox:
+                xpos 0.26
+                ypos -0.1
 
-            hbox:
+                hbox:
 
-                if selectedAchievement:
+                    if selectedAchievement:
+
+                        python:
+                            currentVal = eval(selectedAchievement.persistent)
+
+                            if not currentVal:
+                                currentVal = False
+
+                        if selectedAchievement.count:
+                            add ConditionSwitch(
+                                    currentVal >= selectedAchievement.maxCount, selectedAchievement.image, "True",
+                                    selectedAchievement.locked) at achievement_scaler(128)
+                        else:
+                            add ConditionSwitch(
+                                    currentVal, selectedAchievement.image, "True",
+                                    selectedAchievement.locked) at achievement_scaler(128)
+                    else:
+                        null height 128
+
+                    spacing 20
+
+                    vbox:
+                        xsize 400
+                        ypos 0.2
+
+                        if selectedAchievement:
+
+                            text selectedAchievement.name:
+                                font gui.name_font
+                                color "#fff"
+                                outlines [(2, "#505050", 0, 0)]
+
+                            if selectedAchievement.count:
+                                text "[selectedAchievement.description] ([currentVal] / [selectedAchievement.maxCount])"
+                            else:
+                                text selectedAchievement.description
+                        else:
+                            null height 128
+
+            # This vpgrid is responsible for the list of achievements in the game.
+            vpgrid:
+                id "avp"
+                rows math.ceil(len(achievementList) / 6.0)
+                if len(achievementList) > 6: 
+                    cols 6
+                else: 
+                    cols len(achievementList)
+
+                spacing 25
+                mousewheel True
+
+                xalign 0.5
+                yalign 0.85
+                ysize 410
+
+                for name, al in achievementList.items():
 
                     python:
-                        currentVal = eval(selectedAchievement.persistent)
+                        currentVal = eval(al.persistent)
 
                         if not currentVal:
                             currentVal = False
 
-                    if selectedAchievement.count:
-                        add ConditionSwitch(
-                                currentVal >= selectedAchievement.maxCount, selectedAchievement.image, "True",
-                                selectedAchievement.locked) at achievement_scaler(128)
+                    if al.count:
+                        
+                        imagebutton:
+                            idle Transform(ConditionSwitch(
+                                    currentVal >= al.maxCount, al.image, "True",
+                                    al.locked), size=(128,128))
+                            action SetVariable("selectedAchievement", al)
                     else:
-                        add ConditionSwitch(
-                                currentVal, selectedAchievement.image, "True",
-                                selectedAchievement.locked) at achievement_scaler(128)
-                else:
-                    null height 128
+                        imagebutton:
+                            idle Transform(ConditionSwitch(
+                                    currentVal, al.image, "True",
+                                    al.locked), size=(128,128))
+                            action SetVariable("selectedAchievement", al)
 
-                spacing 20
-
-                vbox:
-                    xsize 400
-                    ypos 0.2
-
-                    if selectedAchievement:
-
-                        text selectedAchievement.name:
-                            font gui.name_font
-                            color "#fff"
-                            outlines [(2, "#505050", 0, 0)]
-
-                        if selectedAchievement.count:
-                            text "[selectedAchievement.description] ([currentVal] / [selectedAchievement.maxCount])"
-                        else:
-                            text selectedAchievement.description
-                    else:
-                        null height 128
-
-        # This vpgrid is responsible for the list of achievements in the game.
-        vpgrid:
-            id "avp"
-            rows math.ceil(len(achievementList) / 6.0)
-            cols 6
-
-            spacing 25
-            mousewheel True
-
-            xalign 0.5
-            ypos 0.2
-            ysize 410
-
-            for al in achievementList:
-
-                python:
-                    currentVal = eval(al.persistent)
-
-                    if not currentVal:
-                        currentVal = False
-
-                if al.count:
-                    
-                    imagebutton:
-                        idle Transform(ConditionSwitch(
-                                currentVal >= al.maxCount, al.image, "True",
-                                al.locked), size=(128,128))
-                        action SetVariable("selectedAchievement", al)
-                else:
-                    imagebutton:
-                        idle Transform(ConditionSwitch(
-                                currentVal, al.image, "True",
-                                al.locked), size=(128,128))
-                        action SetVariable("selectedAchievement", al)
-
-        vbar value YScrollValue("avp") xalign 1.01 ypos 0.2 ysize 400
+            vbar value YScrollValue("avp") xalign 1.01 ypos 0.2 ysize 400
 
         textbutton "?":
             style "return_button"
@@ -213,3 +220,7 @@ transform achievement_scaler(x):
 transform achievement_notif_transition:
     alpha 0.0
     linear 0.5 alpha 1.0
+
+style achievements_image_button:
+    hover_sound gui.hover_sound
+    activate_sound gui.activate_sound

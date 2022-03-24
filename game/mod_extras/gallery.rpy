@@ -1,18 +1,16 @@
 ## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
-## You may only use this file/feature only for DDLC mods and not for DDLC patchers,
-## unofficial fixes, etc.
 
-## gallery.rpy
-
-# This file is not part of DDLC. This file contains the code for the gallery
-# menu that shows backgrounds and sprites from your mod.
+# gallery.rpy
+# This file contains the code for the gallery menu that shows backgrounds and 
+# sprites from your mod.
 
 init python:
     import math
     import renpy.display.image as imgcore
+    from collections import OrderedDict 
 
-    galleryList = []
-    current_img = None
+    galleryList = None 
+    current_img_name = None
 
     # This class declares the code to make a image for the gallery menu.
     # Syntax:
@@ -22,14 +20,19 @@ init python:
     #                   of the image in the gallery.
     #   name - This variable contains the human-readable name of the image in the
     #           gallery.
+    #   artist - This variable contains the human-readable author name of the image.
     #   sprite - This variable checks if the image declared is a character sprite.
     #   watermark - This variable checks if the exporter should export a watermarked image
     #               of the image shown in the gallery.
-    #   locked - This variable checks if this image should not be included in the gallery
-    #               until it is shown in-game.
+    #   unlocked - This variable checks if this image should be included in the gallery
+    #               or until it is shown in-game.
+    #   locked - DEPRECIATED for unlocked. This variable was used to lock a image from 
+    #               the gallery.
     class GalleryImage:
 
-        def __init__(self, image, small_size=None, name=None, sprite=False, watermark=False, locked=None):
+        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, watermark=False, unlocked=True, locked=None):
+            global galleryList 
+
             # The image variable name in-game
             self.file = image
 
@@ -39,14 +42,17 @@ init python:
             else:
                 self.name = image
 
+            # The human readable author of the image
+            self.artist = artist
+
             # This condition sees if the image given is a sprite
             self.sprite = sprite
 
-            # This condition sees if the image is locked
-            if locked is not None:
-                self.locked = locked
+            # A condition to see if the image should be shown
+            if unlocked and locked != True:
+                self.unlocked = True
             else:
-                self.locked = not renpy.seen_image(image)
+                self.unlocked = renpy.seen_image(image)
 
             # A condition to see if we export a watermark version of the image
             self.watermark = watermark
@@ -76,6 +82,11 @@ init python:
                     self.small_size = small_size 
                 else:     
                     self.small_size = Transform(image, size=(234, 132))
+
+            if galleryList is None:
+                galleryList = OrderedDict([(self.name, self)])
+            else:
+                galleryList[self.name] = self
 
         # This function exports the selected image to the players' computer.
         def export(self):
@@ -111,21 +122,25 @@ init python:
                         else:
                             p.write(renpy.file(export).read())
 
-                renpy.show_screen("dialog", message="Exported \"" + self.name + "\" to the gallery folder.", ok_action=Hide("dialog"))
+                renpy.show_screen("dialog", message='Exported "%s" to the gallery folder.' % self.name, ok_action=Hide("dialog"))
 
     # This function advances to the next/previous image in the gallery.
     def next_image(back=False):
-        global current_img
+        global current_img_name
 
-        index = 0
-        while current_img != galleryList[index]:
-            index = index + 1
+        # Create a new list from the keys
+        all_keys = list(galleryList.keys())
 
-        if back:
-            current_img = galleryList[index-1]
-        else:
-            try: current_img = galleryList[index+1]
-            except: current_img = galleryList[0]
+        # Get the current key as index
+        current_index = all_keys.index(current_img_name)
+
+        # Get the next key as index
+        next_index = current_index - 1 if back else current_index + 1
+
+        try: 
+            all_keys[next_index]
+            current_img_name = all_keys[next_index]
+        except IndexError: current_img_name = all_keys[0]
 
     # For Ren'Py 6 compatibility. This function gets the image displayed in the
     # gallery from from 'renpy.display.image'.
@@ -138,14 +153,11 @@ init python:
 
     # This section declares the images to be shown in the gallery. See the
     # 'GalleryMenu' class syntax to declare a image to the gallery.
-    residential = GalleryImage("bg residential_day", locked=False)
-    galleryList.append(residential)
+    residential = GalleryImage("bg residential_day")
 
-    s1a = GalleryImage("sayori 1", sprite=True, locked=False)
-    galleryList.append(s1a)
+    s1a = GalleryImage("sayori 1", sprite=True)
 
-    m1a = GalleryImage("monika 1", name="Monika", sprite=True, locked=False)
-    galleryList.append(m1a)
+    m1a = GalleryImage("monika 1", name="Monika", artist="Satchely", sprite=True)
 
 ## Gallery Screen #############################################################
 ##
@@ -169,36 +181,44 @@ screen gallery():
 
     use game_menu(_("Gallery")):
         
-        vpgrid:
-            id "gvp"
+        fixed:
 
-            rows math.ceil(len(galleryList) / 3.0)
+            vpgrid:
+                id "gvp"
 
-            if len(galleryList) > 3:
-                cols 3
-            else:
-                cols len(galleryList)
+                rows math.ceil(len(galleryList) / 3.0)
 
-            spacing 25
-            mousewheel True
+                if len(galleryList) > 3:
+                    cols 3
+                else:
+                    cols len(galleryList)
 
-            xalign 0.5
-            yalign 0.5
+                spacing 25
+                mousewheel True
 
-            for gl in galleryList:
+                xalign 0.5
+                yalign 0.5
 
-                if not gl.locked:
-                    vbox:
-                        imagebutton: 
-                            idle gl.small_size 
-                            action [SetVariable("current_img", gl), ShowMenu("preview"), With(Dissolve(0.5))]
-                        text gl.name:
-                            xalign 0.5
-                            color "#555"
-                            outlines []
-                            size 14
+                for name, gl in galleryList.items():
 
-        vbar value YScrollValue("gvp") xalign 0.99 ysize 560
+                    if gl.unlocked:
+                        vbox:
+                            imagebutton: 
+                                idle gl.small_size
+                                action [SetVariable("current_img_name", name), ShowMenu("preview"), With(Dissolve(0.5))]
+                            text "[name]": 
+                                xalign 0.5
+                                color "#555"
+                                outlines []
+                                size 14
+                            if gl.artist:
+                                text "Artist: [gl.artist]":
+                                    xalign 0.5
+                                    color "#555"
+                                    outlines []
+                                    size 14
+
+            vbar value YScrollValue("gvp") xalign 0.99 ysize 560
 
 ## Gallery Screen #################################################################
 ##
@@ -208,15 +228,15 @@ screen preview():
 
     tag menu
 
-    hbox:
-        add current_img.image yoffset 40
+    hbox: 
+        add galleryList[current_img_name].image yoffset 40
     hbox:
         add Solid("#fcf") size(config.screen_width, 40)
 
     hbox:
         ypos 0.005
-        xalign 0.5
-        text current_img.name:
+        xalign 0.5 
+        text current_img_name: 
             color "#000"
             outlines[]
             size 24 
@@ -226,7 +246,7 @@ screen preview():
         xalign 0.98
         textbutton "E":
             text_style "navigation_button_text"
-            action Function(current_img.export)
+            action Function(galleryList[current_img_name].export) 
 
         textbutton "X":
             text_style "navigation_button_text"

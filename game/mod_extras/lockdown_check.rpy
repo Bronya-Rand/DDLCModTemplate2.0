@@ -1,10 +1,9 @@
 ## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
 
 ## lockdown_check.rpy
-
-# This file is not part of DDLC. This file is mainly designed to warn new modders
-# about bugs with certain Ren'Py versions or warn them about QA issues with running 
-# Ren'Py versions higher than the one the mod template was tested for.
+# This file is mainly designed to warn new modders about bugs with certain Ren'Py 
+# versions or warn them about QA issues with running Ren'Py versions higher than 
+# the one the mod template was tested for.
 
 ## DO NOT MODIFY THIS FILE! ##
 
@@ -24,9 +23,6 @@ label lockdown_check:
             "I agree.":
                 $ persistent.lockdown_warning = True
                 return
-            "I disagree.":
-                "You have disagreed to this warning message. In order to mod DDLC on a higher version of Ren'Py than the one tested, you must accept the warning message."
-                $ renpy.quit()
 
     else:
         $ persistent.lockdown_warning = True
