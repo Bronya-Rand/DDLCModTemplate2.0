@@ -21,7 +21,7 @@ init python:
             persistent.are = pronoun_temp.lower()
             are = pronoun_temp.lower()
             are_capital = pronoun_temp.lower().capitalize()
-        elif type = "him":
+        elif type == "him":
             persistent.him = pronoun_temp.lower()
             him = pronoun_temp.lower()
             him_capital = pronoun_temp.lower().capitalize()
@@ -30,13 +30,13 @@ init python:
 
 label pronoun:
     while not persistent.he:
-        $ renpy.show_screen("pronoun_input", message="Enter your first pronoun (He/She/They)", ok_action=Function(SetPronoun, "he")))
+        $ renpy.show_screen("pronoun_input", message="Enter your first pronoun (He/She/They)", ok_action=Function(SetPronoun, "he"))
     while not persistent.him:
-        $ renpy.show_screen("pronoun_input", message="Enter your second pronoun (Him/Her/Them)", ok_action=Function(SetPronoun, "him")))
+        $ renpy.show_screen("pronoun_input", message="Enter your second pronoun (Him/Her/Them)", ok_action=Function(SetPronoun, "him"))
     while not persistent.hes:
-        $ renpy.show_screen("pronoun_input", message="Enter your third pronoun (He's/She's/They're)", ok_action=Function(SetPronoun, "he's")))
+        $ renpy.show_screen("pronoun_input", message="Enter your third pronoun (He's/She's/They're)", ok_action=Function(SetPronoun, "he's"))
     while not persistent.are:
-        $ renpy.show_screen("pronoun_input", message="Enter your fourth pronoun (Is/Are)", ok_action=Function(SetPronoun, "are")))
+        $ renpy.show_screen("pronoun_input", message="Enter your fourth pronoun (Is/Are)", ok_action=Function(SetPronoun, "are"))
 
 screen pronoun_input(message, ok_action):
 

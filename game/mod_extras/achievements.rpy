@@ -74,10 +74,9 @@ init python:
 screen achievements():
 
     tag menu
+    style_prefix "achievements"
 
     use game_menu(_("Awards")):
-        
-        style_prefix "achievements"
 
         fixed:
             # This vbox is responsible for the achievement display above the list
@@ -221,3 +220,7 @@ transform achievement_scaler(x):
 transform achievement_notif_transition:
     alpha 0.0
     linear 0.5 alpha 1.0
+
+style achievements_image_button:
+    hover_sound gui.hover_sound
+    activate_sound gui.activate_sound
