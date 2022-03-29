@@ -1062,6 +1062,18 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
+
+            hbox:
+
+             if extra_settings:
+                xoffset 15   
+
+                viewport:
+                    has vbox
+                    
+                    textbutton "English" action Language(None)
+                    for lang in renpy.known_languages():
+                        textbutton "[lang]" action Language(lang)
                             
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
