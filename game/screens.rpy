@@ -960,7 +960,6 @@ screen preferences():
                 xoffset 35
             else:
                 xoffset 50
-            yoffset -5
 
             hbox:
                 box_wrap True
