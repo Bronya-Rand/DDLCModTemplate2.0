@@ -183,6 +183,7 @@ init python:
     #   Example: build.classify("game/**.pdf", "scripts all")
     
     build.classify("game/mod_assets/**", "mod_assets all")
+    build.classify("game/presplash.png", "scripts all")
     build.classify("game/**.rpyc", "scripts all")
     build.classify("game/README.md", None)
     build.classify("game/**.txt", "scripts all")
