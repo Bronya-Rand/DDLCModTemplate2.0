@@ -4,9 +4,6 @@
 # This file contains the code for the gallery menu that shows backgrounds and 
 # sprites from your mod.
 
-## Allows exporting mod images to a players' PC/Phone
-define persistent.allow_export = True
-
 init python:
     import math
     import threading
@@ -32,7 +29,7 @@ init python:
     #               or until it is shown in-game.
     class GalleryImage:
 
-        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, watermark=False, unlocked=True):
+        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, unlocked=True):
             global galleryList 
 
             # The image variable name in-game
@@ -51,14 +48,11 @@ init python:
             self.unlocked_str = None
 
             # A condition to see if the image should be shown
-            if unlocked == True: self.unlocked = True
-            elif unlocked == False: self.unlocked = renpy.seen_image(image)
+            if unlocked is True: self.unlocked = True
+            elif not unlocked: self.unlocked = renpy.seen_image(image)
             else: 
                 self.unlocked_str = unlocked
                 self.unlocked = eval(unlocked)
-
-            # A condition to see if we export a watermark version of the image
-            self.watermark = watermark
 
             if sprite:
                 self.image = LiveComposite(
@@ -89,38 +83,29 @@ init python:
 
         # This function exports the selected image to the players' computer.
         def export(self):
-            if persistent.allow_export:
-                if renpy.android:
-                    try: os.mkdir(os.environ['ANDROID_PUBLIC'] + "/gallery")
-                    except: pass
-                else:
-                    try: os.mkdir(config.basedir + "/gallery")
-                    except: pass
+            if renpy.android:
+                try: os.mkdir(os.environ['ANDROID_PUBLIC'] + "/gallery")
+                except: pass
+            else:
+                try: os.mkdir(config.basedir + "/gallery")
+                except: pass
 
-                if self.sprite: renpy.show_screen("dialog", message="Sprites cannot be exported to the gallery folder. Please try another image.", ok_action=Hide("dialog"))
-                else:
-                    try: 
-                        renpy.file(self.file)
-                        export = self.file
-                    except:
-                        export = get_registered_image(self.file).filename
+            if self.sprite: renpy.show_screen("dialog", message="Sprites cannot be exported to the gallery folder. Please try another image.", ok_action=Hide("dialog"))
+            else:
+                try: 
+                    renpy.file(self.file)
+                    export = self.file
+                except:
+                    export = get_registered_image(self.file).filename
                     
-                    if renpy.android:
-                        with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
-                            if self.watermark:
-                                p.write(renpy.file(os.path.splitext(export)[0] + "_watermark" + os.path.splitext(export)[-1]).read())
-                            else:
-                                p.write(renpy.file(export).read())
-                    else:
-                        with open(os.path.join(config.basedir, "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]).replace("\\", "/"), "wb") as p:
-                            if self.watermark:
-                                p.write(renpy.file(os.path.splitext(export)[0] + "_watermark" + os.path.splitext(export)[-1]).read())
-                            else:
-                                p.write(renpy.file(export).read())
+                if renpy.android:
+                    with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
+                        p.write(renpy.file(export).read())
+                else:
+                    with open(os.path.join(config.basedir, "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]).replace("\\", "/"), "wb") as p:
+                        p.write(renpy.file(export).read())
 
                     renpy.show_screen("dialog", message='Exported "%s" to the gallery folder.' % self.name, ok_action=Hide("dialog"))
-            else:
-                renpy.show_screen("dialog", message='Exporting images from the Gallery Menu has been disabled by the mod developer.', ok_action=Hide("dialog"))
 
     class GalleryThread():
         def __init__(self):
