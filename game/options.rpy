@@ -7,14 +7,14 @@
 # This file customizes what your mod is and and how it starts and builds!
 
 # This controls what your mod is called.
-define config.name = "DDLC Mod Template"
+define config.name = "DDLC Mod Template - Python 3 Edition"
 
 # This controls whether you want your mod name to show in the main menu.
 # If your mod name is big, it is suggested to turn this off.
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "3.0.2"
+define config.version = "Py3-Beta1"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
@@ -152,11 +152,8 @@ init python:
 
     # These variables declare the packages to build your mod that is Team Salvato
     # IPG compliant. Do not mess with these variables whatsoever.
-    if renpy.version_tuple == (6, 99, 12, 4, 2187):
-        build.package(build.directory_name + "Mod", 'zip', 'mod', description="Ren'Py 6 DDLC Compliant Mod")
-    else:
-        build.package(build.directory_name + "Renpy7Mod", 'zip', 'windows linux mac renpy mod',
-        description="Ren'Py 7 DDLC Compliant Mod")
+    build.package(build.directory_name + "Renpy7Mod", 'zip', 'windows linux mac renpy mod',
+        description="Ren'Py 7/8 DDLC Compliant Mod")
 
     # These variables declare the archives that will be made to your packaged mod.
     # To add another archive, make a build.archive variable like in this example:

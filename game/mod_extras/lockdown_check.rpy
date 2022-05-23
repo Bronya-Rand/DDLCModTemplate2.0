@@ -4,18 +4,25 @@
 # This file is mainly designed to warn new modders about bugs with certain Ren'Py 
 # versions or warn them about QA issues with running Ren'Py versions higher than 
 # the one the mod template was tested for.
+# New in [TBD]: Add lockout for Ren'Py 6/7 on Py 3 templates.
 
 ## DO NOT MODIFY THIS FILE! ##
+
+# Checks if we are on Ren'Py 8
+init -100 python:
+
+    if renpy.version_tuple < (8, 0, 0):
+        raise NotRenPyEight
 
 label lockdown_check:
 
     $ version = renpy.version()
 
-    if renpy.version_tuple > (7, 4, 11, 2266):
+    if renpy.version_tuple > (8, 0, 0, 22052208):
 
         scene black
         "{b}Warning:{/b} The version of Ren'Py you are trying to mod DDLC on has not been tested for modding compatibility."
-        "The last recent version of Ren'Py that works for DDLC mods is \"{i}Ren'Py 7.4.10{/i}\"."
+        "The last recent version of Ren'Py 8 that works for DDLC mods is \"{i}Ren'Py 8.0.0{/i}\"."
         "Running DDLC or your DDLC mod on a higher version than the one tested may introduce bugs and other game breaking features."
         
         menu:
