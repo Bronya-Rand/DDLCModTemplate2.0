@@ -141,8 +141,6 @@ image m_rectstatic3:
     RectStatic(im.FactorScale(im.Crop("gui/menu_art_s.png", (100, 100, 64, 64)), 0.5), 2, 32, 32).sm
 
 init python:
-    import math
-
     # This class declares the code used for the RectStatic effect.
     class RectStatic(object):
         def __init__(self, theDisplayable, numRects=12, rectWidth = 30, rectHeight = 30):
@@ -339,8 +337,6 @@ image blood_eye2:
     Blood("blood_particle", dripChance=0.005, numSquirts=0, burstSize=0).sm
 
 init python:
-    import math
-
     ## AnimatedMask
     # This class declares the code used for the AnimatedMask effect in Act 3.
     class AnimatedMask(renpy.Displayable):

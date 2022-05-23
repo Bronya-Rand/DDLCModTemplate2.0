@@ -20,9 +20,6 @@
 ##     show screen bsod("EILEEN_EXCEPTION_NOT_HANDLED", rsod=True) 
 
 init python:
-    import subprocess
-    import platform
-
     cursor = 0
 
     def fakePercent(st, at, winver):
@@ -53,7 +50,7 @@ init python:
 
 
     if renpy.windows:
-        try: osVer = tuple(map(int, subprocess.check_output("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", shell=True).split("."))) # Vista+
+        try: osVer = tuple(map(int, subprocess.run("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", check=True, shell=True, stdout=subprocess.PIPE).stdout.split(b"."))) # Vista+
         except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (though who uses XP today?)
 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):

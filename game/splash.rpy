@@ -10,21 +10,18 @@ init -100 python:
     if not renpy.android:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
-                raise Exception("DDLC RPA files were not found in the game folder. Check your installation and try again.")
+                raise DDLCRPAsMissing
 
         if renpy.windows:
             try:
                 onedrive_path = os.environ["OneDrive"]
                 if onedrive_path in config.basedir:
-                    raise Exception("DDLC mods/mod projects cannot be run from a cloud folder. Move your mod/mod project to another location and try again.")
-            except: pass
+                    raise IllegalModLocation
+            except KeyError: pass
 
 ## Splash Message
 # This python statement is where the splash messages reside in.
 init python:
-    import re
-
-    menu_trans_time = 1
     # This variable is the default splash message that people will see when
     # the game launches.
     splash_message_default = "This game is an unofficial fan game that is unaffiliated with Team Salvato."
@@ -42,16 +39,16 @@ init python:
     ## Syntax to use: recolorize("path/to/your/image", "#color1hex", "#color2hex", contrast value)
     ## Example: recolorize("gui/menu_bg.png", "#bdfdff", "#e6ffff", 1.25)
     def recolorize(path, blackCol="#ffbde1", whiteCol="#ffe6f4", contr=1.29):
-        return im.MatrixColor(im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr)), im.matrix.colorize("#00f", "#fff")
-            * im.matrix.saturation(120)), im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
+        return im.MatrixColor(im.MatrixColor(im.MatrixColor(path, im.matrix.desaturate() * im.matrix.contrast(contr)), 
+            im.matrix.colorize("#00f", "#fff") * im.matrix.saturation(120)), im.matrix.desaturate() * im.matrix.colorize(blackCol, whiteCol))
 
     def process_check(stream_list):
         if not renpy.windows:
-            for x in range(len(stream_list)):
+            for x in enumerate(stream_list):
                 stream_list[x] = stream_list[x].replace(".exe", "")
         
-        for x in range(len(stream_list)):
-            for y in range(len(process_list)):
+        for x in enumerate(stream_list):
+            for y in enumerate(process_list):
                 if re.match(r"^" + stream_list[x] + r"\b", process_list[y]):
                     return True
         return False
@@ -273,13 +270,12 @@ image warning:
 ## and writes them to the characters folder depending on the playthrough.
 init python:
     if not persistent.do_not_delete:
-        import os
         if renpy.android:
-            if not os.access(os.environ['ANDROID_PUBLIC'] + "/characters/", os.F_OK):
-                os.mkdir(os.environ['ANDROID_PUBLIC'] + "/characters")
+            if not os.path.exists(os.path.join(os.environ['ANDROID_PUBLIC'], "characters")):
+                os.mkdir(os.path.join(os.environ['ANDROID_PUBLIC'], "characters"))
         else:
-            if not os.access(config.basedir + "/characters/", os.F_OK):
-                os.mkdir(config.basedir + "/characters")
+            if not os.path.exists(os.path.join(config.basedir, "characters")):
+                os.mkdir(os.path.join(config.basedir, "characters"))
         restore_all_characters()
 
 ## These images are the background images shown in-game during the disclaimer.
@@ -295,30 +291,27 @@ label splashscreen:
         currentuser = ""
 
         if renpy.windows:
-            try: process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
-            except:
+            try: process_list = subprocess.run("wmic process get Description", check=True, shell=True, stdout=subprocess.PIPE).stdout.lower().decode("utf-8").replace("\r", "").replace(" ", "").strip().split("\n")
+            except subprocess.CalledProcessError:
                 try:
-                    process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().replace("\r", "").split("\n") # For W11 builds > 22000
+                    process_list = subprocess.run("powershell (Get-Process).ProcessName", check=True, shell=True, stdout=subprocess.PIPE).stdout.lower().decode("utf-8").replace("\r", "").strip().split("\n") # For W10/11 builds > 22000
                     
-                    for x in range(len(process_list)):
+                    for x in enumerate(process_list):
                         process_list[x] += ".exe"
-                except: pass            
+                except: 
+                    pass            
         else:
-            try:
-                try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).split(b"\n") # Linux
-                except: process_list = subprocess.check_output("ps -A -o command", shell=True).split(b"\n") # MacOS
+            try: process_list = subprocess.run("ps -A --format cmd", check=True, shell=True, stdout=subprocess.PIPE).stdout.decode("utf-8").strip().split("\n") # Linux
+            except subprocess.CalledProcessError: process_list = subprocess.run("ps -A -o command", check=True, shell=True, stdout=subprocess.PIPE).stdout.decode("utf-8").strip().split("\n") # MacOS
                 
-                for x in range(len(process_list)):
-                    process_list[x] = process_list[x].decode().split("/")[-1]
-                process_list.pop(0)
-            except: pass
+            for x in enumerate(process_list):
+                process_list[x] = process_list[x].decode().split("/")[-1]
+            process_list.pop(0)
 
-        try:
-            for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
-                user = os.environ.get(name)
-                if user:
-                    currentuser = user
-        except: pass
+        for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
+            user = os.environ.get(name)
+            if user:
+                currentuser = user
 
     ## This if statement checks if we have passed the disclaimer and that the
     ## current version of the mod equals the old one or the autoload is set to 
@@ -395,20 +388,19 @@ label splashscreen:
     #     s_kill_early = None
     #     if persistent.playthrough == 0:
     #         try: renpy.file("../characters/sayori.chr")
-    #         except: s_kill_early = True
+    #         except IOError: s_kill_early = True
     #     if not s_kill_early:
     #         if persistent.playthrough <= 2 and persistent.playthrough != 0:
     #             try: renpy.file("../characters/monika.chr")
-    #             except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
+    #             except IOError: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
     #         if persistent.playthrough <= 1 or persistent.playthrough == 4:
     #             try: renpy.file("../characters/natsuki.chr")
-    #             except: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
+    #             except IOError: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
     #             try: renpy.file("../characters/yuri.chr")
-    #             except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
+    #             except IOError: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
     #         if persistent.playthrough == 4:
     #             try: renpy.file("../characters/sayori.chr")
-    #             except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
-
+    #             except IOError: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
 
     ## This if statement controls which special poems are shown to the player in-game.
     if not persistent.special_poems:

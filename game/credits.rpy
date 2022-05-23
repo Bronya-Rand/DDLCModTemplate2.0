@@ -2,9 +2,6 @@
 
 # This file controls the ending of DDLC and your mod!
 
-init python:
-    import datetime
-
 # These images shows the CGs seen in-game then deletes them after a few seconds
 # from the credits if the game isn't 100% complete.
 image credits_cg1:

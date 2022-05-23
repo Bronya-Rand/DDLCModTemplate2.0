@@ -5,11 +5,6 @@
 # sprites from your mod.
 
 init python:
-    import math
-    import threading
-    import renpy.display.image as imgcore
-    from collections import OrderedDict 
-
     galleryList = None 
     current_img_name = None
 

@@ -5,9 +5,6 @@
 # shows your progress throughout the mod.
 
 init python:
-    import math
-    from collections import OrderedDict 
-
     achievementList = None
     selectedAchievement = None
 
