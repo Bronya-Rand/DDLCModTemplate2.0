@@ -6,6 +6,7 @@
 
 init python:
     import math
+    import threading
     import renpy.display.image as imgcore
     from collections import OrderedDict 
 
@@ -26,21 +27,17 @@ init python:
     #               of the image shown in the gallery.
     #   unlocked - This variable checks if this image should be included in the gallery
     #               or until it is shown in-game.
-    #   locked - DEPRECIATED for unlocked. This variable was used to lock a image from 
-    #               the gallery.
     class GalleryImage:
 
-        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, watermark=False, unlocked=True, locked=None):
+        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, unlocked=True):
             global galleryList 
 
             # The image variable name in-game
             self.file = image
 
             # The human readable name of the image
-            if name:
-                self.name = name
-            else:
-                self.name = image
+            if name: self.name = name
+            else: self.name = image
 
             # The human readable author of the image
             self.artist = artist
@@ -48,20 +45,19 @@ init python:
             # This condition sees if the image given is a sprite
             self.sprite = sprite
 
-            # A condition to see if the image should be shown
-            if unlocked and locked != True:
-                self.unlocked = True
-            else:
-                self.unlocked = renpy.seen_image(image)
+            self.unlocked_str = None
 
-            # A condition to see if we export a watermark version of the image
-            self.watermark = watermark
+            # A condition to see if the image should be shown
+            if unlocked is True: self.unlocked = True
+            elif not unlocked: self.unlocked = renpy.seen_image(image)
+            else: 
+                self.unlocked_str = unlocked
+                self.unlocked = eval(unlocked)
 
             if sprite:
-
                 self.image = LiveComposite(
-                    (1280, 720), (0, 0), 
-                    "black", (0.2, 0), 
+                    (config.screen_width, config.screen_height), (0, 0), 
+                    "black", (0.2 * (config.screen_width / 1280.0), 0), 
                     Transform(image, zoom=0.75*0.95)
                 )
 
@@ -75,22 +71,18 @@ init python:
                         Transform(image, zoom=0.137)
                     )
             else:
-                
-                self.image = Transform(image, size=(1280, 680))
+                self.image = Transform(image, size=(config.screen_width, config.screen_height-40))
 
                 if small_size:
                     self.small_size = small_size 
                 else:     
                     self.small_size = Transform(image, size=(234, 132))
 
-            if galleryList is None:
-                galleryList = OrderedDict([(self.name, self)])
-            else:
-                galleryList[self.name] = self
+            if galleryList is None: galleryList = OrderedDict([(self.name, self)])
+            else: galleryList[self.name] = self
 
         # This function exports the selected image to the players' computer.
         def export(self):
-
             if renpy.android:
                 try: os.mkdir(os.environ['ANDROID_PUBLIC'] + "/gallery")
                 except: pass
@@ -98,31 +90,42 @@ init python:
                 try: os.mkdir(config.basedir + "/gallery")
                 except: pass
 
-            if self.sprite:
-                renpy.show_screen("dialog", message="Sprites cannot be exported to the gallery folder. Please try another image.", ok_action=Hide("dialog"))
+            if self.sprite: renpy.show_screen("dialog", message="Sprites cannot be exported to the gallery folder. Please try another image.", ok_action=Hide("dialog"))
             else:
                 try: 
                     renpy.file(self.file)
                     export = self.file
                 except:
                     export = get_registered_image(self.file).filename
-                
-                if renpy.android:
-
-                    with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
-                        if self.watermark:
-                            p.write(renpy.file(os.path.splitext(export)[0] + "_watermark" + os.path.splitext(export)[-1]).read())
-                        else:
-                            p.write(renpy.file(export).read())
-                else:
                     
+                if renpy.android:
+                    with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
+                        p.write(renpy.file(export).read())
+                else:
                     with open(os.path.join(config.basedir, "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]).replace("\\", "/"), "wb") as p:
-                        if self.watermark:
-                            p.write(renpy.file(os.path.splitext(export)[0] + "_watermark" + os.path.splitext(export)[-1]).read())
-                        else:
-                            p.write(renpy.file(export).read())
+                        p.write(renpy.file(export).read())
 
-                renpy.show_screen("dialog", message='Exported "%s" to the gallery folder.' % self.name, ok_action=Hide("dialog"))
+                    renpy.show_screen("dialog", message='Exported "%s" to the gallery folder.' % self.name, ok_action=Hide("dialog"))
+
+    class GalleryThread():
+        def __init__(self):
+            self.lock = threading.RLock()
+            self.periodic_condition = threading.Condition()
+            self.gallery_thread = threading.Thread(target=self.gallery_thread_main)
+            self.gallery_thread.daemon = True
+            self.gallery_thread.start()
+
+        def gallery_thread_main(self):
+            while True:
+                with self.periodic_condition:
+                    self.periodic_condition.wait(1.0)
+
+                with self.lock:
+                    for name, gl in galleryList.items():
+                        if gl.unlocked_str is not None:
+                            gl.unlocked = eval(gl.unlocked_str)
+
+    gallery_image_thread = GalleryThread()
 
     # This function advances to the next/previous image in the gallery.
     def next_image(back=False):
@@ -154,9 +157,7 @@ init python:
     # This section declares the images to be shown in the gallery. See the
     # 'GalleryMenu' class syntax to declare a image to the gallery.
     residential = GalleryImage("bg residential_day")
-
     s1a = GalleryImage("sayori 1", sprite=True)
-
     m1a = GalleryImage("monika 1", name="Monika", artist="Satchely", sprite=True)
 
 ## Gallery Screen #############################################################
@@ -174,7 +175,6 @@ init python:
 ##   gl.sprite - This variable checks if the image declared is a character sprite.
 ##   gl.locked - This variable checks if this image should not be included in
 ##               the gallery until it is shown in-game.
-
 screen gallery():
 
     tag menu
@@ -200,9 +200,8 @@ screen gallery():
                 yalign 0.5
 
                 for name, gl in galleryList.items():
-
-                    if gl.unlocked:
-                        vbox:
+                    vbox:
+                        if gl.unlocked:
                             imagebutton: 
                                 idle gl.small_size
                                 action [SetVariable("current_img_name", name), ShowMenu("preview"), With(Dissolve(0.5))]
@@ -211,19 +210,21 @@ screen gallery():
                                 color "#555"
                                 outlines []
                                 size 14
-                            if gl.artist:
-                                text "Artist: [gl.artist]":
-                                    xalign 0.5
-                                    color "#555"
-                                    outlines []
-                                    size 14
+                        else:
+                            imagebutton: 
+                                idle "mod_assets/mod_extra_images/galleryLock.png"
+                                action Show("dialog", message="This image is locked. Continue playing [config.name] to unlock this image.", ok_action=Hide("dialog"))
+                            text "Locked": 
+                                xalign 0.5
+                                color "#555"
+                                outlines []
+                                size 14
 
             vbar value YScrollValue("gvp") xalign 0.99 ysize 560
 
 ## Gallery Screen #################################################################
 ##
 ## This screen shows the currently selected screen to the player in-game.
-
 screen preview():
 
     tag menu
@@ -244,6 +245,11 @@ screen preview():
     hbox:
         ypos 0.005
         xalign 0.98
+        if galleryList[current_img_name].artist:
+            textbutton "?":
+                text_style "navigation_button_text"
+                action Show("dialog", message="Artist: " + galleryList[current_img_name].artist, ok_action=Hide("dialog"))
+
         textbutton "E":
             text_style "navigation_button_text"
             action Function(galleryList[current_img_name].export) 
