@@ -10,7 +10,9 @@ init -200 python:
             return "This version of the mod template can only run on Ren'Py 8. Install the 'py2' version of the mod template and try again."
 
     class DDLCRPAsMissing(Exception):
-        pass
+        def __str__(self):
+            return "DDLC RPA files were not found in the game folder. Check your installation and try again."
 
     class IllegalModLocation(Exception):
-        pass
+        def __str__(self):
+            return "DDLC mods/mod projects cannot be run from a cloud folder. Move your mod/mod project to another location and try again."
