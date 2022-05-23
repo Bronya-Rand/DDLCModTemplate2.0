@@ -48,10 +48,9 @@ init python:
             cursor = 0
             return Text("   ", style="bsod_linux_text"), 0.3
 
-
     if renpy.windows:
         try: osVer = tuple(map(int, subprocess.run("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", check=True, shell=True, stdout=subprocess.PIPE).stdout.split(b"."))) # Vista+
-        except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (though who uses XP today?)
+        except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (but Ren'Py 8 doesn't even support XP...)
 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
@@ -195,31 +194,31 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
         vbox:
             style_prefix "bsod_linux"
 
-            text "metaverse-pci.c:v[config.version] 9/22/2017 Metaverse Enterprise Solutions\n"
+            text "metaverse-pci.c:v[config.version] 5/22/2022 Metaverse Enterprise Solutions\n"
             text "  https://www.metaverse-enterprise.com/network/metaverse-pci.html"
-            text "hda0: METAVERSE ENTERPRISE VIRTUAL HARDDISK, ATA DISK drive"
-            text "ide0 at 0x1f0 - 0x1f7, 0x3f6 on irq 14"
+            text "hd0: METAVERSE ENTERPRISE VIRTUAL HARDDISK, ATA DISK drive"
+            text "sda0 at 0x1f0 - 0x1f7, 0x3f6 on irq 14"
             text "hdc: METAVERSE ENTERPRISE VIRTUAL CD-ROM, ATAPI CD/DVD-ROM drive"
-            text "ide1 at 0x444 - 0x910, 0x211 on irq 15"
+            text "sr0 at 0x444 - 0x910, 0x211 on irq 15"
             text "fd0: METAVERSE ENTERPRISE VIRTUAL FLOPPY, ATA FLOPPY drive"
             text "ide2 at 0x7363-0x6e6565, 0x4569 on irq 16"
             text "ACPI: PCI Interrupt Link [[LNKC] ebabked at IRQ 10"
             text "ACPI: PCI Interrupt 0000:00:03:.0[[A] -> Link [[LNKC] -> GSI 10 (level, low) -> IRQ 10"
             text "eno1: Metaverse Enterprise LIB-0922 found at 0xc453, IRQ 10, 09:10:21:86:75:30"
-            text "hda: max request size: 512KiB"
-            text "hda: 2147483648 sectors (1 TB) w/256KiB Cache, CHS=178/255/63, (U)DMA"
-            text "hda: hda1"
-            text "hdc: ATAPI 4x CD-ROM drive, 512kB Cache, (U)DMA"
-            text "Uniform CD-ROM driver Revision: 3.20"
+            text "sda: max request size: 4MiB"
+            text "sda: 2147483648 sectors (1 TB) w/256KiB Cache, CHS=178/255/63, (U)DMA"
+            text "sda: sda1"
+            text "sr0: ATAPI 16x CD-ROM drive, 2MB Cache, (U)DMA"
+            text "Uniform CD-ROM driver Revision: [renpy.version_tuple]"
             text "Done."
             text "Begin: DDLC.so"
             text "Done."
-            text "DDLC.so[[3352]: Importing _renpysteam: ImportError('No module named _renpysteam',)"
+            text "DDLC.so[[3352]: Faled to initialize steam: FileNotFoundError(\"Could not find module '/usr/app/ddlc/lib/py3-linux-x86_64/steam_api64.so') (or one of its dependencies). Try using the full path with constructor syntax.\")"
             text "DDLC.so[[3352]: nvdrs: Loaded, about to disable thread optimizations."
             text "DDLC.so[[3352]: nvdrs: Disabled thread optimizations."
             text "DDLC.so: SUCCESS."
             text "Done."
-            text "Begin: DDLC.so -> linux-4.12.14"
+            text "Begin: DDLC.so -> linux-5.18"
             text "/init: /init: 151: " + bsodCode.upper() + ": 0xforce=panic"
             text "Kernel panic - not syncing: Attempted to kill init!"
             add DynamicDisplayable(constantCursor)
