@@ -15,10 +15,7 @@ init python:
     class DiscordRPC():
         def __init__(self, client_id):
             ## DO NOT TOUCH THIS
-            if isinstance(client_id, int):
-                self.client_id = str(client_id)
-            else: 
-                self.client_id = client_id
+            self.client_id = str(client_id)
 
             ## You may touch this. All values MUST be strings.
 
@@ -63,30 +60,26 @@ init python:
             self.rpc.close()
 
         def update_state(self, state):
-            if isinstance(state, str):
-                self.state = state
-                self.update_info()
+            self.state = str(state)
+            self.update_info()
         
         def update_details(self, details):
-            if isinstance(details, str):
-                self.details = details
-                self.update_info()
+            self.details = str(details)
+            self.update_info()
         
         def update_large_img_info(self, large_img=None, large_txt=None):
             if large_img is not None:
-                if isinstance(large_img, str):
-                    self.large_img = large_img
+                self.large_img = str(large_img)
             if large_txt is not None:
-                if isinstance(large_txt, str):
-                    self.large_txt = large_txt
+                self.large_txt = str(large_txt)
+            self.update_info()
 
         def update_small_img_info(self, small_img=None, small_txt=None):
             if small_img is not None:
-                if isinstance(small_img, str):
-                    self.small_img = small_img
+                self.small_img = str(small_img)
             if small_txt is not None:
-                if isinstance(small_txt, str):
-                    self.large_txt = small_txt
+                self.small_txt = str(small_txt)
+            self.update_info()
 
         def update_info(self):
             self.rpc.update(state=self.state, details=self.details, start=self.start_time, large_image=self.large_img, large_text=self.large_txt, small_image=self.small_img, small_text=self.small_txt)
