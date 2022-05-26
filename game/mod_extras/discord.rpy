@@ -54,7 +54,6 @@ init python:
             self.rpc_thread.daemon = True
             self.rpc_thread.start()
 
-        ## DO NOT TOUCH THESE FUNCTIONS
         def rpc_thread_main(self):
             self.update_info()
             while True:  # The presence will stay on as long as the program is running
@@ -63,6 +62,7 @@ init python:
                     self.prev_state = self.state
 
                 # These default checks sets up different statuses per menu accessed.
+                # You may edit this to fit what works for you.
                 if renpy.get_screen("main_menu"):
                     self.update_state("In the Main Menu")
                 elif renpy.get_screen("navigation"):
@@ -91,6 +91,7 @@ init python:
             
             self.rpc.close()
 
+        ## DO NOT TOUCH THESE FUNCTIONS
         def update_state(self, state):
             self.state = str(state)
             self.update_info()
