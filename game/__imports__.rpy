@@ -25,3 +25,7 @@ init -1 python:
     # For Gallery
     import threading
     import renpy.display.image as imgcore
+
+    # For Discord RPC
+    from pypresence import Presence
+    import time

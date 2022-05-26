@@ -8,7 +8,6 @@ define persistent.enable_extras_menu = True
 if persistent.enable_extras_menu:
 
     screen extras():
-
         tag menu
         style_prefix "extras"
 

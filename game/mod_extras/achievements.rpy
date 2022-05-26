@@ -6,6 +6,7 @@
 define persistent.enable_achievements = True
 
 if persistent.enable_achievements:
+    
     init python:
         achievementList = None
         selectedAchievement = None
