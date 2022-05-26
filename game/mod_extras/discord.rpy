@@ -27,6 +27,9 @@ init python:
             # Example: Browsing Settings
             self.state = "Monika Is Watching You Code"
 
+            # The previous state the RPC was in
+            self.prev_state = None
+
             # Defines the largest image to use in rich presence as the
             # main icon.
             self.large_img = "ddlcmodtemplatelogo"
@@ -47,15 +50,44 @@ init python:
             self.start_time = time.time()
             self.rpc = Presence(self.client_id)
             self.rpc.connect()
-            self.update_info()
             self.rpc_thread = threading.Thread(target=self.rpc_thread_main)
+            self.rpc_thread.daemon = True
+            self.rpc_thread.start()
 
         ## DO NOT TOUCH THESE FUNCTIONS
         def rpc_thread_main(self):
+            self.update_info()
             while True:  # The presence will stay on as long as the program is running
-                self.update_info()
-                time.sleep(15) # Can only update rich presence every 15 seconds
-                continue
+                # We save the previous status if the player returns back to what we are doing
+                if self.prev_state is None:
+                    self.prev_state = self.state
+
+                # These default checks sets up different statuses per menu accessed.
+                if renpy.get_screen("main_menu"):
+                    self.update_state("In the Main Menu")
+                elif renpy.get_screen("navigation"):
+                    self.update_state("In the Start Menu")
+                elif renpy.get_screen("preferences"):
+                    self.update_state("In the Settings Menu")
+                elif renpy.get_screen("load"):
+                    self.update_state("In the Load Menu")
+                elif renpy.get_screen("save"):
+                    self.update_state("In the Save Menu")
+                elif renpy.get_screen("history"):
+                    self.update_state("In the History Menu")
+                elif renpy.get_screen("extras"):
+                    self.update_state("In the Extras Menu")
+                elif renpy.get_screen("gallery"):
+                    self.update_state("In the Gallery Menu")
+                elif renpy.get_screen("preview"):
+                    self.update_state("Previewing a Gallery Image")
+                elif renpy.get_screen("achievements"):
+                    self.update_state("In the Awards Menu")
+                else:
+                    self.update_state(self.prev_state)
+                    self.prev_state = None
+
+                time.sleep(1)
             
             self.rpc.close()
 
