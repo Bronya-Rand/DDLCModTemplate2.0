@@ -1,7 +1,8 @@
 
 # __imports__.rpy
 # This file imports certain python modules at runtime for DDLC and template
-# features
+# features.
+
 default enable_discord = True
 
 init -1 python:
