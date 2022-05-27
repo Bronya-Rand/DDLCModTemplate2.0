@@ -53,7 +53,7 @@ init python:
     # These functions restores all the character CHR files to the characters folder 
     # given the playthrough number in the mod and list of characters to restore.
     def restore_character(names):
-        if type(names) != list:
+        if not isinstance(names, list):
             raise Exception("'names' parameter must be a list. Example: [\"monika\", \"sayori\"].")
 
         for x in names:
@@ -61,7 +61,7 @@ init python:
                 try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/" + x + ".chr")
                 except: open(os.environ['ANDROID_PUBLIC'] + "/characters/" + x + ".chr", "wb").write(renpy.file(x + ".chr").read())
             else:
-                try: renpy.file("../characters/" + x + ".chr")
+                try: renpy.file(config.basedir + "/characters/" + x + ".chr")
                 except: open(config.basedir + "/characters/" + x + ".chr", "wb").write(renpy.file(x + ".chr").read())
 
     def restore_all_characters():

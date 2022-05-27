@@ -13,11 +13,10 @@ init -100 python:
                 raise DDLCRPAsMissing
 
         if renpy.windows:
-            try:
-                onedrive_path = os.environ["OneDrive"]
+            onedrive_path = os.environ.get("OneDrive")
+            if onedrive_path is not None:
                 if onedrive_path in config.basedir:
                     raise IllegalModLocation
-            except KeyError: pass
 
 ## Splash Message
 # This python statement is where the splash messages reside in.
@@ -44,12 +43,12 @@ init python:
 
     def process_check(stream_list):
         if not renpy.windows:
-            for x in enumerate(stream_list):
-                stream_list[x] = stream_list[x].replace(".exe", "")
+            for index, process in enumerate(stream_list):
+                stream_list[index] = process.replace(".exe", "")
         
-        for x in enumerate(stream_list):
-            for y in enumerate(process_list):
-                if re.match(r"^" + stream_list[x] + r"\b", process_list[y]):
+        for x in stream_list:
+            for y in process_list:
+                if re.match(r"^" + x + r"\b", y):
                     return True
         return False
 
