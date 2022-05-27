@@ -3,9 +3,9 @@
 # gallery.rpy
 # This file contains the code for the gallery menu that shows backgrounds and 
 # sprites from your mod.
-define persistent.enable_gallery = True
+default enable_gallery = True
 
-if persistent.enable_gallery:
+if enable_gallery:
     
     init python:
         galleryList = None 

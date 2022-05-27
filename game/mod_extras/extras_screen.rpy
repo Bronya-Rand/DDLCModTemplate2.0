@@ -3,9 +3,9 @@
 # extras_screen.rpy
 # This file contains the screen code for the extras menu for more screen options
 # (Achievements/Gallery)
-define persistent.enable_extras_menu = True
+define enable_extras_menu = True
 
-if persistent.enable_extras_menu:
+if enable_extras_menu:
 
     screen extras():
         tag menu

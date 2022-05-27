@@ -2,6 +2,7 @@
 # __imports__.rpy
 # This file imports certain python modules at runtime for DDLC and template
 # features
+default enable_discord = True
 
 init -1 python:
     # For Achievements/Gallery
@@ -27,5 +28,6 @@ init -1 python:
     import renpy.display.image as imgcore
 
     # For Discord RPC
-    from pypresence import Presence
-    import time
+    if enable_discord:
+        from discord_rpc import DiscordRPC
+        RPC = DiscordRPC("979471077187125248")

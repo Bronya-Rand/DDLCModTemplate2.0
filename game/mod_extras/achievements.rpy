@@ -3,9 +3,9 @@
 ## achievements.rpy
 # This file contains the code for the achievements menu and notification that 
 # shows your progress throughout the mod.
-define persistent.enable_achievements = True
+default enable_achievements = True
 
-if persistent.enable_achievements:
+if enable_achievements:
     
     init python:
         achievementList = None
