@@ -3,7 +3,7 @@
 # This file imports certain python modules at runtime for DDLC and template
 # features.
 
-default enable_discord = True
+default persistent.enable_discord = True
 
 init -1 python:
     # For Achievements/Gallery
