@@ -6,9 +6,6 @@ This file was introduced in Version 3.0.0 of the mod template. This file contain
 ### **bsod.rpy**
 This file was introduced in Version 2.4.9 of the mod template. This file contains the code to call a fake Blue Screen of Death/Kernel Panic to the players' computer.
 
-### **discord.rpy**
-This file was introduced in Version [TBD] of the mod template. This file contains the code to make a Discord Rich Presence for your mod.
-
 ### **gallery.rpy**
 
 This file was introduced in Version 3.0.0 of the mod template. This file contains the code for the gallery menu that shows backgrounds and sprites from your mod.

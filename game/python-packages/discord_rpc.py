@@ -1,4 +1,4 @@
-# discord.py
+# discord_rpc.py
 # This file sets up Discord Rich Presence into your mod.
 # This requires that pypresence exists on your mod.
 
