@@ -41,9 +41,9 @@ init python: # This whole block runs when DDLC is started (as opposed to when th
         with file as wordfile:
             for line in wordfile:
                 # Ignore lines beginning with '#' and empty lines
-                line = line.strip()
+                line = line.decode("utf-8").strip()
 
-                if line == '' or line[0] == '#': continue
+                if line == '' or '#' in line: continue
 
                 # File format: word,sPoint,nPoint,yPoint
                 x = line.split(',')
