@@ -1,3 +1,12 @@
+# discord.py
+# This file sets up Discord Rich Presence into your mod.
+# This requires that pypresence exists on your mod.
+
+## BEFORE STARTING READ THIS.
+## To make RPC work for you, make a new application on Discord's Developer Portal
+## https://discord.com/developers/applications
+## Follow the comments below in order to setup RPC assets and defining this in DDLC.
+
 from pypresence import Presence
 import time
 import threading
