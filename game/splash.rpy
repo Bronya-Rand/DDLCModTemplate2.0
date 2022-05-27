@@ -10,7 +10,7 @@ init -100 python:
     if not renpy.android:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
-                raise DDLCRPAsMissing
+                raise DDLCRPAsMissing(archive)
 
         if renpy.windows:
             onedrive_path = os.environ.get("OneDrive")
