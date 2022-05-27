@@ -26,26 +26,26 @@ The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 1. Build Packaging on Ren'Py 8!
 2. Team Salvato compliant splash screen.
 3. DDLC's exact RPY files with explainations.
-5. macOS `.app` and Linux support via `LinuxLauncher.sh`.
-6. Android Support! Bring your mod over to a mobile platform!\*
+4. macOS `.app` and Linux support via `LinuxLauncher.sh`.
+5. Android Support! Bring your mod over to a mobile platform!\*
     > If your mod uses simple code or DDLC functions. More complex code or non-mobile friendly features may require some adjustments to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
-7. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
+6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-8. [BETA] Pronoun Support! Allow players to identify with the pronoun they go by!
+7. [BETA] Pronoun Support! Allow players to identify with the pronoun they go by!
     > See *mod_extras/pronouns.rpy* in the `game` folder for a example on how to use this feature.
-9. Better Blue Screens of Death! Make your own BSOD easily in-game on every operating system! 
-10. Uncensored Mode! Allow more sensitive content to be shown in-game.
-11. Let's Play Mode (Streamer Mode)! A better alternative to hide streamer information and more!
-12. Gallery Menu! Allow players to see the work you have done in-game and export it!
-13. Achievements Menu! Set up achievements in your mod for players to complete your mod in full!
-14. Different Menu Button Colors! Have different colored buttons in the menu prompt to your hearts content.
-15. Automatic GUI Coloring! Color the GUI in the game to whatever you like without editing the asset files themselves! 
-17. Extras Menu! Add additional button options to your game for additional button options!
-17. Terra's in-depth Poem Game guide!
-18. NVL Support thanks to Yagamirai01!
-19. Patches for several Ren'Py releases and Windows features.
-20. Python 3 code now in use!
-21. Discord Rich Presence support!
+8. Better Blue Screens of Death! Make your own BSOD easily in-game on every operating system! 
+9. Uncensored Mode! Allow more sensitive content to be shown in-game.
+10. Let's Play Mode (Streamer Mode)! A better alternative to hide streamer information and more!
+11. Gallery Menu! Allow players to see the work you have done in-game and export it!
+12. Achievements Menu! Set up achievements in your mod for players to complete your mod in full!
+13. Different Menu Button Colors! Have different colored buttons in the menu prompt to your hearts content.
+14. Automatic GUI Coloring! Color the GUI in the game to whatever you like without editing the asset files themselves! 
+15. Extras Menu! Add additional button options to your game for additional button options!
+16. Terra's in-depth Poem Game guide!
+17. NVL Support thanks to Yagamirai01!
+18. Patches for several Ren'Py releases and Windows features.
+19. Python 3 code now in use!
+20. Discord Rich Presence support!
 
 ### Returned Features
 1. Ghost Menu. (Dan's spooky easter egg)
