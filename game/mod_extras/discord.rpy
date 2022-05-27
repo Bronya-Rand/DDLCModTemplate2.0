@@ -49,12 +49,12 @@ if persistent.enable_discord:
                 ## DO NOT TOUCH THIS EITHER
                 self.start_time = time.time()
                 self.rpc = Presence(self.client_id)
-                self.rpc.connect()
+
                 self.rpc_thread = threading.Thread(target=self.rpc_thread_main)
-                self.rpc_thread.daemon = True
                 self.rpc_thread.start()
 
             def rpc_thread_main(self):
+                self.rpc.connect()
                 self.update_info()
                 while True:  # The presence will stay on as long as the program is running
                     # We save the previous status if the player returns back to what we are doing
@@ -62,7 +62,6 @@ if persistent.enable_discord:
                         self.prev_state = self.state
 
                     # These default checks sets up different statuses per menu accessed.
-                    # You may edit this to fit what works for you.
                     if renpy.get_screen("main_menu"):
                         self.update_state("In the Main Menu")
                     elif renpy.get_screen("navigation"):
@@ -89,7 +88,9 @@ if persistent.enable_discord:
 
                     time.sleep(1)
                 
+                self.prev_state = None
                 self.rpc.close()
+                self.rpc_thread.stop()
 
             ## DO NOT TOUCH THESE FUNCTIONS
             def update_state(self, state):
