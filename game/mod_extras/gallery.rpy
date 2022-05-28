@@ -93,7 +93,7 @@ if enable_gallery:
                         renpy.file(self.file)
                         export = self.file
                     except:
-                        export = get_registered_image(self.file).filename
+                        export = renpy.get_registered_image(self.file).filename
                         
                     if renpy.android:
                         with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
@@ -141,15 +141,6 @@ if enable_gallery:
                 all_keys[next_index]
                 current_img_name = all_keys[next_index]
             except IndexError: current_img_name = all_keys[0]
-
-        # For Ren'Py 6 compatibility. This function gets the image displayed in the
-        # gallery from from 'renpy.display.image'.
-        def get_registered_image(name): 
-
-            if not isinstance(name, tuple):
-                name = tuple(name.split())
-
-            return imgcore.images.get(name)
 
         # This section declares the images to be shown in the gallery. See the
         # 'GalleryMenu' class syntax to declare a image to the gallery.
@@ -229,7 +220,7 @@ if enable_gallery:
         hbox: 
             add galleryList[current_img_name].image yoffset 40
         hbox:
-            add Solid("#fcf") size(config.screen_width, 40)
+            add Solid("#fcf") xysize(config.screen_width, 40)
 
         hbox:
             ypos 0.005
