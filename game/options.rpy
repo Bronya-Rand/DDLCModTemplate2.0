@@ -1,9 +1,8 @@
-﻿## This template version is 3.0.2. When asked to provide the template version
+﻿## This template version is [TBD]. When asked to provide the template version
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
 ## options.rpy
-
 # This file customizes what your mod is and and how it starts and builds!
 
 # This controls what your mod is called.
@@ -14,7 +13,7 @@ define config.name = "DDLC Mod Template – Python 3 Edition"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "Py3–Beta2"
+define config.version = "Py3–Beta3"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
