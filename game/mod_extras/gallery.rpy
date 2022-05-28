@@ -53,7 +53,7 @@ if enable_gallery:
                     self.unlocked = eval(unlocked)
 
                 if sprite:
-                    self.image = LiveComposite(
+                    self.image = Composite(
                         (config.screen_width, config.screen_height), (0, 0), 
                         "black", (0.2 * (config.screen_width / 1280.0), 0), 
                         Transform(image, zoom=0.75*0.95)
@@ -63,18 +63,18 @@ if enable_gallery:
                     if small_size:
                         self.small_size = small_size 
                     else:               
-                        self.small_size = LiveComposite(
+                        self.small_size = Composite(
                             (234, 132), (0, 0), 
                             "black", (0.2, 0), 
                             Transform(image, zoom=0.137)
                         )
                 else:
-                    self.image = Transform(image, size=(config.screen_width, config.screen_height-40))
+                    self.image = Transform(image, xysize=(config.screen_width, config.screen_height-40))
 
                     if small_size:
                         self.small_size = small_size 
                     else:     
-                        self.small_size = Transform(image, size=(234, 132))
+                        self.small_size = Transform(image, xysize=(234, 132))
 
                 galleryList[self.name] = self
 
