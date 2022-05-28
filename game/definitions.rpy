@@ -1418,7 +1418,7 @@ default him = persistent.him
 default are = persistent.are
 default hes = persistent.hes
 default he_capital = he.capitalize()
-default him_capital = hcapitalize()
+default him_capital = him.capitalize()
 default are_capital = are.capitalize()
 default hes_capital = hes.capitalize()
 

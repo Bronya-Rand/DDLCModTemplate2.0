@@ -13,7 +13,7 @@ image console_bg:
 style console_text:
     font "gui/font/F25_Bank_Printer.ttf"
     color "#fff"
-    xysize 18
+    size 18
     outlines []
 
 # This style controls the text speed of text shown in the console in-game.
