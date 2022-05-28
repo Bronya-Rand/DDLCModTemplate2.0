@@ -12,7 +12,7 @@ This folder was introduced in Version 3.0.1 of the mod template. This folder sto
 
 This folder contains the needed Python package files needed to run DDLC or a mod
 
-### **__imports__.rpy**
+### **\_\_imports\_\_.rpy**
 This file was introduced in Version [TBD] of the mod template. This file contains the imports necessary to run DDLC.
 
 ### **cgs.rpy**
@@ -34,6 +34,10 @@ This file defines important stuff for DDLC and your mod!
 ### **effects.rpy**
 
 This file defines all the effects in DDLC used in Act 2.
+
+### **exceptions.rpy**
+
+This file defines all the common exceptions of the mod template for Python 2 and 3. This file should not be removed for any reason.
 
 ### **glitchtext.rpy**
 
@@ -66,10 +70,6 @@ This file declares the poem words for each character for the poem writing mini-g
 ### **presplash.png**
 
 This image was introduced in Version 3.0.0 of the mod template. This image is mandatory for modders to use as a thanksfor the work on this template; either in a stock template image or custom image with the name credit image visible on it (which can be found [here](../.github/IMAGES/TemplateMadeLogo.png)).
-
-### **renpy_patches.rpy**
-
-This file was introduced in Version [TBD] of the mod template. It's purpose is to prevent users from running this Python 3 template on Python 2 Ren'Py versions (Ren'Py 6/7).
 
 ### **renpy_patches.rpy**
 
