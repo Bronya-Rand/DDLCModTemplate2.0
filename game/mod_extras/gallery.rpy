@@ -8,9 +8,8 @@ init python:
     import math
     import threading
     import renpy.display.image as imgcore
-    from collections import OrderedDict 
 
-    galleryList = None 
+    galleryList = {} 
     current_img_name = None
 
     # This class declares the code to make a image for the gallery menu.
@@ -30,8 +29,6 @@ init python:
     class GalleryImage:
 
         def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, unlocked=True):
-            global galleryList 
-
             # The image variable name in-game
             self.file = image
 
@@ -78,8 +75,7 @@ init python:
                 else:     
                     self.small_size = Transform(image, size=(234, 132))
 
-            if galleryList is None: galleryList = OrderedDict([(self.name, self)])
-            else: galleryList[self.name] = self
+            galleryList[self.name] = self
 
         # This function exports the selected image to the players' computer.
         def export(self):
