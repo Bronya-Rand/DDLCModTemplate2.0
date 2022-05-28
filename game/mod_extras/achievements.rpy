@@ -8,7 +8,7 @@ default enable_achievements = True
 if enable_achievements:
     
     init python:
-        achievementList = None
+        achievementList = {}
         selectedAchievement = None
 
         # This class declares the code to make a achievement.
@@ -48,10 +48,7 @@ if enable_achievements:
                 # The max number of items the user needs to unlock the achievements.
                 self.maxCount = maxCount
 
-                if achievementList is None:
-                    achievementList = OrderedDict([(self.name, self)])
-                else:
-                    achievementList[self.name] = self
+                achievementList[self.name] = self
 
         # This section declares the achievements. See the 'Achievements' class
         # syntax to declare one.
