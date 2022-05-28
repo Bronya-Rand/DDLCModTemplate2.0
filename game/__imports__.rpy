@@ -7,8 +7,7 @@ default persistent.enable_discord = True
 
 init -1 python:
     # For Achievements/Gallery
-    import math
-    from collections import OrderedDict 
+    import math 
 
     # For Credits
     import datetime
