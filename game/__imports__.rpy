@@ -28,6 +28,6 @@ init -1 python:
     import renpy.display.image as imgcore
 
     # For Discord RPC
-    if enable_discord:
+    if persistent.enable_discord:
         from discord_rpc import DiscordRPC
         RPC = DiscordRPC("979471077187125248")
