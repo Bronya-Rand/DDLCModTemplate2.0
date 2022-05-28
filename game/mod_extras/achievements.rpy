@@ -212,7 +212,7 @@ if enable_achievements:
         size 20
 
     transform achievement_scaler(x):
-        size(x, x)
+        xysize(x, x)
 
     transform achievement_notif_transition:
         alpha 0.0

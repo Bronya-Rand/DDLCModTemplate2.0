@@ -167,23 +167,23 @@ image n_cg1_exp5:
     "images/cg/n_cg1_exp5.png"
 
 # This image makes Natsuki look glitched in the CG during Act 2.
-image n_cg1b = LiveComposite((1280,720), (0,0), "images/cg/n_cg1b.png", (882,325), "n_rects1", (732,400), "n_rects2", (850,475), "n_rects3")
+image n_cg1b = Composite((1280,720), (0,0), "images/cg/n_cg1b.png", (882,325), "n_rects1", (732,400), "n_rects2", (850,475), "n_rects3")
 
 # These image transforms covers Natsuki's eyes with black squares during Act 2.
 image n_rects1:
     RectCluster(Solid("#000"), 12, 30, 30).sm
     pos (899, 350)
-    size (34, 34)
+    xysize (34, 34)
 
 image n_rects2:
     RectCluster(Solid("#000"), 12, 30, 24).sm
     pos (749, 430)
-    size (34, 34)
+    xysize (34, 34)
 
 image n_rects3:
     RectCluster(Solid("#000"), 4, 15, 5).sm
     pos (764, 490)
-    size (30, 20)
+    xysize (30, 20)
 
 ## Natsuki's Closet CG [Natsuki Route 2]
 # This is the background of the CG (Closet).

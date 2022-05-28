@@ -298,4 +298,4 @@ transform bsod_transition:
     yoffset 750
 
 transform bsod_qrcode(x):
-    size(x,x)
+    xysize(x,x)

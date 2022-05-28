@@ -421,7 +421,7 @@ image bsod_2:
     0.1
     yoffset 750
 
-image bsod = LiveComposite((1280, 720), (0, 0), "bsod_1", (0, 0), "bsod_2")
+image bsod = Composite((1280, 720), (0, 0), "bsod_1", (0, 0), "bsod_2")
 
 ## Veins
 # This image transform creates a veiny border around the screen that shakes and pulses

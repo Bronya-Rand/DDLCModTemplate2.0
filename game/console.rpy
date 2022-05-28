@@ -7,13 +7,13 @@
 image console_bg:
     "#333"
     topleft
-    alpha 0.75 size (480,180)
+    alpha 0.75 xysize (480,180)
 
 # This style declares the text appearance of the text shown in the console in-game.
 style console_text:
     font "gui/font/F25_Bank_Printer.ttf"
     color "#fff"
-    size 18
+    xysize 18
     outlines []
 
 # This style controls the text speed of text shown in the console in-game.
