@@ -5,7 +5,7 @@
 
 default persistent.enable_discord = True
 
-init -1 python:
+python early:
     # For Achievements/Gallery
     import math 
 
