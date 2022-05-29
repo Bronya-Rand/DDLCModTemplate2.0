@@ -384,7 +384,7 @@ init python:
             
             nr = renpy.render(self.null, width, height, st, at)
             
-            rv = renpy.Render(w, h, opaque=False)
+            rv = renpy.Render(w, h)
             
             rv.operation = renpy.display.render.IMAGEDISSOLVE
             rv.operation_alpha = 1.0
