@@ -3,8 +3,6 @@
 # This file imports certain python modules at runtime for DDLC and template
 # features.
 
-default persistent.enable_discord = True
-
 python early:
     # For Achievements/Gallery
     import math 
@@ -27,6 +25,10 @@ python early:
     import threading
     import renpy.display.image as imgcore
 
+
+default -20 persistent.enable_discord = True
+
+init -19 python:
     # For Discord RPC
     if persistent.enable_discord:
         from discord_rpc import DiscordRPC
