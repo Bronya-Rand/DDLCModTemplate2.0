@@ -10,21 +10,17 @@ init -100 python:
     if not renpy.android:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
-                raise Exception("DDLC RPA files were not found in the game folder. Check your installation and try again.")
+                raise DDLCRPAsMissing(archive)
 
         if renpy.windows:
-            try:
-                onedrive_path = os.environ["OneDrive"]
+            onedrive_path = os.environ.get("OneDrive")
+            if onedrive_path is not None:
                 if onedrive_path in config.basedir:
-                    raise Exception("DDLC mods/mod projects cannot be run from a cloud folder. Move your mod/mod project to another location and try again.")
-            except: pass
+                    raise IllegalModLocation
 
 ## Splash Message
 # This python statement is where the splash messages reside in.
 init python:
-    import re
-
-    menu_trans_time = 1
     # This variable is the default splash message that people will see when
     # the game launches.
     splash_message_default = "This game is an unofficial fan game that is unaffiliated with Team Salvato."
@@ -47,12 +43,12 @@ init python:
 
     def process_check(stream_list):
         if not renpy.windows:
-            for x in range(len(stream_list)):
-                stream_list[x] = stream_list[x].replace(".exe", "")
+            for index, process in enumerate(stream_list):
+                stream_list[index] = process.replace(".exe", "")
         
-        for x in range(len(stream_list)):
-            for y in range(len(process_list)):
-                if re.match(r"^" + stream_list[x] + r"\b", process_list[y]):
+        for x in stream_list:
+            for y in process_list:
+                if re.match(r"^" + x + r"\b", y):
                     return True
         return False
 
@@ -273,7 +269,6 @@ image warning:
 ## and writes them to the characters folder depending on the playthrough.
 init python:
     if not persistent.do_not_delete:
-        import os
         if renpy.android:
             if not os.access(os.environ['ANDROID_PUBLIC'] + "/characters/", os.F_OK):
                 os.mkdir(os.environ['ANDROID_PUBLIC'] + "/characters")
@@ -296,29 +291,25 @@ label splashscreen:
 
         if renpy.windows:
             try: process_list = subprocess.check_output("wmic process get Description", shell=True).lower().replace("\r", "").replace(" ", "").split("\n")
-            except:
+            except subprocess.CalledProcessError:
                 try:
                     process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().replace("\r", "").split("\n") # For W11 builds > 22000
                     
-                    for x in range(len(process_list)):
+                    for x in enumerate(process_list):
                         process_list[x] += ".exe"
-                except: pass            
+                except subprocess.CalledProcessError: pass            
         else:
-            try:
-                try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).split(b"\n") # Linux
-                except: process_list = subprocess.check_output("ps -A -o command", shell=True).split(b"\n") # MacOS
+            try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).split(b"\n") # Linux
+            except subprocess.CalledProcessError: process_list = subprocess.check_output("ps -A -o command", shell=True).split(b"\n") # MacOS
                 
-                for x in range(len(process_list)):
-                    process_list[x] = process_list[x].decode().split("/")[-1]
-                process_list.pop(0)
-            except: pass
+            for x in enumerate(process_list):
+                process_list[x] = process_list[x].decode('utf-8').split("/")[-1]
+            process_list.pop(0)
 
-        try:
-            for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
-                user = os.environ.get(name)
-                if user:
-                    currentuser = user
-        except: pass
+        for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
+            user = os.environ.get(name)
+            if user:
+                currentuser = user
 
     ## This if statement checks if we have passed the disclaimer and that the
     ## current version of the mod equals the old one or the autoload is set to 
