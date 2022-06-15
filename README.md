@@ -45,7 +45,7 @@ The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 17. NVL Support thanks to Yagamirai01!
 18. Patches for several Ren'Py releases and Windows features.
 19. Python 3 code now in use!
-20. Discord Rich Presence support!
+20. [BETA] Discord Rich Presence support!
 
 ### Returned Features
 1. Ghost Menu. (Dan's spooky easter egg)

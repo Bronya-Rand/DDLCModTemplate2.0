@@ -13,7 +13,7 @@ This folder was introduced in Version 3.0.1 of the mod template. This folder sto
 This folder contains the needed Python package files needed to run DDLC or a mod
 
 ### **\_\_imports\_\_.rpy**
-This file was introduced in Version [TBD] of the mod template. This file contains the imports necessary to run DDLC.
+This file was introduced in Version 4.0.0 of the mod template. This file contains the imports necessary to run DDLC.
 
 ### **cgs.rpy**
 

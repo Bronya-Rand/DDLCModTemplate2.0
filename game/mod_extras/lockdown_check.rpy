@@ -4,7 +4,7 @@
 # This file is mainly designed to warn new modders about bugs with certain Ren'Py 
 # versions or warn them about QA issues with running Ren'Py versions higher than 
 # the one the mod template was tested for.
-# New in [TBD]: Add lockout for Ren'Py 6/7 on Py 3 templates.
+# New in 4.0.0: Add lockout for Ren'Py 6/7 on Py 3 templates.
 
 ## DO NOT MODIFY THIS FILE! ##
 
