@@ -7,6 +7,26 @@
 
 init offset = -1
 
+# Thanks RenpyTom! Borrowed from the Ren'Py Launcher
+init python:
+    def scan_translations():
+
+        languages = renpy.known_languages()
+
+        if not languages:
+            return None
+
+        rv = [(i, renpy.translate_string("{#language name and font}", i)) for i in languages ]
+        rv.sort(key=lambda a : renpy.filter_text_tags(a[1], allow=[]).lower())
+
+        rv.insert(0, (None, "English"))
+
+        bound = math.ceil(len(rv)/2.)
+
+        return (rv[:bound], rv[bound:2*bound])
+
+default translations = scan_translations()
+
 # Enables the ability to add more settings in the game such as uncensored mode.
 default extra_settings = True
 default enable_languages = True
@@ -1074,16 +1094,16 @@ screen preferences():
 
                         hbox:
                             viewport:
+                                mousewheel True
+                                scrollbars "vertical"
                                 ysize 110
                                 has vbox
                                 
-                                python:
-                                    lang_list = list(renpy.known_languages())
-                                    lang_list.append('english')
-                                    lang_list = sorted(set(lang_list))
-
-                                for lang in lang_list:
-                                    textbutton lang.capitalize() action If(lang == 'english', Language(None), Language(lang))
+                                for tran in translations:
+                                    vbox:
+                                        for tlid, tlname in tran:
+                                            textbutton tlname:
+                                                action Language(tlid)
                             
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
@@ -1773,3 +1793,50 @@ style nvl_button:
 
 style nvl_button_text:
     properties gui.button_text_properties("nvl_button")
+
+screen choose_language():
+    default local_lang = _preferences.language
+    default chosen_lang = _preferences.language
+
+    modal True
+    style_prefix "radio"
+
+    add "gui/overlay/confirm.png"
+
+    frame:
+        style "confirm_frame"
+
+        vbox:
+            xalign .5
+            yalign .5
+            xsize 760
+            spacing 30
+
+            label renpy.translate_string(_("{#in language font}Please select a language"), local_lang):
+                style "confirm_prompt"
+                xalign 0.5
+
+            hbox:
+                xalign .5
+                for tran in translations:
+                    vbox:
+                        for tlid, tlname in tran:
+                            textbutton tlname:
+                                xalign .5
+                                action SetScreenVariable("chosen_lang", tlid)
+                                hovered SetScreenVariable("local_lang", tlid)
+                                unhovered SetScreenVariable("local_lang", chosen_lang)
+
+            $ lang_name = renpy.translate_string("{#language name and font}", local_lang)
+            
+            hbox:
+                xalign 0.5
+                spacing 100
+
+                textbutton renpy.translate_string(_("{#in language font}Select"), local_lang):
+                    style "confirm_button"
+                    action [Language(chosen_lang), Return()]
+
+translate None strings:
+    old "{#language name and font}"
+    new "English"

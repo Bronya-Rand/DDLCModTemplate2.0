@@ -352,6 +352,11 @@ label splashscreen:
         with Dissolve(1.0)
         pause 1.0
 
+        ## If other languages exist (via Ren'Py translate), switch to language 
+        ## selector.
+        if len(renpy.known_languages()) > 0:
+            call screen choose_language
+
         ## You can edit this message but you MUST declare that your mod is 
         ## unaffiliated with Team Salvato, requires that the player must 
         ## finish DDLC before playing, has spoilers for DDLC, and where to 
