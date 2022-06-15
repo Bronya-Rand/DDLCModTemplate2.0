@@ -15,7 +15,7 @@ label lockdown_check:
 
         scene black
         "{b}Warning:{/b} The version of Ren'Py you are trying to mod DDLC on has not been tested for modding compatibility."
-        "The last recent version of Ren'Py that works for DDLC mods is \"{i}Ren'Py 7.4.10{/i}\"."
+        "The last recent version of Ren'Py that works for DDLC mods is \"{i}Ren'Py 7.4.11{/i}\"."
         "Running DDLC or your DDLC mod on a higher version than the one tested may introduce bugs and other game breaking features."
         
         menu:

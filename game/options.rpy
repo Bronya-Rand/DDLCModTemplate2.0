@@ -1,4 +1,4 @@
-﻿## This template version is 3.0.2. When asked to provide the template version
+﻿## This template version is 4.0.0. When asked to provide the template version
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
@@ -14,7 +14,7 @@ define config.name = "DDLC Mod Template"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "3.0.2"
+define config.version = "4.0.0"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
