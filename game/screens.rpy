@@ -511,7 +511,7 @@ screen navigation():
             textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
             if not enable_extras_menu:
-                textbutton _("About") action ShowMenu("about")
+                textbutton _("Credits") action ShowMenu("about")
 
             if renpy.variant("pc"):
 
