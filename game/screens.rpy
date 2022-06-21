@@ -1111,7 +1111,7 @@ screen preferences():
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
 
-            if enable_languages:
+            if enable_languages and translations:
                 hbox:
                     style_prefix "radio"
                     if extra_settings:
