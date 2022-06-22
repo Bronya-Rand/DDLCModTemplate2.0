@@ -2,7 +2,7 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-[<u>Download the Beta Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/Py3-Beta3)
+[<u>Download the Beta Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/Py3-Beta4)
 
 The **new** Python 3 DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 8.
 
@@ -16,8 +16,9 @@ By default a credits screen is enabled in-game, either in the Extras screen or a
 
 Optional but very appreciated credits that you can also add are
    1. A custom splash screen that features the Team Salvato logo (and/or your mod logo) and a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES)).
-   2. A presplash screen that contains a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES)).
-   3. Present a custom idea to me for approval either through Discord or Reddit.
+   2. A small mention in the game's disclaimer saying that this mod was not possible without using GanstaKingofSA's mod template.
+   3. A presplash screen that contains a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES)).
+   4. Present a custom idea to me for approval either through Discord or Reddit.
 
 ### Team Salvato Disclaimer
 > The template code/files are designed for original DDLC fan games and mods that use DDLC assets with Ren'Py. It is not meant for non-DDLC projects. 
