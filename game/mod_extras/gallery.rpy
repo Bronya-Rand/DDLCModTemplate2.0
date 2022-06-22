@@ -110,6 +110,8 @@ init python:
             self.gallery_thread.start()
 
         def gallery_thread_main(self):
+            global galleryList
+            
             while True:
                 with self.periodic_condition:
                     self.periodic_condition.wait(1.0)
