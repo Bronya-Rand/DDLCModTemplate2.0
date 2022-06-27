@@ -287,6 +287,9 @@ default persistent.has_chosen_language = False
 ## This sets the first run variable to False to show the disclaimer.
 default persistent.first_run = False
 
+## This sets the lockdown check variable to False to show the warning for developers.
+default persistent.lockdown_warning = False
+
 ## Startup Disclaimer
 ## This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
@@ -337,10 +340,6 @@ label splashscreen:
             "No, continue where I left off.":
                 $ restore_relevant_characters()
 
-    ## These variables and if statements are for the lockdown feature introduced
-    ## in 2.4.6 of the template. DO NOT MODIFY THESE LINES.
-    default persistent.lockdown_warning = False
-
     if not persistent.lockdown_warning:
         if config.developer:
             call lockdown_check
@@ -356,7 +355,7 @@ label splashscreen:
         pause 1.0
 
         ## Switch to language selector. Borrowed from Ren'Py
-        if not persistent.has_chosen_language:
+        if not persistent.has_chosen_language and translations:
 
             if _preferences.language is None:
                 call choose_language
