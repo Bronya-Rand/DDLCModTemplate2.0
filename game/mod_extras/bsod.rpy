@@ -20,9 +20,6 @@
 ##     show screen bsod("EILEEN_EXCEPTION_NOT_HANDLED", rsod=True) 
 
 init python:
-    import subprocess
-    import platform
-
     cursor = 0
 
     def fakePercent(st, at, winver):
