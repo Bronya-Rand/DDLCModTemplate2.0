@@ -20,7 +20,7 @@ init python: # This whole block runs when DDLC is started (as opposed to when th
             if not os.access(os.path.join(os.environ['ANDROID_PUBLIC'] + "/game/", os.F_OK)):
                 os.mkdir(os.path.join(os.environ['ANDROID_PUBLIC'] + "/game"))
             file(poem_txt)
-        except: open(poem_txt, "wb").write(renpy.file("poemwords.txt").read())
+        except IOError: open(poem_txt, "wb").write(renpy.file("poemwords.txt").read())
     else:
         poem_txt = "poemwords.txt"
 

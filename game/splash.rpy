@@ -281,6 +281,15 @@ init python:
 image tos = "bg/warning.png"
 image tos2 = "bg/warning2.png"
 
+## This sets the persistent to false in order to choose a language.
+default persistent.has_chosen_language = False
+
+## This sets the first run variable to False to show the disclaimer.
+default persistent.first_run = False
+
+## This sets the lockdown check variable to False to show the warning for developers.
+default persistent.lockdown_warning = False
+
 ## Startup Disclaimer
 ## This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
@@ -330,18 +339,11 @@ label splashscreen:
             "No, continue where I left off.":
                 $ restore_relevant_characters()
 
-    ## These variables and if statements are for the lockdown feature introduced
-    ## in 2.4.6 of the template. DO NOT MODIFY THESE LINES.
-    default persistent.lockdown_warning = False
-
     if not persistent.lockdown_warning:
         if config.developer:
             call lockdown_check
         else:
             $ persistent.lockdown_warning = True
-
-    ## This sets the first run variable to False to show the disclaimer.
-    default persistent.first_run = False
 
     if not persistent.first_run:
         $ quick_menu = False
@@ -351,10 +353,13 @@ label splashscreen:
         with Dissolve(1.0)
         pause 1.0
 
-        ## If other languages exist (via Ren'Py translate), switch to language 
-        ## selector.
-        if len(renpy.known_languages()) > 0:
-            call screen choose_language
+        ## Switch to language selector. Borrowed from Ren'Py
+        if not persistent.has_chosen_language and translations:
+
+            if _preferences.language is None:
+                call choose_language
+        
+        $ persistent.has_chosen_language = True
 
         ## You can edit this message but you MUST declare that your mod is 
         ## unaffiliated with Team Salvato, requires that the player must 

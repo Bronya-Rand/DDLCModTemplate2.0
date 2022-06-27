@@ -82,7 +82,7 @@ default preferences.sfx_volume = 0.75
 #   Windows: %AppData%/RenPy/
 #   macOS: $HOME/Library/RenPy/ (Un-hide the Library Folder)
 #   Linux: $HOME/.renpy/
-define config.save_directory = "DDLCModTemplateTwo-Py2"
+define config.save_directory = "DDLCModTemplateTwo"
 
 # This controls the window logo of your mod.
 define config.window_icon = "gui/window_icon.png"
@@ -181,7 +181,6 @@ init python:
     # Make sure to add 'all' to your build.classify variable if you are planning
     # to build your mod on Android like in this example.
     #   Example: build.classify("game/**.pdf", "scripts all")
-    
     build.classify("game/mod_assets/**", "mod_assets all")
     build.classify("game/presplash.png", "scripts all")
     build.classify("game/**.rpyc", "scripts all")
