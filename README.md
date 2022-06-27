@@ -2,9 +2,11 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-[<u>Download the Beta Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/Py3-Beta4)
+[<u>Download the Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/latest)
 
 The **new** Python 3 DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 8.
+
+> For Ren'Py 6-7 support, see the [Python 2](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/tree/python-2) branch.
 
 > The template can be downloaded/forked/used to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
 
@@ -58,7 +60,7 @@ The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 
 ### Getting Started
 Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
-> Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 7/8 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Renpy7Mod* ZIP file with your mod files.
+> Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 8 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Renpy8-DDLCMod* ZIP file with your mod files.
 
 ### Getting Started For Android Porting/Modding
 Refer to [*guide.pdf*](guide.pdf) for more in-depth information about making your mod work on Android.
