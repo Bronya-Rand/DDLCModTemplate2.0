@@ -2,19 +2,25 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
 
-[<u>Download the Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/3.0.1)
+[<u>Download the Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/latest)
 
-The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.4.11.
+The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.5.0.
 
-## Note
-If you use this template, you must do the following requirements.
-1. You must include a name credit in either you mods' credits screen and/or your mods' credits.txt file.
-2. You must include either
-   
-   1. The stock [presplash.png](game/presplash.png) included with the template.
-   2. A custom presplash image that includes a readable view of the `Template Made By GanstaKingofSA` logo (which can be found [here](.github/IMAGES/TemplateMadeLogo.png)).
-   3. A custom splash screen that features the Team Salvato logo (and/or your mod logo) and the `Template Made By GanstaKingofSA` logo (which can be found [here](.github/IMAGES/TemplateMadeLogo.png)).
-   > You may present me your idea of this requirement to me to verify if it's sufficient to count as credit.
+> For Ren'Py 8 support, see the [Python 3](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/tree/python-3) branch.
+
+> The template can be downloaded/forked/used to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
+
+### **Credit Requirements**
+You must include a name credit in your mods' credits screen and/or `credits.txt` file. Below is a example credit you may use.
+   > This mod was made possible by GanstaKingofSA's DDLC Mod Template 2.0: https://github.com/GanstaKingofSA/DDLCModTemplate2.0
+
+By default a credits screen is enabled in-game, either in the Extras screen or as a button in-game if the Extras screen is disabled.
+
+Optional but very appreciated credits that you can also add are
+   1. A custom splash screen that features the Team Salvato logo (and/or your mod logo) and a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES)).
+   2. A small mention in the game's disclaimer saying that this mod was not possible without using GanstaKingofSA's mod template.
+   3. A presplash screen that contains a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES)).
+   4. Present a custom idea to me for approval either through Discord or Reddit.
 
 The template can be downloaded/forked/used to create DDLC mods, make translations for other languages (with name credit) or submit fixes via a pull request. You may not use the template to make unofficial DDLC patchers, fixes, etc.
 
@@ -41,7 +47,6 @@ The DDLC Mod Template is not afilliated in anyway with Team Salvato.
 13. Achievements Menu! Set up achievements in your mod for players to complete your mod in full!
 14. Different Menu Button Colors! Have different colored buttons in the menu prompt to your hearts content.
 15. Automatic GUI Coloring! Color the GUI in the game to whatever you like without editing the asset files themselves! 
-16. Export your mod logo as a ICO file for your executables! (Windows Only)
 17. Extras Menu! Add additional button options to your game for additional button options!
 17. Terra's in-depth Poem Game guide!
 18. NVL Support thanks to Yagamirai01!
