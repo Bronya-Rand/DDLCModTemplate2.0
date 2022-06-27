@@ -3,6 +3,7 @@
 # This file defines important stuff for DDLC and your mod!
 
 # This variable declares if the mod is a demo or not.
+# Leftover from DDLC.
 define persistent.demo = False
 
 # This variable declares whether the mod is in the 'steamapps' folder.

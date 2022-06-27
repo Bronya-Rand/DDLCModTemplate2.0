@@ -29,7 +29,6 @@ default translations = scan_translations()
 
 # Enables the ability to add more settings in the game such as uncensored mode.
 default extra_settings = True
-default enable_languages = True
 default enable_extras_menu = True
 
 ## Color Styles
@@ -1111,7 +1110,7 @@ screen preferences():
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
 
-            if enable_languages and translations:
+            if translations:
                 hbox:
                     style_prefix "radio"
                     if extra_settings:
@@ -1867,3 +1866,7 @@ screen choose_language():
 translate None strings:
     old "{#language name and font}"
     new "English"
+
+label choose_language:
+    call screen choose_language
+    return

@@ -3,7 +3,7 @@
 # This file contains the exceptions for certain DDLC/Template errors
 # DO NOT MODIFY THIS FILE!
 
-init -200 python:
+python early:
     
     class NotRenPyEight(Exception):
         def __str__(self):

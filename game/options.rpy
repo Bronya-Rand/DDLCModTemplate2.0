@@ -13,7 +13,7 @@ define config.name = "DDLC Mod Template – Python 3 Edition"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "4.0.0–Py3–Beta4"
+define config.version = "4.0.0–Py3"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
@@ -24,7 +24,7 @@ define gui.about = _("")
 # Note:
 #   The build name is ASCII only so no numbers, spaces, or semicolons.
 #   Example: Doki Doki Yuri Time to DokiDokiYuriTime
-define build.name = "DDLCModTemplateTwo"
+define build.name = "DDLCModTemplateTwo-Py3"
 
 # This configures whether your mod has sound effects.
 define config.has_sound = True
@@ -81,7 +81,7 @@ default preferences.sfx_volume = 0.75
 #   Windows: %AppData%/RenPy/
 #   macOS: $HOME/Library/RenPy/ (Un-hide the Library Folder)
 #   Linux: $HOME/.renpy/
-define config.save_directory = "DDLCModTemplateTwo"
+define config.save_directory = "DDLCModTemplateTwo-Py3"
 
 # This controls the window logo of your mod.
 define config.window_icon = "gui/window_icon.png"
@@ -151,8 +151,8 @@ init python:
 
     # These variables declare the packages to build your mod that is Team Salvato
     # IPG compliant. Do not mess with these variables whatsoever.
-    build.package(build.directory_name + "Renpy7Mod", 'zip', 'windows linux mac renpy mod',
-        description="Ren'Py 7-8 DDLC Compliant Mod")
+    build.package("Renpy8-DDLCMod", 'zip', 'windows linux mac renpy mod',
+        description="Ren'Py 8 DDLC Compliant Mod")
 
     # These variables declare the archives that will be made to your packaged mod.
     # To add another archive, make a build.archive variable like in this example:
@@ -177,7 +177,6 @@ init python:
     # Make sure to add 'all' to your build.classify variable if you are planning
     # to build your mod on Android like in this example.
     #   Example: build.classify("game/**.pdf", "scripts all")
-    
     build.classify("game/mod_assets/**", "mod_assets all")
     build.classify("game/presplash.png", "scripts all")
     build.classify("game/**.rpyc", "scripts all")
