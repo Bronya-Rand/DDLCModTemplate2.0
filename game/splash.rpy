@@ -270,11 +270,11 @@ image warning:
 init python:
     if not persistent.do_not_delete:
         if renpy.android:
-            if not os.access(os.environ['ANDROID_PUBLIC'] + "/characters/", os.F_OK):
-                os.mkdir(os.environ['ANDROID_PUBLIC'] + "/characters")
+            if not os.path.exists(os.path.join(os.environ['ANDROID_PUBLIC'], "characters")):
+                os.mkdir(os.path.join(os.environ['ANDROID_PUBLIC'], "characters"))
         else:
-            if not os.access(config.basedir + "/characters/", os.F_OK):
-                os.mkdir(config.basedir + "/characters")
+            if not os.path.exists(os.path.join(config.basedir, "characters")):
+                os.mkdir(os.path.join(config.basedir, "characters"))
         restore_all_characters()
 
 ## These images are the background images shown in-game during the disclaimer.
@@ -351,6 +351,11 @@ label splashscreen:
         with Dissolve(1.0)
         pause 1.0
 
+        ## If other languages exist (via Ren'Py translate), switch to language 
+        ## selector.
+        if len(renpy.known_languages()) > 0:
+            call screen choose_language
+
         ## You can edit this message but you MUST declare that your mod is 
         ## unaffiliated with Team Salvato, requires that the player must 
         ## finish DDLC before playing, has spoilers for DDLC, and where to 
@@ -386,20 +391,19 @@ label splashscreen:
     #     s_kill_early = None
     #     if persistent.playthrough == 0:
     #         try: renpy.file("../characters/sayori.chr")
-    #         except: s_kill_early = True
+    #         except IOError: s_kill_early = True
     #     if not s_kill_early:
     #         if persistent.playthrough <= 2 and persistent.playthrough != 0:
     #             try: renpy.file("../characters/monika.chr")
-    #             except: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
+    #             except IOError: open(config.basedir + "/characters/monika.chr", "wb").write(renpy.file("monika.chr").read())
     #         if persistent.playthrough <= 1 or persistent.playthrough == 4:
     #             try: renpy.file("../characters/natsuki.chr")
-    #             except: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
+    #             except IOError: open(config.basedir + "/characters/natsuki.chr", "wb").write(renpy.file("natsuki.chr").read())
     #             try: renpy.file("../characters/yuri.chr")
-    #             except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
+    #             except IOError: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
     #         if persistent.playthrough == 4:
     #             try: renpy.file("../characters/sayori.chr")
-    #             except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
-
+    #             except IOError: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
 
     ## This if statement controls which special poems are shown to the player in-game.
     if not persistent.special_poems:

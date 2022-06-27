@@ -41,6 +41,7 @@ default translations = scan_translations()
 # Enables the ability to add more settings in the game such as uncensored mode.
 default extra_settings = True
 default enable_languages = True
+default enable_extras_menu = True
 
 ## Color Styles
 ################################################################################
@@ -505,7 +506,8 @@ screen navigation():
 
             textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
 
-            textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
+            if enable_extras_menu:
+                textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
 
             if _in_replay:
 
@@ -519,7 +521,8 @@ screen navigation():
 
             textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
-            #textbutton _("About") action ShowMenu("about")
+            if not enable_extras_menu:
+                textbutton _("Credits") action ShowMenu("about")
 
             if renpy.variant("pc"):
 
@@ -1095,7 +1098,7 @@ screen preferences():
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
 
-            if enable_languages and len(renpy.known_languages()) > 0:
+            if enable_languages and translations:
                 hbox:
                     style_prefix "radio"
                     if extra_settings:
