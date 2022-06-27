@@ -1898,3 +1898,7 @@ screen choose_language():
 translate None strings:
     old "{#language name and font}"
     new "English"
+
+label choose_language:
+    call screen choose_language
+    return

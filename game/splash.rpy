@@ -7,6 +7,8 @@
 # Note: For building a mod for PC/Android, you must keep the DDLC RPAs 
 # and decompile them for the builds to work.
 init -100 python:
+    import os
+    
     if not renpy.android:
         for archive in ['audio','images','fonts']:
             if archive not in config.archives:
