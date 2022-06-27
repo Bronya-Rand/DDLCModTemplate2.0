@@ -3,9 +3,9 @@
 # This file imports certain python modules at runtime for DDLC and template
 # features.
 
-init -1 python:
+python early:
     # For Achievements/Gallery
-    import math
+    import math 
     from collections import OrderedDict 
 
     # For Credits

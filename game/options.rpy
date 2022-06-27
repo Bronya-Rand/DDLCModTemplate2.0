@@ -1,4 +1,4 @@
-﻿## This template version is 3.0.2. When asked to provide the template version
+﻿## This template version is 4.0.0. When asked to provide the template version
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
@@ -7,14 +7,14 @@
 # This file customizes what your mod is and and how it starts and builds!
 
 # This controls what your mod is called.
-define config.name = "DDLC Mod Template (Python 2 Edition)"
+define config.name = "DDLC Mod Template – Python 2 Edition"
 
 # This controls whether you want your mod name to show in the main menu.
 # If your mod name is big, it is suggested to turn this off.
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "3.0.2"
+define config.version = "4.0.0-Py2"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
@@ -25,7 +25,7 @@ define gui.about = _("")
 # Note:
 #   The build name is ASCII only so no numbers, spaces, or semicolons.
 #   Example: Doki Doki Yuri Time to DokiDokiYuriTime
-define build.name = "DDLCModTemplateTwo"
+define build.name = "DDLCModTemplateTwo-Py2"
 
 # This configures whether your mod has sound effects.
 define config.has_sound = True
@@ -82,7 +82,7 @@ default preferences.sfx_volume = 0.75
 #   Windows: %AppData%/RenPy/
 #   macOS: $HOME/Library/RenPy/ (Un-hide the Library Folder)
 #   Linux: $HOME/.renpy/
-define config.save_directory = "DDLCModTemplateTwo"
+define config.save_directory = "DDLCModTemplateTwo-Py2"
 
 # This controls the window logo of your mod.
 define config.window_icon = "gui/window_icon.png"

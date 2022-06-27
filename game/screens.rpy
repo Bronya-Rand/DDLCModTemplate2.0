@@ -7,9 +7,41 @@
 
 init offset = -1
 
+# Thanks RenpyTom! Borrowed from the Ren'Py Launcher
+init python:
+    # Ren'Py 6 doesn't have translate_string defined by default so
+    # import it and set for Ren'Py 7 code workings.
+    from renpy.translation import translate_string
+    renpy.translate_string = translate_string
+
+    def scan_translations():
+
+        languages = renpy.known_languages()
+
+        if not languages:
+            return None
+
+        rv = [(i, renpy.translate_string("{#language name and font}", i)) for i in languages ]
+        
+        # We will use a imported Ren'Py 7 function for Ren'Py 6
+        if renpy.version_tuple == (6, 99, 12, 4, 2187):
+            rv.sort(key=lambda a : filter_text_tags(a[1], allow=[]).lower())
+        else:
+            rv.sort(key=lambda a : renpy.filter_text_tags(a[1], allow=[]).lower())
+
+        rv.insert(0, (None, "English"))
+
+        # Cause Ren'Py 6 sets this as float, set it as int
+        bound = int(math.ceil(len(rv)/2.))
+
+        return (rv[:bound], rv[bound:2*bound])
+
+default translations = scan_translations()
+
 # Enables the ability to add more settings in the game such as uncensored mode.
 default extra_settings = True
 default enable_languages = True
+default enable_extras_menu = True
 
 ## Color Styles
 ################################################################################
@@ -474,7 +506,8 @@ screen navigation():
 
             textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
 
-            textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
+            if enable_extras_menu:
+                textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
 
             if _in_replay:
 
@@ -488,7 +521,8 @@ screen navigation():
 
             textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
-            #textbutton _("About") action ShowMenu("about")
+            if not enable_extras_menu:
+                textbutton _("Credits") action ShowMenu("about")
 
             if renpy.variant("pc"):
 
@@ -1064,7 +1098,7 @@ screen preferences():
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
 
-            if enable_languages:
+            if enable_languages and translations:
                 hbox:
                     style_prefix "radio"
                     if extra_settings:
@@ -1074,16 +1108,16 @@ screen preferences():
 
                         hbox:
                             viewport:
+                                mousewheel True
+                                scrollbars "vertical"
                                 ysize 110
                                 has vbox
                                 
-                                python:
-                                    lang_list = list(renpy.known_languages())
-                                    lang_list.append('english')
-                                    lang_list = sorted(set(lang_list))
-
-                                for lang in lang_list:
-                                    textbutton lang.capitalize() action If(lang == 'english', Language(None), Language(lang))
+                                for tran in translations:
+                                    vbox:
+                                        for tlid, tlname in tran:
+                                            textbutton tlname:
+                                                action Language(tlid)
                             
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
@@ -1201,25 +1235,28 @@ screen history():
 python early:
     import renpy.text.textsupport as textsupport
     from renpy.text.textsupport import TAG, PARAGRAPH
-
+    
     def filter_text_tags(s, allow=None, deny=None):
         if (allow is None) and (deny is None):
             raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+
         if (allow is not None) and (deny is not None):
             raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
-        
+
         tokens = textsupport.tokenize(unicode(s))
+
         rv = [ ]
-        
+
         for tokentype, text in tokens:
+
             if tokentype == PARAGRAPH:
                 rv.append("\n")
             elif tokentype == TAG:
                 kind = text.partition("=")[0]
-                
+
                 if kind and (kind[0] == "/"):
                     kind = kind[1:]
-                
+
                 if allow is not None:
                     if kind in allow:
                         rv.append("{" + text + "}")
@@ -1227,8 +1264,8 @@ python early:
                     if kind not in deny:
                         rv.append("{" + text + "}")
             else:
-                rv.append(text)
-        
+                rv.append(text.replace("{", "{{"))
+
         return "".join(rv)
 
 style history_window is empty
@@ -1790,3 +1827,50 @@ style nvl_button:
 
 style nvl_button_text:
     properties gui.button_text_properties("nvl_button")
+
+screen choose_language():
+    default local_lang = _preferences.language
+    default chosen_lang = _preferences.language
+
+    modal True
+    style_prefix "radio"
+
+    add "gui/overlay/confirm.png"
+
+    frame:
+        style "confirm_frame"
+
+        vbox:
+            xalign .5
+            yalign .5
+            xsize 760
+            spacing 30
+
+            label renpy.translate_string(_("{#in language font}Please select a language"), local_lang):
+                style "confirm_prompt"
+                xalign 0.5
+
+            hbox:
+                xalign .5
+                for tran in translations:
+                    vbox:
+                        for tlid, tlname in tran:
+                            textbutton tlname:
+                                xalign .5
+                                action SetScreenVariable("chosen_lang", tlid)
+                                hovered SetScreenVariable("local_lang", tlid)
+                                unhovered SetScreenVariable("local_lang", chosen_lang)
+
+            $ lang_name = renpy.translate_string("{#language name and font}", local_lang)
+            
+            hbox:
+                xalign 0.5
+                spacing 100
+
+                textbutton renpy.translate_string(_("{#in language font}Select"), local_lang):
+                    style "confirm_button"
+                    action [Language(chosen_lang), Return()]
+
+translate None strings:
+    old "{#language name and font}"
+    new "English"
