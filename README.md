@@ -4,7 +4,7 @@
 
 [<u>Download the Mod Template Here!</u>](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/latest)
 
-The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.5.0.
+The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.5.1.
 
 > For Ren'Py 8 support, see the [Python 3](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/tree/python-3) branch.
 
