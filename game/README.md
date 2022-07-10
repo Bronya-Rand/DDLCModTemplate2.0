@@ -47,6 +47,10 @@ This file defines the glitched/corrupted text seen in DDLC.
 
 This file defines all the positions, colors, paths and more of DDLC's GUI interface.
 
+### **lockdown_check.rpy** 
+
+This file was introduced in Version 2.4.6 of the mod template. This file is mainly designed to warn new modders about bugs with certain Ren'Py versions or warn them about QA issues with running Ren'Py versions higher than the one the mod template was tested for. Additionally it prevents Python 3 mod templates from running on older versions of Ren'Py prior to Ren'Py 8.
+
 ### **monika.chr**, **natsuki.chr**, **sayori.chr** & **yuri.chr**
 
 These files are in the game directory so the game can re-add the characters files to the `characters` folder when needed.
