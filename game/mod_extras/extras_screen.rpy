@@ -61,8 +61,8 @@ screen extras():
                         yalign 0.5
             
                         imagebutton:
-                            idle Composite((150, 130), (50, 20), "mod_assets/mod_extra_images/about.png", (40, 75), Text("Credits", style="extras_text"))
-                            hover Composite((150, 130), (50, 20), "mod_assets/mod_extra_images/about.png", (38, 73), Text("Credits", style="extras_hover_text"))
+                            idle LiveComposite((150, 130), (50, 20), "mod_assets/mod_extra_images/about.png", (40, 75), Text("Credits", style="extras_text"))
+                            hover LiveComposite((150, 130), (50, 20), "mod_assets/mod_extra_images/about.png", (38, 73), Text("Credits", style="extras_hover_text"))
                             action ShowMenu("about")
 
                 ## Increase rows or cols count before commenting this out
