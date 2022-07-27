@@ -310,11 +310,9 @@ label splashscreen:
                         process_list[x] += ".exe"
                 except subprocess.CalledProcessError: pass            
         else:
-            try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).split(b"\n") # Linux
-            except subprocess.CalledProcessError: process_list = subprocess.check_output("ps -A -o command", shell=True).split(b"\n") # MacOS
+            try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).decode('utf-8').split("\n") # Linux
+            except subprocess.CalledProcessError: process_list = subprocess.check_output("ps -A -o command", shell=True).decode('utf-8').split("\n") # MacOS
                 
-            for x in enumerate(process_list):
-                process_list[x] = process_list[x].decode('utf-8').split("/")[-1]
             process_list.pop(0)
 
         for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
