@@ -25,10 +25,8 @@ python early:
     import threading
     import renpy.display.image as imgcore
 
-
-default -20 persistent.enable_discord = True
-
 init -19 python:
+    persistent.enable_discord = True
     # For Discord RPC
     if persistent.enable_discord:
         from discord_rpc import DiscordRPC
