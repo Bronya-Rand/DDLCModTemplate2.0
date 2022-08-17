@@ -312,8 +312,6 @@ label splashscreen:
             try: process_list = subprocess.run("ps -A --format cmd", check=True, shell=True, stdout=subprocess.PIPE).stdout.decode("utf-8").strip().split("\n") # Linux
             except subprocess.CalledProcessError: process_list = subprocess.run("ps -A -o command", check=True, shell=True, stdout=subprocess.PIPE).stdout.decode("utf-8").strip().split("\n") # MacOS
                 
-            for x in enumerate(process_list):
-                process_list[x] = process_list[x].decode().split("/")[-1]
             process_list.pop(0)
 
         for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
