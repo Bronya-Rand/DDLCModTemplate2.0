@@ -30,6 +30,7 @@ init -19 python:
     # For Discord RPC
     if persistent.enable_discord:
         from discord_rpc import DiscordRPC
+        from pypresence import DiscordNotFound
         try:
             RPC = DiscordRPC("979471077187125248")
         except DiscordNotFound: pass
