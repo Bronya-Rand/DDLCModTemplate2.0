@@ -36,7 +36,7 @@ if [ -d "$LIB/lib" ]; then
     rm -r "$LIB/lib"
 fi
 
-SHFILE="$(ls -I "DDLC.sh" -I "LinuxLauncher.sh" "$ROOT" | grep ".sh")"
+SHFILE="$(ls -I "DDLC.sh" -I "LinuxLauncher.sh" "$ROOT" | grep "\.sh")"
 
 if test -z "$SHFILE"; then
     echo "Error: Unable to find a mod shell script file. Defaulting to 'DDLC.sh'."
