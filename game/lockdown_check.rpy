@@ -18,11 +18,11 @@ label lockdown_check:
 
     $ version = renpy.version()
 
-    if renpy.version_tuple > (8, 0, 1, 22070801):
+    if renpy.version_tuple > (8, 0, 3, 22083102):
 
         scene black
         "{b}Warning:{/b} The version of Ren'Py you are trying to mod DDLC on has not been tested for modding compatibility."
-        "The last recent version of Ren'Py 8 that works for DDLC mods is \"{i}Ren'Py 8.0.1{/i}\"."
+        "The last recent version of Ren'Py 8 that works for DDLC mods is \"{i}Ren'Py 8.0.3{/i}\"."
         "Running DDLC or your DDLC mod on a higher version than the one tested may introduce bugs and other game breaking features."
         
         menu:
