@@ -26,6 +26,7 @@ The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by
 17. Terra's in-depth Poem Game guide!
 18. NVL Support thanks to Yagamirai01!
 19. Patches for several Ren'Py releases and Windows features.
+20. [Python 3] Discord RPC support
 
 ### Returned Features
 1. Ghost Menu. (Dan's spooky easter egg)
@@ -36,40 +37,11 @@ The **new** DDLC Mod Template is a mod template for Doki Doki Literature Club by
 
 ## Changes
 
-Version 3.0.0 (<u>Android Supported</u> Mod Template)
-**Note**: Starting from 3.0.0, you may only use the DDLC Mod Template to create DDLC mods. You may not use it to make unofficial patches/fixes to DDLC.
+Version 4.0.2
+- Fixed a bug where LinuxLauncher.sh crashes if a screenshot file is present.
+- [Python 3] Fixed a bug in effects.rpy due to Python 3 division.
+- [Python 2] Fixed a bug with the process list on Mac/Linux.
+- Fixed a possible line bug due to Composite vs im.Composite.
+- [Python 3] Added a try except for Discord RPC if Discord is not present.
+- Bump Lockdown to 8.0.3/7.5.3.
 
-- Achievements Menu! Set up achievements in your mod and notify the user of a unlocked achievement in-game!
-- Gallery Menu! Showcase the art in your mod outside of the mod's story for players to see.
-    > Players can export only backgrounds from the mod to use for a PC background. If you wish to not have this, remove the `E` textbutton in *gallery.rpy*
-- Different Menu Button Colors! Have different colored buttons in the menu prompt to your hearts content.
-    > Examples on how to use this are in *screens.rpy*
-- Automatic GUI Coloring! Color the GUI in the game to whatever you like without editing the asset files themselves!
-    > Examples and code to use this feature are in *splash.rpy* and *screens.rpy* respectively.
-- Export your mod logo as a ICO file for your executables! (Windows Only)
-- Uncensored Mode! Allow adult/sensitive content to players that wish to see the following content.
-    > To hide uncensored details, refer to this example
-```py
-    if persistent.uncensored_mode:
-        m "Uncensored Content"
-    else:
-        m "Censored Content"
-```
-- Let's Play Mode (Streamer Mode)! Protect dokitubers, streamers and more from having their information leaked (names, etc.) in-game!
-    > To hide player info details, refer to this example
-```py
-    if persistent.lets_play:
-        m "Hi MC!"
-    else:
-        m "Hi John!"
-```
-
-- Made a Linux/MacOS SH Launcher (*LinuxLauncher.sh*) to fix the `future.standard_library` issue that occurs from installing a Ren'Py 7 mod over DDLC.
-- Fixed a bug where the poemgame under Ren'Py 6 will error out due to different syntax requirements.
-- Patched the long causing Ren'Py 7.4.6-7.4.8 transform bug where several characters may not appear or transitions are broken in script.
-- Patched the Ren'Py 7.4.9 menu animation bug where the menu polka-dots would reset themselves each time a menu button was clicked.
-
-- Removed the *scripts.rpa* requirement from splash.rpy due to `defined twice` errors.
-- Fixed process listing due to `wmic`'s depreciation in Windows 10 and 11 builds > 22000 and for MacOS/Linux support.
-- Fixed Better BSODs due to `wmic`'s depreciation in Windows 10 and 11 builds > 22000.
-- Updated template comments.
