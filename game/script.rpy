@@ -45,142 +45,147 @@ label start:
     ## The Main Part of the Script
     # This is where your script code is called!
     # 'persistent.playthrough' controls the playthrough number the player is on i.e (Act 1, 2, 3, 4)
-    if persistent.playthrough == 0:
+    
+    # REMOVE THIS LINE WHEN YOU HAVE MADE A STORY SCRIPT FILE AND CALLED IT HERE
+    call screen dialog(message="It seems that you are trying to run the mod template as a new game with no story.\nThis is a template, not an actual mod. Please code a story for your mod, call it in \'script.rpy\', and try again.", ok_action=MainMenu(confirm=False))
 
-        # This variable sets the chapter number to X depending on the chapter
-        # your player is experiencing ATM.
-        $ chapter = 0
+    ## Example on calling scripts from DDLC.
+    # if persistent.playthrough == 0:
 
-        # This call statement calls your script label to be played.
-        call ch0_main
+    #     # This variable sets the chapter number to X depending on the chapter
+    #     # your player is experiencing ATM.
+    #     $ chapter = 0
+
+    #     # This call statement calls your script label to be played.
+    #     call ch0_main
         
-        # This call statement calls the poem mini-game to be played.
-        call poem
+    #     # This call statement calls the poem mini-game to be played.
+    #     call poem
 
-        ## Day 1
-        $ chapter = 1
-        call ch1_main
+    #     ## Day 1
+    #     $ chapter = 1
+    #     call ch1_main
 
-        # This call statement calls the poem sharing minigame to be played.
-        call poemresponse_start
-        call ch1_end
+    #     # This call statement calls the poem sharing minigame to be played.
+    #     call poemresponse_start
+    #     call ch1_end
 
-        call poem
+    #     call poem
 
-        ## Day 2
-        $ chapter = 2
-        call ch2_main
-        call poemresponse_start
-        call ch2_end
+    #     ## Day 2
+    #     $ chapter = 2
+    #     call ch2_main
+    #     call poemresponse_start
+    #     call ch2_end
 
-        call poem
+    #     call poem
 
-        ## Day 3
-        $ chapter = 3
-        call ch3_main
-        call poemresponse_start
-        call ch3_end
+    #     ## Day 3
+    #     $ chapter = 3
+    #     call ch3_main
+    #     call poemresponse_start
+    #     call ch3_end
 
-        ## Day 4
-        $ chapter = 4
-        call ch4_main
+    #     ## Day 4
+    #     $ chapter = 4
+    #     call ch4_main
 
-        # This python statement writes a file from within the game to the game folder
-        # or to the Android/data/[modname]/files/game folder.
-        python:
-            if renpy.android:
-                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
-                except IOError: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
-            else:
-                try: renpy.file(config.basedir + "/hxppy thxughts.png")
-                except IOError: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+    #     # This python statement writes a file from within the game to the game folder
+    #     # or to the Android/data/[modname]/files/game folder.
+    #     python:
+    #         if renpy.android:
+    #             try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
+    #             except IOError: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
+    #         else:
+    #             try: renpy.file(config.basedir + "/hxppy thxughts.png")
+    #             except IOError: open(config.basedir + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
 
-        ## Day 5
-        $ chapter = 5
-        call ch5_main
+    #     ## Day 5
+    #     $ chapter = 5
+    #     call ch5_main
 
-        # This call statement ends the game but doesn't play the credits.
-        call endgame
-        return
+    #     # This call statement ends the game but doesn't play the credits.
+    #     call endgame
+    #     return
 
-    elif persistent.playthrough == 1:
-        $ chapter = 0
-        call ch10_main
+    # elif persistent.playthrough == 1:
+    #     $ chapter = 0
+    #     call ch10_main
         
-        # This jump statement jumps over to Act 2 from Act 1.
-        jump playthrough2
+    #     # This jump statement jumps over to Act 2 from Act 1.
+    #     jump playthrough2
 
 
-    elif persistent.playthrough == 2:
-        ## Day 1 - Act 2
-        $ chapter = 0
-        call ch20_main
-        label playthrough2:
-            call poem
+    # elif persistent.playthrough == 2:
+    #     ## Day 1 - Act 2
+    #     $ chapter = 0
+    #     call ch20_main
+    #     label playthrough2:
+    #         call poem
 
-            python:
-                if renpy.android:
-                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
-                    except IOError: open(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
-                else:
-                    try: renpy.file(config.basedir + "/CAN YOU HEAR ME.txt")
-                    except IOError: open(config.basedir + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
+    #         python:
+    #             if renpy.android:
+    #                 try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
+    #                 except IOError: open(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
+    #             else:
+    #                 try: renpy.file(config.basedir + "/CAN YOU HEAR ME.txt")
+    #                 except IOError: open(config.basedir + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
 
-            ## Day 2 - Act 2
-            $ chapter = 1
-            call ch21_main
-            call poemresponse_start
-            call ch21_end
+    #         ## Day 2 - Act 2
+    #         $ chapter = 1
+    #         call ch21_main
+    #         call poemresponse_start
+    #         call ch21_end
 
-            # This call statement calls the poem mini-game with no transition.
-            call poem(False)
+    #         # This call statement calls the poem mini-game with no transition.
+    #         call poem(False)
 
-            python:
-                if renpy.android:
-                    try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
-                    except IOError: open(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
-                else:
-                    try: renpy.file(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
-                    except IOError: open(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
+    #         python:
+    #             if renpy.android:
+    #                 try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
+    #                 except IOError: open(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
+    #             else:
+    #                 try: renpy.file(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
+    #                 except IOError: open(config.basedir + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
 
-            ## Day 3 - Act 2
-            $ chapter = 2
-            call ch22_main
-            call poemresponse_start
-            call ch22_end
+    #         ## Day 3 - Act 2
+    #         $ chapter = 2
+    #         call ch22_main
+    #         call poemresponse_start
+    #         call ch22_end
 
-            call poem(False)
+    #         call poem(False)
 
-            ## Day 4 - Act 2
-            $ chapter = 3
-            call ch23_main
+    #         ## Day 4 - Act 2
+    #         $ chapter = 3
+    #         call ch23_main
 
-            # This if statement calls either a special poem response game or play
-            # as normal.
-            if y_appeal >= 3:
-                call poemresponse_start2
-            else:
-                call poemresponse_start
+    #         # This if statement calls either a special poem response game or play
+    #         # as normal.
+    #         if y_appeal >= 3:
+    #             call poemresponse_start2
+    #         else:
+    #             call poemresponse_start
 
-            # This if statement is leftover code from DDLC where if your game is
-            # a demo that it ends the game fully.
-            if persistent.demo:
-                stop music fadeout 2.0
-                scene black with dissolve_cg
-                "End of demo"
-                return
+    #         # This if statement is leftover code from DDLC where if your game is
+    #         # a demo that it ends the game fully.
+    #         if persistent.demo:
+    #             stop music fadeout 2.0
+    #             scene black with dissolve_cg
+    #             "End of demo"
+    #             return
 
-            call ch23_end
-            return
+    #         call ch23_end
+    #         return
 
-    elif persistent.playthrough == 3:
-        jump ch30_main
+    # elif persistent.playthrough == 3:
+    #     jump ch30_main
 
-    elif persistent.playthrough == 4:
-        ## Day 1 - Act 4
-        $ chapter = 0
-        call ch40_main
-        jump credits
+    # elif persistent.playthrough == 4:
+    #     ## Day 1 - Act 4
+    #     $ chapter = 0
+    #     call ch40_main
+    #     jump credits
 
 # This label is where the game 'ends' during Act 1.
 label endgame(pause_length=4.0):
