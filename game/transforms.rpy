@@ -385,14 +385,24 @@ define trueblack = MultipleTransition([
     Solid("#000")
     ])
 
-# This variable makes the current character hide by wiping their sprite off-screen.
+# This variable makes the current character hide by wiping their sprite off-screen to the left.
 define wipeleft = ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64)
 
-# This variable makes the current scene wipe to black, then shows another scene.
+# This variable makes the current scene wipe to black from the left, then shows another scene.
 define wipeleft_scene = MultipleTransition([
     False, ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64),
     Solid("#000"), Pause(0.25),
     Solid("#000"), ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64),
+    True])
+
+# This variable makes the current character hide by wiping their sprite off-screen to the right.
+define wiperight = ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64, reverse=True)
+
+# This variable makes the current scene wipe to black from the right, then shows another scene.
+define wiperight_scene = MultipleTransition([
+    False, ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64, reverse=True),
+    Solid("#000"), Pause(0.25),
+    Solid("#000"), ImageDissolve("images/menu/wipeleft.png", 0.5, ramplen=64, reverse=True),
     True])
 
 # This variable is possibly a left-over from DDLC's development.
