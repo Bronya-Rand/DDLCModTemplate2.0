@@ -26,7 +26,10 @@ python early:
     import renpy.display.image as imgcore
 
 init -19 python:
-    persistent.enable_discord = True
+    # By default we will disable Discord RPC.
+    # To enable Discord RPC, set this to true.
+    # Recommended False if you using autoreload (Shift+R).
+    persistent.enable_discord = False
     # For Discord RPC
     if persistent.enable_discord:
         from discord_rpc import DiscordRPC

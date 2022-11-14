@@ -1,104 +1,53 @@
-# Explanation of the following files in here
+# Contents
 
-## mod_assets
+### <u>act_two</u>
 
-This folder stores all your images, music/sfx, and more relating to your mod
+This folder contains the files used in Act Two of the game. (Glitched Text, Special Poems, and the Console)
 
-## mod_extras
+### <u>chrs</u>
 
-This folder was introduced in Version 3.0.1 of the mod template. This folder stores the extra content that is available for modders to use i.e. Gallery/Achievements.
+This folder contains the character files of the girls themselves.
 
-## python-packages
+### <u>core</u>
 
-This folder contains the needed Python package files needed to run DDLC or a mod
+This folder contains the needed files for DDLC and the template to run. (Patches, Lockdown, Imports/Exceptions, and Credits)
 
-### **\_\_imports\_\_.rpy**
-This file was introduced in Version 4.0.0 of the mod template. This file contains the imports necessary to run DDLC.
+### <u>definitions</u>
 
-### **cgs.rpy**
+This folder contains the definition files for images, sprites, music, etc. that are used in DDLC. (CGs, Definitions, Effects, Splash, Transforms)
 
-This file defines all the character graphics (CGs) in DDLC such as Yuri's Chocolate CG and Natsuki's Manga CG.
+### <u>mod_assets</u>
 
-### **console.rpy**
+This folder stores all your images, music/sfx, and more relating to your mod along with files needed for the Extras screen.
 
-This file defines the Monika Console contents that appears in the game when Monika deletes characters.
+### <u>mod_extras</u>
 
-### **credits.rpy**
+This folder contains the extra features in the template that is available for modders to use. (BSOD, Extras Screen, Gallery, Achievements, Pronouns)
 
-This file controls the ending of DDLC and your mod!
+### <u>poem_game</u>
 
-### **definitions.rpy**
+This folder contains the files used for the poem minigame in DDLC.
 
-This file defines important stuff for DDLC and your mod!
+### <u>poem_responses</u>
 
-### **effects.rpy**
+This folder contains the files used for the poem response minigame in DDLC.
 
-This file defines all the effects in DDLC used in Act 2.
+### <u>python-packages</u>
 
-### **exceptions.rpy**
+This folder stores third-party python modules that you can use in your mod and contains the modules necessary to run DDLC.
 
-This file defines all the common exceptions of the mod template for Python 2 and 3. This file should not be removed for any reason.
-
-### **glitchtext.rpy**
-
-This file defines the glitched/corrupted text seen in DDLC.
-
-### **gui.rpy**
+### gui.rpy
 
 This file defines all the positions, colors, paths and more of DDLC's GUI interface.
 
-### **lockdown_check.rpy** 
+### options.rpy
 
-This file was introduced in Version 2.4.6 of the mod template. This file is mainly designed to warn new modders about bugs with certain Ren'Py versions or warn them about QA issues with running Ren'Py versions higher than the one the mod template was tested for. Additionally it prevents Python 3 mod templates from running on older versions of Ren'Py prior to Ren'Py 8.
+This file defines information about your mod and contains the necessary code to build it that complies to Team Salvato's IPG.
 
-### **monika.chr**, **natsuki.chr**, **sayori.chr** & **yuri.chr**
+### screens.rpy
 
-These files are in the game directory so the game can re-add the characters files to the `characters` folder when needed.
+This file declares all the screens and styles used in DDLC like the main menu, dialog windows, etc.
 
-### **options.rpy**
-
-This file customizes what your mod is and and how it starts and builds!
-
-### **poems_special.rpy**
-
-This file defines the special poems that the player can see during Act 2. Only three poems are ever shown to the player which are selected at random by `splash.rpy`.
-
-### **poems.rpy**
-
-This file defines all the poems in the game that can be shown to the player by the girls in the poem sharing mini-game.
-
-### **poemwords.txt**
-
-This file declares the poem words for each character for the poem writing mini-game.
-
-### **presplash.png**
-
-This image was introduced in Version 3.0.0 of the mod template. This image is mandatory for modders to use as a thanksfor the work on this template; either in a stock template image or custom image with the name credit image visible on it (which can be found [here](../.github/IMAGES/TemplateMadeLogo.png)).
-
-### **renpy_patches.rpy**
-
-This file was introduced in Version 3.0.0 of the mod template. It's purpose is to patch problematic code that can affect DDLC/DDLC mods on certain versions of Ren'Py that is tied to the Ren'Py engine itself.
-
-### **screens.rpy**
-
-This file declares all the screens and styles in DDLC.
-
-### **script-poemgame.rpy**
-
-This file is where the game runs all the code needed to play the poem game in the original game.
-
-### **script-poemresponses.rpy**
-
-This is where the Doki's respond to how much they like your poem. Act 2 uses script-poemresponses2 which is in 'original_scripts'.
-
-### **script.rpy**
+### script.rpy
 
 This file is the main script that Ren'Py calls upon to start your mod's story! 
-
-### **splash.rpy**
-
-This file is where the splashscreen, disclaimer and menu code reside in.
-
-### **transforms.rpy**
-
-This file defines the placements and animations in DDLC.

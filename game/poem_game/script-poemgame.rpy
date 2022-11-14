@@ -10,7 +10,7 @@
 # Images are defined after the main poem game loop.
 
 init python: # This whole block runs when DDLC is started (as opposed to when the poem minigame is called)
-    poem_txt = "poemwords.txt"
+    poem_txt = "poem_game/poemwords.txt"
 
     # This class holds a word, and point values for each of the four heroines
     class PoemWord:
