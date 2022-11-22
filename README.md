@@ -13,6 +13,18 @@ The **new** Python 3 DDLC Mod Template is a mod template made by Azariel Del Car
    - <u>GanstaKingofSA</u>
       > You may not use the template to make unofficial DDLC patchers, fixes, etc.
 
+### **Credit Requirements**
+You must include a name credit in your mods' credits screen and/or `credits.txt` file. Below is a example credit you may use.
+   > This mod was made possible by GanstaKingofSA's DDLC Mod Template 2.0: https://github.com/GanstaKingofSA/DDLCModTemplate2.0
+
+By default a credits screen is enabled in-game, either in the Extras screen or as a button in-game if the Extras screen is disabled.
+
+Optional but very appreciated credits that you can also add are
+   1. A custom splash screen that features the Team Salvato logo (and/or your mod logo) and a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES)).
+   2. A small mention in the game's disclaimer saying that this mod was not possible without using GanstaKingofSA's mod template.
+   3. A presplash screen that contains a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES)).
+   4. Present a custom idea to me for approval either through Discord or Reddit.
+
 ### Template Features
 1. Ren'Py 8 Team Salvato Compliant Mods!
 2. Team Salvato compliant splash screen.
