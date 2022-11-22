@@ -66,7 +66,7 @@ Follow the steps listed [here](https://ganstakingofsa.github.io/information/guid
 > Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 7 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Renpy7Mod* ZIP file with your mod files.
 
 ### Getting Started For Android Porting/Modding (Versions 2.4.0 and higher)
-Refer to [*guide.pdf*](./Documentation/Android%20Mod%20Guide.pdf) for more in-depth information about making your mod work on Android.
+Refer to [*The DDLC Android Mod Guide*](./Documentation/Android%20Mod%20Guide.pdf) for more in-depth information about making your mod work on Android.
 > For older templates, refer to the PDF in your templates' ZIP file as the latest guide may not match your current template.
 
 Copyright © 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
