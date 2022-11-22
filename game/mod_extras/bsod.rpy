@@ -32,7 +32,7 @@ init python:
         if winver == 8:
             d = Text("we'll restart for you. (" + str(percent) + "% complete)\n", style="bsod_win8_text", size=26)
         else:
-            d = Text(str(percent) + "% complete", style="bsod_win10_text", line_leading=25)
+            d = Text(str(percent) + "% complete", style="bsod_win10_text", line_leading=20)
 
         if percent < 100:
             return d, renpy.random.randint(1, 3)
@@ -94,75 +94,66 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 add DynamicDisplayable(fakePercent, 8)
                 text "If you'd like to know more, you can search online later for this error: " + bsodCode.upper() style "bsod_win8_sub_text"
 
-        else: # Windows 10 (up to 21H1)/Windows 11/Windows 11 RSOD
+        else: # Windows 10, 11 and RSOD
             
-            if osVer < (10, 0, 22000):
-            
-                add Solid("#0078d7")
+            # After a silent update, Windows 11 now returns to a
+            # Windows 10 BSOD color. We will remove the black for
+            # blue now.
+            if rsod:
+
+                add Solid("#d40e0eff")
+                python:
+                    blackCol = "#f00"
 
             else:
 
-                if not rsod:
-
-                    add Solid("#000000")
-                    python:
-                        blackCol = "#0078d7"
-
-                else:
-
-                    add Solid("#d40e0eff")
-                    python:
-                        blackCol = "#f00"
+                add Solid("#0078d7")
+                python:
+                    blackCol = "#0078d7"
 
             style_prefix "bsod_win10"
 
             vbox:
 
-                xalign 0.3
-                yalign 0.3
+                xalign 0.2
+                yalign 0.4
 
                 text ":(" style "bsod_win10_sad_text"
 
                 if osVer < (10, 0, 22000):
+                    python:
+                        bsodQRSize = 100
 
                     text "Your PC ran into a problem and needs to restart. We're"
                     text "just collecting some error info, and then we'll restart for"
                     text "you."
 
                 else:
+                    python:
+                        bsodQRSize = 150
 
                     text "Your device ran into a problem and needs to restart."
-                    text "We're just collecting some error info, and then you can"
-                    text "restart."
+                    text "We're just collecting some error info, and then we'll"
+                    text "restart for you."
 
                 add DynamicDisplayable(fakePercent, 10)
 
                 hbox:
-
-                    if osVer < (10, 0, 22000):
-
+                    vbox:
+                        text "" line_leading -3
+                        add im.MatrixColor("mod_assets/mod_extra_images/bsod_qr_code.png", im.matrix.colorize(blackCol, "#fff"), ) at bsod_qrcode(bsodQRSize)
+                    vbox:
+                        xpos 0.04
                         vbox:
-                            text "" line_leading -3
-                            add im.MatrixColor("mod_assets/mod_extra_images/bsod_qr_code.png", im.matrix.colorize("#0078d7", "#fff"), ) at bsod_qrcode(100)
-                        vbox:
-                            xpos 0.03
-                            spacing 4
-                            text "For more information about this issue and possible fixes, visit https://www.windows.com/stopcode" style "bsod_win10_info_text" line_leading 25
-                            text "If you call a support person, give them this info:" style "bsod_win10_sub_text" line_leading 25
-                            text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
-
-                    else:
-
-                        vbox:
-                            text "" line_leading -3
-                            add im.MatrixColor("mod_assets/mod_extra_images/bsod_qr_code.png", im.matrix.colorize(blackCol, "#fff"), ) at bsod_qrcode(150)
-                        vbox:
-                            xpos 0.03
-                            spacing 4
-                            text "For more information about this issue and possible fixes, visit" style "bsod_win10_info_text" line_leading 25
+                            spacing 2
+                            text "For more information about this issue and possible fixes, visit" style "bsod_win10_info_text" line_leading 30
                             text "https://www.windows.com/stopcode\n" style "bsod_win10_info_text"
+                        null height 3
+                        vbox:
+                            spacing 4
                             text "If you call a support person, give them this info:" style "bsod_win10_sub_text"
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
+                            text "What failed: " + bsodFile.lower() style "bsod_win10_sub_text"
         
     elif renpy.macintosh:
 
@@ -256,19 +247,19 @@ style bsod_win8_sub_text is bsod_win8_text:
 style bsod_win10_text is bsod_win8_text
 style bsod_win10_text:
     font "C:/Windows/Fonts/segoeuil.ttf"
-    size 24
-    line_leading 3
-    line_spacing 0
+    size 28
+    line_leading 2
+    line_spacing -2
     xsize 800
     outlines []
 
 style bsod_win10_info_text is bsod_win10_text
 style bsod_win10_info_text:
-    size 16
+    size 13
 
 style bsod_win10_sad_text is bsod_win10_text
 style bsod_win10_sad_text:
-    size 136
+    size 140
     xpos -8
 
 style bsod_win10_sub_text is bsod_win10_text

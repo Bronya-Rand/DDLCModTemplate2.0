@@ -48,3 +48,38 @@ label poem_special(poem=1):
 
     $ quick_menu = True
     return
+
+# Backwards Compatibility
+label poem_special_1:
+    call poem_special(1)
+    return
+label poem_special_2:
+    call poem_special(2)
+    return
+label poem_special_3:
+    call poem_special(3)
+    return
+label poem_special_4:
+    call poem_special(4)
+    return
+label poem_special_5:
+    call poem_special(5)
+    return
+label poem_special_6:
+    call poem_special(6)
+    return
+label poem_special_7:
+    call poem_special(7)
+    return
+label poem_special_8:
+    call poem_special(8)
+    return
+label poem_special_9:
+    call poem_special(9)
+    return
+label poem_special_10:
+    call poem_special(10)
+    return
+label poem_special_11:
+    call poem_special(11)
+    return
