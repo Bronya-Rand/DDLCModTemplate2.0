@@ -28,7 +28,7 @@ python early:
 init -19 python:
     # By default we will disable Discord RPC.
     # To enable Discord RPC, set this to true.
-    # Recommended False if you using autoreload (Shift+R).
+    # Recommended to set this to False if you using autoreload (Shift+R).
     persistent.enable_discord = False
     # For Discord RPC
     if persistent.enable_discord:
