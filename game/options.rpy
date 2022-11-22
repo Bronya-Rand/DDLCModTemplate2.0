@@ -185,6 +185,7 @@ init python:
     build.classify("game/presplash.png", "scripts all")
     build.classify("game/**.rpyc", "scripts all")
     build.classify("game/README.md", None)
+    build.classify("game/**/README.md", None)
     build.classify("game/**.txt", "scripts all")
     build.classify("game/**.chr", "scripts all")
     build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
