@@ -227,7 +227,7 @@ screen preview():
     vbox:
 
         frame:
-            ysize 120
+            ysize dsp(45)
             hbox:
                 xalign 0.5
                 yalign 0.005
