@@ -53,7 +53,7 @@ init python:
     # This section declares the achievements. See the 'Achievements' class
     # syntax to declare one.
     startup = Achievements("Welcome to DDLC!", "Thanks for accepting the TOS.",
-            "gui/logo.png", "persistent.first_run")
+            "gui/window_icon.png", "persistent.first_run")
 
 ## Achievements Screen #############################################################
 ##
@@ -83,7 +83,8 @@ screen achievements():
                 ypos -0.1
 
                 hbox:
-
+                    spacing dsp(20)
+                    
                     if selectedAchievement:
 
                         python:
@@ -103,10 +104,8 @@ screen achievements():
                     else:
                         null height 128
 
-                    spacing 20
-
                     vbox:
-                        xsize 400
+                        xsize dsp(400)
                         ypos 0.2
 
                         if selectedAchievement:
@@ -137,7 +136,7 @@ screen achievements():
 
                 xalign 0.5
                 yalign 0.85
-                ysize 410
+                ysize dsp(410)
 
                 for name, al in achievementList.items():
 
@@ -152,27 +151,30 @@ screen achievements():
                         imagebutton:
                             idle Transform(ConditionSwitch(
                                     currentVal >= al.maxCount, al.image, "True",
-                                    al.locked), size=(128,128))
+                                    al.locked), size=(dsp(128), dsp(128)))
                             action SetVariable("selectedAchievement", al)
                     else:
                         imagebutton:
                             idle Transform(ConditionSwitch(
                                     currentVal, al.image, "True",
-                                    al.locked), size=(128,128))
+                                    al.locked), size=(dsp(128), dsp(128)))
                             action SetVariable("selectedAchievement", al)
 
             vbar value YScrollValue("avp") xalign 1.01 ypos 0.2 ysize 400
 
-        textbutton "?":
-            style "return_button"
-            xpos 0.99 ypos 1.1
-            action ShowMenu("dialog", "{b}Help{/b}\nGray icons indicate that this achievement is locked.\nContinue your progress in [config.name]\nto unlock all the achievements possible.", ok_action=Hide("dialog"))
+            hbox:
+                xalign 0.99
+                ypos 0.99
+                spacing 5
 
-        if config.developer:
-            textbutton "Test Notif":
-                style "return_button"
-                xpos 0.8 ypos 1.1
-                action ShowMenu("achievement_notify", startup)
+                if config.developer:
+                    textbutton "Test Notif":
+                        style "return_button"
+                        action ShowMenu("achievement_notify", startup)
+
+                textbutton "?":
+                    style "return_button"
+                    action ShowMenu("dialog", "{b}Help{/b}\nGray icons indicate that this achievement is locked.\nContinue your progress in [config.name]\nto unlock all the achievements possible.", ok_action=Hide("dialog"))
 
 ## Achievements Notify Screen #############################################################
 ##
@@ -189,19 +191,19 @@ screen achievement_notify(reward):
     style_prefix "achievements"
 
     frame at achievement_notif_transition:
-        xsize 300
-        ysize 100
+        xsize dsp(300)
+        ysize dsp(100)
         xpos 0.4
 
         hbox:
             xalign 0.27
             yalign 0.5
             add reward.image at achievement_scaler(50)
-            spacing 20
+            spacing dsp(20)
             vbox:
                 spacing 5
-                text "Achievement Unlocked!" size 16
-                text reward.name size 14
+                text "Achievement Unlocked!" size dsp(16)
+                text reward.name size dsp(14)
     
     timer 5.0 action [Hide("achievement_notify"), With(Dissolve(1.0))]
 
@@ -209,10 +211,10 @@ style achievements_text is gui_text
 style achievements_text:
     color "#000"
     outlines []
-    size 20
+    size dsp(20)
 
 transform achievement_scaler(x):
-    size(x, x)
+    size(dsp(x), dsp(x))
 
 transform achievement_notif_transition:
     alpha 0.0

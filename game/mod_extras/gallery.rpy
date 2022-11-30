@@ -52,16 +52,16 @@ init python:
             if sprite:
                 self.image = LiveComposite(
                     (config.screen_width, config.screen_height), (0, 0), 
-                    "black", (0.2 * (config.screen_width / 1280.0), 0), 
+                    "black", (0.22, 0), 
                     Transform(image, zoom=0.75*0.95)
                 )
 
                 # A descaled version of the main image.
                 if small_size:
-                    self.small_size = small_size 
+                    self.small_size = dsp(small_size)
                 else:               
                     self.small_size = LiveComposite(
-                        (234, 132), (0, 0), 
+                        (dsp(234), dsp(132)), (0, 0), 
                         "black", (0.2, 0), 
                         Transform(image, zoom=0.137)
                     )
@@ -69,9 +69,9 @@ init python:
                 self.image = Transform(image, size=(config.screen_width, config.screen_height-40))
 
                 if small_size:
-                    self.small_size = small_size 
+                    self.small_size = dsp(small_size) 
                 else:     
-                    self.small_size = Transform(image, size=(234, 132))
+                    self.small_size = Transform(image, size=(dsp(234), dsp(132)))
 
             if galleryList is None: galleryList = OrderedDict([(self.name, self)])
             else: galleryList[self.name] = self
@@ -204,7 +204,7 @@ screen gallery():
                                 xalign 0.5
                                 color "#555"
                                 outlines []
-                                size 14
+                                size dsp(14)
                         else:
                             imagebutton: 
                                 idle "mod_assets/mod_extra_images/galleryLock.png"
@@ -213,9 +213,9 @@ screen gallery():
                                 xalign 0.5
                                 color "#555"
                                 outlines []
-                                size 14
+                                size dsp(14)
 
-            vbar value YScrollValue("gvp") xalign 0.99 ysize 560
+            vbar value YScrollValue("gvp") xalign 0.99 ysize dsp(560)
 
 ## Gallery Screen #################################################################
 ##
@@ -224,34 +224,36 @@ screen preview():
 
     tag menu
 
-    hbox: 
-        add galleryList[current_img_name].image yoffset 40
-    hbox:
-        add Solid("#fcf") size(config.screen_width, 40)
+    vbox:
 
-    hbox:
-        ypos 0.005
-        xalign 0.5 
-        text current_img_name: 
-            color "#000"
-            outlines[]
-            size 24 
+        frame:
+            ysize 120
+            hbox:
+                xalign 0.5
+                yalign 0.005
+                text current_img_name: 
+                    color "#000"
+                    outlines[]
+                    size dsp(24) 
 
-    hbox:
-        ypos 0.005
-        xalign 0.98
-        if galleryList[current_img_name].artist:
-            textbutton "?":
-                text_style "navigation_button_text"
-                action Show("dialog", message="Artist: " + galleryList[current_img_name].artist, ok_action=Hide("dialog"))
+            hbox:
+                xalign 0.98
+                yalign 0.005
+                hbox:
+                    if galleryList[current_img_name].artist:
+                        textbutton "?":
+                            text_style "navigation_button_text"
+                            action Show("dialog", message="Artist: " + galleryList[current_img_name].artist, ok_action=Hide("dialog"))
 
-        textbutton "E":
-            text_style "navigation_button_text"
-            action Function(galleryList[current_img_name].export) 
+                    textbutton "E":
+                        text_style "navigation_button_text"
+                        action Function(galleryList[current_img_name].export) 
 
-        textbutton "X":
-            text_style "navigation_button_text"
-            action ShowMenu("gallery")
+                    textbutton "X":
+                        text_style "navigation_button_text"
+                        action ShowMenu("gallery")
+
+        add galleryList[current_img_name].image
 
     textbutton "<":
         text_style "navigation_button_text"

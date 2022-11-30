@@ -30,9 +30,9 @@ init python:
             percent = 100
 
         if winver == 8:
-            d = Text("we'll restart for you. (" + str(percent) + "% complete)\n", style="bsod_win8_text", size=26)
+            d = Text("we'll restart for you. (" + str(percent) + "% complete)\n", style="bsod_win8_text", size=dsp(26))
         else:
-            d = Text(str(percent) + "% complete", style="bsod_win10_text", line_leading=20)
+            d = Text(str(percent) + "% complete", style="bsod_win10_text", line_leading=dsp(20))
 
         if percent < 100:
             return d, renpy.random.randint(1, 3)
@@ -145,12 +145,12 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                     vbox:
                         xpos 0.04
                         vbox:
-                            spacing 2
-                            text "For more information about this issue and possible fixes, visit" style "bsod_win10_info_text" line_leading 30
+                            spacing dsp(2)
+                            text "For more information about this issue and possible fixes, visit" style "bsod_win10_info_text" line_leading dsp(32)
                             text "https://www.windows.com/stopcode\n" style "bsod_win10_info_text"
                         null height 3
                         vbox:
-                            spacing 4
+                            spacing dsp(4)
                             text "If you call a support person, give them this info:" style "bsod_win10_sub_text"
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
                             text "What failed: " + bsodFile.lower() style "bsod_win10_sub_text"
@@ -237,34 +237,34 @@ style bsod_win8_text:
 
 style bsod_win8_sad_text is gui_text
 style bsod_win8_sad_text is bsod_win8_text:
-    size 128
+    size dsp(128)
     xpos -8
 
 style bsod_win8_sub_text is gui_text
 style bsod_win8_sub_text is bsod_win8_text:
-    size 11
+    size dsp(11)
 
 style bsod_win10_text is bsod_win8_text
 style bsod_win10_text:
     font "C:/Windows/Fonts/segoeuil.ttf"
-    size 28
+    size dsp(28)
     line_leading 2
     line_spacing -2
-    xsize 800
+    xsize dsp(800)
     outlines []
 
 style bsod_win10_info_text is bsod_win10_text
 style bsod_win10_info_text:
-    size 13
+    size dsp(13)
 
 style bsod_win10_sad_text is bsod_win10_text
 style bsod_win10_sad_text:
-    size 140
+    size dsp(140)
     xpos -8
 
 style bsod_win10_sub_text is bsod_win10_text
 style bsod_win10_sub_text:
-    size 11
+    size dsp(11)
 
 style bsod_mac_text is gui_text
 style bsod_mac_text:
@@ -283,11 +283,11 @@ style bsod_linux_text:
 transform bsod_transition:
     "black"
     0.1
-    yoffset 250
+    yoffset dsp(250)
     0.1
-    yoffset 500
+    yoffset dsp(500)
     0.1
-    yoffset 750
+    yoffset dsp(750)
 
 transform bsod_qrcode(x):
-    size(x,x)
+    size(dsp(x), dsp(x))

@@ -28,8 +28,8 @@ screen extras():
 
                 if enable_gallery:
                     frame:
-                        xsize 160
-                        ysize 140
+                        xsize dsp(160)
+                        ysize dsp(140)
 
                         vbox:
                             xalign 0.5
@@ -41,8 +41,8 @@ screen extras():
 
                 if enable_achievements:               
                     frame:
-                        xsize 160
-                        ysize 140
+                        xsize dsp(160)
+                        ysize dsp(140)
 
                         vbox:
                             xalign 0.5
@@ -53,8 +53,8 @@ screen extras():
                                 action ShowMenu("achievements")
 
                 frame:
-                    xsize 160
-                    ysize 140
+                    xsize dsp(160)
+                    ysize dsp(140)
 
                     vbox:
                         xalign 0.5
@@ -65,28 +65,15 @@ screen extras():
                             hover LiveComposite((150, 130), (50, 20), "mod_assets/mod_extra_images/about.png", (38, 73), Text("Credits", style="extras_hover_text"))
                             action ShowMenu("about")
 
-                ## Increase rows or cols count before commenting this out
-                # frame:
-                #     xsize 160
-                #     ysize 140
-
-                #     vbox:
-                #         xalign 0.5
-                #         yalign 0.5
-                #         imagebutton:
-                #             idle LiveComposite((150, 130), (50, 20), "mod_assets/mod_extra_images/ost_player.png", (40, 75), Text("DDLC OST-Player", style="extras_text"))
-                #             hover LiveComposite((150, 130), (50, 20), "mod_assets/mod_extra_images/ost_player.png", (38, 73), Text("DDLC OST-Player", style="extras_hover_text"))
-                #             action [ShowMenu("new_music_room"), Function(ost_start)]
-
             vbar value YScrollValue("ext") xalign 0.99 ysize 560
 
 style extras_text:
     color "#000"
     outlines []
-    size 20
+    size dsp(20)
 
 style extras_hover_text is extras_text:
-    outlines [(2, "#cacaca", 0, 0), (2, "#cacaca", 2, 2)]
+    outlines [(dsp(2), "#cacaca", 0, 0), (dsp(2), "#cacaca", dsp(2), dsp(2))]
 
 style extras_image_button:
     hover_sound gui.hover_sound

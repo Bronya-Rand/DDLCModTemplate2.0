@@ -10,7 +10,7 @@ init -100 python:
     import os
     
     if not renpy.android:
-        for archive in ['audio','images','fonts']:
+        for archive in ['audio','fonts']:
             if archive not in config.archives:
                 raise DDLCRPAsMissing(archive)
 
@@ -66,8 +66,8 @@ image menu_logo:
     "/mod_assets/DDLCModTemplateLogo.png"
     # im.Composite((512, 512), (0, 0), recolorize("mod_assets/logo_bg.png"), (0, 0), "mod_assets/logo_fg.png")
     subpixel True
-    xcenter 240
-    ycenter 120
+    xcenter dsp(240)
+    ycenter dsp(120)
     zoom 0.60
     menu_logo_move
 
@@ -94,77 +94,77 @@ image menu_fade:
 image menu_art_y:
     subpixel True
     "gui/menu_art_y.png"
-    xcenter 600
-    ycenter 335
-    zoom 0.60
-    menu_art_move(0.54, 600, 0.60)
+    xcenter dsp(600)
+    ycenter dsp(335)
+    zoom 0.6
+    menu_art_move(0.54, dsp(600), 0.6)
 
 image menu_art_n:
     subpixel True
     "gui/menu_art_n.png"
-    xcenter 750
-    ycenter 385
+    xcenter dsp(750)
+    ycenter dsp(385)
     zoom 0.58
     menu_art_move(0.58, 750, 0.58)
 
 image menu_art_s:
     subpixel True
     "gui/menu_art_s.png"
-    xcenter 510
-    ycenter 500
+    xcenter dsp(510)
+    ycenter dsp(500)
     zoom 0.68
-    menu_art_move(0.68, 510, 0.68)
+    menu_art_move(0.68, dsp(510), 0.68)
 
 image menu_art_m:
     subpixel True
     "gui/menu_art_m.png"
-    xcenter 1000
-    ycenter 640
+    xcenter dsp(1000)
+    ycenter dsp(640)
     zoom 1.00
-    menu_art_move(1.00, 1000, 1.00)
+    menu_art_move(1.00, dsp(1000), 1.00)
 
 # These images are the same as above but ghost themed for the secret ghost menu
 # that appears rarely in-game .
 image menu_art_y_ghost:
     subpixel True
     "gui/menu_art_y_ghost.png"
-    xcenter 600
-    ycenter 335
-    zoom 0.60
-    menu_art_move(0.54, 600, 0.60)
+    xcenter dsp(600)
+    ycenter dsp(335)
+    zoom 0.6
+    menu_art_move(0.54, dsp(600), 0.6)
 
 image menu_art_n_ghost:
     subpixel True
     "gui/menu_art_n_ghost.png"
-    xcenter 750
-    ycenter 385
+    xcenter dsp(750)
+    ycenter dsp(385)
     zoom 0.58
     menu_art_move(0.58, 750, 0.58)
 
 image menu_art_s_ghost:
     subpixel True
     "gui/menu_art_s_ghost.png"
-    xcenter 510
-    ycenter 500
+    xcenter dsp(510)
+    ycenter dsp(500)
     zoom 0.68
-    menu_art_move(0.68, 510, 0.68)
+    menu_art_move(0.68, dsp(510), 0.68)
 
 image menu_art_m_ghost:
     subpixel True
     "gui/menu_art_m_ghost.png"
-    xcenter 1000
-    ycenter 640
-    zoom 1.00
-    menu_art_move(1.00, 1000, 1.00)
+    xcenter dsp(600)
+    ycenter dsp(335)
+    zoom 0.6
+    menu_art_move(0.54, dsp(600), 0.6)
 
 # This image sprite shows a glitched Sayori menu sprite after Act 1 finishes.
 image menu_art_s_glitch:
     subpixel True
     "gui/menu_art_s_break.png"
-    xcenter 470
-    ycenter 600
+    xcenter dsp(470)
+    ycenter dsp(600)
     zoom 0.68
-    menu_art_move(.8, 470, .8)
+    menu_art_move(.8, dsp(470), .8)
 
 # This image shows the main menu screen in the main/pause menu.
 image menu_nav:
@@ -180,8 +180,8 @@ image menu_nav:
 # the game starts.
 image menu_particles:
     2.481
-    xpos 224
-    ypos 104
+    xpos dsp(224)
+    ypos dsp(104)
     ParticleBurst("gui/menu_particle.png", explodeTime=0, numParticles=40, particleTime=2.0, particleXSpeed=3, particleYSpeed=3).sm
     particle_fadeout
 
@@ -195,12 +195,12 @@ transform menu_bg_move:
     topleft
     parallel:
         xoffset 0 yoffset 0
-        linear 3.0 xoffset -100 yoffset -100
+        linear 3.0 xoffset dsp(-100) yoffset dsp(-100)
         repeat
     parallel:
         ypos 0
         time 0.65
-        ease_cubic 2.5 ypos -500
+        ease_cubic 2.5 ypos dsp(-500)
 
 # This transform loops the polka-dot moving effect.
 transform menu_bg_loop:
@@ -208,7 +208,7 @@ transform menu_bg_loop:
     topleft
     parallel:
         xoffset 0 yoffset 0
-        linear 3.0 xoffset -100 yoffset -100
+        linear 3.0 xoffset dsp(-100) yoffset dsp(-100)
         repeat
 
 # This transform moves the menu logo down to it's intended placement in-game.
@@ -221,7 +221,7 @@ transform menu_logo_move:
 # This transform moves the main menu screen in-game to be visible.
 transform menu_nav_move:
     subpixel True
-    xoffset -500
+    xoffset dsp(-500)
     time 1.5
     easein_quint 1 xoffset 0
 
@@ -236,8 +236,8 @@ transform menu_fadeout:
 # sprites to where they appear in the game.
 transform menu_art_move(z, x, z2):
     subpixel True
-    yoffset 0 + (1200 * z)
-    xoffset (740 - x) * z * 0.5
+    yoffset 0 + (dsp(1200) * z)
+    xoffset (dsp(700) - x) * z * 0.5
     zoom z2 * 0.75
     time 1.0
     parallel:

@@ -57,7 +57,7 @@ style default:
     font gui.default_font
     size gui.text_size
     color gui.text_color
-    outlines [(2, "#000000aa", 0, 0)]
+    outlines [(dsp(2), "#000000aa", 0, 0)]
     line_overlap_split 1
     line_spacing 1
 
@@ -67,7 +67,7 @@ style default_monika is normal:
 style edited is default:
     font "gui/font/VerilySerifMono.otf"
     kerning 8
-    outlines [(10, "#000", 0, 0)]
+    outlines [(dsp(10), "#000", 0, 0)]
     xpos gui.text_xpos
     xanchor gui.text_xalign
     xsize gui.text_width
@@ -93,7 +93,7 @@ style hyperlink_text:
     hover_underline True
 
 style splash_text:
-    size 24
+    size dsp(24)
     color "#000"
     font gui.default_font
     text_align 0.5
@@ -102,12 +102,12 @@ style splash_text:
 style poemgame_text:
     yalign 0.5
     font "gui/font/Halogen.ttf"
-    size 30
+    size dsp(30)
     color "#000"
     outlines []
 
     hover_xoffset -3
-    hover_outlines [(3, "#fef", 0, 0), (2, "#fcf", 0, 0), (1, "#faf", 0, 0)]
+    hover_outlines [(dsp(3), "#fef", 0, 0), (dsp(2), "#fcf", 0, 0), (dsp(1), "#faf", 0, 0)]
 
 style gui_text:
     font gui.interface_font
@@ -137,26 +137,26 @@ style vbar:
     bottom_bar Frame("gui/bar/bottom.png", gui.vbar_borders, tile=gui.bar_tile)
 
 style bar:
-    ysize 18
+    ysize dsp(18)
     base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
     thumb Frame("gui/scrollbar/horizontal_poem_thumb.png", top=6, right=6, tile=True)
 
 style scrollbar:
-    ysize 18
+    ysize dsp(18)
     base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
     thumb Frame("gui/scrollbar/horizontal_poem_thumb.png", top=6, right=6, tile=True)
     unscrollable "hide"
     bar_invert True
 
 style vscrollbar:
-    xsize 18
+    xsize dsp(18)
     base_bar Frame("gui/scrollbar/vertical_poem_bar.png", tile=False)
     thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
     unscrollable "hide"
     bar_invert True
 
 style slider:
-    ysize 18
+    ysize dsp(18)
     base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
     thumb "gui/slider/horizontal_hover_thumb.png"
 
@@ -247,8 +247,7 @@ style say_label:
     size gui.name_text_size
     xalign gui.name_xalign
     yalign 0.5
-    outlines [(3, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)]
-    #outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
+    outlines [(dsp(3), text_outline_color, 0, 0), (dsp(1), text_outline_color, dsp(1), dsp(1))]
 
 style say_dialogue:
     xpos gui.text_xpos
@@ -279,7 +278,7 @@ image ctc:
 
 image input_caret:
     Solid("#b59")
-    size (2,25) subpixel True
+    size (dsp(2), dsp(25)) subpixel True
     block:
         linear 0.35 alpha 0
         linear 0.35 alpha 1
@@ -548,10 +547,9 @@ style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
     font "gui/font/RifficFree-Bold.ttf"
     color "#fff"
-    outlines [(4, text_outline_color, 0, 0), (2, text_outline_color, 2, 2)]
-    #outlines [(4, "#b59", 0, 0), (2, "#b59", 2, 2)]
-    hover_outlines [(4, "#fac", 0, 0), (2, "#fac", 2, 2)]
-    insensitive_outlines [(4, "#fce", 0, 0), (2, "#fce", 2, 2)]
+    outlines [(dsp(4), text_outline_color, 0, 0), (dsp(2), text_outline_color, dsp(2), dsp(2))]
+    hover_outlines [(dsp(4), "#fac", 0, 0), (dsp(2), "#fac", dsp(2), dsp(2))]
+    insensitive_outlines [(dsp(4), "#fce", 0, 0), (dsp(2), "#fce", dsp(2), dsp(2))]
 
 
 ## Main Menu screen ############################################################
@@ -616,11 +614,11 @@ style main_menu_text is gui_text
 style main_menu_title is main_menu_text
 style main_menu_version is main_menu_text:
     color "#000000"
-    size 16
+    size dsp(16)
     outlines []
 
 style main_menu_frame:
-    xsize 310
+    xsize dsp(310)
     yfill True
 
     background "menu_nav"
@@ -628,7 +626,7 @@ style main_menu_frame:
 style main_menu_vbox:
     xalign 1.0
     xoffset -20
-    xmaximum 800
+    xmaximum dsp(800)
     yalign 1.0
     yoffset -20
 
@@ -741,40 +739,39 @@ style return_button is navigation_button
 style return_button_text is navigation_button_text
 
 style game_menu_outer_frame:
-    bottom_padding 30
-    top_padding 120
+    bottom_padding dsp(30)
+    top_padding dsp(120)
 
     background "gui/overlay/game_menu.png"
     # background recolorize("gui/overlay/game_menu.png")
 
 style game_menu_navigation_frame:
-    xsize 280
+    xsize dsp(280)
     yfill True
 
 style game_menu_content_frame:
-    left_margin 40
-    right_margin 20
-    top_margin 10
+    left_margin dsp(40)
+    right_margin dsp(20)
+    top_margin dsp(10)
 
 style game_menu_viewport:
-    xsize 920
+    xsize dsp(920)
 
 style game_menu_vscrollbar:
     unscrollable gui.unscrollable
 
 style game_menu_side:
-    spacing 10
+    spacing dsp(10)
 
 style game_menu_label:
-    xpos 50
-    ysize 120
+    xpos dsp(50)
+    ysize dsp(120)
 
 style game_menu_label_text:
     font "gui/font/RifficFree-Bold.ttf"
     size gui.title_text_size
     color "#fff"
-    outlines [(6, text_outline_color, 0, 0), (3, text_outline_color, 2, 2)]
-    #outlines [(6, "#b59", 0, 0), (3, "#b59", 2, 2)]
+    outlines [(dsp(6), text_outline_color, 0, 0), (dsp(3), text_outline_color, dsp(2), dsp(2))]
     yalign 0.5
 
 style return_button:
@@ -1180,13 +1177,13 @@ style pref_label:
 
 style pref_label_text:
     font "gui/font/RifficFree-Bold.ttf"
-    size 24
+    size dsp(24)
     color "#fff"
-    outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
+    outlines [(dsp(3), "#b59", 0, 0), (dsp(1), "#b59", dsp(1), dsp(1))]
     yalign 1.0
 
 style pref_vbox:
-    xsize 225
+    xsize dsp(225)
 
 style radio_vbox:
     spacing gui.pref_button_spacing
@@ -1213,18 +1210,18 @@ style check_button_text:
     outlines []
 
 style slider_slider:
-    xsize 350
+    xsize dsp(350)
 
 style slider_button:
     properties gui.button_properties("slider_button")
     yalign 0.5
-    left_margin 10
+    left_margin dsp(10)
 
 style slider_button_text:
     properties gui.button_text_properties("slider_button")
 
 style slider_vbox:
-    xsize 450
+    xsize dsp(450)
 
 
 ## History screen ##############################################################
@@ -1512,7 +1509,7 @@ screen name_input(message, ok_action):
         vbox:
             xalign .5
             yalign .5
-            spacing 30
+            spacing dsp(30)
 
             label _(message):
                 style "confirm_prompt"
@@ -1522,7 +1519,7 @@ screen name_input(message, ok_action):
 
             hbox:
                 xalign 0.5
-                spacing 100
+                spacing dsp(100)
 
                 textbutton _("OK") action ok_action
 
@@ -1542,7 +1539,7 @@ screen dialog(message, ok_action):
         vbox:
             xalign .5
             yalign .5
-            spacing 30
+            spacing dsp(30)
 
             label _(message):
                 style "confirm_prompt"
@@ -1550,7 +1547,7 @@ screen dialog(message, ok_action):
 
             hbox:
                 xalign 0.5
-                spacing 100
+                spacing dsp(100)
 
                 textbutton _("OK") action ok_action
 
@@ -1583,7 +1580,7 @@ screen confirm(message, yes_action, no_action):
         vbox:
             xalign .5
             yalign .5
-            spacing 30
+            spacing dsp(30)
 
             ## This if-else statement either shows a normal textbox or
             ## glitched textbox if you are in Sayori's Death Scene and are
@@ -1597,7 +1594,7 @@ screen confirm(message, yes_action, no_action):
 
             hbox:
                 xalign 0.5
-                spacing 100
+                spacing dsp(100)
 
                 ## This if-else statement disables quitting from the quit box
                 ## if you are in Sayori's Death Scene, else normal box.
