@@ -23,7 +23,8 @@ init -3 python:
     # DSP is a feature in where the game upscales the positions of assets to
     # comply with higher resolution settings (1080p).
     # This is just simple math from NVIDIA, implemented in Python.
-    def dsp(orig_val, ceil=True):
+    def dsp(orig_val):
+        ceil = True if isinstance(orig_val, float) else False
         dsp_scale = config.screen_width / 1280.0
         if ceil: return math.ceil(orig_val * dsp_scale)
         else: return orig_val * dsp_scale
