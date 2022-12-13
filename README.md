@@ -5,6 +5,8 @@
 
 The **new** Python 3 DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 8.
 
+> Additionaly [here](./CREDITS.md) are all the contributors that contributed to the mod template.
+
 > For Ren'Py 6-7 support, see the [Python 2](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/tree/python-2) branch.
 
 ### Disclaimers
@@ -33,24 +35,23 @@ Optional but very appreciated credits that you can also add are
    > \* - Linux users must run your mod via `LinuxLauncher.sh`.
 5. Android Support! - Bring your mod over to Android devices!\*
     > \* - If your mod uses simple code or DDLC's/template built-in functions. More complex code or non-mobile friendly features may require some adjustments and changes to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
-6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
-    > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-7. [BETA] Pronoun Support! - Allow players to identify with the pronoun they go by!
+<!-- 6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
+    > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md) -->
+6. [BETA] Pronoun Support! - Allow players to identify with the pronoun they go by!
     > See *mod_extras/pronouns.rpy* in the `game` folder for a example on how to use this feature.
-8. Better Blue Screens of Death! - Make your own BSOD easily in-game on every operating system! 
-9. Uncensored Mode! - Allow more "sensitive" content to be shown in-game.
-10. Let's Play Mode (Streamer Mode)! - A better alternative to hide streamer information and more!
-11. Gallery Menu! - Allow players to see the work you have done in-game!
-12. Achievements Menu! - Set up achievements in your mod for players to complete your mod in full!
-13. Different Menu Button Colors! - Have different colored buttons in the menu prompt to your hearts content.
-14. Automatic GUI Coloring! - Color the GUI in the game to whatever you like without editing the asset files themselves! 
-15. Extras Menu! - Add additional button options to your game for additional mod screens and features!
-16. Terra's in-depth Poem Game guide!
-17. NVL Support thanks to Yagamirai01!
-18. Patches for several Ren'Py releases and Windows features.
-19. Python 3 support and code now in use!
-20. [BETA] Discord Rich Presence support!
-21. New transforms.
+7. Better Blue Screens of Death! - Make your own BSOD easily in-game on every operating system! 
+8. Uncensored Mode! - Allow more "sensitive" content to be shown in-game.
+9. Let's Play Mode (Streamer Mode)! - A better alternative to hide streamer information and more!
+10. Gallery Menu! - Allow players to see the work you have done in-game!
+11. Achievements Menu! - Set up achievements in your mod for players to complete your mod in full!
+12. Different Menu Button Colors! - Have different colored buttons in the menu prompt to your hearts content.
+13. Automatic GUI Coloring! - Color the GUI in the game to whatever you like without editing the asset files themselves! 
+14. Terra's in-depth Poem Game guide!
+15. NVL Support thanks to Yagamirai01!
+16. Patches for several Ren'Py releases and Windows features.
+17. Python 3 support and code now in use!
+18. [BETA] Discord Rich Presence support!
+19. New transforms.
 
 ### Returned Features
 1. Ghost Menu (Dan's spooky easter egg).
