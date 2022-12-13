@@ -10,14 +10,8 @@ python early:
     os.environ['wmic process get Description'] = "powershell (Get-Process).ProcessName"
     os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
 
-    ## Games produced with this version use the model-based renderer by
-    ## default.
-    ## We will disable this to retain Act 3 effects but you may disable
-    ## this if you need model-based rendering
-    if renpy.version_tuple >= (7, 4, 5, 1648):
-        config.gl2 = False
-
-    ## Patches the 7.4.6 - 7.4.8 transform bugs. 
+    ## Patches the 7.4.6 - 7.4.8 transform bugs.
+    ## using 7.4.9's Scenelists code. 
     if renpy.version_tuple >= (7, 4, 6, 1693) and renpy.version_tuple < (7, 4, 9, 2142):
 
         class NewSceneLists(renpy.display.core.SceneLists):
