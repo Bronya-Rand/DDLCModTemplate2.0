@@ -416,7 +416,7 @@ label splashscreen:
             persistent.special_poems = [0,0,0]
             
             # This sets the range of poem numbers to pick from.
-            a = range(1,12)
+            a = list(range(1,12))
 
             # This for loop loops 3 times (array number of special_poems) and
             # assigns a random number to the array.
