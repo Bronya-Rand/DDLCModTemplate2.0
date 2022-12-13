@@ -393,27 +393,28 @@ init python:
             rv.operation_complete = complete
             rv.operation_parameter = self.op
             
-            if renpy.display.render.models:
+            if renpy.version_tuple >= (7, 4, 5, 1648):
+                if renpy.display.render.models:
 
-                target = rv.get_size()
+                    target = rv.get_size()
 
-                op = self.op
+                    op = self.op
 
-                # Prevent a DBZ if the user gives us a 0 ramp.
-                if op < 1:
-                    op = 1
+                    # Prevent a DBZ if the user gives us a 0 ramp.
+                    if op < 1:
+                        op = 1
 
-                # Compute the offset to apply to the alpha.
-                start = -1.0
-                end = op / 256.0
-                offset = start + (end - start) * complete
+                    # Compute the offset to apply to the alpha.
+                    start = -1.0
+                    end = op / 256.0
+                    offset = start + (end - start) * complete
 
-                rv.mesh = True
+                    rv.mesh = True
 
-                rv.add_shader("renpy.imagedissolve",)
-                rv.add_uniform("u_renpy_dissolve_offset", offset)
-                rv.add_uniform("u_renpy_dissolve_multiplier", 256.0 / op)
-                rv.add_property("mipmap", renpy.config.mipmap_dissolves if (self.style.mipmap is None) else self.style.mipmap)
+                    rv.add_shader("renpy.imagedissolve",)
+                    rv.add_uniform("u_renpy_dissolve_offset", offset)
+                    rv.add_uniform("u_renpy_dissolve_multiplier", 256.0 / op)
+                    rv.add_property("mipmap", renpy.config.mipmap_dissolves if (self.style.mipmap is None) else self.style.mipmap)
 
             rv.blit(mb, (0, 0), focus=False, main=False)
             rv.blit(nr, (0, 0), focus=False, main=False)
