@@ -527,7 +527,7 @@ screen navigation():
             if renpy.variant("pc"):
 
                 ## Help isn't necessary or relevant to mobile devices.
-                textbutton _("Help") action [Help("README.html"), Show(screen="dialog", message="The help file has been opened in your browser.", ok_action=Hide("dialog"))]
+                #textbutton _("Help") action OpenURL("https://github.com/GanstaKingofSA/DDLCModTemplate2.0")
 
                 ## The quit button is banned on iOS and unnecessary on Android.
                 textbutton _("Quit") action Quit(confirm=not main_menu)
