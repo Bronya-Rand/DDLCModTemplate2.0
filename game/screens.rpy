@@ -1049,7 +1049,8 @@ screen preferences():
                                 message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
                                 ok_action=Hide("dialog")
                             )])
-                            
+                        textbutton "Discord RPC" action [ToggleField(persistent, "enable_discord"), 
+                            If(persistent.enable_discord, Function(stop_discord), Function(start_discord))]
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
