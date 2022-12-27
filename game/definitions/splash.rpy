@@ -306,8 +306,8 @@ label splashscreen:
                 try:
                     process_list = subprocess.check_output("powershell (Get-Process).ProcessName", shell=True).lower().replace("\r", "").split("\n") # For W11 builds > 22000
                     
-                    for x in enumerate(process_list):
-                        process_list[x] += ".exe"
+                    for i, x in enumerate(process_list):
+                        process_list[i] = x + ".exe"
                 except subprocess.CalledProcessError: pass            
         else:
             try: process_list = subprocess.check_output("ps -A --format cmd", shell=True).decode('utf-8').split("\n") # Linux
