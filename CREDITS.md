@@ -14,3 +14,4 @@ Special thanks to the following for contributing to the mod template
 - NekoLaiS (Cryllic compatibility)
 - The DDMC Community (Feature suggestions and feedback)
 - Pseurae (Donation/Act 3 GL2 Fix)
+- Lezalith (New Console (4.1.1+))
