@@ -102,7 +102,6 @@ style console_screen_frame:
     background Frame(Transform(Solid("#333"), alpha=0.75))
     xsize 480
     ysize 180
-    yalign 0.5
 
 # This style declares the text appearance of the text shown in the console in-game.
 style console_screen_text:
