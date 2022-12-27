@@ -1049,8 +1049,6 @@ screen preferences():
                                 message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
                                 ok_action=Hide("dialog")
                             )])
-                        textbutton "Discord RPC" action [ToggleField(persistent, "enable_discord"), 
-                            If(persistent.enable_discord, Function(stop_discord), Function(start_discord))]
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
@@ -1111,11 +1109,12 @@ screen preferences():
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
 
-            if translations:
-                hbox:
-                    style_prefix "radio"
-                    if extra_settings:
-                        xoffset 15   
+            hbox:
+                style_prefix "radio"
+                if extra_settings:
+                    xoffset 15  
+
+                if translations: 
                     vbox:
                         label _("Language")
 
@@ -1131,6 +1130,26 @@ screen preferences():
                                         for tlid, tlname in tran:
                                             textbutton tlname:
                                                 action Language(tlid)
+                        
+                vbox:
+                    label _("Discord RPC")
+
+                    python:
+                        rpc_text = "Disabled"
+                        connect_status = "Disconnected"
+                        if persistent.enable_discord:
+                            rpc_text = "Enabled"
+                        if RPC.rpc_connected:
+                            connect_status = "Connected"
+
+                    textbutton rpc_text action [ToggleField(persistent, "enable_discord"), 
+                        If(persistent.enable_discord, Function(RPC.exit), Function(RPC.connect))]
+                    
+                    text "Status: [connect_status]" style "main_menu_version" xalign 0.0
+
+                    if persistent.enable_discord and not RPC.rpc_connected:
+                        textbutton "Reconnect" action Function(RPC.connect)
+
                             
     text "v[config.version]":
                 xalign 1.0 yalign 1.0

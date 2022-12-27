@@ -6,7 +6,6 @@
 ## To make RPC work for you, make a new application on Discord's Developer Portal
 ## https://discord.com/developers/applications
 ## Follow the comments inside of `set_defaults` in order to setup RPC to your liking.
-## To register the your RPC with your mod, scroll down to line 115.
 
 init -960:
     default persistent.enable_discord = True
@@ -22,6 +21,7 @@ init -950 python in discord:
         def __init__(self, client_id):
             self.client_id = str(client_id)
             self.start_time = time.time()
+            self.rpc_connected = False
             
             self.set_defaults()
             self.auth()
@@ -63,11 +63,13 @@ init -950 python in discord:
             if self.rpc is None: self.auth()
             if self.rpc is None: return
             self.rpc.connect()
+            self.rpc_connected = True
             self.update_rpc()
 
         def exit(self):
             if self.rpc is None: return
             self.rpc.close()
+            self.rpc_connected = False
         
         def update_status(self, state, details, large_img=None, large_txt=None, small_img=None, small_txt=None):
             if self.rpc is None:
