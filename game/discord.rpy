@@ -7,23 +7,25 @@
 ## https://discord.com/developers/applications
 ## Follow the comments inside of `set_defaults` in order to setup RPC to your liking.
 
-init -960:
-    default persistent.enable_discord = True
-    default persistent.discord_rpc_save_state = {}
+## Based similarly off off Lazalith's RPC code: https://github.com/Lezalith/RenPy-Discord-Presence
+
+default persistent.enable_discord = True
 
 init -950 python in discord:
-    from pypresence import Presence, DiscordError, DiscordNotFound
-    from store import config, NoRollback, persistent
+    from pypresence import Presence, DiscordError, DiscordNotFound, InvalidPipe
+    from store import config, NoRollback
+    from copy import deepcopy
     import time
-    import json
 
     class DiscordRPC(NoRollback):
         def __init__(self, client_id):
             self.client_id = str(client_id)
-            self.start_time = time.time()
+            self.start = time.time()
             self.rpc_connected = False
             
             self.set_defaults()
+            self.original_props = self.self_dict()
+            self.props = {}
             self.auth()
             self.connect()
 
@@ -39,19 +41,33 @@ init -950 python in discord:
 
             # Defines the largest image to use in rich presence as the
             # main icon.
-            self.large_img = "ddlcmodtemplatelogo"
+            self.large_image  = "ddlcmodtemplatelogo"
 
             # Defines the text when a user hovers on the large icon in
             # a players' status.
             # Example: DDLC Mod Template
-            self.large_txt = config.name  # Uses the name of the mod defined in-game.
+            self.large_text  = config.name  # Uses the name of the mod defined in-game.
 
             # Defines the smallest image to use in rich presence as the
             # secondary icon.
-            self.small_img = "test"
+            self.small_image = "test"
             # Defines the text when a user hovers on the small icon in
             # a players' status.
-            self.small_txt = config.version  # Uses the version name of the mod
+            self.small_text = config.version  # Uses the version name of the mod
+
+        def self_dict(self):
+            return {
+                "state": self.state,
+                "details": self.details,
+                "large_image": self.large_image,
+                "large_text": self.large_text,
+                "small_image": self.small_image,
+                "small_text": self.small_text,
+                "start": self.start,
+            }
+        
+        def reset_time(self):
+            self.start = time.time()
 
         def auth(self):
             try:
@@ -59,62 +75,69 @@ init -950 python in discord:
             except (DiscordError, DiscordNotFound):
                 self.rpc = None
 
-        def connect(self):
+        def connect(self, reset=False):
             if self.rpc is None: self.auth()
             if self.rpc is None: return
-            self.rpc.connect()
-            self.rpc_connected = True
-            self.update_rpc()
+            try:
+                self.rpc.connect()
+                self.rpc_connected = True
+                if reset:
+                    self.set(**self.props)
+            except InvalidPipe:
+                self.rpc = None
 
-        def exit(self):
+        def close(self):
             if self.rpc is None: return
             self.rpc.close()
             self.rpc_connected = False
+
+        def reset(self):
+            self.set(**self.original_props)
         
-        def update_status(self, state, details, large_img=None, large_txt=None, small_img=None, small_txt=None):
-            if self.rpc is None:
-                return
+        def record_to_rollback(self):
+            global rollback_status
+            rollback_status = deepcopy(self.props)
 
-            persistent.discord_rpc_save_state = {
-                "state": state,
-                "details": details,
-                "large_img": str(large_img) if large_img else self.large_img,
-                "large_txt": large_txt if large_txt else self.large_txt,
-                "small_img": str(small_img) if small_img else self.small_img,
-                "small_txt": small_txt if small_txt else self.small_txt,
-            }
+        def rollback_check(self):
+            global rollback_status
+
+            if self.rpc is None: return
+            if self.props != rollback_status:
+                self.set(**rollback_status)
+
+        def on_load(self):
+            global rollback_status
+            self.set(**rollback_status)
+
+        def set(self, **props):
+            if self.rpc is None: return
+            self.props = deepcopy(props)
+            self.props["start"] = self.start
+
+            self.rpc.update(**self.props)
+            self.record_to_rollback()
+
+        def update(self, **props):
+            if self.rpc is None: return
+            for p in props:
+                self.props[p] = props[p]
+            self.props["start"] = self.start
             
-            self.update_rpc_info()
+            self.rpc.update(**self.props)
+            self.record_to_rollback()
 
-        def update_rpc_info(self):
-            if self.rpc is None:
-                return
+        def clear(self):
+            self.props = {}
+            self.record_to_rollback()
+            self.rpc.clear()
 
-            p = persistent.discord_rpc_save_state
-
-            self.state = p['state']
-            self.details = p['details']
-            self.large_img = p['large_img']
-            self.large_txt = p['large_txt']
-            self.small_img = p['small_img']
-            self.small_txt = p['small_txt']
-            
-            self.update_rpc()
-        
-        def update_rpc(self):
-            self.rpc.update(
-                state=self.state,
-                details=self.details,
-                start=self.start_time,
-                large_image=self.large_img,
-                large_text=self.large_txt,
-                small_image=self.small_img,
-                small_text=self.small_txt,
-            )
+default discord.rollback_status = {}
 
 init -940 python:
     # Place your Discord RPC token inside the ""'s
     RPC = discord.DiscordRPC("979471077187125248")
 
-    config.quit_callbacks += [RPC.exit] 
-    config.after_load_callbacks += [RPC.update_rpc_info]
+    config.quit_callbacks += [RPC.close] 
+    config.after_load_callbacks += [RPC.on_load]
+    config.interact_callbacks += [RPC.rollback_check] 
+    config.start_callbacks += [RPC.reset]

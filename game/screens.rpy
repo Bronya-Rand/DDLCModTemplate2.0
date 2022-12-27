@@ -1143,12 +1143,12 @@ screen preferences():
                             connect_status = "Connected"
 
                     textbutton rpc_text action [ToggleField(persistent, "enable_discord"), 
-                        If(persistent.enable_discord, Function(RPC.exit), Function(RPC.connect))]
+                        If(persistent.enable_discord, Function(RPC.close), Function(RPC.connect, reset=True))]
                     
                     text "Status: [connect_status]" style "main_menu_version" xalign 0.0
 
                     if persistent.enable_discord and not RPC.rpc_connected:
-                        textbutton "Reconnect" action Function(RPC.connect)
+                        textbutton "Reconnect" action Function(RPC.connect, reset=True)
 
                             
     text "v[config.version]":
