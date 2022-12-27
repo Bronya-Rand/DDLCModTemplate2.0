@@ -5,7 +5,8 @@
 ## BEFORE STARTING READ THIS.
 ## To make RPC work for you, make a new application on Discord's Developer Portal
 ## https://discord.com/developers/applications
-## Follow the comments below in order to setup RPC assets and defining this in DDLC.
+## Follow the comments inside of `set_defaults` in order to setup RPC to your liking.
+## To register the your RPC with your mod, scroll down to line 115.
 
 init -960:
     default persistent.enable_discord = True
@@ -19,9 +20,15 @@ init -950 python in discord:
 
     class DiscordRPC(NoRollback):
         def __init__(self, client_id):
-            ## DO NOT TOUCH THIS
             self.client_id = str(client_id)
+            self.start_time = time.time()
+            
+            self.set_defaults()
+            self.auth()
+            self.connect()
 
+        # Easy method to reset stuff back to stock RPC info.
+        def set_defaults(self):
             # Details indicates what the player is doing ATM
             # Example: In Main Menu
             self.details = renpy.version()
@@ -45,12 +52,6 @@ init -950 python in discord:
             # Defines the text when a user hovers on the small icon in
             # a players' status.
             self.small_txt = config.version  # Uses the version name of the mod
-
-            ## DO NOT TOUCH THIS EITHER
-            self.start_time = time.time()
-            
-            self.auth()
-            self.connect()
 
         def auth(self):
             try:
@@ -112,6 +113,6 @@ init -950 python in discord:
 init -940 python:
     # Place your Discord RPC token inside the ""'s
     RPC = discord.DiscordRPC("979471077187125248")
-    
+
     config.quit_callbacks += [RPC.exit] 
     config.after_load_callbacks += [RPC.update_rpc_info]
