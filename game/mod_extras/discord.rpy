@@ -13,7 +13,7 @@ default persistent.enable_discord = True
 
 init -950 python in discord:
     from pypresence import Presence, DiscordError, DiscordNotFound, InvalidPipe
-    from store import config, NoRollback
+    from store import config, NoRollback, persistent
     from copy import deepcopy
     import time
 
@@ -70,6 +70,10 @@ init -950 python in discord:
             self.start = time.time()
 
         def auth(self):
+            if not persistent.enable_discord: 
+                self.rpc = None
+                return
+                
             try:
                 self.rpc = Presence(self.client_id)
             except (DiscordError, DiscordNotFound):
@@ -82,7 +86,8 @@ init -950 python in discord:
                 self.rpc.connect()
                 self.rpc_connected = True
                 if reset:
-                    self.set(**self.props)
+                    if len(self.props) <= 1: self.set(**self.original_props)
+                    else: self.set(**self.props)
             except InvalidPipe:
                 self.rpc = None
 
