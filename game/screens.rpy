@@ -75,11 +75,6 @@ style normal is default:
 style input:
     color gui.accent_color
 
-style hyperlink_text:
-    color gui.accent_color
-    hover_color gui.hover_color
-    hover_underline True
-
 style splash_text:
     size 24
     color "#000"
@@ -805,7 +800,7 @@ screen about():
                 ## Do not touch/remove these unless the © or – symbol isn't available in your font.
                 ## You may add things above or below it.
                 ## If you are not going with a splashscreen option, this first line MUST stay in the mod.
-                text "Made with GanstaKingofSA's {a=https://github.com/GanstaKingofSA/DDLCModTemplate2.0}DDLC Mod Template 2.0{/a} – Version 4.0.0.\nCopyright © 2019-" + str(datetime.date.today().year) + " Azariel Del Carmen (GanstaKingofSA). All rights reserved.\n"
+                text "Made with GanstaKingofSA's {a=https://github.com/GanstaKingofSA/DDLCModTemplate2.0}DDLC Mod Template 2.0{/a}\nCopyright © 2019-" + str(datetime.date.today().year) + " Azariel Del Carmen (GanstaKingofSA). All rights reserved.\n"
                 text "Doki Doki Literature Club. Copyright © 2017 Team Salvato. All rights reserved.\n"
                 text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n[renpy.license!t]")
 
@@ -833,8 +828,8 @@ style about_text:
 
 style hyperlink_text:
     properties gui.text_properties("hyperlink", accent=True)
-    idle_color "#000"
-    hover_color "#e3b6f5ff"
+    idle_color gui.idle_color
+    hover_color gui.hover_color
     hover_underline True
 
 ## Load and Save screens #######################################################
