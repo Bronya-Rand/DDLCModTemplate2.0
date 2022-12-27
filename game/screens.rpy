@@ -990,6 +990,65 @@ style slot_button_text:
     color "#666"
     outlines []
 
+## Windowed Resolutions
+## Windowed Resolutions allow players to scale the game to different resolutions.
+## Uncomment the below #'s to enable this.
+# screen confirm_res(old_res):
+    
+#     ## Ensure other screens do not get input while this screen is displayed.
+#     modal True
+
+#     zorder 200
+
+#     style_prefix "confirm"
+
+#     add "gui/overlay/confirm.png"
+
+#     frame:
+
+#         vbox:
+#             xalign .5
+#             yalign .5
+#             spacing 30
+
+#             ## This if-else statement either shows a normal textbox or
+#             ## glitched textbox if you are in Sayori's Death Scene and are
+#             ## quitting the game.
+#             # if in_sayori_kill and message == layout.QUIT:
+#             #     add "confirm_glitch" xalign 0.5
+#             # else:
+#             label _("Would you like to keep these changes?"):
+#                 style "confirm_prompt"
+#                 xalign 0.5
+
+#             add DynamicDisplayable(res_text_timer) xalign 0.5
+
+#             hbox:
+#                 xalign 0.5
+#                 spacing 100
+
+#                 ## This if-else statement disables quitting from the quit box
+#                 ## if you are in Sayori's Death Scene, else normal box.
+#                 # if in_sayori_kill and message == layout.QUIT:
+#                 #     textbutton _("Yes") action NullAction()
+#                 #     textbutton _("No") action Hide("confirm")
+#                 # else:
+#                 textbutton _("Yes") action Hide()
+#                 textbutton _("No") action [Function(renpy.set_physical_size, old_res), Hide()]
+    
+#     timer 5.0 action [Function(renpy.set_physical_size, old_res), Hide()]
+
+# init python:
+#     def res_text_timer(st, at):
+#         if st <= 5.0:
+#             time_left = str(round(5.0 - st))
+#             return Text(time_left, style="confirm_prompt"), 0.1
+#         else: return Text("0", style="confirm_prompt"), 0.0
+
+#     def set_physical_resolution(res):
+#         old_res = renpy.get_physical_size()
+#         renpy.set_physical_size(res)
+#         renpy.show_screen("confirm_res", old_res=old_res)
 
 ## Preferences screen ##########################################################
 ##
@@ -1023,8 +1082,18 @@ screen preferences():
                     vbox:
                         style_prefix "radio"
                         label _("Display")
-                        textbutton _("Windowed") action Preference("display", "window")
-                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                        hbox:
+                            viewport:
+                                mousewheel True
+                                scrollbars "vertical"
+                                ysize 110
+                                has vbox
+
+                                textbutton _("Windowed") action Preference("display", "window")
+                                ## To add a windowed resolution, copy the below comment and adjust it by resolution size.
+                                #textbutton "1280x720" action Function(set_physical_resolution, (1280, 720))
+                                textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                                
                 if config.developer:
                     vbox:
                         style_prefix "radio"
