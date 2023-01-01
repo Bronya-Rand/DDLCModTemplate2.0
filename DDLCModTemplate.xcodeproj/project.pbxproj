@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		8097AD172962356F008CC82F /* CREDITS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CREDITS.md; sourceTree = "<group>"; };
+		8097AD18296235AE008CC82F /* game */ = {isa = PBXFileReference; lastKnownFileType = folder; path = game; sourceTree = "<group>"; };
+		8097AD19296235AE008CC82F /* README.linux */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.linux; sourceTree = "<group>"; };
+		8097AD1A296235AE008CC82F /* LinuxLauncher.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = LinuxLauncher.sh; sourceTree = "<group>"; };
+		8097AD1B296235AE008CC82F /* XCODE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = XCODE.md; sourceTree = "<group>"; };
+		8097AD1C296235AE008CC82F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8097AD1D296235AE008CC82F /* Original Game Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Original Game Scripts"; sourceTree = "<group>"; };
+		8097AD1E296235AE008CC82F /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
+		8097AD1F296235AE008CC82F /* README.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = README.html; sourceTree = "<group>"; };
+		8097AD20296235AE008CC82F /* characters */ = {isa = PBXFileReference; lastKnownFileType = folder; path = characters; sourceTree = "<group>"; };
 		BF7B5EA622AD8ACC007BEAD8 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -14,7 +24,17 @@
 		BF7B5E7122AD8AA2007BEAD8 = {
 			isa = PBXGroup;
 			children = (
+				8097AD172962356F008CC82F /* CREDITS.md */,
 				BF7B5EA622AD8ACC007BEAD8 /* Config.xcconfig */,
+				8097AD20296235AE008CC82F /* characters */,
+				8097AD1E296235AE008CC82F /* Documentation */,
+				8097AD18296235AE008CC82F /* game */,
+				8097AD1A296235AE008CC82F /* LinuxLauncher.sh */,
+				8097AD1D296235AE008CC82F /* Original Game Scripts */,
+				8097AD1F296235AE008CC82F /* README.html */,
+				8097AD19296235AE008CC82F /* README.linux */,
+				8097AD1C296235AE008CC82F /* README.md */,
+				8097AD1B296235AE008CC82F /* XCODE.md */,
 			);
 			sourceTree = "<group>";
 		};
