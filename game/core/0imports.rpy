@@ -4,7 +4,7 @@
 # features.
 
 python early:
-    # For Achievements/Gallery
+    # For DSR/DSP, Effects
     import math 
 
     # For Credits
@@ -21,7 +21,7 @@ python early:
     import subprocess
     import platform
 
-    # For Gallery
-    import threading
-    import renpy.display.image as imgcore
-
+init python:
+    # Achievements/Gallery
+    from store.achievements import achievementList, Achievement, AchievementCount
+    from store.gallery import GalleryImage, galleryList

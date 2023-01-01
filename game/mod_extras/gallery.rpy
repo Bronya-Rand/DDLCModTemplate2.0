@@ -4,29 +4,29 @@
 # This file contains the code for the gallery menu that shows backgrounds and 
 # sprites from your mod.
 
-init python:
+default persistent.gallery_imgs = {}
+
+init -1 python in gallery:
+    from store import Transform, persistent, config, Hide, Composite
+    import os
+    import renpy.display.image as imgcore
     galleryList = {} 
-    current_img_name = None
 
     # This class declares the code to make a image for the gallery menu.
     # Syntax:
     #   image - This variable contains the path or image tag (sayori 1a) of the 
-    #           image.
+    #       image.
     #   small_size - This variable contain the path or image tag of a shorten version
-    #                   of the image in the gallery.
+    #       of the image in the gallery.
     #   name - This variable contains the human-readable name of the image in the
-    #           gallery.
+    #       gallery.
     #   artist - This variable contains the human-readable author name of the image.
     #   sprite - This variable checks if the image declared is a character sprite.
-    #   watermark - This variable checks if the exporter should export a watermarked image
-    #               of the image shown in the gallery.
-    #   unlocked - This variable checks if this image should be included in the gallery
-    #               or until it is shown in-game.
+    #   already_unlocked - This variable makes sure the image is unlocked already when 
+    #       the game is launched.
     class GalleryImage:
 
-        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, unlocked=True):
-            global galleryList 
-
+        def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, already_unlocked=False):
             # The image variable name in-game
             self.file = image
 
@@ -34,20 +34,18 @@ init python:
             if name: self.name = name
             else: self.name = image
 
+            if self.name not in persistent.gallery_imgs:
+                persistent.gallery_imgs[self.name] = {
+                    "unlocked": True if already_unlocked else False
+                }
+
             # The human readable author of the image
             self.artist = artist
 
             # This condition sees if the image given is a sprite
             self.sprite = sprite
 
-            self.unlocked_str = None
-
-            # A condition to see if the image should be shown
-            if unlocked is True: self.unlocked = True
-            elif not unlocked: self.unlocked = renpy.seen_image(image)
-            else: 
-                self.unlocked_str = unlocked
-                self.unlocked = eval(unlocked)
+            self.unlocked = persistent.gallery_imgs[self.name]['unlocked']
 
             if sprite:
                 self.image = Composite(
@@ -66,14 +64,18 @@ init python:
                         Transform(image, zoom=0.137)
                     )
             else:
-                self.image = Transform(image, xysize=(config.screen_width, config.screen_height-40))
+                self.image = Transform(image, size=(config.screen_width, config.screen_height-40))
 
                 if small_size:
                     self.small_size = small_size 
                 else:     
-                    self.small_size = Transform(image, xysize=(234, 132))
+                    self.small_size = Transform(image, size=(234, 132))
 
             galleryList[self.name] = self
+        
+        def unlock(self):
+            self.unlocked = True
+            persistent.gallery_imgs[self.name]['unlocked'] = True
 
         # This function exports the selected image to the players' computer.
         def export(self):
@@ -90,7 +92,7 @@ init python:
                     renpy.file(self.file)
                     export = self.file
                 except:
-                    export = renpy.get_registered_image(self.file).filename
+                    export = self.get_registered_image().filename
                     
                 if renpy.android:
                     with open(os.path.join(os.environ['ANDROID_PUBLIC'], "gallery", os.path.splitext(export)[0].split("/")[-1] + os.path.splitext(export)[-1]), "wb") as p:
@@ -100,35 +102,25 @@ init python:
                         p.write(renpy.file(export).read())
 
                     renpy.show_screen("dialog", message='Exported "%s" to the gallery folder.' % self.name, ok_action=Hide("dialog"))
+        
+        # For Ren'Py 6 compatibility. This function gets the image displayed in the
+        # gallery from from 'renpy.display.image'.
+        def get_registered_image(self): 
 
-    class GalleryThread():
-        def __init__(self):
-            self.lock = threading.RLock()
-            self.periodic_condition = threading.Condition()
-            self.gallery_thread = threading.Thread(target=self.gallery_thread_main)
-            self.gallery_thread.daemon = True
-            self.gallery_thread.start()
+            if not isinstance(self.name, tuple):
+                name = tuple(self.name.split())
 
-        def gallery_thread_main(self):
-            global galleryList
-            
-            while True:
-                with self.periodic_condition:
-                    self.periodic_condition.wait(1.0)
+            return imgcore.images.get(name)
 
-                with self.lock:
-                    for name, gl in galleryList.items():
-                        if gl.unlocked_str is not None:
-                            gl.unlocked = eval(gl.unlocked_str)
-
-    gallery_image_thread = GalleryThread()
-
+init python:
+    # from store.gallery import GalleryImage, galleryList
+    current_img_name = None
     # This function advances to the next/previous image in the gallery.
     def next_image(back=False):
         global current_img_name
 
         # Create a new list from the keys
-        all_keys = list(galleryList.keys())
+        all_keys = [k for k, v in galleryList.items() if v.unlocked]
 
         # Get the current key as index
         current_index = all_keys.index(current_img_name)
@@ -143,9 +135,12 @@ init python:
 
     # This section declares the images to be shown in the gallery. See the
     # 'GalleryMenu' class syntax to declare a image to the gallery.
-    residential = GalleryImage("bg residential_day")
-    s1a = GalleryImage("sayori 1", sprite=True)
+    residential = GalleryImage("bg residential_day", already_unlocked=True)
+    s1a = GalleryImage("sayori 1", sprite=True, already_unlocked=True)
     m1a = GalleryImage("monika 1", name="Monika", artist="Satchely", sprite=True)
+
+    # Fast Sort (DO NOT REMOVE)
+    galleryList = {k: galleryList[k] for k in sorted(galleryList)}
 
 ## Gallery Screen #############################################################
 ##
@@ -219,7 +214,7 @@ screen preview():
     hbox: 
         add galleryList[current_img_name].image yoffset 40
     hbox:
-        add Solid("#fcf") xysize(config.screen_width, 40)
+        add Solid("#fcf") size(config.screen_width, 40)
 
     hbox:
         ypos 0.005
