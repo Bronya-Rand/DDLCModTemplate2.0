@@ -5,25 +5,27 @@
 # shows your progress throughout the mod.
 
 default persistent.achievements = {}
-default temp_counter = 0
 
 init -1 python in achievements:
     from store import persistent, im
     achievementList = {}
     
-    # This class declares the code to make a achievement.
+    # This class declares the code to make a achievement (Non-Counting).
     # Syntax:
     #   name - This variable contains the human-readable name of the achievement.
     #   description - This variable contains the human-readable description of your
-    #                   achievement.
+    #       achievement.
     #   image - This variable contains the path or image tag of the achievement.
     #   persistent - This variable contain the name of a in-game variable to check if the
-    #                   achievement has been completed or not.
+    #       achievement has been completed or not.
     #   count - This variable checks if the achievement declared requires a number to match.
-    #   maxCount - This variable stores the maxCount a achievement needs to be completed.
+    #   locked_desc - This variable contains the human-readable description of your
+    #       achievement when it is locked.
+    #   show_desc_while_locked - This variable determines whether to show the actual description
+    #       of the achievement or a locked one.
     class Achievement(object):
 
-        def __init__(self, name, description, image, show_desc_while_locked=False):
+        def __init__(self, name, description, image, locked_desc="???", show_desc_while_locked=False):
             # The human readable name of the achievement.
             self.name = name
 
@@ -36,7 +38,7 @@ init -1 python in achievements:
             # The image variable or path of the achievement image if the 
             # achievement hasn't been unlocked.
             self.locked = im.MatrixColor(image, im.matrix.desaturate())
-            self.locked_desc = "???"
+            self.locked_desc = locked_desc
 
             self.show_desc_while_locked = show_desc_while_locked
 
@@ -54,7 +56,12 @@ init -1 python in achievements:
             self.unlocked = True
             persistent.achievements[self.name]['unlocked'] = True
             renpy.show_screen("achievement_notify", self)
-        
+    
+    # This class declares the code to make a achievement (Non-Counting).
+    # This class has the same syntax as Achievement but 1 more argurment.
+    # Refer to Achievement for the rest of the argurments here.
+    # Syntax:
+    #   max_count = The total counts needed to unlock the achievement
     class AchievementCount(Achievement):
         def __init__(self, name, description, image, show_desc_while_locked=False, max_count=100):
             Achievement.__init__(self, name, description, image, show_desc_while_locked)
