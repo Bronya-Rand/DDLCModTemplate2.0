@@ -138,7 +138,7 @@ init python:
     s1a = GalleryImage("sayori 1", sprite=True, already_unlocked=True)
     m1a = GalleryImage("monika 1", name="Monika", artist="Satchely", sprite=True)
 
-    # Fast Sort
+    # Fast Sort (DO NOT REMOVE)
     galleryList = {k: galleryList[k] for k in sorted(galleryList)}
 
 ## Gallery Screen #############################################################

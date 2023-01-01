@@ -79,6 +79,9 @@ init python:
     lets_count = AchievementCount("Count", "1-3",
             "gui/logo.png", max_count=3)
 
+    # Fast Sort (DO NOT REMOVE)
+    achievementList = {k: achievementList[k] for k in sorted(achievementList)}
+
 ## Achievements Screen #############################################################
 ##
 ## This screen is used to make a achievements view of all possible achievements
