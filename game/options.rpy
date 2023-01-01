@@ -13,7 +13,7 @@ define config.name = "DDLC Mod Template – Python 3 Edition"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "4.1.1–Py3"
+define config.version = "4.2.0–Py3"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
