@@ -1023,90 +1023,90 @@ style viewframe_text is confirm_prompt_text:
 ## Windowed Resolutions
 ## Windowed Resolutions allow players to scale the game to different resolutions.
 ## Uncomment the below #'s to enable this.
-screen confirm_res(old_res):
+# screen confirm_res(old_res):
     
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
+#     ## Ensure other screens do not get input while this screen is displayed.
+#     modal True
 
-    zorder 150
+#     zorder 150
 
-    style_prefix "confirm"
+#     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png"
+#     add "gui/overlay/confirm.png"
 
-    frame:
+#     frame:
 
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
+#         vbox:
+#             xalign .5
+#             yalign .5
+#             spacing 30
 
-            ## This if-else statement either shows a normal textbox or
-            ## glitched textbox if you are in Sayori's Death Scene and are
-            ## quitting the game.
-            # if in_sayori_kill and message == layout.QUIT:
-            #     add "confirm_glitch" xalign 0.5
-            # else:
-            label _("Would you like to keep these changes?"):
-                style "confirm_prompt"
-                xalign 0.5
+#             ## This if-else statement either shows a normal textbox or
+#             ## glitched textbox if you are in Sayori's Death Scene and are
+#             ## quitting the game.
+#             # if in_sayori_kill and message == layout.QUIT:
+#             #     add "confirm_glitch" xalign 0.5
+#             # else:
+#             label _("Would you like to keep these changes?"):
+#                 style "confirm_prompt"
+#                 xalign 0.5
 
-            add DynamicDisplayable(res_text_timer) xalign 0.5
+#             add DynamicDisplayable(res_text_timer) xalign 0.5
 
-            hbox:
-                xalign 0.5
-                spacing 100
+#             hbox:
+#                 xalign 0.5
+#                 spacing 100
 
-                textbutton _("Yes") action Hide()
-                textbutton _("No") action [Function(renpy.set_physical_size, old_res), Hide()]
+#                 textbutton _("Yes") action Hide()
+#                 textbutton _("No") action [Function(renpy.set_physical_size, old_res), Hide()]
     
-    timer 5.0 action [Function(renpy.set_physical_size, old_res), Hide()]
+#     timer 5.0 action [Function(renpy.set_physical_size, old_res), Hide()]
 
-init python:
-    def res_text_timer(st, at):
-        if st <= 5.0:
-            time_left = str(round(5.0 - st))
-            return Text(time_left, style="confirm_prompt_text"), 0.1
-        else: return Text("0", style="confirm_prompt_text"), 0.0
+# init python:
+#     def res_text_timer(st, at):
+#         if st <= 5.0:
+#             time_left = str(round(5.0 - st))
+#             return Text(time_left, style="confirm_prompt_text"), 0.1
+#         else: return Text("0", style="confirm_prompt_text"), 0.0
 
-    def set_physical_resolution(res):
-        old_res = renpy.get_physical_size()
-        renpy.set_physical_size(res)
-        renpy.show_screen("confirm_res", old_res=old_res)
+#     def set_physical_resolution(res):
+#         old_res = renpy.get_physical_size()
+#         renpy.set_physical_size(res)
+#         renpy.show_screen("confirm_res", old_res=old_res)
 
-screen display_options():
+# screen display_options():
 
-    style_prefix "viewframe"
+#     style_prefix "viewframe"
 
-    modal True
+#     modal True
 
-    zorder 150
+#     zorder 150
 
-    use viewframe_options(_("Display Resolutions")):
+#     use viewframe_options(_("Display Resolutions")):
 
-        default scale = renpy.get_physical_size()
+#         default scale = renpy.get_physical_size()
 
-        vbox:
-            xmaximum 500
-            ysize 120
-            viewport:
-                style_prefix "radio"
-                scrollbars "vertical"
-                mousewheel True
-                draggable True
-                has vbox
+#         vbox:
+#             xmaximum 500
+#             ysize 120
+#             viewport:
+#                 style_prefix "radio"
+#                 scrollbars "vertical"
+#                 mousewheel True
+#                 draggable True
+#                 has vbox
 
-                textbutton "1280x720" action SetScreenVariable("scale", (1280, 720))
-                textbutton "1600x900" action SetScreenVariable("scale", (1600, 900))
+#                 textbutton "1280x720" action SetScreenVariable("scale", (1280, 720))
+#                 textbutton "1600x900" action SetScreenVariable("scale", (1600, 900))
         
-        null height 10
+#         null height 10
 
-        hbox:
-            xalign 0.5
-            spacing 100
+#         hbox:
+#             xalign 0.5
+#             spacing 100
 
-            textbutton _("Reset") action [Hide(), Function(renpy.reset_physical_size)]
-            textbutton _("Set") action [Hide(), Function(set_physical_resolution, scale)]
+#             textbutton _("Reset") action [Hide(), Function(renpy.reset_physical_size)]
+#             textbutton _("Set") action [Hide(), Function(set_physical_resolution, scale)]
 
 screen text_options():
     modal True
@@ -1282,7 +1282,7 @@ screen preferences():
                         hbox:
                             textbutton _("Windowed") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
-                            textbutton _("More") action Show("display_options")
+                            # textbutton _("More") action Show("display_options")
                     
                     vbox:
                         style_prefix "radio"
