@@ -6,7 +6,7 @@
 
 default persistent.gallery_imgs = {}
 
-init python in gallery:
+init -1 python in gallery:
     from store import LiveComposite, Transform, persistent, config, Hide
     import os
     import renpy.display.image as imgcore
