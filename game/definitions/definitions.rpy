@@ -30,6 +30,9 @@ init -3 python:
                      # since `absolute * float` -> `float`
                      # we wanna keep the same type
         else: return type(orig_val)(orig_val * dsp_scale)
+    
+    # This makes evaluating the value faster
+    renpy.pure(dsp)
 
     ## Dynamic Super Resolution
     # DSR is a feature in where the game upscales asset sizes to higher
