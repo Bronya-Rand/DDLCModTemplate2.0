@@ -1,4 +1,4 @@
-## Copyright 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## Copyright 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
 
 # bsod.rpy
 # This file contains the screen code to display a fake Blue Screen of death.
