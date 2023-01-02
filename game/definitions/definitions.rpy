@@ -27,7 +27,9 @@ init -3 python:
         ceil = not isinstance(orig_val, float)
         dsp_scale = config.screen_width / 1280.0
         if ceil: return math.ceil(orig_val * dsp_scale)
-        else: return orig_val * dsp_scale
+                     # since `absolute * float` -> `float`
+                     # we wanna keep the same type
+        else: return type(orig_val)(orig_val * dsp_scale)
 
     ## Dynamic Super Resolution
     # DSR is a feature in where the game upscales asset sizes to higher
