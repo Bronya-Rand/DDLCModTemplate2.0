@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		8097AD2129623613008CC82F /* README.linux */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.linux; sourceTree = "<group>"; };
+		8097AD2229623613008CC82F /* CREDITS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CREDITS.md; sourceTree = "<group>"; };
+		8097AD2329623614008CC82F /* README.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = README.html; sourceTree = "<group>"; };
+		8097AD2429623614008CC82F /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		8097AD2529623614008CC82F /* Original Script Files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Original Script Files"; sourceTree = "<group>"; };
+		8097AD2629623614008CC82F /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
+		8097AD2729623614008CC82F /* LinuxLauncher.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = LinuxLauncher.sh; sourceTree = "<group>"; };
+		8097AD2829623614008CC82F /* XCODE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = XCODE.md; sourceTree = "<group>"; };
+		8097AD2929623614008CC82F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8097AD2A29623614008CC82F /* game */ = {isa = PBXFileReference; lastKnownFileType = folder; path = game; sourceTree = "<group>"; };
+		8097AD2B29623614008CC82F /* characters */ = {isa = PBXFileReference; lastKnownFileType = folder; path = characters; sourceTree = "<group>"; };
 		BF7B5EA622AD8ACC007BEAD8 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -14,6 +25,17 @@
 		BF7B5E7122AD8AA2007BEAD8 = {
 			isa = PBXGroup;
 			children = (
+				8097AD2B29623614008CC82F /* characters */,
+				8097AD2229623613008CC82F /* CREDITS.md */,
+				8097AD2629623614008CC82F /* Documentation */,
+				8097AD2A29623614008CC82F /* game */,
+				8097AD2729623614008CC82F /* LinuxLauncher.sh */,
+				8097AD2529623614008CC82F /* Original Script Files */,
+				8097AD2329623614008CC82F /* README.html */,
+				8097AD2129623613008CC82F /* README.linux */,
+				8097AD2929623614008CC82F /* README.md */,
+				8097AD2429623614008CC82F /* requirements.txt */,
+				8097AD2829623614008CC82F /* XCODE.md */,
 				BF7B5EA622AD8ACC007BEAD8 /* Config.xcconfig */,
 			);
 			sourceTree = "<group>";
