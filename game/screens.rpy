@@ -30,6 +30,7 @@ default translations = scan_translations()
 # Enables the ability to add more settings in the game such as uncensored mode.
 default extra_settings = True
 default enable_extras_menu = True
+default enable_languages = True
 
 ## Color Styles
 ################################################################################
