@@ -24,7 +24,7 @@ init -3 python:
     # with higher resolutions (1080p).
     # This is just simple division from Adobe, implemented in Python.
     def dsp(orig_val):
-        ceil = False if isinstance(orig_val, float) else True
+        ceil = not isinstance(orig_val, float)
         dsp_scale = config.screen_width / 1280.0
         if ceil: return math.ceil(orig_val * dsp_scale)
         else: return orig_val * dsp_scale
