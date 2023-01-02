@@ -28,30 +28,28 @@ Optional but very appreciated credits that you can also add are
    4. Present a custom idea to me for approval either through Discord or Reddit.
 
 ### Template Features
-1. Ren'Py 8 Team Salvato Compliant Mods!
-2. Team Salvato compliant splash screen.
+1. Ren'Py 8 Team Salvato Compliant Mods and Splashscreen (Disclaimer)!
 3. DDLC's exact RPY files with explainations.
-4. Support for macOS and Linux!*
+4. Support for macOS, Linux* and Android**!
    > \* - Linux users must run your mod via `LinuxLauncher.sh`.
-5. Android Support! - Bring your mod over to Android devices!\*
-    > \* - If your mod uses simple code or DDLC's/template built-in functions. More complex code or non-mobile friendly features may require some adjustments and changes to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
-<!-- 6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
-    > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md) -->
-6. [BETA] Pronoun Support! - Allow players to identify with the pronoun they go by!
+
+   > \*\* - If your mod uses simple code or DDLC's/template built-in functions. More complex code or non-mobile friendly features may require some adjustments and changes to get working. See *Android Mod Guide.pdf* or visit the DDMC Discord for additional help.
+6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
+    > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
+7. [BETA] Pronoun Support! - Allow players to identify with the pronoun they go by!
     > See *mod_extras/pronouns.rpy* in the `game` folder for a example on how to use this feature.
-7. Better Blue Screens of Death! - Make your own BSOD easily in-game on every operating system! 
-8. Uncensored Mode! - Allow more "sensitive" content to be shown in-game.
-9. Let's Play Mode (Streamer Mode)! - A better alternative to hide streamer information and more!
-10. Gallery Menu! - Allow players to see the work you have done in-game!
-11. Achievements Menu! - Set up achievements in your mod for players to complete your mod in full!
-12. Different Menu Button Colors! - Have different colored buttons in the menu prompt to your hearts content.
-13. Automatic GUI Coloring! - Color the GUI in the game to whatever you like without editing the asset files themselves! 
-14. Terra's in-depth Poem Game guide!
-15. NVL Support thanks to Yagamirai01!
-16. Patches for several Ren'Py releases and Windows features.
-17. Python 3 support and code now in use!
-18. [BETA] Discord Rich Presence support!
-19. New transforms.
+8. Better Blue Screens of Death! - Make your own BSOD easily in-game on every OS! 
+9. Uncensored Mode and Let's Play Mode! - Allow more "sensitive" content to be shown in-game and protect your IRL information while streaming/recording!
+10. Gallery Menu and Achievements Menu! - Allow players to see the work you have done in-game and earn achievements for playing your mod!
+12. Automatic GUI Coloring and Different Menu Button Colors! - Color the GUI and/or menu buttons in the game to whatever you like without editing the asset files themselves! 
+13. Terra's in-depth Poem Game guide!
+14. NVL Support thanks to Yagamirai01!
+15. Patches for several Ren'Py releases and Windows features.
+16. Python 3 support and code now in use!
+17. [BETA] Discord Rich Presence support!
+18. Dynamic Super Resolution/Dynamic Super Positions (DSR/DSP) and Custom Resolutions! - Scale positions and/or your assets higher than they usually can go and display DDLC in different resolution modes. The DDLC Mod Template is now a universal X resolution template!
+19. Player Name Change! - Did you wrongly typed your name or want to change it? You can now do so very easily!
+20. New Monika Console and Settings Menu! - Enjoy a easier console to type commands in and a cleaner settings UI compared to the original game.
 
 ### Returned Features
 1. Ghost Menu (Dan's spooky easter egg).
@@ -68,6 +66,6 @@ Follow the steps listed [here](https://ganstakingofsa.github.io/information/guid
 Refer to [*The DDLC Android Mod Guide*](./Documentation/Android%20Mod%20Guide.pdf) for more in-depth information about making your mod work on Android.
 > For older templates, refer to the PDF in your templates' ZIP file as the latest guide may not match your current template.
 
-Copyright © 2019-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+Copyright © 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
 
 Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato (Dan Salvato LLC). Copyright © 2017 Team Salvato. All rights reserved.
