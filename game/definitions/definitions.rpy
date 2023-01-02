@@ -38,12 +38,9 @@ init -3 python:
     # DSR is a feature in where the game upscales asset sizes to higher
     # resolutions (1080p) and sends back a modified transform.
     # (Recommend that you just make higher res assets than upscale lower res ones)
-    class DSR:
-        def __call__(self, path):
-            img_bounds = renpy.image_size(path)
-            return Transform(path, size=(dsp(img_bounds[0]), dsp(img_bounds[1])))
-
-    dsr = DSR()
+    def dsr(path):
+        img_bounds = renpy.image_size(path)
+        return Transform(path, size=(dsp(img_bounds[0]), dsp(img_bounds[1])))
 
 # This init python statement sets up the functions, keymaps and channels
 # for the game.
