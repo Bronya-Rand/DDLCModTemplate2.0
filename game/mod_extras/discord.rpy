@@ -9,7 +9,7 @@
 
 ## Based similarly off off Lazalith's RPC code: https://github.com/Lezalith/RenPy-Discord-Presence
 
-default persistent.enable_discord = True
+default persistent.enable_discord = not renpy.android
 
 init -950 python in discord:
     from pypresence import Presence, DiscordError, DiscordNotFound, InvalidPipe
@@ -46,7 +46,7 @@ init -950 python in discord:
             # Defines the text when a user hovers on the large icon in
             # a players' status.
             # Example: DDLC Mod Template
-            self.large_text  = config.name  # Uses the name of the mod defined in-game.
+            self.large_text  = "Remembering"  # Uses the name of the mod defined in-game.
 
             # Defines the smallest image to use in rich presence as the
             # secondary icon.

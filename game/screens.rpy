@@ -1227,20 +1227,21 @@ screen extra_options():
                     ok_action=Hide("dialog")
                 )])
 
-        label _("Discord RPC")
+        if not renpy.android:
+            label _("Discord RPC")
 
-        python:
-            connect_status = "Disconnected"
-            if RPC.rpc_connected:
-                connect_status = "Connected"
+            python:
+                connect_status = "Disconnected"
+                if RPC.rpc_connected:
+                    connect_status = "Connected"
 
-        textbutton "Enable" action [ToggleField(persistent, "enable_discord"), 
-            If(persistent.enable_discord, Function(RPC.close), Function(RPC.connect, reset=True))]
-        
-        text "Status: [connect_status]" style "main_menu_version" xalign 0.0
+            textbutton "Enable" action [ToggleField(persistent, "enable_discord"), 
+                If(persistent.enable_discord, Function(RPC.close), Function(RPC.connect, reset=True))]
+            
+            text "Status: [connect_status]" style "main_menu_version" xalign 0.0
 
-        if persistent.enable_discord and not RPC.rpc_connected:
-            textbutton "Reconnect" action Function(RPC.connect, reset=True) style "viewframe_button"
+            if persistent.enable_discord and not RPC.rpc_connected:
+                textbutton "Reconnect" action Function(RPC.connect, reset=True) style "viewframe_button"
 
         label _("Player Name")
         vbox:
