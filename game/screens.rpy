@@ -1284,13 +1284,13 @@ screen preferences():
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
                             # textbutton _("More") action Show("display_options")
                     
-                    vbox:
-                        style_prefix "radio"
-                        label _("Game Settings")
-                        hbox:
-                            textbutton _("Text") action Show("text_options")
-                            textbutton _("Audio") action Show("audio_options")
-                            textbutton _("Extras") action Show("extra_options")
+                vbox:
+                    style_prefix "radio"
+                    label _("Game Settings")
+                    hbox:
+                        textbutton _("Text") action Show("text_options")
+                        textbutton _("Audio") action Show("audio_options")
+                        textbutton _("Extras") action Show("extra_options")
 
                 if enable_languages and translations:
                     vbox:
