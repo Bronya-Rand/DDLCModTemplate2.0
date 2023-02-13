@@ -1052,10 +1052,10 @@ style viewframe_text is confirm_prompt_text:
 #                 #     textbutton _("Yes") action NullAction()
 #                 #     textbutton _("No") action Hide("confirm")
 #                 # else:
-#                 textbutton _("Yes") action Hide()
-#                 textbutton _("No") action [Function(renpy.set_physical_size, old_res), Hide()]
+#                 textbutton _("Yes") action Hide("confirm_res")
+#                 textbutton _("No") action [Function(renpy.set_physical_size, old_res), Hide("confirm_res")]
     
-#     timer 5.0 action [Function(renpy.set_physical_size, old_res), Hide()]
+#     timer 5.0 action [Function(renpy.set_physical_size, old_res), Hide("confirm_res")]
 
 # init python:
 #     def res_text_timer(st, at):
@@ -1069,39 +1069,39 @@ style viewframe_text is confirm_prompt_text:
 #         renpy.set_physical_size(res)
 #         renpy.show_screen("confirm_res", old_res=old_res)
 
-screen display_options():
+# screen display_options():
 
-    style_prefix "viewframe"
+#     style_prefix "viewframe"
 
-    modal True
+#     modal True
 
-    zorder 150
+#     zorder 150
 
-    use viewframe_options(_("Display Resolutions")):
+#     use viewframe_options(_("Display Resolutions")):
 
-        default scale = renpy.get_physical_size()
+#         default scale = renpy.get_physical_size()
 
-        vbox:
-            xmaximum 500
-            ysize 120
-            viewport:
-                style_prefix "radio"
-                scrollbars "vertical"
-                mousewheel True
-                draggable True
-                has vbox
+#         vbox:
+#             xmaximum 500
+#             ysize 120
+#             viewport:
+#                 style_prefix "radio"
+#                 scrollbars "vertical"
+#                 mousewheel True
+#                 draggable True
+#                 has vbox
 
-                textbutton "1280x720" action SetScreenVariable("scale", (1280, 720))
-                textbutton "1600x900" action SetScreenVariable("scale", (1600, 900))
+#                 textbutton "1280x720" action SetScreenVariable("scale", (1280, 720))
+#                 textbutton "1600x900" action SetScreenVariable("scale", (1600, 900))
 
-        null height 10
+#         null height 10
 
-        hbox:
-            xalign 0.5
-            spacing 100
+#         hbox:
+#             xalign 0.5
+#             spacing 100
 
-            textbutton _("Reset") action [Hide(), Function(renpy.reset_physical_size)]
-            textbutton _("Set") action [Hide(), Function(set_physical_resolution, scale)]
+#             textbutton _("Reset") action [Hide("display_options"), Function(renpy.reset_physical_size)]
+#             textbutton _("Set") action [Hide("display_options"), Function(set_physical_resolution, scale)]
 
 screen text_options():
     modal True
@@ -1142,7 +1142,7 @@ screen text_options():
             xalign 0.5
             spacing 100
 
-            textbutton _("OK") action Hide() style "confirm_button"
+            textbutton _("OK") action Hide("text_options") style "confirm_button"
 
 screen audio_options():
     style_prefix "viewframe"
@@ -1200,7 +1200,7 @@ screen audio_options():
             xalign 0.5
             spacing 100
 
-            textbutton _("OK") action Hide() style "confirm_button"
+            textbutton _("OK") action Hide("audio_options") style "confirm_button"
 
 screen extra_options():
     style_prefix "viewframe"
@@ -1258,7 +1258,7 @@ screen extra_options():
             xalign 0.5
             spacing 100
 
-            textbutton _("OK") action Hide() style "confirm_button"
+            textbutton _("OK") action Hide("extra_options") style "confirm_button"
 
 ## Preferences screen ##########################################################
 ##
