@@ -1028,7 +1028,7 @@ style viewframe_text is confirm_prompt_text:
 #     ## Ensure other screens do not get input while this screen is displayed.
 #     modal True
 
-#     zorder 150
+#     zorder 200
 
 #     style_prefix "confirm"
 
@@ -1057,17 +1057,23 @@ style viewframe_text is confirm_prompt_text:
 #                 xalign 0.5
 #                 spacing 100
 
-#                 textbutton _("Yes") action Hide()
-#                 textbutton _("No") action [Function(renpy.set_physical_size, old_res), Hide()]
+#                 ## This if-else statement disables quitting from the quit box
+#                 ## if you are in Sayori's Death Scene, else normal box.
+#                 # if in_sayori_kill and message == layout.QUIT:
+#                 #     textbutton _("Yes") action NullAction()
+#                 #     textbutton _("No") action Hide("confirm")
+#                 # else:
+#                 textbutton _("Yes") action Hide("confirm_res")
+#                 textbutton _("No") action [Function(renpy.set_physical_size, old_res), Hide("confirm_res")]
     
-#     timer 5.0 action [Function(renpy.set_physical_size, old_res), Hide()]
+#     timer 5.0 action [Function(renpy.set_physical_size, old_res), Hide("confirm_res")]
 
 # init python:
 #     def res_text_timer(st, at):
 #         if st <= 5.0:
 #             time_left = str(round(5.0 - st))
-#             return Text(time_left, style="confirm_prompt_text"), 0.1
-#         else: return Text("0", style="confirm_prompt_text"), 0.0
+#             return Text(time_left, style="confirm_prompt"), 0.1
+#         else: return Text("0", style="confirm_prompt"), 0.0
 
 #     def set_physical_resolution(res):
 #         old_res = renpy.get_physical_size()
@@ -1098,15 +1104,15 @@ style viewframe_text is confirm_prompt_text:
 
 #                 textbutton "1280x720" action SetScreenVariable("scale", (1280, 720))
 #                 textbutton "1600x900" action SetScreenVariable("scale", (1600, 900))
-        
+
 #         null height 10
 
 #         hbox:
 #             xalign 0.5
 #             spacing 100
 
-#             textbutton _("Reset") action [Hide(), Function(renpy.reset_physical_size)]
-#             textbutton _("Set") action [Hide(), Function(set_physical_resolution, scale)]
+#             textbutton _("Reset") action [Hide("display_options"), Function(renpy.reset_physical_size)]
+#             textbutton _("Set") action [Hide("display_options"), Function(set_physical_resolution, scale)]
 
 screen text_options():
     modal True
@@ -1120,13 +1126,13 @@ screen text_options():
             textbutton _("Disable") action Preference("rollback side", "disable")
             textbutton _("Left") action Preference("rollback side", "left")
             textbutton _("Right") action Preference("rollback side", "right")
-        
+
         label _("Skip")
         hbox:
             textbutton _("Unseen Text") action Preference("skip", "toggle")
             textbutton _("After Choices") action Preference("after choices", "toggle")
             #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-        
+
         hbox:
             spacing 10
             label _("Text Speed")
@@ -1140,18 +1146,18 @@ screen text_options():
             text str(round(preferences.afm_time)) style "viewframe_text"
 
         bar value Preference("auto-forward time") xsize 500
-        
+
         null height 10
 
         hbox:
             xalign 0.5
             spacing 100
 
-            textbutton _("OK") action Hide() style "confirm_button"
+            textbutton _("OK") action Hide("text_options") style "confirm_button"
 
 screen audio_options():
     style_prefix "viewframe"
-    
+
     modal True
 
     zorder 150
@@ -1198,14 +1204,14 @@ screen audio_options():
             textbutton _("Mute All"):
                 action Preference("all mute", "toggle")
                 style "mute_all_button"
-        
+
         null height 10
 
         hbox:
             xalign 0.5
             spacing 100
 
-            textbutton _("OK") action Hide() style "confirm_button"
+            textbutton _("OK") action Hide("audio_options") style "confirm_button"
 
 screen extra_options():
     style_prefix "viewframe"
@@ -1247,7 +1253,7 @@ screen extra_options():
             xalign 0.5
             spacing 100
 
-            textbutton _("OK") action Hide() style "confirm_button"
+            textbutton _("OK") action Hide("extra_options") style "confirm_button"
 
 ## Preferences screen ##########################################################
 ##
