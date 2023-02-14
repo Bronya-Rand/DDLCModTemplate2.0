@@ -123,6 +123,21 @@ init python:
                 render.subpixel_blit(subsrf, (piece.xoffset, piece.y))
 
             return render
+    
+    class BaseTear(renpy.Displayable):
+        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50)):
+            super(BaseTear, self).__init__()
+            self.tear = TearCore(number, offtimeMult, ontimeMult, offsetRange)
+
+        def render(self, w, h, st, at):
+            rv = self.tear.render_pieces(w, h, st, at)
+            renpy.redraw(self, 0.0)
+            return rv
+    
+    class Tear(BaseTear):
+        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), srf=None):
+            super(Tear, self).__init__(number, offtimeMult, ontimeMult, offsetRange)
+            self.tear.update_srf(srf or renpy.display.draw.screenshot(None))
 
 ## Tear
 # This screen is called using `show screen tear()` to tear the screen.
