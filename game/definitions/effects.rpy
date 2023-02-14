@@ -58,22 +58,23 @@ screen invert(length, delay=0.0):
 
 init python:
     # This class defines the code for the tear piece effect in 'screen tear'.
-    class TearPiece:
-        def __init__(self, startY, endY, offtimeMult, ontimeMult, offsetMin, offsetMax):
-            self.startY = startY
-            self.endY = endY
-            self.offTime = (random.random() * 0.2 + 0.2) * offtimeMult
-            self.onTime = (random.random() * 0.2 + 0.2) * ontimeMult
-            self.offset = 0
-            self.offsetMin = offsetMin
-            self.offsetMax = offsetMax
-        
+    class TearPiece(object):
+        def __init__(self, startY, endY, offtimeMult, ontimeMult, range):
+            self.y = max(0, startY - 1)
+            self.height = max(0, endY - startY)
+
+            self.onTime  = random.uniform(0.0, 0.24) * ontimeMult
+            self.offTime = random.uniform(0.0, 0.24) * offtimeMult
+
+            self.xoffset = 0
+            self.xoffsetMin, self.xoffsetMax = range
+
         def update(self, st):
-            st = st % (self.offTime + self.onTime)
-            if st > self.offTime and self.offset == 0:
-                self.offset = random.randint(self.offsetMin, self.offsetMax)
-            elif st <= self.offTime and self.offset != 0:
-                self.offset = 0
+            st %= self.offTime + self.onTime
+            if st > self.offTime and self.xoffset == 0:
+                self.xoffset = random.randint(self.xoffsetMin, self.xoffsetMax) * random.choice((1, -1))
+            elif st <= self.offTime and self.xoffset != 0:
+                self.xoffset = 0
     
     # This class defines the code for the 'screen tear' effect in-game.
     class Tear(renpy.Displayable):
