@@ -98,7 +98,7 @@ init python:
             self.srf = srf
 
             self.raw_size = width, height = srf.get_size()
-            if width / height > 16 / 9: width = height * 16 / 9
+            if float(width) / float(height) > 16.0 / 9.0: width = height * 16 / 9
             else: height = width * 9 / 16
             self.width, self.height = width, height
 
@@ -137,7 +137,7 @@ init python:
     class Tear(BaseTear):
         def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), srf=None):
             super(Tear, self).__init__(number, offtimeMult, ontimeMult, offsetRange)
-            self.tear.update_srf(srf or renpy.display.draw.screenshot(None))
+            self.tear.update_srf(srf or screenshot_srf())
 
 ## Tear
 # This screen is called using `show screen tear()` to tear the screen.
@@ -150,7 +150,7 @@ init python:
 #   srf - This declares the screen image from 'screenshot_srf' if it is declared.
 screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None):
     zorder 150
-    add Tear(number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf) size (1280,720)
+    add Tear(number, offtimeMult, ontimeMult, (offsetMin, offsetMax), srf) size (1280, 720)
     on "show" action Function(hide_windows_enabled, enabled=False)
     on "hide" action Function(hide_windows_enabled, enabled=True)
 
