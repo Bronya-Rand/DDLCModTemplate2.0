@@ -76,36 +76,52 @@ init python:
             elif st <= self.offTime and self.xoffset != 0:
                 self.xoffset = 0
     
-    # This class defines the code for the 'screen tear' effect in-game.
-    class Tear(renpy.Displayable):
-        def __init__(self, number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf=None):
-            super(Tear, self).__init__()
-            self.width, self.height = renpy.get_physical_size()
-
-            if float(self.width) / float(self.height) > 16.0/9.0:
-                self.width = self.height * 16 / 9
-            else:
-                self.height = self.width * 9 / 16
+    class TearCore(object):
+        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50)):
             self.number = number
-            if not srf: self.srf = screenshot_srf()
-            else: self.srf = srf
+            self.offtimeMult = offtimeMult
+            self.ontimeMult = ontimeMult
+            self.offsetRange = offsetRange
 
-            self.pieces = []
-            tearpoints = [0, self.height]
-            for i in range(number):
-                tearpoints.append(random.randint(10, self.height - 10))
-            tearpoints.sort()
-            for i in range(number+1):
-                self.pieces.append(TearPiece(tearpoints[i], tearpoints[i+1], offtimeMult, ontimeMult, offsetMin, offsetMax))
+            self.srf = None
+            self.pieces = [ ]
+            self.width = self.height = 0
         
-        def render(self, width, height, st, at):
+        def update_srf(self, srf):
+            """
+            Chnages the surface the pieces are made from.
+
+            `srf`: Render | Surface | GL2Model
+                The new surface.
+            """
+            if srf in (self.srf, None): return
+            self.srf = srf
+
+            self.raw_size = width, height = srf.get_size()
+            if width / height > 16 / 9: width = height * 16 / 9
+            else: height = width * 9 / 16
+            self.width, self.height = width, height
+
+            tearpoints = [0, self.height]
+            for _ in range(self.number):
+                tearpoints.append(random.uniform(10, self.height - 10))
+            tearpoints.sort()
+
+            self.pieces = [ ]
+            for i in range(self.number + 1):
+                self.pieces.append(TearPiece(tearpoints[i], tearpoints[i + 1], self.offtimeMult, self.ontimeMult, self.offsetRange))
+        
+        def render_pieces(self, w, h, st, at):
+            if self.srf is None: raise Exception("surface not given")
+
             render = renpy.Render(self.width, self.height)
-            render.blit(self.srf, (0,0))
+            render.blit(self.srf, (0, 0))
+
             for piece in self.pieces:
                 piece.update(st)
-                subsrf = self.srf.subsurface((0, max(0, piece.startY - 1), self.width, max(0, piece.endY - piece.startY)))
-                render.blit(subsrf, (piece.offset, piece.startY))
-            renpy.redraw(self, 0)
+                subsrf = render.subsurface((0, piece.y, self.width, piece.height))
+                render.subpixel_blit(subsrf, (piece.xoffset, piece.y))
+
             return render
 
 ## Tear
