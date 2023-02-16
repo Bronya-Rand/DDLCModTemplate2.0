@@ -159,6 +159,39 @@ init python:
             return self._srf_render(self.srf, w, h, st, at)
     
     Tear = TearSurface # backwards comptability
+    
+    class _TearDisplayable(BaseTear):
+        def __init__(self, child, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50)):
+            super(_TearDisplayable, self).__init__(number, offtimeMult, ontimeMult, offsetRange)
+            self.child = renpy.displayable(child)
+        
+        def render(self, w, h, st, at):
+            return self._srf_render(self.child.render(w, h, st, at), w, h, st, at)
+        
+        def event(self, ev, x, y, st):
+            return self.child.event(ev, x, y, st)
+        
+        def visit(self):
+            return [self.child]
+        
+        def predict_one(self):
+            renpy.display.predict.displayable(self.child)
+
+    class TearDisplayable(object):
+        """
+        To use like a transform.
+        ```
+        show sayori turned at TearDisplayable()
+        ```
+        """
+        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50)):
+            self.number = number
+            self.offtimeMult = offtimeMult
+            self.ontimeMult = ontimeMult
+            self.offsetRange = offsetRange
+        
+        def __call__(self, child):
+            return _TearDisplayable(child, self.number, self.offtimeMult, self.ontimeMult, self.offsetRange)
 
 ## Tear
 # This screen is called using `show screen tear()` to tear the screen.
