@@ -145,10 +145,20 @@ init python:
             renpy.redraw(self, 0)
             return rv
     
-    class Tear(BaseTear):
+    class TearSurface(BaseTear):
+        """
+        `srf`: Render | Surface | GL2Model | None
+            The surface used. If `None` is passed, takes a screenshot and uses it as surface
+            (the screenshot's size doesn't exactly match the screen's size, careful with that).
+        """
         def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), srf=None):
-            super(Tear, self).__init__(number, offtimeMult, ontimeMult, offsetRange)
-            self.tear.update_srf(srf or screenshot_srf())
+            super(TearSurface, self).__init__(number, offtimeMult, ontimeMult, offsetRange)
+            self.srf = srf or screenshot_srf()
+        
+        def render(self, w, h, st, at):
+            return self._srf_render(self.srf, w, h, st, at)
+    
+    Tear = TearSurface # backwards comptability
 
 ## Tear
 # This screen is called using `show screen tear()` to tear the screen.
