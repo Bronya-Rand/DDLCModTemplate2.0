@@ -85,39 +85,39 @@ init python:
             self.ontimeMult = ontimeMult
             self.offsetRange = offsetRange
 
-            self.srf = None
             self.pieces = [ ]
-            self.width = self.height = 0
+            self.width = self.height = self.og_width = self.og_height = 0
         
-        def update_srf(self, srf):
+        def update_pieces(self, srf):
             """
-            Chnages the surface the pieces are made from.
+            Two different effects.
 
-            `srf`: Render | Surface | GL2Model
-                The new surface.
+            If the pieces haven't been defined (or when the surface's height is 0), defines the pieces.
+            Else, it scales the pieces with to new height.
             """
-            if srf in (self.srf, None): return
-            self.srf = srf
+            self.width, self.height = srf.get_size()
 
-            self.raw_size = width, height = srf.get_size()
-            if float(width) / float(height) > 16.0 / 9.0: width = height * 16 / 9
-            else: height = width * 9 / 16
-            self.width, self.height = width, height
+            if not self.pieces or not self.og_height:
+                self.og_width, self.og_height = self.width, self.height
 
-            tearpoints = [0, self.height]
-            for _ in range(self.number):
-                tearpoints.append(random.uniform(10, self.height - 10))
-            tearpoints.sort()
+                tearpoints = [0, self.height]
+                for _ in range(self.number):
+                    tearpoints.append(random.uniform(10, self.height - 10))
+                tearpoints.sort()
 
-            self.pieces = [ ]
-            for i in range(self.number + 1):
-                self.pieces.append(TearPiece(tearpoints[i], tearpoints[i + 1], self.offtimeMult, self.ontimeMult, self.offsetRange))
-        
-        def render_pieces(self, w, h, st, at):
-            if self.srf is None: raise Exception("surface not given")
+                self.pieces = [ ]
+                for i in range(self.number + 1):
+                    self.pieces.append(TearPiece(tearpoints[i], tearpoints[i + 1], self.offtimeMult, self.ontimeMult, self.offsetRange))
+            else:
+                ratio = self.height / self.og_width
+                
+                for piece in self.pieces:
+                    piece.y = piece._y * ratio
+                    piece.height = piece._height * ratio 
 
+        def render(self, srf, w, h, st, at):
             render = renpy.Render(self.width, self.height)
-            render.blit(self.srf, (0, 0))
+            render.blit(srf, (0, 0))
 
             for piece in self.pieces:
                 piece.update(st)
