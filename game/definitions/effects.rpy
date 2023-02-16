@@ -61,7 +61,9 @@ init python:
     class TearPiece(object):
         def __init__(self, startY, endY, offtimeMult, ontimeMult, range):
             self.y = max(0, startY - 1)
+            self._y = self.y
             self.height = max(0, endY - startY)
+            self._height = self.height
 
             self.onTime  = random.uniform(0.0, 0.24) * ontimeMult
             self.offTime = random.uniform(0.0, 0.24) * offtimeMult
