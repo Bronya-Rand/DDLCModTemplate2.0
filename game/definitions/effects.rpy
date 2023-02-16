@@ -93,7 +93,7 @@ init python:
             Two different effects.
 
             If the pieces haven't been defined (or when the surface's height is 0), defines the pieces.
-            Else, it scales the pieces with to new height.
+            Else, it scales the pieces to new height.
             """
             self.width, self.height = srf.get_size()
 
@@ -109,7 +109,7 @@ init python:
                 for i in range(self.number + 1):
                     self.pieces.append(TearPiece(tearpoints[i], tearpoints[i + 1], self.offtimeMult, self.ontimeMult, self.offsetRange))
             else:
-                ratio = self.height / self.og_width
+                ratio = float(self.height) / float(self.og_width)
                 
                 for piece in self.pieces:
                     piece.y = piece._y * ratio
