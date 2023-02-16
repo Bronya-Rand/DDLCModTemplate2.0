@@ -127,13 +127,22 @@ init python:
             return render
     
     class BaseTear(renpy.Displayable):
-        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50)):
+        """
+        `number`: int
+            The number of pieces.
+        
+        `offsetRange`: tuple[int | float, int | float]
+            The offset minmum / maximum.
+        """
+        def __init__(self, number, offtimeMult, ontimeMult, offsetRange):
             super(BaseTear, self).__init__()
             self.tear = TearCore(number, offtimeMult, ontimeMult, offsetRange)
-
-        def render(self, w, h, st, at):
-            rv = self.tear.render_pieces(w, h, st, at)
-            renpy.redraw(self, 0.0)
+        
+        def _srf_render(self, srf, w, h, st, at):
+            if (self.tear.width, self.tear.height) != srf.get_size():
+                self.tear.update_pieces(srf)
+            rv = self.tear.render(srf, w, h, st, at)
+            renpy.redraw(self, 0)
             return rv
     
     class Tear(BaseTear):
