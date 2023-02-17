@@ -127,13 +127,6 @@ init python:
             return render
     
     class BaseTear(renpy.Displayable):
-        """
-        `number`: int
-            The number of pieces.
-        
-        `offsetRange`: tuple[int | float, int | float]
-            The offset minmum / maximum.
-        """
         def __init__(self, number, offtimeMult, ontimeMult, offsetRange):
             super(BaseTear, self).__init__()
             self.tear = TearCore(number, offtimeMult, ontimeMult, offsetRange)
@@ -183,6 +176,15 @@ init python:
         ```
         show sayori turned at TearDisplayable()
         ```
+
+        `number`: int
+            The number of pieces.
+        
+        `offsetRange`: tuple[int | float, int | float]
+            The offset minmum / maximum.
+        
+        `chroma`: bool
+            Do we apply chromatic aberration to the pieces?
         """
         def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50)):
             self.number = number
