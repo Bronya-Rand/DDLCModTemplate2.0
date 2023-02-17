@@ -77,6 +77,8 @@ init python:
                 self.xoffset = 0
     
     class TearCore(object):
+        _cache = { }
+        
         def __init__(self, number, offtimeMult, ontimeMult, offsetRange, chroma):
             self.chroma = bool(chroma) and getattr(renpy.display.render, "models", False)
 
@@ -180,16 +182,22 @@ init python:
         
         `chroma`: bool
             Do we apply chromatic aberration to the pieces?
+        
+        `key`: Any | None
+            If not `None`, all `TearDisplayable` that have this key will use the same `tear` effect.
         """
-        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), chroma=False):
+        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), chroma=False, key=None):
             self.number = number
             self.offtimeMult = offtimeMult
             self.ontimeMult = ontimeMult
             self.offsetRange = offsetRange
             self.chroma = chroma
+            self.key = key
         
         def __call__(self, child):
-            return _TearDisplayable(child, self.number, self.offtimeMult, self.ontimeMult, self.offsetRange, self.chroma)
+            rv = _TearDisplayable(child, self.number, self.offtimeMult, self.ontimeMult, self.offsetRange, self.chroma)
+            if self.key is not None: rv.tear = TearCore._cache.setdefault(self.key, rv.tear)
+            return rv
 
 ## Tear
 # This screen is called using `show screen tear()` to tear the screen.
