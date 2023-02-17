@@ -78,7 +78,7 @@ init python:
     
     class TearCore(object):
         def __init__(self, number, offtimeMult, ontimeMult, offsetRange, chroma):
-            self.chroma = chroma & renpy.display.render.models
+            self.chroma = bool(chroma) and getattr(renpy.display.render, "models", False)
 
             tearpoints = [0.0, 1.0]
             for _ in range(number):
@@ -145,7 +145,8 @@ init python:
         def render(self, w, h, st, at):
             return self._srf_render(self.srf, w, h, st, at)
     
-    Tear = TearSurface # backwards comptability
+    def Tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None, chroma=False):
+        return TearSurface(number, offtimeMult, ontimeMult, (offsetMin, offsetMax), chroma, srf)
     
     class _TearDisplayable(BaseTear):
         def __init__(self, child, number, offtimeMult, ontimeMult, offsetRange, chroma):
@@ -199,9 +200,9 @@ init python:
 #   offsetMin - This declares the minimum offset of time by the multiplier.
 #   offsetMax - This declares the minimum offset of time by the multiplier.
 #   srf - This declares the screen image from 'screenshot_srf' if it is declared.
-screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None):
+screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None, chroma=False):
     zorder 150
-    add Tear(number, offtimeMult, ontimeMult, (offsetMin, offsetMax), srf) size (1280, 720)
+    add Tear(number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf, chroma) size (1280, 720)
     on "show" action Function(hide_windows_enabled, enabled=False)
     on "hide" action Function(hide_windows_enabled, enabled=True)
 
