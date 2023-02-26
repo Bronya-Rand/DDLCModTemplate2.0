@@ -1168,7 +1168,7 @@ screen audio_options():
             hbox:
                 spacing 10
                 label _("Music Volume")
-                text str(round(preferences.music_volume * 100)) style "viewframe_text"
+                text str(round(preferences.get_volume("music") * 100)) style "viewframe_text"
 
             hbox:
                 bar value Preference("music volume") xsize 500
@@ -1178,7 +1178,7 @@ screen audio_options():
             hbox:
                 spacing 10
                 label _("Sound Volume")
-                text str(round(preferences.sfx_volume * 100)) style "viewframe_text"
+                text str(round(preferences.get_volume("sfx") * 100)) style "viewframe_text"
 
             hbox:
                 bar value Preference("sound volume") xsize 500
