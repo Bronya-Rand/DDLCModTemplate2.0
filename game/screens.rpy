@@ -27,10 +27,12 @@ init python:
 
 default translations = scan_translations()
 
-# Enables the ability to add more settings in the game such as uncensored mode.
+# Enables the ability to add more settings in the game such as Uncensored Mode.
 default extra_settings = True
-default enable_extras_menu = True
-default enable_languages = True
+# If you are using the Extras Menu feature, set this line to True.
+default enable_extras_menu = False
+# If you are going to use extra languages, set this to True.
+default enable_languages = False
 
 ## Color Styles
 ################################################################################
