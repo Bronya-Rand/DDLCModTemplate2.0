@@ -20,10 +20,6 @@ This folder contains the definition files for images, sprites, music, etc. that 
 
 This folder stores all your images, music/sfx, and more relating to your mod along with files needed for the Extras screen.
 
-### <u>mod_extras</u>
-
-This folder contains the extra features in the template that is available for modders to use. (BSOD, Extras Screen, Gallery, Achievements, Pronouns)
-
 ### <u>poem_game</u>
 
 This folder contains the files used for the poem minigame in DDLC.

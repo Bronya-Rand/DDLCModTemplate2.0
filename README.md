@@ -29,27 +29,31 @@ Optional but very appreciated credits that you can also add are
 
 ### Template Features
 1. Ren'Py 8 Team Salvato Compliant Mods and Splashscreen (Disclaimer)!
-3. DDLC's exact RPY files with explainations.
-4. Support for macOS, Linux* and Android**!
+2. DDLC's exact RPY files with explainations.
+3. Support for macOS, Linux* and Android**!
    > \* - Linux users must run your mod via `LinuxLauncher.sh`.
 
    > \*\* - If your mod uses simple code or DDLC's/template built-in functions. More complex code or non-mobile friendly features may require some adjustments and changes to get working. See *Android Mod Guide.pdf* or visit the DDMC Discord for additional help.
-6. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
+4. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-7. [BETA] Pronoun Support! - Allow players to identify with the pronoun they go by!
+5. Uncensored Mode and Let's Play Mode! - Allow more "sensitive" content to be shown in-game and protect your IRL information while streaming/recording!
+6. Automatic GUI Coloring and Different Menu Button Colors! - Color the GUI and/or menu buttons in the game to whatever you like without editing the asset files themselves! 
+7. Terra's in-depth Poem Game guide!
+8. NVL Support thanks to Yagamirai01!
+9. Patches for several Ren'Py releases and Windows features.
+10. Python 3 support and code now in use!
+11. Dynamic Super Resolution/Dynamic Super Positions (DSR/DSP) and Custom Resolutions! - Scale positions and/or your assets higher than they usually can go and display DDLC in different resolution modes. The DDLC Mod Template is now a universal X resolution template!
+12. Player Name Change! - Did you wrongly typed your name or want to change it? You can now do so very easily!
+13. New Monika Console and Settings Menu! - Enjoy a easier console to type commands in and a cleaner settings UI compared to the original game.
+
+In addition to these base features, the template comes with additional optional features you can use such as
+- **[BETA]** Pronoun Support! - Allow players to identify with the pronoun they go by!
     > See *mod_extras/pronouns.rpy* in the `game` folder for a example on how to use this feature.
-8. Better Blue Screens of Death! - Make your own BSOD easily in-game on every OS! 
-9. Uncensored Mode and Let's Play Mode! - Allow more "sensitive" content to be shown in-game and protect your IRL information while streaming/recording!
-10. Gallery Menu and Achievements Menu! - Allow players to see the work you have done in-game and earn achievements for playing your mod!
-12. Automatic GUI Coloring and Different Menu Button Colors! - Color the GUI and/or menu buttons in the game to whatever you like without editing the asset files themselves! 
-13. Terra's in-depth Poem Game guide!
-14. NVL Support thanks to Yagamirai01!
-15. Patches for several Ren'Py releases and Windows features.
-16. Python 3 support and code now in use!
-17. [BETA] Discord Rich Presence support!
-18. Dynamic Super Resolution/Dynamic Super Positions (DSR/DSP) and Custom Resolutions! - Scale positions and/or your assets higher than they usually can go and display DDLC in different resolution modes. The DDLC Mod Template is now a universal X resolution template!
-19. Player Name Change! - Did you wrongly typed your name or want to change it? You can now do so very easily!
-20. New Monika Console and Settings Menu! - Enjoy a easier console to type commands in and a cleaner settings UI compared to the original game.
+- Better Blue Screens of Death! - Make your own BSOD easily in-game on every OS! 
+- Gallery and Achievements Menu! - Allow players to see the work you have done in-game and earn achievements for playing your mod!
+- **[BETA]** Discord Rich Presence!
+
+> To download these features, you must download the `DDLCModTemplate-X.X.X-Extras.zip` along with the base game.
 
 ### Returned Features
 1. Ghost Menu (Dan's spooky easter egg).
