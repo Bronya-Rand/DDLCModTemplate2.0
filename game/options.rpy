@@ -161,16 +161,12 @@ init python:
 
     # Do not touch these lines. This is so Ren'Py can add your mods' py file
     # and a special launcher for Linux and macOS to run your mod. 
-    try: 
-        build.renpy_patterns.remove(('renpy.py', ['all']))
-        build.classify_renpy("renpy.py", "renpy all")
-    except: pass
+    build.renpy_patterns.remove(('renpy.py', ['all']))
+    build.classify_renpy("renpy.py", "renpy all")
     
-    try:
-        build.early_base_patterns.remove(('*.sh', None))
-        build.classify("LinuxLauncher.sh", "linux") ## Linux Launcher Script
-        build.classify("*.sh", None)
-    except: pass
+    build.early_base_patterns.remove(('*.sh', None))
+    build.classify("LinuxLauncher.sh", "linux") ## Linux Launcher Script
+    build.classify("*.sh", None)
     
     #############################################################
     # These variables classify packages for PC and Android platforms.
@@ -186,7 +182,7 @@ init python:
     build.classify("game/**.chr", "scripts all")
     build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
     build.classify("game/tl/**", "scripts all") ## Translation Folder
-    build.classify("game/mod_extras/**.rpyc", "scripts") ## Extra Features
+    build.classify("game/mod_extras/**.rpyc", "scripts") ## Extra Features (Backwards Compatibility)
 
     build.classify('**~', None)
     build.classify('**.bak', None)
