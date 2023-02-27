@@ -29,7 +29,7 @@ Optional but very appreciated credits that you can also add are
 
 ### Template Features
 1. Ren'Py 6* or 7 Team Salvato Compliant Mods and Splashscreen (Disclaimer)!
-   > \* - Ren'Py 6 is being put into question for depreciation to keep up with Ren'Py's Development Lifecycle. It is **highly** recommended you upgrade to Ren'Py 7 for mod development. [Learn more.](https://www.reddit.com/r/DDLCMods/wiki/notices/#wiki_why_is_the_megathread_and_other_users_recommending_me_to_create_my_mod_in_ren.27py_7.3F)
+   > \* - Ren'Py 6 support will end soon to keep up with Ren'Py's Development Lifecycle. It is **highly** recommended you upgrade to Ren'Py 7 for mod development. [Learn more.](https://www.reddit.com/r/DDLCMods/wiki/notices/#wiki_why_is_the_megathread_and_other_users_recommending_me_to_create_my_mod_in_ren.27py_7.3F)
 2. DDLC's exact RPY files with explainations.
 3. Support for macOS, Linux* and Android**!
     > \* - Linux users must run your mod via `LinuxLauncher.sh`.
@@ -37,17 +37,19 @@ Optional but very appreciated credits that you can also add are
     > \*\* - If your mod uses simple code or DDLC functions. More complex code or non-mobile friendly features may require some adjustments to get working. See *guide.pdf* or visit the DDMC Discord for additional help.
 4. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again! 
     > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-7. [BETA] Pronoun Support! - Allow players to identify with the pronoun they go by!
-    > See *mod_extras/pronouns.rpy* in the `game` folder for a example on how to use this feature.
-9. Uncensored Mode and Let's Play Mode! - Allow more "sensitive" content to be shown in-game and protect your IRL information while streaming/recording!
-10. Gallery Menu and Achievements Menu! - Allow players to see the work you have done in-game and earn achievements for playing your mod!
-12. Automatic GUI Coloring and Different Menu Button Colors! - Color the GUI and/or menu buttons in the game to whatever you like without editing the asset files themselves! 
-13. Terra's in-depth Poem Game guide!
-14. NVL Support thanks to Yagamirai01!
-15. Patches for several Ren'Py releases and Windows features.
-16. Dynamic Super Resolution/Dynamic Super Positions (DSR/DSP) and Custom Resolutions! - Scale positions and/or your assets higher than they usually can go and display DDLC in different resolution modes. The DDLC Mod Template is now a universal X resolution template!
-17. Player Name Change! - Did you wrongly typed your name or want to change it? You can now do so very easily!
-18. New Monika Console and Settings Menu! - Enjoy a easier console to type commands in and a cleaner settings UI compared to the original game.
+5. Uncensored Mode and Let's Play Mode! - Allow more "sensitive" content to be shown in-game and protect your IRL information while streaming/recording!
+6. Automatic GUI Coloring and Different Menu Button Colors! - Color the GUI and/or menu buttons in the game to whatever you like without editing the asset files themselves! 
+7. Terra's in-depth Poem Game guide!
+8. NVL Support thanks to Yagamirai01!
+9. Patches for several Ren'Py releases and Windows features.
+10. Dynamic Super Resolution/Dynamic Super Positions (DSR/DSP) and Custom Resolutions! - Scale positions and/or your assets higher than they usually can go and display DDLC in different resolution modes. The DDLC Mod Template is now a universal X resolution template!
+11. Player Name Change! - Did you wrongly typed your name or want to change it? You can now do so very easily!
+12. New Monika Console and Settings Menu! - Enjoy a easier console to type commands in and a cleaner settings UI compared to the original game.
+
+In addition to these base features, the template comes with additional optional features you can use such as
+- **[BETA]** Pronoun Support! - Allow players to identify with the pronoun they go by!
+- Better Blue Screens of Death! - Make your own BSOD easily in-game on every OS! 
+- Gallery and Achievements Menu! - Allow players to see the work you have done in-game and earn achievements for playing your mod!
 
 ### Returned Features
 1. Ghost Menu. (Dan's spooky easter egg)
