@@ -111,7 +111,7 @@ init 10 python:
     def Tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None, chroma=False):
         return TearSurface(number, offtimeMult, ontimeMult, (offsetMin, offsetMax), chroma, srf)
     
-    class GlicthedDisplayable(object):
+    class GlitchedDisplayable(object):
         """
         Takes a number of tuples that are expected to contain 8 elements, which are the following:
 
@@ -161,7 +161,7 @@ init 10 python:
         
         def __call__(self, child):
             if not self.glitches: raise ValueError("glitch not given")
-            return _GlicthedDisplayable(child, *self.glitches)  
+            return _GlitchedDisplayable(child, *self.glitches)  
 
 init python:
     @renpy.pure
@@ -280,7 +280,7 @@ init python:
         def predict_one(self):
             renpy.display.predict.displayable(self.child)
 
-    class _GlicthedDisplayablePiece(object):
+    class _GlitchedDisplayablePiece(object):
         def __init__(self, col, row, offtimeMult, ontimeMult):
             self.col = col
             self.row = row
@@ -297,10 +297,10 @@ init python:
             elif st <= self.offTime and self.pos is not None:
                 self.pos = None
         
-    class _GlicthedDisplayableCore(object):
+    class _GlitchedDisplayableCore(object):
         def __init__(self, center, cols, rows, size, box, offtimeMult, ontimeMult, d):
             self.pieces = [
-                _GlicthedDisplayablePiece(col, row, offtimeMult, ontimeMult)
+                _GlitchedDisplayablePiece(col, row, offtimeMult, ontimeMult)
                 for col in range(cols)
                 for row in range(rows)
             ]
@@ -368,7 +368,7 @@ rect: ({}, {})""".format(xrange, yrange, rect_xsize, rect_ysize))
             rv.subpixel_blit(rect_render, (center_x - (sw / 2.0), center_y - (sh / 2.0)), main=False)
             return rv
 
-    class _BaseGlicthedDisplayable(renpy.Displayable):
+    class _BaseGlitchedDisplayable(renpy.Displayable):
         def __init__(self, *args):
             super(_BaseGlicthedDisplayable, self).__init__()
             self.cores = [
@@ -389,7 +389,7 @@ rect: ({}, {})""".format(xrange, yrange, rect_xsize, rect_ysize))
                 rv.blit(rect, (0, 0), main=False)
             return rv
 
-    class _GlicthedDisplayable(_BaseGlicthedDisplayable):
+    class _GlitchedDisplayable(_BaseGlitchedDisplayable):
         def __init__(self, child, *args):
             super(_GlicthedDisplayable, self).__init__(*args)
             self.child = renpy.displayable(child)
