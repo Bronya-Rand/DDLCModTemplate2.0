@@ -1109,163 +1109,6 @@ style viewframe_text is confirm_prompt_text:
 #             textbutton _("Reset") action [Hide("display_options"), Function(renpy.reset_physical_size)]
 #             textbutton _("Set") action [Hide("display_options"), Function(set_physical_resolution, scale)]
 
-screen text_options():
-    modal True
-
-    zorder 150
-
-    use viewframe_options(_("Text Settings")):
-        style_prefix "radio"
-        label _("Rollback Side")
-        hbox:
-            textbutton _("Disable") action Preference("rollback side", "disable")
-            textbutton _("Left") action Preference("rollback side", "left")
-            textbutton _("Right") action Preference("rollback side", "right")
-
-        label _("Skip")
-        hbox:
-            textbutton _("Unseen Text") action Preference("skip", "toggle")
-            textbutton _("After Choices") action Preference("after choices", "toggle")
-            #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-
-        hbox:
-            spacing 10
-            label _("Text Speed")
-            text str(preferences.text_cps) style "viewframe_text"
-
-        bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20) xsize 500
-
-        hbox:
-            spacing 10
-            label _("Auto-Forward Time")
-            text str(round(preferences.afm_time)) style "viewframe_text"
-
-        bar value Preference("auto-forward time") xsize 500
-
-        null height 10
-
-        hbox:
-            xalign 0.5
-            spacing 100
-
-            textbutton _("OK") action Hide("text_options") style "confirm_button"
-
-screen audio_options():
-    style_prefix "viewframe"
-
-    modal True
-
-    zorder 150
-
-    use viewframe_options(_("Audio Settings")):
-        style_prefix "slider"
-        if config.has_music:
-            hbox:
-                spacing 10
-                label _("Music Volume")
-                text str(round(preferences.music_volume * 100)) style "viewframe_text"
-
-            hbox:
-                bar value Preference("music volume") xsize 500
-
-        if config.has_sound:
-
-            hbox:
-                spacing 10
-                label _("Sound Volume")
-                text str(round(preferences.sfx_volume * 100)) style "viewframe_text"
-
-            hbox:
-                bar value Preference("sound volume") xsize 500
-
-                if config.sample_sound:
-                    textbutton _("Test") action Play("sound", config.sample_sound)
-
-        if config.has_voice:
-            hbox:
-                spacing 10
-                label _("Voice Volume")
-                text str(round(preferences.get_volume("voice") * 100)) style "viewframe_text"
-
-            hbox:
-                bar value Preference("voice volume")
-
-                if config.sample_voice:
-                    textbutton _("Test") action Play("voice", config.sample_voice) 
-
-        if config.has_music or config.has_sound or config.has_voice:
-            null height gui.pref_spacing
-
-            textbutton _("Mute All"):
-                action Preference("all mute", "toggle")
-                style "mute_all_button"
-
-        null height 10
-
-        hbox:
-            xalign 0.5
-            spacing 100
-
-            textbutton _("OK") action Hide("audio_options") style "confirm_button"
-
-screen extra_options():
-    style_prefix "viewframe"
-
-    modal True
-
-    zorder 150
-
-    use viewframe_options(_("Extra Settings")):
-        style_prefix "radio"
-
-        label _("Game Modes")
-        hbox:
-            textbutton _("Uncensored Mode") action If(persistent.uncensored_mode, 
-                ToggleField(persistent, "uncensored_mode"), 
-                Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult/sensitive\ncontent in your playthrough.\n\nThis setting will be dependent on the modder if\nthey programmed these checks in their story.", 
-                    yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
-                    no_action=Hide("confirm")
-                ))
-            textbutton _("Let's Play Mode") action If(persistent.lets_play, 
-                ToggleField(persistent, "lets_play"),
-                [ToggleField(persistent, "lets_play"), Show("dialog", 
-                    message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
-                    ok_action=Hide("dialog")
-                )])
-
-        if not renpy.android:
-            label _("Discord RPC")
-
-            python:
-                connect_status = "Disconnected"
-                if RPC.rpc_connected:
-                    connect_status = "Connected"
-
-            textbutton "Enable" action [ToggleField(persistent, "enable_discord"), 
-                If(persistent.enable_discord, Function(RPC.close), Function(RPC.connect, reset=True))]
-            
-            text "Status: [connect_status]" style "main_menu_version" xalign 0.0
-
-            if persistent.enable_discord and not RPC.rpc_connected:
-                textbutton "Reconnect" action Function(RPC.connect, reset=True) style "viewframe_button"
-
-        label _("Player Name")
-        vbox:
-            style_prefix "confirm"
-            if player == "":
-                text "Current Name: No Name Set" style "viewframe_text"
-            else:
-                text "Current Name: [player]" style "viewframe_text"
-            textbutton "Change Name" action Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName, launchGame=False)) xoffset 10
-
-        null height 10
-
-        hbox:
-            xalign 0.5
-            spacing 100
-
-            textbutton _("OK") action Hide("extra_options") style "confirm_button"
-
 ## Preferences screen ##########################################################
 ##
 ## The preferences screen allows the player to configure the game to better suit
@@ -1310,6 +1153,7 @@ screen preferences():
                             label _("Display")
                             textbutton _("Windowed") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                            # textbutton _("More") action Show("display_options")
 
                     if config.developer:
                         vbox:
@@ -1333,27 +1177,47 @@ screen preferences():
                     box_wrap True
 
                     vbox:
+                        
+                        hbox:
+                            label _("Text Speed")
+                            
+                            null width 5
 
-                        label _("Text Speed")
+                            text str(preferences.text_cps) style "value_text"
 
                         #bar value Preference("text speed")
                         bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
 
-                        label _("Auto-Forward Time")
+                        hbox:
+                            label _("Auto-Forward Time")
+                            
+                            null width 5
+                            
+                            text str(round(preferences.afm_time)) style "value_text"
 
                         bar value Preference("auto-forward time")
 
                     vbox:
                         
                         if config.has_music:
-                            label _("Music Volume")
+                            hbox:
+                                label _("Music Volume")
+                                
+                                null width 5
+                            
+                                text str(round(preferences.get_volume("music") * 100)) style "value_text"
 
                             hbox:
                                 bar value Preference("music volume")
 
                         if config.has_sound:
 
-                            label _("Sound Volume")
+                            hbox:
+                                label _("Sound Volume")
+                                
+                                null width 5
+                            
+                                text str(round(preferences.get_volume("sfx") * 100)) style "value_text"
 
                             hbox:
                                 bar value Preference("sound volume")
@@ -1361,10 +1225,14 @@ screen preferences():
                                 if config.sample_sound:
                                     textbutton _("Test") action Play("sound", config.sample_sound)
 
-
                         if config.has_voice:
-                            label _("Voice Volume")
-
+                            hbox:
+                                label _("Voice Volume")
+                                
+                                null width 5
+                            
+                                text str(round(preferences.get_volume("voice") * 100)) style "value_text"
+ 
                             hbox:
                                 bar value Preference("voice volume")
 
@@ -1561,6 +1429,12 @@ style name_text:
     size 24
     color gui.idle_color
     outlines []
+
+style value_text:
+    size 18
+    color "#000"
+    outlines []
+    yalign 0.65
 
 ## History screen ##############################################################
 ##
