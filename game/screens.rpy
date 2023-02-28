@@ -1328,27 +1328,47 @@ screen preferences():
                     box_wrap True
 
                     vbox:
+                        
+                        hbox:
+                            label _("Text Speed")
+                            
+                            null width 5
 
-                        label _("Text Speed")
+                            text str(preferences.text_cps) style "value_text"
 
                         #bar value Preference("text speed")
                         bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
 
-                        label _("Auto-Forward Time")
+                        hbox:
+                            label _("Auto-Forward Time")
+                            
+                            null width 5
+                            
+                            text str(round(preferences.afm_time)) style "value_text"
 
                         bar value Preference("auto-forward time")
 
                     vbox:
                         
                         if config.has_music:
-                            label _("Music Volume")
+                            hbox:
+                                label _("Music Volume")
+                                
+                                null width 5
+                            
+                                text str(round(preferences.get_volume("music") * 100)) style "value_text"
 
                             hbox:
                                 bar value Preference("music volume")
 
                         if config.has_sound:
 
-                            label _("Sound Volume")
+                            hbox:
+                                label _("Sound Volume")
+                                
+                                null width 5
+                            
+                                text str(round(preferences.get_volume("sfx") * 100)) style "value_text"
 
                             hbox:
                                 bar value Preference("sound volume")
@@ -1356,10 +1376,14 @@ screen preferences():
                                 if config.sample_sound:
                                     textbutton _("Test") action Play("sound", config.sample_sound)
 
-
                         if config.has_voice:
-                            label _("Voice Volume")
-
+                            hbox:
+                                label _("Voice Volume")
+                                
+                                null width 5
+                            
+                                text str(round(preferences.get_volume("voice") * 100)) style "value_text"
+ 
                             hbox:
                                 bar value Preference("voice volume")
 
@@ -1521,6 +1545,12 @@ style name_text:
     size 24
     color gui.idle_color
     outlines []
+
+style value_text:
+    size 18
+    color "#000"
+    outlines []
+    yalign 0.65
 
 ## History screen ##############################################################
 ##
