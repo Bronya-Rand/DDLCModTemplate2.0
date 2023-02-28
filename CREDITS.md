@@ -10,7 +10,7 @@ Special thanks to the following for contributing to the mod template
 - Terra (In-depth poem game)
 - Yagamirai01 (NVL)
 - Alexxonder (Auto Color Adjustments)
-- Elckarow (Python 3 updates)
+- Elckarow (Python 3 updates, New poem responses/effects)
 - NekoLaiS (Cryllic compatibility)
 - The DDMC Community (Feature suggestions and feedback)
 - Pseurae (Donation/Act 3 GL2 Fix)

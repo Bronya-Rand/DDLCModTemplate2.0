@@ -44,7 +44,7 @@ Optional but very appreciated credits that you can also add are
 10. Python 3 support and code now in use!
 11. Dynamic Super Resolution/Dynamic Super Positions (DSR/DSP) and Custom Resolutions! - Scale positions and/or your assets higher than they usually can go and display DDLC in different resolution modes. The DDLC Mod Template is now a universal X resolution template!
 12. Player Name Change! - Did you wrongly typed your name or want to change it? You can now do so very easily!
-13. New Monika Console and Settings Menu! - Enjoy a easier console to type commands in and a cleaner settings UI compared to the original game.
+13. New Monika Console and Poem Responses! - Enjoy a easier console to type commands in and a cleaner, easier poem response!
 
 In addition to these base features, the template comes with additional optional features you can use such as
 - **[BETA]** Pronoun Support! - Allow players to identify with the pronoun they go by!
@@ -60,7 +60,6 @@ In addition to these base features, the template comes with additional optional 
 2. Sayori Kill Script (plays if Sayori is deleted before the game starts).
 3. Monika Kill Script (plays if Monika is deleted before a new game starts).
 4. Special Poems (The random poems in DDLC that appear in Act 2) <u>[now improved!]</u>.
-5. Poem Responses! (The responses the girls give you about your poem).
 
 ### Getting Started
 Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
