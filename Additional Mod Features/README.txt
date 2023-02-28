@@ -3,27 +3,31 @@ Welcome to the Added Optional Features of the DDLC Mod Template!
 This section contains all optional code you can use in your mod that was previously bundled with the template (under `mod_extras`) but now separated to return back to the original template aesthetic. 
 
 Installation
-Copy the respective RPY files you need to your projects' game folder. Everything should work out of the box.
+Copy the respective feature files inside their folders to your projects' game folder. Everything should work out of the box.
+If a file requires additional steps, please refer to its' own README file.
 
 Contents
 
-achievements.rpy
-This file contains the code for the achievements menu and notification that shows your progress throughout the mod.
+Achievements
+This folder contains the code for the achievements menu and notification that shows your progress throughout the mod.
 
-bsod.rpy
-This file contains the code to call a fake Blue Screen of Death/Kernel Panic to the players' computer.
+Better BSODs
+This folder contains the code to call a fake Blue Screen of Death/Kernel Panic to the players' computer.
 
-discord.rpy
-This file contains the code to use Discord's RPC in DDLC.
+Better Screen Tear
+This folder contains the code for a improved tear effect for glitches (made by Elckarow).
 
-extras_screen.rpy
+Discord
+This folder contains the code to use Discord's RPC in DDLC.
 
-This file contains the code for the extras menu that allows multiple screens to be selected without cluttering the main options.
+Extras Screen
 
-gallery.rpy
+This folder contains the code for the extras menu that allows multiple screens to be selected without cluttering the main options.
 
-This file contains the code for the gallery menu that shows backgrounds and sprites from your mod.
+Gallery
 
-pronouns.rpy
+This folder contains the code for the gallery menu that shows backgrounds and sprites from your mod.
 
-This file allows players to input their given pronouns into the game.
+Pronouns
+
+This folder allows players to input their given pronouns into the game.
