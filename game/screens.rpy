@@ -805,6 +805,10 @@ screen about():
                 yfit True
 
             vbox:
+                add Transform("mod_assets/DDLCModTemplateLogo.png", size=(200,200)) xalign .5
+
+                null height 5
+                
                 label "[config.name!t]" xalign .5
                 text _("Version [config.version!t]\n") xalign .5
 
