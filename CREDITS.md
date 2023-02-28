@@ -13,6 +13,6 @@ Special thanks to the following for contributing to the mod template
 - NekoLaiS (Cryllic compatibility)
 - The DDMC Community (Feature suggestions and feedback)
 - Pseurae (Donation/Act 3 GL2 Fix)
-- Elckarow (Small patches)
+- Elckarow (Small patches, New effects/poem responses)
 - Lezalith (New Console (4.1.1+))
 - RS/6000 (New Mod Template Logo (4.2.1+))

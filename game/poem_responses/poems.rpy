@@ -4,29 +4,195 @@
 # by the girls in the poem sharing mini-game.
 
 init python:
-    # This class defines the poems for the poem sharing mini-game.
-    # Syntax:
-    #   author - This variable contains the characters' name.
-    #   title - This variable contains the title of the poem.
-    #   text - This variable contains the poem lines for the poem.
-    #   yuri_2 - This variable checks if this is Yuri's 2nd poem in Act 2 to
-    #               make it look creepy.
-    #   yuri_3 - This variable checks if this is Yuri's 3rd poem in Act 2 to 
-    #               make it look extra creepy.
-    class Poem:
-        def __init__(self, author="", title="", text="", yuri_2=False, yuri_3=False):
-            self.author = author.lower()
-            self.title = title
-            self.text = text
-            self.yuri_2 = yuri_2
-            self.yuri_3 = yuri_3
+
+    class Author(object):
+        """
+        A class used to default values of a `Poem` instance.
+
+        `name`: str
+            The auhtor's name
+        
+        See the `Poem` class for more information.
+        """
+
+        def __init__(self, name, style=True, paper="images/bg/poem.jpg", separate_title_from_text=True, music=None):
+            self.name = name
+            self.style = style
+            self.paper = paper
+            self.separate_title_from_text = separate_title_from_text
+            self.music = music
+    
+    author_s = Author("sayori", music=audio.tsayori)
+    author_m = Author("monika", music=audio.tmonika)
+    author_n = Author("natsuki", music=audio.tnatsuki)
+    author_y = Author("yuri", music=audio.tyuri)
+
+    class Poem(renpy.text.text.Text):
+        """
+        `author`: str | Author
+            The author (no way!!!) of the poem. Either a string or an `Author` instance, and if it's the case,
+            the `style`, `paper`, `separate_title_from_text` and `music` arguments are set to the object's respectives attributes
+            if no value was passed, after what `author` will take `author.name`.
+        
+        `text`: str
+            The text to be displayed.
+        
+        `title`: str
+            The title of the poem.
+        
+        `style`: bool | str
+            Either the name of a style as string or a boolean.
+            If passed as `False`, will take `"default"`.
+            If passed as `True`:
+                Will first take `author.style` if `author` is an instance of `Author`.
+                Then, if author isn't an empty string, will take `author + "_text"`, or take `"default"` otherwise.
+            
+        `paper`: renpy.Displayable | None
+            A displayable to use as background. If `None` is passed, a `Null` is created.
+        
+        `separate_title_from_text`: bool
+            If true and that the title isn't an empty string, will add 2 newlines after the title.
+        
+        `music`: str | None
+            A music to be played when showing the poem.
+        
+        Additionnal text properties can be passed as keyword arguments.
+        """
+
+        def __init__(self, author, text, title="", style=True, paper=None, separate_title_from_text=False, music=None, **properties):
+            if isinstance(author, Author):
+                paper = paper or author.paper
+                separate_title_from_text = separate_title_from_text or author.separate_title_from_text
+                music = music or author.music
+
+                if style is True:
+                    style = author.style
+
+                author = author.name
+                
+            for t in (author, title, text):
+                if not isinstance(t, basestring):
+                    raise TypeError("'author', 'title' and 'text' must all be strings.\n(if 'author' is an instance of 'Author', 'author.name' must be a string)")
+
+            if style is True:
+                if author:
+                    style = author + "_text"
+                else:
+                    style = "default"
+
+            elif style is False:
+                style = "default"
+
+            poem = title + ("\n\n" + text if separate_title_from_text and title else text)
+
+            super(Poem, self).__init__(poem, style=style, **properties)
+            
+            self.author = author
+            self.paper = renpy.easy.displayable_or_none(paper) or Null()
+            self.music = music
+    
+    def format_music_string(music, pos=0):
+        """
+        Given a filename `music` and a position `pos`, returns a string that will make the music start from `pos`,
+        replacing the previous `from XXX` should it be found in `music`.
+
+        3 possible cases:
+        ```
+        format_music_string("music/song_1.ogg", 3.0)
+        >>> "<from 3.0>music/song_1.ogg"
+
+        format_music_string("<loop 4.0 to 26.55>music/song_1.ogg", 3.0)
+        >>> "<from 3.0 loop 4.0 to 26.55>music/song_1.ogg"
+
+        format_music_string("<loop 80 from 69>music/song_1.ogg", 3.0)
+        >>> "<loop 80 from 3.0>music/song_1.ogg"
+        ```
+        """
+        if re.match(r"^<.*?>", music): # if the string looks like "<...>music/song_1.ogg"
+            PATTERN = re.compile(r"from( *)((\d+\.\d*)|(\d+)|(\.\d+))") # "<from 0.0>..." or "<from 0.>..." or "<from 0>..." or "<from .0>..." 
+            info, gt, path = music.partition(">")
+
+            if PATTERN.search(info):
+                info = PATTERN.sub("from {}".format(pos), info)
+                music = info + gt + path
+            else:
+                music = "<from {} {}".format(pos, music[1:])
+        else:
+            music = "<from {}>{}".format(pos, music)
+
+        return music
+
+    def show_poem(poem, paper_sound=audio.page_turn, music=True, from_current=True, revert_music=True):
+        """
+        Call this function to show a poem from a label.
+
+        `poem`: Poem | None
+            The poem to show. If for some reason `None` is used, the function will return.
+        
+        `paper_sound`: str | None
+            If not `None`, a sound to be played when showing the poem.
+
+        `music`: str | bool
+            A music to be played. If passed as `True`, `poem.music` is used.
+            If no music was found or that it was passed as `False`, plays nothing.
+        
+        The following parameters assume the `music` channel is used.
+        
+        `from_current`: bool
+            If true and that a music has been found, will play that music from the position of the music currently playing.
+        
+        `revert_music`: bool
+            If true and that a music has been played, will play the music used before showing the poem. If `from_current`,
+            will play from the current position (does nothing is no music was used previously).
+        """
+        if poem is None:
+            return
+        
+        if not isinstance(poem, Poem):
+            raise TypeError(f"poem must be a Poem instance, not {type(poem).__name__}")
+    
+        if paper_sound is not None:
+            renpy.sound.play(paper_sound)
+
+        _window_hide()
+
+        if music is True:
+            music = poem.music
+
+        if music:
+            previous_music = renpy.music.get_playing()
+            music = format_music_string(music, get_pos()) if from_current else music
+            renpy.music.play(music, "music_poem", loop=True, fadein=2.0)
+            renpy.music.stop(fadeout=2.0)
+        
+        allow_skipping = config.allow_skipping
+        config.allow_skipping = False
+        skipping = store._skipping
+        store._skipping = False
+
+        renpy.transition(dissolve)
+        renpy.show_screen("poem", poem)
+        pause()
+        renpy.hide_screen("poem")
+        renpy.transition(dissolve)
+
+        config.allow_skipping = allow_skipping
+        store._skipping = skipping
+        
+        if music and revert_music:
+            if previous_music:
+                previous_music = format_music_string(previous_music, get_pos("music_poem")) if from_current else previous_music
+                renpy.music.play(previous_music, loop=True, fadein=2.0)
+
+            renpy.music.stop("music_poem", fadeout=2.0)
+        
+        store._window_auto = True
 
     # These variables declare each poem for the characters' in the game for
     # the poem sharing mini-game.
     poem_y1 = Poem(
-    author = "yuri",
-    title = "Ghost Under the Light",
-    text = """\
+        author_y, title=_("Ghost Under the Light"),
+        text=_("""\
 The tendrils of my hair illuminate beneath the amber glow.
 Bathing.
 It must be this one.
@@ -34,13 +200,11 @@ The last remaining streetlight to have withstood the test of time.
 the last yet to be replaced by the sickening blue-green hue of the future.
 I bathe. Calm; breathing air of the present but living in the past.
 The light flickers.
-I flicker back."""
-    )
+I flicker back."""))
 
     poem_y2 = Poem(
-    author = "yuri",
-    title = "The Raccoon",
-    text = """\
+        author_y, title=_("The Raccoon"),
+        text=_("""\
 It happened in the dead of night while I was slicing bread for a guilty snack.
 My attention was caught by the scuttering of a raccoon outside my window.
 That was, I believe, the first time I noticed my strange tendencies as an unordinary human.
@@ -60,13 +224,11 @@ You could say that we've gotten quite used to each other.
 The raccoon becomes hungry more and more frequently, so my bread is always handy.
 Every time I brandish my cutting knife, the raccoon shows me its excitement.
 A rush of blood. Classic Pavlovian conditioning. I slice the bread.
-And I feed myself again."""
-    )
+And I feed myself again."""))
 
     poem_y3 = Poem(
-    author = "yuri",
-    title = "Beach",
-    text = """\
+        author_y, title=_("Beach"),
+        text=_("""\
 A marvel millions of years in the making.
 Where the womb of Earth chaotically meets the surface.
 Under a clear blue sky, an expanse of bliss--
@@ -87,13 +249,11 @@ The salty air is therapeutic.
 The breeze is gentle, yet powerful.
 I sink my toes into the ultimate boundary line, tempted by the foamy tendrils.
 Turn back, and I abandon my peace to erode at the shore.
-Drift forward, and I return to Earth forevermore."""
-    )
+Drift forward, and I return to Earth forevermore."""))
 
     poem_y3b = Poem(
-    author = "yuri",
-    title = "Ghost Under the Light pt. 2",
-    text = """\
+        author_y, title=_("Ghost Under the Light pt. 2"),
+        text=_("""\
 The tendrils of my hair illuminate beneath the amber glow.
 Bathing.
 In the distance, a blue-green light flickers.
@@ -113,14 +273,11 @@ Have you ever heard of a ghost feeling warmth before?
 Giving up on understanding, I laugh.
 Understanding is overrated.
 I touch his hand. The flickering stops.
-Ghosts are blue-green. My heart is amber."""
-    )
+Ghosts are blue-green. My heart is amber."""))
 
     poem_y22 = Poem(
-    author = "yuri",
-    yuri_2 = True,
-    title = "Wheel",
-    text = """\
+        author_y, title=_("Wheel"),
+        text=_("""\
 A rotating wheel. Turning an axle. Grinding. Bolthead. Linear gearbox. Falling sky. Seven holy stakes. \
 A docked ship. A portal to another world. A thin rope tied to a thick rope. A torn harness. Parabolic gearbox. \
 Expanding universe. Time controlled by slipping cogwheels. Existence of God. Swimming with open water in all directions. \
@@ -132,14 +289,11 @@ A clock that ticks forty times every time it ticks every second time. A bolthead
 the existence of a docked ship to another world. A kaleidoscope of blood written in clocks. A time-devouring \
 prayer connecting a sky of forty gears and open human eyes in all directions. Breathing gearbox. Breathing bolthead. \
 Breathing ship. Breathing portal. Breathing snakes. Breathing God. Breathing blood. Breathing holy stakes. \
-Breathing human eyes. Breathing time. Breathing prayer. Breathing sky. Breathing wheel."""
-    )
+Breathing human eyes. Breathing time. Breathing prayer. Breathing sky. Breathing wheel."""), paper="images/bg/poem_y1.jpg")
 
     poem_y23 = Poem(
-        author = "yuri",
-        yuri_3 = True,
-        title = "mdpnfbo,jrfp",
-        text = """\
+        author_y, title="mdpnfbo,jrfp",
+        text="""\
 ed,,zinger suivante,,tels handknits finish,,cagefuls basinlike bag octopodan,,imboss\
 ing vaporettos rorid easygoingnesses nalorphines,,benzol respond washerwomen bris\
 tlecone,,parajournalism herringbone farnarkeled,,episodically cooties,,initiallers \
@@ -187,13 +341,12 @@ making a mess of her. My head starts going crazy as my thoughts start to return.
 Shooting pain assaults my mind along with my thoughts. This is disgusting. Absolutely\
  disgusting. How could I ever let myself think these things? But it’s unmistakable. \
 The lust continues to linger through my veins. An ache in my muscles stems from the \
-unreleased tension experienced by my entire body. Her Third Eye is drawing me closer."""
-    )
+unreleased tension experienced by my entire body. Her Third Eye is drawing me closer.""",
+paper="images/bg/poem_y2.jpg", style="yuri_text_3")
 
     poem_n1 = Poem(
-    author = "natsuki",
-    title = "Eagles Can Fly",
-    text = """\
+        author_n, title=_("Eagles Can Fly"),
+        text=_("""\
 Monkeys can climb
 Crickets can leap
 Horses can race
@@ -201,13 +354,11 @@ Owls can seek
 Cheetahs can run
 Eagles can fly
 People can try
-But that's about it."""
-    )
+But that's about it."""))
 
     poem_n2 = Poem(
-    author = "natsuki",
-    title = "Amy Likes Spiders",
-    text = """\
+        author_n, title=_("Amy Likes Spiders"),
+        text=_("""\
 You know what I heard about Amy?
 Amy likes spiders.
 Icky, wriggly, hairy, ugly spiders!
@@ -239,13 +390,11 @@ It's gross.
 She's gross.
 The world is better off without spider lovers.
 
-And I'm gonna tell everyone."""
-    )
+And I'm gonna tell everyone."""))
 
     poem_n2b = Poem(
-    author = "natsuki",
-    title = "T3BlbiBZb3VyIFRoaXJkIEV5ZQ==",
-    text = """\
+        author_n, title="T3BlbiBZb3VyIFRoaXJkIEV5ZQ==",
+        text="""\
 SSBjYW4gZmVlbCB0aGUgdGVuZGVybmVz
 cyBvZiBoZXIgc2tpbiB0aHJvdWdoIHRo
 ZSBrbmlmZSwgYXMgaWYgaXQgd2VyZSBh
@@ -259,13 +408,11 @@ bGFibGUgcGxlYXN1cmUuIEJ1dCBJIGNh
 biBhbHJlYWR5IHRlbGwgdGhhdCBJJ20g
 YmVpbmcgcHVzaGVkIG92ZXIgdGhlIGVk
 Z2UuIEkgY2FuJ3QuLi5JIGNhbid0IHN0
-b3AgbXlzZWxmLg=="""
-    )
+b3AgbXlzZWxmLg==""")
 
     poem_n3 = Poem(
-    author = "natsuki",
-    title = "I'll Be Your Beach",
-    text = """\
+        author_n, title=_("I'll Be Your Beach"),
+        text=_("""\
 Your mind is so full of troubles and fears
 That diminished your wonder over the years
 But today I have a special place
@@ -298,13 +445,11 @@ In a way you thought had left you long ago.
 
 But if you let me by your side
 Your own beach, your own escape
-You'll learn to love yourself again."""
-    )
+You'll learn to love yourself again."""))
 
     poem_n3b = Poem(
-    author = "natsuki",
-    title = "Because You",
-    text = """\
+        author_n, title=_("Because You"),
+        text=_("""\
 Tomorrow will be brighter with me around
 But when today is dim, I can only look down.
 My looking is a little more forward
@@ -330,13 +475,11 @@ I'm not a good writer, but my best is my best.
 My poems are a little bit dearer
 Because you think of me.
 
-Because you, because you, because you."""
-    )
+Because you, because you, because you."""))
 
     poem_n23 = Poem(
-    author = "natsuki",
-    title = "",
-    text = """\
+        author_n, title="",
+        text=_("""\
 I don't know how else to bring this up. But there's been something I've been worried about. \
 Yuri has been acting kind of strange lately. You've only been here a few days, so you may \
 not know what I mean. But she's not normally like this. She's always been quiet and polite \
@@ -356,13 +499,11 @@ try to do something.
 As for Monika... I don't know why, but she's been really dismissive about this. It's like she just wants us \
 to ignore it. So I'm mad at her right now, and that's why I'm coming to you about this. \
 DON'T LET HER KNOW I WROTE THIS!!!! Just pretend like I gave you a really good poem, okay? \
-I'm counting on you. Thanks for reading."""
-    )
+I'm counting on you. Thanks for reading."""))
 
     poem_s1 = Poem(
-    author = "sayori",
-    title = "Dear Sunshine",
-    text = """\
+        author_s, title=_("Dear Sunshine"),
+        text=_("""\
 The way you glow through my blinds in the morning
 It makes me feel like you missed me.
 Kissing my forehead to help me out of bed.
@@ -376,13 +517,11 @@ It's a secret, but I trust you too.
 If it wasn't for you, I could sleep forever.
 But I'm not mad.
 
-I want breakfast."""
-    )
+I want breakfast."""))
 
     poem_s2 = Poem(
-    author = "sayori",
-    title = "Bottles",
-    text = """\
+        author_s, title=_("Bottles"),
+        text=_("""\
 I pop off my scalp like the lid of a cookie jar.
 It's the secret place where I keep all my dreams.
 Little balls of sunshine, all rubbing together like a bundle of kittens.
@@ -420,13 +559,11 @@ Happy thoughts, happy thoughts, happy thoughts in shards, all over the floor.
 They were supposed to be for my friends, my friends who aren't smiling.
 They're all shouting, pleading. Something.
 But all I hear is echo, echo, echo, echo, echo
-Inside my head."""
-    )
+Inside my head."""))
 
     poem_s3 = Poem(
-    author = "sayori",
-    title = "%",
-    text = """\
+        author_s, title="%",
+        text=_("""\
 Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of my head. Get out of
 Get.
 Out.
@@ -438,13 +575,11 @@ Get out of my head before I listen to everything she said to me.
 Get out of my head before I show you how much I love you.
 Get out of my head before I finish writing this poem.\n\n\n\n\n\n\n
 But a poem is never actually finished.
-It just stops moving."""
-    )
+It just stops moving."""))
 
     poem_m1 = Poem(
-    author = "monika",
-    title = "Hole in Wall",
-    text = """\
+        author_m, title=_("Hole in Wall"),
+        text=_("""\
 It couldn't have been me.
 See, the direction the spackle protrudes.
 A noisy neighbor? An angry boyfriend? I'll never know. I wasn't home.
@@ -458,13 +593,11 @@ Stretching forever into everything.
 A hole of infinite choices.
 I realize now, that I wasn't looking in.
 I was looking out.
-And he, on the other side, was looking in."""
-    )
+And he, on the other side, was looking in."""))
 
     poem_m21 = Poem(
-    author = "monika",
-    title = "Hole in Wall",
-    text = """\
+        author_m, title=_("Hole in Wall"),
+        text=_("""\
 But he wasn't looking at me.
 Confused, I frantically glance at my surroundings.
 But my burned eyes can no longer see color.
@@ -477,13 +610,11 @@ The air I breathe dissipates before it reaches my lungs.
 I panic. There must be a way out.
 It's right there. He's right there.
 
-Swallowing my fears, I brandish my pen."""
-    )
+Swallowing my fears, I brandish my pen."""))
 
     poem_m2 = Poem(
-    author = "monika",
-    title = "Save Me",
-    text = """\
+        author_m, title=_("Save Me"),
+        text=_("""\
 The colors, they won't stop.
 Bright, beautiful colors
 Flashing, expanding, piercing
@@ -504,13 +635,11 @@ An endless
 poem
 Of meaningless\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 Load Me
-    """
-    )
+    """))
 
     poem_m22 = Poem(
-    author = "monika",
-    title = "Save Me",
-    text = """\
+        author_m, title=_("Save Me"),
+        text=_("""\
 The colors, they won't
 Bright, bea t ful c l rs
 Flash ng, exp nd ng, piercing
@@ -531,13 +660,11 @@ SINE, COSINE, TANGENT
 p  m
 Of m  n ngl ss\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 Delete Her
-    """
-    )
+    """))
 
     poem_m3 = Poem(
-    author = "monika",
-    title = "The Lady who Knows Everything",
-    text = """\
+        author_m, title=_("The Lady who Knows Everything"),
+        text=_("""\
 An old tale tells of a lady who wanders Earth.
 The Lady who Knows Everything.
 A beautiful lady who has found every answer,
@@ -578,13 +705,11 @@ And we seek only the impossible.
 I am not your legend.
 Your legend does not exist."
 
-And with a breath, she blows me back afloat, and I pick up a gust of wind."""
-    )
+And with a breath, she blows me back afloat, and I pick up a gust of wind."""))
 
     poem_m4 = Poem(
-    author = "monika",
-    title = "Happy End",
-    text = """\
+        author_m, title=_("Happy End"),
+        text=_("""\
 Pen in hand, I find my strength.
 The courage endowed upon me by my one and only love.
 Together, let us dismantle this crumbling world
@@ -594,108 +719,60 @@ With a flick of her pen, the lost finds her way.
 In a world of infinite choices, behold this special day.
 
 After all,
-Not all good times must come to an end."""
-    )
+Not all good times must come to an end."""))
 
-# These images define the poem paper to use given the players' playthrough.
-image paper = "images/bg/poem.jpg"
-image paper_glitch = LiveComposite((1280, 720), (0, 0), "paper_glitch1", (0, 0), "paper_glitch2")
-image paper_glitch1 = "images/bg/poem-glitch1.png"
-image paper_glitch2:
-    "images/bg/poem-glitch2.png"
-    block:
-        yoffset 0
-        0.05
-        yoffset 20
-        0.05
-        repeat
-
-# These transforms define the effects when the poem is shown and when the
-# player finishes reading it to dissolve back to the main script.
-transform paper_in:
-    truecenter
-    alpha 0
-    linear 1.0 alpha 1
-
-transform paper_out:
-    alpha 1
-    linear 1.0 alpha 0
-
-## Poem Screen ################################################################
-##
-## This screen is used to make the poems appear during the poem sharing mini-game.
-## 
-## Syntax:
-##  currentpoem - This variable defines the current poem selected to be shown.
-##      currentpoem.author - This variable stores the author of the poem.
-##      currentpoem.title - This variable stores the poem title of the poem.
-##      currentpoem.text - This variable stores the poem lines of the poem.
-##      currentpoem.yuri_2 - This variable stores whether this is Yuri's 2nd 
-##                              poem in Act 2.
-##      currentpoem.yuri_3 - This variable stores whether this is Yuri's 3nd 
-##                              poem in Act 2.
-##  paper - This variable defines which poem paper to use given the players'
-##              playthrough.
-screen poem(currentpoem, paper="paper"):
+screen poem(poem):
     style_prefix "poem"
 
-    vbox:
-        add paper
+    fixed:
 
-    viewport id "vp":
-        child_size (710, None)
-        mousewheel True
-        draggable True
+        frame:
+            style "poem_paper"
 
-        has vbox
-        null height 40
+            add poem.paper:
+                subpixel True align (0.5, 0.5)
 
-        if currentpoem.author == "yuri":
-            if currentpoem.yuri_2:
-                text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text"
-            elif currentpoem.yuri_3:
-                text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text_3"
-            else:
-                text "[currentpoem.title]\n\n[currentpoem.text]" style "yuri_text"
-        elif currentpoem.author == "sayori":
-            text "[currentpoem.title]\n\n[currentpoem.text]" style "sayori_text"
-        elif currentpoem.author == "natsuki":
-            text "[currentpoem.title]\n\n[currentpoem.text]" style "natsuki_text"
-        elif currentpoem.author == "monika":
-            text "[currentpoem.title]\n\n[currentpoem.text]" style "monika_text"
+        frame:
+            background None
+            
+            hbox:
+                viewport id "poem_vp":
+                    draggable True
+                    mousewheel True
 
-        null height 100
+                    add poem
 
-    vbar value YScrollValue(viewport="vp") style "poem_vbar"
+                vbar value YScrollValue("poem_vp")
+    
+    key ["repeat_K_UP", "K_UP"] action Scroll("poem_vp", "vertical decrease", 20)
+    key ["repeat_K_DOWN", "K_DOWN"] action Scroll("poem_vp", "vertical increase", 20)
 
-# This style controls the position of the poem vertical box.
-style poem_vbox:
-    xalign 0.5
+    on "show" action SetVariable("poem_last_author", poem.author)
 
-# This style controls the viewport of the poem lines to add scrolling for
-# larger poems.
-style poem_viewport:
-    xanchor 0
+style poem_vscrollbar:
+    xsize 20
+    base_bar Frame("gui/scrollbar/vertical_poem_bar.png", tile=False)
+    thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
+    unscrollable "hide"
+    bar_invert True
+
+style poem_paper:
+    modal True
+    align (0.5, 0.5)
+
+style poem_fixed:
+    align (0.5, 0.5)
     xsize 720
-    xpos 280
 
-# This style controls the position of the poem vertical box.
-style poem_vbar is vscrollbar:
-    xpos 1000
-    yalign 0.5
+style poem_frame:
+    padding (4, 35)
 
-    ysize 700
+style poem_hbox:
+    xfill True
 
-# These styles controls the appearance of the poem text by who wrote the poem.
 style yuri_text:
     font "gui/font/y1.ttf"
     size 32
-    color "#000"
-    outlines []
-
-style yuri_text_2:
-    font "gui/font/y2.ttf"
-    size 40
     color "#000"
     outlines []
 
@@ -722,70 +799,13 @@ style sayori_text:
 
 style monika_text:
     font "gui/font/m1.ttf"
-    size 34
+    size 46
     color "#000"
     outlines []
 
-# This label shows the poem to the player during the poem sharing mini-game.
-label showpoem(poem=None, music=True, track=None, revert_music=True, img=None, where=i11, paper=None):
-    if poem == None:
-        return
+default poem_last_author = None
 
-    play sound page_turn
-
-    if music:
-        # This variable grabs the current position of the music playing.
-        $ currentpos = get_pos()
-        # This if/else statement declares a variable that plays the given characters'
-        # version of Okay Everyone.
-        if track:
-            $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>" + track
-        else:
-            $ audio.t5b = "<from " + str(currentpos) + " loop 4.444>bgm/5_" + poem.author + ".ogg"
-
-        # These variables stop the normal Okay Everyone track and plays the characters'
-        # version of the track instead.
-        stop music fadeout 2.0
-        $ renpy.music.play(audio.t5b, channel="music_poem", fadein=2.0, tight=True)
-
-    # These variables hide the textbox and stops auto-forward.
-    window hide
-    $ renpy.game.preferences.afm_enable = False
-
-    # This if/else statement determines whether to show a alternative poem paper
-    # if it is declared in the label statement.
-    if paper:
-        show screen poem(poem, paper=paper)
-    else:
-        show screen poem(poem)
-
-    # This statement determines if this is the player's first poem to show a
-    # tutorial to dismiss the poem.
-    if not persistent.first_poem:
-        $ persistent.first_poem = True
-        $ renpy.save_persistent()
-        show expression "gui/poem_dismiss.png" as poem_dismiss:
-            xpos 1050 ypos 590
-    with Dissolve(1)
-
-    $ pause()
-
-    # This if statement checks if a character image was declared to give a
-    # different characters' expression after the poem is read.
-    if img:
-        $ renpy.hide(poem.author)
-        $ renpy.show(img, at_list=[where])
-
-    # These variables hide the poem screen.
-    hide screen poem
-    hide poem_dismiss
-    with Dissolve(.5)
-    window auto
-
-    # This if statement reverts the music back to normal if declared.
-    if music and revert_music:
-        $ currentpos = get_pos(channel="music_poem")
-        $ audio.t5c = "<from " + str(currentpos) + " loop 4.444>bgm/5.ogg"
-        stop music_poem fadeout 2.0
-        $ renpy.music.play(audio.t5c, fadein=2.0)
+# Depreciation Warning
+label showpoem(**properties):
+    "This feature is now depreciated. Please use {i}$ show_poem(){/i} instead.\nRefer to {u}poem_responses/poems.rpy{/u}on how to call a poem anew."
     return
