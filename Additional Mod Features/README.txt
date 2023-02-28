@@ -1,12 +1,15 @@
 Welcome to the Added Optional Features of the DDLC Mod Template!
 
-This section contains all optional code you can use in your mod that was previously bundled with the template (under `mod_extras`) but now separated to return back to the original template aesthetic. 
+This section contains all optional code you can use in your mod that was previously bundled with the template (under `mod_extras`) 
+but now separated to return back to the original template aesthetic. 
 
 Installation
-Copy the respective feature files inside their folders to your projects' game folder. Everything should work out of the box.
+For most code here, all you need to do is copy the respective feature files inside their folders to your projects' game folder. 
+Everything should work out of the box once you run DDLC again. 
+
 If a file requires additional steps, please refer to its' own README file.
 
-Contents
+# Contents #
 
 Achievements
 This folder contains the code for the achievements menu and notification that shows your progress throughout the mod.
