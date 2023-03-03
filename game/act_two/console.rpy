@@ -36,13 +36,18 @@ init python:
         renpy.show_screen("console_screen")
 
     # Add the output to history.
-    def input_finished():
-        global new_input, console_history
+    def add_to_history(input):
+        global console_history
 
         console_history.insert(0, new_input[1])
         if len(console_history) > 5:
             console_history.pop(5)
 
+    # Add the output to history after code is done.
+    def input_finished():
+        global new_input
+
+        add_to_history(new_input)
         new_input = None
 
         renpy.restart_interaction()

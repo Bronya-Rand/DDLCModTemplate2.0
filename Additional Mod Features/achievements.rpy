@@ -23,6 +23,8 @@ init -1 python in achievements:
     #       achievement when it is locked.
     #   show_desc_while_locked - This variable determines whether to show the actual description
     #       of the achievement or a locked one.
+    #
+    # To unlock an achievment, simply do `$ X.unlock()` (without the `'s where X is your achievements' variable name).
     class Achievement(object):
 
         def __init__(self, name, description, image, locked_desc="???", show_desc_while_locked=False):
