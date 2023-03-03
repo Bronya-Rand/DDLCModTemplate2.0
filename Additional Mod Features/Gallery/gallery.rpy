@@ -24,6 +24,8 @@ init -1 python in gallery:
     #   sprite - This variable checks if the image declared is a character sprite.
     #   already_unlocked - This variable makes sure the image is unlocked already when 
     #       the game is launched.
+    #
+    # To unlock an image, simply do `$ X.unlock()` (without the `'s where X is your gallery image' variable name).
     class GalleryImage:
 
         def __init__(self, image, small_size=None, name=None, artist=None, sprite=False, already_unlocked=False):

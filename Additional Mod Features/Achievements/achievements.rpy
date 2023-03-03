@@ -16,13 +16,12 @@ init -1 python in achievements:
     #   description - This variable contains the human-readable description of your
     #       achievement.
     #   image - This variable contains the path or image tag of the achievement.
-    #   persistent - This variable contain the name of a in-game variable to check if the
-    #       achievement has been completed or not.
-    #   count - This variable checks if the achievement declared requires a number to match.
     #   locked_desc - This variable contains the human-readable description of your
     #       achievement when it is locked.
     #   show_desc_while_locked - This variable determines whether to show the actual description
     #       of the achievement or a locked one.
+    #
+    # To unlock an achievment, simply do `$ X.unlock()` (without the `'s where X is your achievements' variable name).
     class Achievement(object):
 
         def __init__(self, name, description, image, locked_desc="???", show_desc_while_locked=False):

@@ -3,22 +3,6 @@
 # bsod.rpy
 # This file contains the screen code to display a fake Blue Screen of death.
 
-## BSOD screen ##################################################################\
-##
-## This screen is used to fake a BSOD/kernel panic on the players' computer 
-## on all platforms (Mobile devices defaults to the Linux BSOD).
-##
-## Syntax:
-##     bsodCode - The error code message you want to show the player. Defaults to 
-##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
-##     bsodFile (Windows 7 Only) - The fake file name that caused the 
-##                error. Defaults to libGLESv2.dll if no file name is given.
-##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
-##
-## Examples:
-##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
-##     show screen bsod("EILEEN_EXCEPTION_NOT_HANDLED", rsod=True) 
-
 init python:
     cursor = 0
 
@@ -52,6 +36,21 @@ init python:
         try: osVer = tuple(map(int, subprocess.run("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", check=True, shell=True, stdout=subprocess.PIPE).stdout.split(b"."))) # Vista+
         except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (but Ren'Py 8 doesn't even support XP...)
 
+## BSOD screen ##################################################################\
+##
+## This screen is used to fake a BSOD/kernel panic on the players' computer 
+## on all platforms (Mobile devices defaults to the Linux BSOD).
+##
+## Syntax:
+##     bsodCode - The error code message you want to show the player. Defaults to 
+##                DDLC_ESCAPE_PLAN_FAILED if no message is given.
+##     bsodFile (Windows 7 Only) - The fake file name that caused the 
+##                error. Defaults to libGLESv2.dll if no file name is given.
+##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
+##
+## Examples:
+##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
+##     show screen bsod("EILEEN_EXCEPTION_NOT_HANDLED", rsod=True) 
 screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
 
     layer "master"

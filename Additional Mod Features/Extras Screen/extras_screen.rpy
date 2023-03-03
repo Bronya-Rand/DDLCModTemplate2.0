@@ -3,6 +3,11 @@
 # extras_screen.rpy
 # This file contains the screen code for the extras menu for more screen options
 # (Achievements/Gallery)
+#
+# To add a new slot to this menu, increase either the row or column count and copy
+# the frames provided below already as a base to your own extras menu option.
+# Make sure that the vpgrid is full or else you will get an error.
+# Use `null` (without `'s) if you need to fill empty space.
 
 default enable_gallery = True
 default enable_achievements = True
@@ -65,20 +70,6 @@ screen extras():
                             idle Composite((150, 130), (50, 20), "mod_assets/mod_extra_images/about.png", (40, 75), Text("Credits", style="extras_text"))
                             hover Composite((150, 130), (50, 20), "mod_assets/mod_extra_images/about.png", (38, 73), Text("Credits", style="extras_hover_text"))
                             action ShowMenu("about")
-
-                ## Increase rows or cols count before commenting this out
-                # frame:
-                #     xsize 160
-                #     ysize 140
-
-                #     vbox:
-                #         xalign 0.5
-                #         yalign 0.5
-        
-                #         imagebutton:
-                #             idle Composite((150, 130), (50, 20), "mod_assets/mod_extra_images/ost_player.png", (40, 75), Text("DDLC OST-Player", style="extras_text"))
-                #             hover Composite((150, 130), (50, 20), "mod_assets/mod_extra_images/ost_player.png", (38, 73), Text("DDLC OST-Player", style="extras_hover_text"))
-                #             action [ShowMenu("new_music_room"), Function(ost_start)]
 
             vbar value YScrollValue("ext") xalign 0.99 ysize 560
 

@@ -1,6 +1,6 @@
 ﻿## Copyright 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
 
-## pronoun_example.rpy
+## pronouns.rpy
 # This file asks the user for their pronoun input.
 
 default pronoun_temp = ""
