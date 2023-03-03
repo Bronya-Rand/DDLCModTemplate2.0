@@ -58,146 +58,54 @@ screen invert(length, delay=0.0):
 
 init python:
     # This class defines the code for the tear piece effect in 'screen tear'.
-    class TearPiece(object):
-        def __init__(self, startY, endY, offtimeMult, ontimeMult, range):
-            self.y = max(0, startY)
-            self.height = max(0, endY - startY)
-
-            self.onTime  = random.uniform(0.0, 0.24) * ontimeMult
-            self.offTime = random.uniform(0.0, 0.24) * offtimeMult
-
-            self.xoffset = 0
-            self.xoffsetMin, self.xoffsetMax = range
-
-        def update(self, st):
-            st %= self.offTime + self.onTime
-            if st > self.offTime and self.xoffset == 0:
-                self.xoffset = random.randint(self.xoffsetMin, self.xoffsetMax) * random.choice((1, -1))
-            elif st <= self.offTime and self.xoffset != 0:
-                self.xoffset = 0
-    
-    class TearCore(object):
-        _cache = { }
+    class TearPiece:
+        def __init__(self, startY, endY, offtimeMult, ontimeMult, offsetMin, offsetMax):
+            self.startY = startY
+            self.endY = endY
+            self.offTime = (random.random() * 0.2 + 0.2) * offtimeMult
+            self.onTime = (random.random() * 0.2 + 0.2) * ontimeMult
+            self.offset = 0
+            self.offsetMin = offsetMin
+            self.offsetMax = offsetMax
         
-        def __init__(self, number, offtimeMult, ontimeMult, offsetRange, chroma):
-            self.chroma = bool(chroma) and getattr(renpy.display.render, "models", False)
+        def update(self, st):
+            st = st % (self.offTime + self.onTime)
+            if st > self.offTime and self.offset == 0:
+                self.offset = random.randint(self.offsetMin, self.offsetMax)
+            elif st <= self.offTime and self.offset != 0:
+                self.offset = 0
+    
+    # This class defines the code for the 'screen tear' effect in-game.
+    class Tear(renpy.Displayable):
+        def __init__(self, number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf=None):
+            super(Tear, self).__init__()
+            self.width, self.height = renpy.get_physical_size()
 
-            tearpoints = [0.0, 1.0]
-            for _ in range(number):
-                tearpoints.append(random.random())
+            if float(self.width) / float(self.height) > 16.0/9.0:
+                self.width = self.height * 16 / 9
+            else:
+                self.height = self.width * 9 / 16
+            self.number = number
+            if not srf: self.srf = screenshot_srf()
+            else: self.srf = srf
+
+            self.pieces = []
+            tearpoints = [0, self.height]
+            for i in range(number):
+                tearpoints.append(random.randint(10, self.height - 10))
             tearpoints.sort()
-
-            self.pieces = [
-                TearPiece(tearpoints[i], tearpoints[i + 1], offtimeMult, ontimeMult, offsetRange)
-                for i in range(number + 1)
-            ]
-
-        def render(self, srf, w, h, st, at):
-            width, height = srf.get_size()
-            render = renpy.Render(width, height)
-            render.blit(srf, (0, 0))
-
+            for i in range(number+1):
+                self.pieces.append(TearPiece(tearpoints[i], tearpoints[i+1], offtimeMult, ontimeMult, offsetMin, offsetMax))
+        
+        def render(self, width, height, st, at):
+            render = renpy.Render(self.width, self.height)
+            render.blit(self.srf, (0,0))
             for piece in self.pieces:
                 piece.update(st)
-                subsrf = render.subsurface((0, piece.y * height, width, piece.height * height))
-
-                if self.chroma:
-                    piece_width, piece_height = subsrf.get_size()
-                    piece_render = renpy.Render(piece_width, piece_height)
-                
-                    for color_mask in (
-                        (False, False, True, True),
-                        (False, True, False, True),
-                        (True, False, False, True),
-                    ):
-                        mask_render = renpy.Render(piece_width, piece_height)
-                        mask_render.blit(subsrf, (0, 0))
-                        mask_render.add_property("gl_color_mask", color_mask)
-                        xzoom = 1.0 + random.uniform(-piece.xoffset, piece.xoffset) / float(piece_width)
-                        mask_render.zoom(xzoom, 1.0)
-
-                        piece_render.blit(mask_render, (0, 0))
-                    
-                    subsrf = piece_render
-
-                render.subpixel_blit(subsrf, (piece.xoffset, piece.y * height))
-            
-            return render
-    
-    class BaseTear(renpy.Displayable):
-        def __init__(self, number, offtimeMult, ontimeMult, offsetRange, chroma):
-            super(BaseTear, self).__init__()
-            self.tear = TearCore(number, offtimeMult, ontimeMult, offsetRange, chroma)
-        
-        def _srf_render(self, srf, w, h, st, at):
-            rv = self.tear.render(srf, w, h, st, at)
+                subsrf = self.srf.subsurface((0, max(0, piece.startY - 1), self.width, max(0, piece.endY - piece.startY)))
+                render.blit(subsrf, (piece.offset, piece.startY))
             renpy.redraw(self, 0)
-            return rv
-    
-    class TearSurface(BaseTear):
-        """
-        `srf`: Render | Surface | GL2Model | None
-            The surface used. If `None` is passed, takes a screenshot and uses it as surface
-            (the screenshot's size doesn't exactly match the screen's size, careful with that).
-        """
-        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), chroma=False, srf=None):
-            super(TearSurface, self).__init__(number, offtimeMult, ontimeMult, offsetRange, chroma)
-            self.srf = srf or screenshot_srf()
-        
-        def render(self, w, h, st, at):
-            return self._srf_render(self.srf, w, h, st, at)
-    
-    def Tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None, chroma=False):
-        return TearSurface(number, offtimeMult, ontimeMult, (offsetMin, offsetMax), chroma, srf)
-    
-    class _TearDisplayable(BaseTear):
-        def __init__(self, child, number, offtimeMult, ontimeMult, offsetRange, chroma):
-            super(_TearDisplayable, self).__init__(number, offtimeMult, ontimeMult, offsetRange, chroma)
-            self.child = renpy.displayable(child)
-        
-        def render(self, w, h, st, at):
-            return self._srf_render(renpy.render(self.child, w, h, st, at), w, h, st, at)
-        
-        def event(self, ev, x, y, st):
-            return self.child.event(ev, x, y, st)
-        
-        def visit(self):
-            return [self.child]
-        
-        def predict_one(self):
-            renpy.display.predict.displayable(self.child)
-
-    class TearDisplayable(object):
-        """
-        To use like a transform.
-        ```
-        show sayori turned at TearDisplayable()
-        ```
-
-        `number`: int
-            The number of pieces.
-        
-        `offsetRange`: tuple[int | float, int | float]
-            The offset minmum / maximum.
-        
-        `chroma`: bool
-            Do we apply chromatic aberration to the pieces?
-        
-        `key`: Any | None
-            If not `None`, all `TearDisplayable` that have this key will use the same `tear` effect.
-        """
-        def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), chroma=False, key=None):
-            self.number = number
-            self.offtimeMult = offtimeMult
-            self.ontimeMult = ontimeMult
-            self.offsetRange = offsetRange
-            self.chroma = chroma
-            self.key = key
-        
-        def __call__(self, child):
-            rv = _TearDisplayable(child, self.number, self.offtimeMult, self.ontimeMult, self.offsetRange, self.chroma)
-            if self.key is not None: rv.tear = TearCore._cache.setdefault(self.key, rv.tear)
-            return rv
+            return render
 
 ## Tear
 # This screen is called using `show screen tear()` to tear the screen.
@@ -208,9 +116,9 @@ init python:
 #   offsetMin - This declares the minimum offset of time by the multiplier.
 #   offsetMax - This declares the minimum offset of time by the multiplier.
 #   srf - This declares the screen image from 'screenshot_srf' if it is declared.
-screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None, chroma=False):
+screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None):
     zorder 150
-    add Tear(number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf, chroma) size (1280, 720)
+    add Tear(number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf) size (1280,720)
     on "show" action Function(hide_windows_enabled, enabled=False)
     on "hide" action Function(hide_windows_enabled, enabled=True)
 
