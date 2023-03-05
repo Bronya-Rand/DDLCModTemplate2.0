@@ -546,7 +546,6 @@ label credits2:
         monikaZoom = 1
         imagenum = 0
     scene black
-    $ consolehistory = []
     play music "<from 50.0>bgm/credits.ogg" noloop
     $ starttime = datetime.datetime.now()
     pause 0.88
