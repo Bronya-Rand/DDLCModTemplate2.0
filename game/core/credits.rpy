@@ -502,10 +502,9 @@ label credits:
     pause 41
     scene black
     pause 0.5
-    $ consolehistory = []
-    call updateconsole ("renpy.music.play(\"ddlc.ogg\")", "Playing audio \"ddlc.ogg\"...")
+    $ run_input(__("renpy.music.play(\"ddlc.ogg\")"), __("Playing audio \"ddlc.ogg\"..."))
     pause 1.0
-    call hideconsole
+    hide screen console_screen
     # This play statement starts Your Reality to 50 seconds in the credits.
     play music "<to 50.0>bgm/credits.ogg" noloop
 
@@ -547,7 +546,6 @@ label credits2:
         monikaZoom = 1
         imagenum = 0
     scene black
-    $ consolehistory = []
     play music "<from 50.0>bgm/credits.ogg" noloop
     $ starttime = datetime.datetime.now()
     pause 0.88
@@ -571,9 +569,9 @@ label credits2:
     $ imagenum += 1
     $ pause(16.95 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/n_cg1.png\")", "n_cg1.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/n_cg1.png\")", __("n_cg1.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/n_cg1.png\")", "n_cg1.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/n_cg1.png\")") / 30.0 + 0.5)
     show expression ("credits_cg2" + lockedtext) as credits_image_2 at credits_scroll_left
     
     show credits_header "Character Art" as credits_header_2 at credits_text_scroll_right
@@ -584,9 +582,9 @@ label credits2:
     $ imagenum += 1
     $ pause(26.05 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/n_cg2.png\")", "n_cg2.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/n_cg2.png\")", __("n_cg2.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/n_cg2.png\")", "n_cg2.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/n_cg2.png\")") / 30.0 + 0.5)
     show expression ("credits_cg3" + lockedtext) as credits_image_1 at credits_scroll_right
     
     show credits_header "Background Art" as credits_header_1 at credits_text_scroll_left
@@ -597,9 +595,9 @@ label credits2:
     $ imagenum += 1
     $ pause(35.15 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/y_cg1.png\")", "y_cg1.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/y_cg1.png\")", __("y_cg1.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/y_cg1.png\")", "y_cg1.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/y_cg1.png\")") / 30.0 + 0.5)
     show expression ("credits_cg4" + lockedtext) as credits_image_2 at credits_scroll_left
     
     show credits_header "Writing" as credits_header_2 at credits_text_scroll_right
@@ -610,9 +608,9 @@ label credits2:
     $ imagenum += 1
     $ pause(44.25 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/y_cg2.png\")", "y_cg2.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/y_cg2.png\")", __("y_cg2.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/y_cg2.png\")", "y_cg2.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/y_cg2.png\")") / 30.0 + 0.5)
     show expression ("credits_cg5" + lockedtext) as credits_image_1 at credits_scroll_right
     
     show credits_header "Music" as credits_header_1 at credits_text_scroll_left
@@ -622,10 +620,10 @@ label credits2:
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(53.35 - (datetime.datetime.now() - starttime).total_seconds())
-    if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/n_cg3.png\")", "n_cg3.png deleted successfully.")
+   if not persistent.clearall:
+        $ run_input("os.remove(\"images/cg/n_cg3.png\")", __("n_cg3.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/n_cg3.png\")", "n_cg3.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/n_cg3.png\")") / 30.0 + 0.5)
     show expression ("credits_cg6" + lockedtext) as credits_image_2 at credits_scroll_left
     
     show credits_header "Vocals" as credits_header_2 at credits_text_scroll_right
@@ -636,9 +634,9 @@ label credits2:
     $ imagenum += 1
     $ pause(62.45 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/y_cg3.png\")", "y_cg3.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/y_cg2.png\")", __("y_cg2.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/y_cg3.png\")", "y_cg3.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/y_cg2.png\")") / 30.0 + 0.5)
     show expression ("credits_cg7" + lockedtext) as credits_image_1 at credits_scroll_right
     
     show credits_header "Special Thanks" as credits_header_1 at credits_text_scroll_left
@@ -649,9 +647,9 @@ label credits2:
     $ imagenum += 1
     $ pause(71.55 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/s_cg1.png\")", "s_cg1.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/s_cg1.png\")", __("s_cg1.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/s_cg1.png\")", "s_cg1.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/s_cg1.png\")") / 30.0 + 0.5)
     show expression ("credits_cg8" + lockedtext) as credits_image_2 at credits_scroll_left
     
     show credits_header "Special Thanks" as credits_header_2 at credits_text_scroll_right
@@ -666,9 +664,9 @@ label credits2:
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/s_cg2.png\")", "s_cg2.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/s_cg2.png\")", __("s_cg2.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/s_cg2.png\")", "s_cg2.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/s_cg2.png\")") / 30.0 + 0.5)
     $ pause(88.00 - (datetime.datetime.now() - starttime).total_seconds())
     show expression ("credits_cg9" + lockedtext) as credits_image_1 at credits_scroll_right
     
@@ -679,9 +677,9 @@ label credits2:
     $ if persistent.clearall: lockedtext = "_clearall"
     $ pause(95.00 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/s_cg3.png\")", "s_cg3.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/s_cg3.png\")", __("s_cg3.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/s_cg3.png\")", "s_cg3.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/s_cg3.png\")") / 30.0 + 0.5)
     show expression ("credits_cg10" + lockedtext) as credits_image_2 at credits_scroll_left
     
     show credits_header "Special Thanks" as credits_header_2 at credits_text_scroll_right
@@ -689,17 +687,17 @@ label credits2:
     
     $ pause(104.10 - (datetime.datetime.now() - starttime).total_seconds())
     if not persistent.clearall:
-        call updateconsole ("os.remove(\"images/cg/m_cg1.png\")", "m_cg1.png deleted successfully.")
+        $ run_input("os.remove(\"images/cg/m_cg1.png\")", __("m_cg1.png deleted successfully."))
     else:
-        call updateconsole_clearall ("os.remove(\"images/cg/m_cg1.png\")", "m_cg1.png deleted successfully.")
+        $ pause(len("os.remove(\"images/cg/m_cg1.png\")") / 30.0 + 0.5)
 
-    call updateconsole ("os.remove(\"game/screens.rpy\")", "screens.rpy deleted successfully.")
-    call updateconsole ("os.remove(\"game/gui.rpy\")", "gui.rpy deleted successfully.")
-    call updateconsole ("os.remove(\"game/menu.rpy\")", "menu.rpy deleted successfully.")
-    call updateconsole ("os.remove(\"game/script.rpy\")", "script.rpy deleted successfully.")
+    $ run_input("os.remove(\"game/screens.rpy\")", __("screens.rpy deleted successfully."))
+    $ run_input("os.remove(\"game/gui.rpy\")", __("gui.rpy deleted successfully."))
+    $ run_input("os.remove(\"game/menu.rpy\")", __("menu.rpy deleted successfully."))
+    $ run_input("os.remove(\"game/script.rpy\")", __("script.rpy deleted successfully."))
     $ pause(115.72 - (datetime.datetime.now() - starttime).total_seconds())
     
-    call hideconsole
+    hide screen console_screen
     show credits_ts
     show credits_text "made with love by":
         zoom 0.75 xalign 0.5 yalign 0.25 alpha 0 subpixel True
