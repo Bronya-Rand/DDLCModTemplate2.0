@@ -692,10 +692,10 @@ label credits2:
     else:
         $ pause(len("os.remove(\"images/cg/m_cg1.png\")") / 30.0 + 0.5)
 
-    call updateconsole ("os.remove(\"game/screens.rpy\")", "screens.rpy deleted successfully.")
-    call updateconsole ("os.remove(\"game/gui.rpy\")", "gui.rpy deleted successfully.")
-    call updateconsole ("os.remove(\"game/menu.rpy\")", "menu.rpy deleted successfully.")
-    call updateconsole ("os.remove(\"game/script.rpy\")", "script.rpy deleted successfully.")
+    $ run_input("os.remove(\"game/screens.rpy\")", __("screens.rpy deleted successfully."))
+    $ run_input("os.remove(\"game/gui.rpy\")", __("gui.rpy deleted successfully."))
+    $ run_input("os.remove(\"game/menu.rpy\")", __("menu.rpy deleted successfully."))
+    $ run_input("os.remove(\"game/script.rpy\")", __("script.rpy deleted successfully."))
     $ pause(115.72 - (datetime.datetime.now() - starttime).total_seconds())
     
     hide screen console_screen
