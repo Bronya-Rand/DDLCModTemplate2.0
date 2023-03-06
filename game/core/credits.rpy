@@ -620,7 +620,7 @@ label credits2:
     $ if persistent.clearall: lockedtext = "_clearall"
     $ imagenum += 1
     $ pause(53.35 - (datetime.datetime.now() - starttime).total_seconds())
-   if not persistent.clearall:
+    if not persistent.clearall:
         $ run_input("os.remove(\"images/cg/n_cg3.png\")", __("n_cg3.png deleted successfully."))
     else:
         $ pause(len("os.remove(\"images/cg/n_cg3.png\")") / 30.0 + 0.5)
