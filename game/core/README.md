@@ -7,6 +7,9 @@ This file imports the needed python modules necessary for DDLC and the template 
 ## credits.rpy
 This file defines the code for the credits that play at the end of Act Four.
 
+## depreciation.rpy
+This file contains old labels formerly used by old features before a revised update. **This file is temporary and may be removed at any time**.
+
 ## exceptions.rpy
 This file stores the exceptions that the mod template can throw to you during development. The following exceptions stored in this file that can occur are:
 

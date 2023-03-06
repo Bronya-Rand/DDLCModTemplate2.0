@@ -39,17 +39,17 @@ init python:
     def add_to_history(input):
         global console_history
 
-        console_history.insert(0, new_input[1])
+        console_history.insert(0, input[1])
         if len(console_history) > 5:
             console_history.pop(5)
 
-    # Add the output to history after code is done.
+    # Add the output to history after code is done
     def input_finished():
         global new_input
 
         add_to_history(new_input)
         new_input = None
-
+        
         renpy.restart_interaction()
 
     def clear_history():
@@ -114,3 +114,10 @@ style console_screen_text:
     color "#fff"
     size 18
     outlines []
+
+# This label clears all console history and commands from the console in-game.
+# Decided to keep this for now as it just pauses stuff.
+label updateconsole_clearall(text="", history=""):
+    $ pause(len(text) / 30.0 + 0.5)
+    $ pause(0.5)
+    return
