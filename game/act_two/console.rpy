@@ -39,7 +39,7 @@ init python:
     def add_to_history(input):
         global console_history
 
-        console_history.insert(0, input)
+        console_history.insert(0, input[1])
         if len(console_history) > 5:
             console_history.pop(5)
 
