@@ -13,7 +13,7 @@ label updateconsole(text="", history=""):
 
 # This label adds certain text to the console history.
 label updateconsolehistory(text=""):
-    call screen dialog(message="{b}Warning{/b}\nThis feature has been depreciated and requires an additional argurment.\nUse the following in order to regain this back.\n {i}$ add_to_history(\"[text]\", \"output\"){/i}."
+    call screen dialog(message="{b}Warning{/b}\nThis feature has been depreciated and requires an additional argurment.\nUse the following in order to regain this back.\n {i}$ add_to_history((\"[text]\", \"output\")){/i}."
         ok_action=Hide("dialog"))
     return
 
