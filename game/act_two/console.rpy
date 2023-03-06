@@ -114,3 +114,10 @@ style console_screen_text:
     color "#fff"
     size 18
     outlines []
+
+# This label clears all console history and commands from the console in-game.
+# Decided to keep this for now as it just pauses stuff.
+label updateconsole_clearall(text="", history=""):
+    $ pause(len(text) / 30.0 + 0.5)
+    $ pause(0.5)
+    return
