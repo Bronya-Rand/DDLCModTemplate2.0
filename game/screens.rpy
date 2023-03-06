@@ -1120,6 +1120,167 @@ style viewframe_text is confirm_prompt_text:
 #             textbutton _("Reset") action [Hide("display_options"), Function(renpy.reset_physical_size)]
 #             textbutton _("Set") action [Hide("display_options"), Function(set_physical_resolution, scale)]
 
+screen ddlc_preferences():
+    hbox:
+        box_wrap True
+
+        if renpy.variant("pc"):
+
+            vbox:
+                style_prefix "radio"
+                label _("Display")
+                textbutton _("Windowed") action Preference("display", "window")
+                textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                # textbutton _("More") action Show("display_options")
+
+        if config.developer:
+            vbox:
+                style_prefix "radio"
+                label _("Rollback Side")
+                textbutton _("Disable") action Preference("rollback side", "disable")
+                textbutton _("Left") action Preference("rollback side", "left")
+                textbutton _("Right") action Preference("rollback side", "right")
+
+        vbox:
+            style_prefix "check"
+            label _("Skip")
+            textbutton _("Unseen Text") action Preference("skip", "toggle")
+            textbutton _("After Choices") action Preference("after choices", "toggle")
+            # textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+    
+    null height (4 * gui.pref_spacing)
+
+    hbox:
+        style_prefix "slider"
+        box_wrap True
+
+        vbox:
+            
+            hbox:
+                label _("Text Speed")
+                
+                null width 5
+
+                text str(preferences.text_cps) style "value_text"
+
+            #bar value Preference("text speed")
+            bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
+
+            hbox:
+                label _("Auto-Forward Time")
+                
+                null width 5
+                
+                text str(round(preferences.afm_time)) style "value_text"
+
+            bar value Preference("auto-forward time")
+
+        vbox:
+            
+            if config.has_music:
+                hbox:
+                    label _("Music Volume")
+                    
+                    null width 5
+                
+                    text str(round(preferences.get_volume("music") * 100)) style "value_text"
+
+                hbox:
+                    bar value Preference("music volume")
+
+            if config.has_sound:
+
+                hbox:
+                    label _("Sound Volume")
+                    
+                    null width 5
+                
+                    text str(round(preferences.get_volume("sfx") * 100)) style "value_text"
+
+                hbox:
+                    bar value Preference("sound volume")
+
+                    if config.sample_sound:
+                        textbutton _("Test") action Play("sound", config.sample_sound)
+
+            if config.has_voice:
+                hbox:
+                    label _("Voice Volume")
+                    
+                    null width 5
+                
+                    text str(round(preferences.get_volume("voice") * 100)) style "value_text"
+
+                hbox:
+                    bar value Preference("voice volume")
+
+                    if config.sample_voice:
+                        textbutton _("Test") action Play("voice", config.sample_voice)
+
+            if config.has_music or config.has_sound or config.has_voice:
+                null height gui.pref_spacing
+
+                textbutton _("Mute All"):
+                    action Preference("all mute", "toggle")
+                    style "mute_all_button"
+
+screen template_preferences():
+    hbox:
+        box_wrap True
+
+        if extra_settings:
+            vbox:
+                style_prefix "check"
+                label _("Game Modes")
+                textbutton _("Uncensored Mode") action If(persistent.uncensored_mode, 
+                    ToggleField(persistent, "uncensored_mode"), 
+                    Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult/sensitive\ncontent in your playthrough.\n\nThis setting will be dependent on the modder if\nthey programmed these checks in their story.", 
+                        yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
+                        no_action=Hide("confirm")
+                    ))
+                textbutton _("Let's Play Mode") action If(persistent.lets_play, 
+                    ToggleField(persistent, "lets_play"),
+                    [ToggleField(persistent, "lets_play"), Show("dialog", 
+                        message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
+                        ok_action=Hide("dialog")
+                    )])
+        
+        vbox:
+            style_prefix "name"
+            label _("Player Name")
+            
+            null height 3
+            
+            if player == "":
+                text _("No Name Set") xalign 0.5
+            else:
+                text "[player]" xalign 0.5
+            
+            textbutton _("Change Name") action Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName, launchGame=False)):
+                text_style "navigation_button_text"
+
+        null height (4 * gui.pref_spacing)
+
+        hbox:
+            box_wrap True
+
+            if enable_languages and translations:
+                vbox:
+                    style_prefix "radio"
+                    label _("Language")
+                    hbox:
+                        viewport:
+                            mousewheel True
+                            scrollbars "vertical"
+                            ysize 120
+                            has vbox
+
+                            for tran in translations:
+                                vbox:
+                                    for tlid, tlname in tran:
+                                        textbutton tlname:
+                                            action Language(tlid)
+
 ## Preferences screen ##########################################################
 ##
 ## The preferences screen allows the player to configure the game to better suit
@@ -1153,165 +1314,9 @@ screen preferences():
             null height 10
 
             if ddlc_settings:
-
-                hbox:
-                    box_wrap True
-
-                    if renpy.variant("pc"):
-
-                        vbox:
-                            style_prefix "radio"
-                            label _("Display")
-                            textbutton _("Windowed") action Preference("display", "window")
-                            textbutton _("Fullscreen") action Preference("display", "fullscreen")
-
-                    if config.developer:
-                        vbox:
-                            style_prefix "radio"
-                            label _("Rollback Side")
-                            textbutton _("Disable") action Preference("rollback side", "disable")
-                            textbutton _("Left") action Preference("rollback side", "left")
-                            textbutton _("Right") action Preference("rollback side", "right")
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Skip")
-                        textbutton _("Unseen Text") action Preference("skip", "toggle")
-                        textbutton _("After Choices") action Preference("after choices", "toggle")
-                        # textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-                
-                null height (4 * gui.pref_spacing)
-
-                hbox:
-                    style_prefix "slider"
-                    box_wrap True
-
-                    vbox:
-                        
-                        hbox:
-                            label _("Text Speed")
-                            
-                            null width 5
-
-                            text str(preferences.text_cps) style "value_text"
-
-                        #bar value Preference("text speed")
-                        bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
-
-                        hbox:
-                            label _("Auto-Forward Time")
-                            
-                            null width 5
-                            
-                            text str(round(preferences.afm_time)) style "value_text"
-
-                        bar value Preference("auto-forward time")
-
-                    vbox:
-                        
-                        if config.has_music:
-                            hbox:
-                                label _("Music Volume")
-                                
-                                null width 5
-                            
-                                text str(round(preferences.get_volume("music") * 100)) style "value_text"
-
-                            hbox:
-                                bar value Preference("music volume")
-
-                        if config.has_sound:
-
-                            hbox:
-                                label _("Sound Volume")
-                                
-                                null width 5
-                            
-                                text str(round(preferences.get_volume("sfx") * 100)) style "value_text"
-
-                            hbox:
-                                bar value Preference("sound volume")
-
-                                if config.sample_sound:
-                                    textbutton _("Test") action Play("sound", config.sample_sound)
-
-                        if config.has_voice:
-                            hbox:
-                                label _("Voice Volume")
-                                
-                                null width 5
-                            
-                                text str(round(preferences.get_volume("voice") * 100)) style "value_text"
- 
-                            hbox:
-                                bar value Preference("voice volume")
-
-                                if config.sample_voice:
-                                    textbutton _("Test") action Play("voice", config.sample_voice)
-
-                        if config.has_music or config.has_sound or config.has_voice:
-                            null height gui.pref_spacing
-
-                            textbutton _("Mute All"):
-                                action Preference("all mute", "toggle")
-                                style "mute_all_button"
-                
+                use ddlc_preferences
             else:
-                hbox:
-                    box_wrap True
-
-                    if extra_settings:
-                        vbox:
-                            style_prefix "check"
-                            label _("Game Modes")
-                            textbutton _("Uncensored Mode") action If(persistent.uncensored_mode, 
-                                ToggleField(persistent, "uncensored_mode"), 
-                                Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult/sensitive\ncontent in your playthrough.\n\nThis setting will be dependent on the modder if\nthey programmed these checks in their story.", 
-                                    yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
-                                    no_action=Hide("confirm")
-                                ))
-                            textbutton _("Let's Play Mode") action If(persistent.lets_play, 
-                                ToggleField(persistent, "lets_play"),
-                                [ToggleField(persistent, "lets_play"), Show("dialog", 
-                                    message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
-                                    ok_action=Hide("dialog")
-                                )])
-                    
-                    vbox:
-                        style_prefix "name"
-                        label _("Player Name")
-                        
-                        null height 3
-                        
-                        if player == "":
-                            text _("No Name Set") xalign 0.5
-                        else:
-                            text "[player]" xalign 0.5
-                        
-                        textbutton _("Change Name") action Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName, launchGame=False)):
-                            text_style "navigation_button_text"
-                
-                null height (4 * gui.pref_spacing)
-
-                hbox:
-                    box_wrap True
-
-                    if enable_languages and translations:
-                        vbox:
-                            style_prefix "radio"
-                            label _("Language")
-                            hbox:
-                                viewport:
-                                    mousewheel True
-                                    scrollbars "vertical"
-                                    ysize 120
-                                    has vbox
-
-                                    for tran in translations:
-                                        vbox:
-                                            for tlid, tlname in tran:
-                                                textbutton tlname:
-                                                    action Language(tlid)
+                use template_preferences
                             
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
