@@ -1,7 +1,17 @@
 # Welcome to the **New** Python 3 Modification Club!
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K22K8SU)
-[![download](.github/IMAGES/download.png)](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/latest)
+<p align="center">
+  <img src="./game/mod_assets/DDLCModTemplateLogo.png" width=250px/>
+</p>
+
+<p align="center">
+   <a href="https://ko-fi.com/K3K22K8SU">
+      <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
+   </a>
+   <a href="https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/latest">
+      <img src=".github/IMAGES/download.png">
+   </a>
+</p>
 
 The **new** Python 3 DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 8.
 
