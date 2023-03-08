@@ -10,3 +10,5 @@ game/saves
 .DS_Store
 errors.txt
 *.pyc
+__pycache__
+ZIPs
