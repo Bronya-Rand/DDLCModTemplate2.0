@@ -1,4 +1,4 @@
-from zipfile import ZipFile
+from zipfile import ZipFile, ZIP_DEFLATED
 from zipper_env import PY3, EXTRAS
 import sys
 import os
@@ -42,7 +42,10 @@ def main():
 
     print("Creating Template ZIP file.")
     with ZipFile(
-        os.path.join(".", "ZIPs", main_zip_name + ".zip"), "w"
+        os.path.join(".", "ZIPs", main_zip_name + ".zip"),
+        "w",
+        ZIP_DEFLATED,
+        compresslevel=5,
     ) as main_template:
         for src, dirs, files in os.walk("."):
             for f in files:
@@ -67,6 +70,8 @@ def main():
         with ZipFile(
             os.path.join(".", "ZIPs", extras_zip_name + ".zip"),
             "w",
+            ZIP_DEFLATED,
+            compresslevel=5,
         ) as extras_template:
             for src, dirs, files in os.walk("."):
                 for f in files:
