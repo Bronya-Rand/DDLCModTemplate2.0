@@ -12,8 +12,9 @@ EXCLUDE_LIST = [
     "requirements.txt",
     "ZIPs",
     "Additional Mod Features",
-    "mod_template_zipper.py",
-    "__pycache__"
+    "zipper.py",
+    "zipper_env.py",
+    "__pycache__",
 ]
 
 
