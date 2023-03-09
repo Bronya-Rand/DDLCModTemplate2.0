@@ -3,7 +3,7 @@
 # This file defines all the poems in the game that can be shown to the player
 # by the girls in the poem sharing mini-game.
 
-init python:
+init 1 python:
 
     class Author(object):
         """
