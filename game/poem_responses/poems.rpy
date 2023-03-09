@@ -176,6 +176,9 @@ init python:
         renpy.hide_screen("poem")
         renpy.transition(dissolve)
 
+        if not persistent.first_poem:
+            persistent.first_poem = True
+
         config.allow_skipping = allow_skipping
         store._skipping = skipping
         
@@ -743,6 +746,9 @@ screen poem(poem):
                     add poem
 
                 vbar value YScrollValue("poem_vp")
+        
+    if not persistent.first_poem:
+        add "gui/poem_dismiss.png" xpos 1050 ypos 590
     
     key ["repeat_K_UP", "K_UP"] action Scroll("poem_vp", "vertical decrease", 20)
     key ["repeat_K_DOWN", "K_DOWN"] action Scroll("poem_vp", "vertical increase", 20)
@@ -806,6 +812,6 @@ style monika_text:
 default poem_last_author = None
 
 # Depreciation Warning
-label showpoem(**properties):
+label showpoem(poem, **properties):
     "This feature is now depreciated. Please use {i}$ show_poem(){/i} instead.\nRefer to {u}poem_responses/poems.rpy{/u}on how to call a poem anew."
     return
