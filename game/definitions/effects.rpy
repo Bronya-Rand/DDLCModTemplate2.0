@@ -92,7 +92,7 @@ init python:
             self.pieces = []
             tearpoints = [0, self.height]
             for i in range(number):
-                tearpoints.append(random.randint(10, self.height - 10))
+                tearpoints.append(random.randint(10, int(self.height) - 10))
             tearpoints.sort()
             for i in range(number+1):
                 self.pieces.append(TearPiece(tearpoints[i], tearpoints[i+1], offtimeMult, ontimeMult, offsetMin, offsetMax))
