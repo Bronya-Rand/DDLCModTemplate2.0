@@ -149,7 +149,7 @@ init 1 python:
             return
         
         if not isinstance(poem, Poem):
-            raise TypeError(f"poem must be a Poem instance, not {type(poem).__name__}")
+            raise TypeError("poem must be a Poem instance, not " + type(poem).__name__)
     
         if paper_sound is not None:
             renpy.sound.play(paper_sound)
