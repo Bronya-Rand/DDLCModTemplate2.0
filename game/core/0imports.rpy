@@ -25,10 +25,10 @@ init python:
     # Achievements/Gallery
     try:
         from store.achievements import achievementList, Achievement, AchievementCount
-    except ModuleNotFoundError:
+    except ImportError:
         pass
     
     try:
         from store.gallery import GalleryImage, galleryList
-    except ModuleNotFoundError:
+    except ImportError:
         pass
