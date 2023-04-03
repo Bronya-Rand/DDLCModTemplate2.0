@@ -1525,12 +1525,6 @@ default m_readpoem = False
 # This variable keeps track on how many people have read your poem.
 default poemsread = 0
 
-# These variables store the appeal a character has to your poem
-default n_appeal = 0
-default s_appeal = 0
-default y_appeal = 0
-default m_appeal = 0
-
 # These variables control if we have seen Natsuki's or Yuri's exclusive scenes
 default n_exclusivewatched = False
 default y_exclusivewatched = False
