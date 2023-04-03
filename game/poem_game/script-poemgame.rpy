@@ -1,10 +1,7 @@
 ## script-poemgame.rpy
 
 # This file contains the code to the DDLC poem game (now improved [finally...])
-# Still commented to oblivion by Terra.
-
-## Joke Comments
-## Will cause Elckarow to rage for all this garbagio.
+# Still commented a bit by Terra.
 
 init python: 
     # This dictionary stores every poemword and the class preference values of each character.
@@ -85,6 +82,9 @@ init python:
         POEM_LIKE_THRESHOLD = 45
 
         def __init__(self, name):
+            if not isinstance(name, str):
+                raise Exception("'name' argurment must be a string, not " + type(name))
+                
             self.charPointTotal = 0
             self.appeal = 0
             super().__init__()
@@ -358,6 +358,7 @@ label poem_eye_scare:
     show bg eyes_move
     pause 1.25
     hide bg eyes with None
+    $ quick_menu = True
     return
 
 ############ Image definitions start here. #############
