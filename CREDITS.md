@@ -16,3 +16,4 @@ Special thanks to the following for contributing to the mod template
 - Pseurae (Donation/Act 3 GL2 Fix)
 - Lezalith (New Console (4.1.1+))
 - RS/6000 (New Mod Template Logo (4.2.1+))
+- Tulkas (Android Gestures)
