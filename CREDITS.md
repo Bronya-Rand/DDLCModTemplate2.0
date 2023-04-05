@@ -16,3 +16,4 @@ Special thanks to the following for contributing to the mod template
 - Elckarow (Small patches, New effects/poem responses)
 - Lezalith (New Console (4.1.1+))
 - RS/6000 (New Mod Template Logo (4.2.1+))
+- Tulkas (Android Gestures)

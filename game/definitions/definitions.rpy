@@ -42,9 +42,25 @@ init -3 python:
         img_bounds = renpy.image_size(path)
         return Transform(path, size=(dsp(img_bounds[0]), dsp(img_bounds[1])))
 
+## Android Gestures (provided by Tulkas)
+## These gestures allow players to access different settings using the touch screen.
+# Swipe Up - Saves
+# Swipe Down - Hide Dialogue Box
+# Swipe Left - History
+# Swipe Right - Skip Dialogue
+define config.gestures = { "n" : 'game_menu', "s" : "hide_windows", "e" : 'toggle_skip', "w" : "history" }
+
 # This init python statement sets up the functions, keymaps and channels
 # for the game.
 init python:
+    ## More Android Gestures
+    # This variable makes a keymap for the history screen.
+    config.underlay.append(renpy.Keymap(history = ShowMenu("history"))) 
+
+    # These commented variables sets all keybinds from Rollback to History.
+    # config.keymap["rollback"] = []
+    # config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
+    
     # These variable declarations adjusts the mapping for certain actions in-game.
     config.keymap['game_menu'].remove('mouseup_3')
     config.keymap['hide_windows'].append('mouseup_3')
