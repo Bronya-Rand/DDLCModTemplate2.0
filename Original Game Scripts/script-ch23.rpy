@@ -706,10 +706,10 @@ label yuri_kill_3:
     m 2e "I'll make it up to you, okay?"
     m "Just gimme a sec..."
     $ consolehistory = []
-    call updateconsole ("os.remove(\"characters/yuri.chr\")", "yuri.chr deleted successfully.")
+    $ run_input("os.remove(\"characters/yuri.chr\")", "yuri.chr deleted successfully.")
     $ delete_character("yuri")
     $ pause(1.0)
-    call updateconsole ("os.remove(\"characters/natsuki.chr\")", "natsuki.chr deleted successfully.")
+    $ run_input("os.remove(\"characters/natsuki.chr\")", "natsuki.chr deleted successfully.")
     $ delete_character("natsuki")
     $ pause(1.0)
     m 2a "I'm almost done."
