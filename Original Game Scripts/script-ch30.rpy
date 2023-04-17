@@ -563,7 +563,7 @@ label ch30_endb:
     $ pause(1.5)
     m "Please hurry and help me."
     $ consolehistory = []
-    call updateconsole ("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
+    $ run_input("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
     m "HELP ME!!!"
     show m_rectstatic
     show m_rectstatic2
@@ -613,8 +613,8 @@ label ch30_endb:
 
 
     $ pause(3.0)
-    call updateconsole ("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
-    call updateconsole ("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
+    $ run_input("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
+    $ run_input("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
     call hideconsole
     hide noise onlayer front
     hide glitch_color onlayer front
