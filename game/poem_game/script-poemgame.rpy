@@ -1,34 +1,22 @@
 ## script-poemgame.rpy
 
-# Commented to absurdity, blame Terra.
+# This file contains the code to the DDLC poem game (now improved [finally...])
+# Still commented a bit by Terra.
 
-# Worth noting how the game gets here in the first place:
-    # This script is called via "call poem" in script.rpy.
-    # All of the Act 1 instances are done simply with "call poem".
-    # Some of the Act 2 instances are done with "call poem (False)"
-        # This is how we get the abrupt cut-in to the mini-game in Act 2.
-# Images are defined after the main poem game loop.
-
-init python: # This whole block runs when DDLC is started (as opposed to when the poem minigame is called)
-    poem_txt = "poem_game/poemwords.txt"
+init python: 
+    # This dictionary stores every poemword and the class preference values of each character.
+    full_wordlist = {}
 
     # This class holds a word, and point values for each of the four heroines
     class PoemWord:
-        def __init__(self, word, sPoint, nPoint, yPoint, glitch=False):
-            self.word = word
-            self.sPoint = sPoint
-            self.nPoint = nPoint
-            self.yPoint = yPoint
+        def __init__(self, s, n, y, glitch=False):
+            self.sPoint = s
+            self.nPoint = n
+            self.yPoint = y
             self.glitch = glitch
-
-    # Static variables for characters' poem appeal: Dislike, Neutral, Like
-    POEM_DISLIKE_THRESHOLD = 29
-    POEM_LIKE_THRESHOLD = 45
-
-    # Building the word list
-    full_wordlist = []
-    with renpy.file(poem_txt) as wordfile:
-        for line in wordfile:
+    
+    with renpy.file("poem_game/poemwords.txt") as pf:
+        for line in pf:
             line = line.decode("utf-8").strip()
 
             # Ignore lines beginning with '#' and empty lines
@@ -36,258 +24,148 @@ init python: # This whole block runs when DDLC is started (as opposed to when th
 
             # File format: word,sPoint,nPoint,yPoint
             x = line.split(',')
-            full_wordlist.append(PoemWord(x[0], float(x[1]), float(x[2]), float(x[3])))
+
+            full_wordlist[x[0]] = PoemWord(int(x[1]), int(x[2]), int(x[3]))
+
+    # For use with Act 2-3 words
+    glitch_word = PoemWord(0, 0, 0, True)
+    monika_word = PoemWord(0, 0, 0, False)
+                
+    # This class handles Chibi Movement in a better way
+    class ChibiTrans(object):
+        def __init__(self):
+            self.charTime = renpy.random.random() * 4 + 4
+            self.charPos = 0
+            self.charOffset = 0
+            self.charZoom = 1
+
+        def produce_random(self):
+            return renpy.random.random() * 4 + 4
+
+        def reset_trans(self):
+            self.charTime = self.produce_random()
+            self.charPos = 0
+            self.charOffset = 0
+            self.charZoom = 1
+
+        def randomPauseTime(self, trans, st, at):
+            if st > self.charTime:
+                self.charTime = self.produce_random()
+                return None
+            return 0
+
+        def randomMoveTime(self, trans, st, at):
+            if st > .16:
+                if self.charPos > 0:
+                    self.charPos = renpy.random.randint(-1,0)
+                elif self.charPos < 0:
+                    self.charPos = renpy.random.randint(0,1)
+                else:
+                    self.charPos = renpy.random.randint(-1,1)
+                if trans.xoffset * self.charPos > 5: self.charPos *= -1
+                return None
+            if self.charPos > 0:
+                trans.xzoom = -1
+            elif self.charPos < 0:
+                trans.xzoom = 1
+            trans.xoffset += .16 * 10 * self.charPos
+            self.charOffset = trans.xoffset
+            self.charZoom = trans.xzoom
+            return 0
+    
+    # This dictionary stores every poemgame character and their points.
+    chibis = {}
+
+    # This class supers' ChibiTrans and is used to store poem point data.
+    class Chibi(ChibiTrans):
+        POEM_DISLIKE_THRESHOLD = 29
+        POEM_LIKE_THRESHOLD = 45
+
+        def __init__(self, name):
+            if not isinstance(name, str):
+                raise Exception("'name' argurment must be a string, not " + type(name))
+                
+            self.charPointTotal = 0
+            self.appeal = 0
+            super().__init__()
+            chibis[name] = self
+
+        def reset(self):
+            self.charPointTotal = 0
+            self.reset_trans()
+
+        def add(self, point):
+            self.charPointTotal += point
+        
+        def calculate_appeal(self):
+            if self.charPointTotal < self.POEM_DISLIKE_THRESHOLD:
+                return -1
+            elif self.charPointTotal > self.POEM_LIKE_THRESHOLD:
+                self.win = True
+                return 1
+            return 0
 
     seen_eyes_this_chapter = False
-    sayoriTime = renpy.random.random() * 4 + 4
-    natsukiTime = renpy.random.random() * 4 + 4
-    yuriTime = renpy.random.random() * 4 + 4
-    monikaTime = renpy.random.random() * 4 + 4
-    sayoriPos = 0
-    natsukiPos = 0
-    yuriPos = 0
-    monikaPos = 0
-    sayoriOffset = 0
-    natsukiOffset = 0
-    yuriOffset = 0
-    monikaOffset = 0
-    sayoriZoom = 1
-    natsukiZoom = 1
-    yuriZoom = 1
-    monikaZoom = 1
-##################################################################################
-#These functions define random pause lengths for each of the stickers' movements.
-#renpy.random.random() returns a random floating point number between 0 and 1
-#So the -Doki-Time variable for each is a random decimal ranging from 4 to 8.
-#These are used in the image definitions.
 
-    def randomPauseSayori(trans, st, at):
-        global sayoriTime
-        if st > sayoriTime:
-            sayoriTime = renpy.random.random() * 4 + 4
-            return None
-        return 0
+    # Declare Chibi variables for transforms and points (cept Monika), she only needs to move around.
+    chibi_s = Chibi('sayori')
+    chibi_n = Chibi('natsuki')
+    chibi_m = ChibiTrans()
+    chibi_y = Chibi('yuri')
 
-    def randomPauseNatsuki(trans, st, at):
-        global natsukiTime
-        if st > natsukiTime:
-            natsukiTime = renpy.random.random() * 4 + 4
-            return None
-        return 0
-
-    def randomPauseYuri(trans, st, at):
-        global yuriTime
-        if st > yuriTime:
-            yuriTime = renpy.random.random() * 4 + 4
-            return None
-        return 0
-
-    def randomPauseMonika(trans, st, at):
-        global monikaTime
-        if st > monikaTime:
-            monikaTime = renpy.random.random() * 4 + 4
-            return None
-        return 0
-
-##############These functions define random movements for the stickers.#######
-    def randomMoveSayori(trans, st, at):
-        global sayoriPos
-        global sayoriOffset
-        global sayoriZoom
-        if st > .16:
-            if sayoriPos > 0:
-                sayoriPos = renpy.random.randint(-1,0)
-            elif sayoriPos < 0:
-                sayoriPos = renpy.random.randint(0,1)
-            else:
-                sayoriPos = renpy.random.randint(-1,1)
-            if trans.xoffset * sayoriPos > 5: sayoriPos *= -1
-            return None
-        if sayoriPos > 0:
-            trans.xzoom = -1
-        elif sayoriPos < 0:
-            trans.xzoom = 1
-        trans.xoffset += .16 * 10 * sayoriPos
-        sayoriOffset = trans.xoffset
-        sayoriZoom = trans.xzoom
-        return 0
-
-    def randomMoveNatsuki(trans, st, at):
-        global natsukiPos
-        global natsukiOffset
-        global natsukiZoom
-        if st > .16:
-            if natsukiPos > 0:
-                natsukiPos = renpy.random.randint(-1,0)
-            elif natsukiPos < 0:
-                natsukiPos = renpy.random.randint(0,1)
-            else:
-                natsukiPos = renpy.random.randint(-1,1)
-            if trans.xoffset * natsukiPos > 5: natsukiPos *= -1
-            return None
-        if natsukiPos > 0:
-            trans.xzoom = -1
-        elif natsukiPos < 0:
-            trans.xzoom = 1
-        trans.xoffset += .16 * 10 * natsukiPos
-        natsukiOffset = trans.xoffset
-        natsukiZoom = trans.xzoom
-        return 0
-
-    def randomMoveYuri(trans, st, at):
-        global yuriPos
-        global yuriOffset
-        global yuriZoom
-        if st > .16:
-            if yuriPos > 0:
-                yuriPos = renpy.random.randint(-1,0)
-            elif yuriPos < 0:
-                yuriPos = renpy.random.randint(0,1)
-            else:
-                yuriPos = renpy.random.randint(-1,1)
-            if trans.xoffset * yuriPos > 5: yuriPos *= -1
-            return None
-        if yuriPos > 0:
-            trans.xzoom = -1
-        elif yuriPos < 0:
-            trans.xzoom = 1
-        trans.xoffset += .16 * 10 * yuriPos
-        yuriOffset = trans.xoffset
-        yuriZoom = trans.xzoom
-        return 0
-
-    def randomMoveMonika(trans, st, at):
-        global monikaPos
-        global monikaOffset
-        global monikaZoom
-        if st > .16:
-            if monikaPos > 0:
-                monikaPos = renpy.random.randint(-1,0)
-            elif monikaPos < 0:
-                monikaPos = renpy.random.randint(0,1)
-            else:
-                monikaPos = renpy.random.randint(-1,1)
-            if trans.xoffset * monikaPos > 5: monikaPos *= -1
-            return None
-        if monikaPos > 0:
-            trans.xzoom = -1
-        elif monikaPos < 0:
-            trans.xzoom = 1
-        trans.xoffset += .16 * 10 * monikaPos
-        monikaOffset = trans.xoffset
-        monikaZoom = trans.xzoom
-        return 0
-
-##################################################################################
-label poem(transition=True):
-    stop music fadeout 2.0
-    if persistent.playthrough == 3: #Takes us to the glitched notebook if we're in Just Monika Mode.
-        scene bg notebook-glitch
-    else:
-        scene bg notebook
-    show screen quick_menu #This allows the player to pull up the save menu during the poem minigame.
-    if persistent.playthrough == 3: 
-        show m_sticker at sticker_mid #Just Monika.
-    else:
-        if persistent.playthrough == 0:
-            show s_sticker at sticker_left #Only show Sayori's sticker in Act 1.
-        show n_sticker at sticker_mid #Natsuki's sticker
-        if persistent.playthrough == 2 and chapter == 2:
-            show y_sticker_cut at sticker_right #Replace Yuri's sticker with the "cut arms" sticker..
-        else:
-            show y_sticker at sticker_right #Yuri's sticker
-        if persistent.playthrough == 2 and chapter == 2:
-            show m_sticker at sticker_m_glitch #Monika's sticker
-    if transition:
-        with dissolve_scene_full #Gives the dissolve transition if the minigame isn't called with False.
-    if persistent.playthrough == 3:
-        play music ghostmenu #Change the music in Just Monika.
-    else:
-        play music t4
-    $ config.skipping = False
-    $ config.allow_skipping = False
-    $ allow_skipping = False #Not completely sure why skipping has to be explicitly disabled, but apparently it does..
-    if persistent.playthrough == 0 and chapter == 0: #Shows the below dialogue the first time the minigame is played.
-        call screen dialog("It's time to write a poem!\n\nPick words you think your favorite club member\nwill like. Something good might happen with\nwhoever likes your poem the most!", ok_action=Return())
-    python: #Variable initialization here. Important to note, these initialize at the start of the mini-game.
-        poemgame_glitch = False
+    # Start of the poem game in python
+    def poem_game_start():
         played_baa = False
+        poemgame_glitch = False
+
+        # Resets points of every character
+        for c in chibis:
+            chibis[c].reset()
+        
+        # Makes a copy of the full dictionary for editing purposes.
+        wordList = full_wordlist.copy()
+
+        # A way better while loop than Dan did
         progress = 1
-        numWords = 20
-        sPointTotal = 0
-        nPointTotal = 0
-        yPointTotal = 0
-        wordlist = list(full_wordlist)
+        while progress <= 20:
+            # This section grabs 10 random words and stores the word in a list.
+            random_words = []
+            for w in range(10):
+                word = random.choice(list(wordList.keys()))
+                random_words.append(word)
+                # Remove the word once its picked and added from the local copy.
+                del wordList[word]
 
-        sayoriTime = renpy.random.random() * 4 + 4
-        natsukiTime = renpy.random.random() * 4 + 4
-        yuriTime = renpy.random.random() * 4 + 4
-        sayoriPos = renpy.random.randint(-1,1)
-        natsukiPos = renpy.random.randint(-1,1)
-        yuriPos = renpy.random.randint(-1,1)
-        sayoriOffset = 0
-        natsukiOffset = 0
-        yuriOffset = 0
-        sayoriZoom = 1
-        natsukiZoom = 1
-        yuriZoom = 1
-
-
-
-
-        # Main loop for drawing and selecting words
-        while True:
-            ystart = 160
-##################This block of code controls the word counter.###########################################
-            if persistent.playthrough == 2 and chapter == 2:
-                #This makes the counter do the "111111111" thing in Act 2.
-                pstring = ""
-                for i in range(progress):
-                    pstring += "1" #Appends "1" to pstring each loop.
+            # Display the poem game
+            poemword = renpy.call_screen("poem_test", words=random_words, progress=progress, poemgame_glitch=poemgame_glitch)
+            # Checks if the word is in the game and not a unique Act 2-3 bugged word.
+            if poemword in full_wordlist:
+                t = full_wordlist[poemword]
             else:
-                pstring = str(progress)
-            ui.text(pstring + "/" + str(numWords), style="poemgame_text", xpos=810, ypos=80, color='#000') #This is the word counter.
-##################This block of code puts the poem words on the screen.###################################
-            for j in range(2): #In python, range() is not inclusive. So j loops from 0 to 1.
-                if j == 0: x = 440 #These two lines build columns out of the words. The first column is at 440px and the second at 680px.
-                else: x = 680
-                ui.vbox() #This is outdated UI code to create a vbox. It adds things to the vbox until it hits a ui.close()
-                for i in range(5):
-                    if persistent.playthrough == 3: #This sets all the words to "Monika" in Just Monika.
-                        s = list("Monika")
-                        for k in range(6): #This gives random corruption effects to the "Monika" words.
-                            if random.randint(0, 4) == 0:
-                                s[k] = ' '
-                            elif random.randint(0, 4) == 0:
-                                s[k] = random.choice(nonunicode)
-                        word = PoemWord("".join(s), 0, 0, 0, False)
-                    elif persistent.playthrough == 2 and not poemgame_glitch and chapter >= 1 and progress < numWords and random.randint(0, 400) == 0:
-                        word = PoemWord(glitchtext(80), 0, 0, 0, True) #This gives a chance for a random word in Act 2 to be the glitched word.
-                    else: #Normal circumstances
-                        word = random.choice(wordlist) #Pick a random word out the wordlist
-                        wordlist.remove(word) #Remove the word from the list. This prevents a word from being on the screen twice.
-                    ui.textbutton(word.word, clicked=ui.returns(word), text_style="poemgame_text", xpos=x, ypos=i * 56 + ystart)
-                ui.close() #Closes the vbox from above
-##################This block controls what happens when words are selected.############################
-            t = ui.interact()
+                if persistent.playthrough == 2:
+                    t = glitch_word
+                else:
+                    t = monika_word
+
+            # If we are not in a bugged poem game state, do normal stuff, else do buggy stuff
             if not poemgame_glitch:
                 if t.glitch: #This conditional controls what happens when the glitch word is selected.
                     poemgame_glitch = True
                     renpy.music.play(audio.t4g)
-                    #The below three lines are just a scene statement in python. It's exactly the same as 'scene bg white'.
-                    renpy.scene()
                     renpy.show("white")
-                    renpy.show("y_sticker glitch", at_list=[sticker_glitch])
+                    renpy.show("y_sticker glitch", at_list=[sticker_glitch], zorder=10)
                 elif persistent.playthrough != 3:
                     renpy.play(gui.activate_sound)
-                    if persistent.playthrough == 0: #Act 1. This makes the stickers hop when words are picked.
+                    # Act 1
+                    if persistent.playthrough == 0:
                         if t.sPoint >= 3:
                             renpy.show("s_sticker hop")
                         if t.nPoint >= 3:
                             renpy.show("n_sticker hop")
                         if t.yPoint >= 3:
                             renpy.show("y_sticker hop")
-                    else: #Act 2
+                    else:
+                        # Act 2
                         if persistent.playthrough == 2 and chapter == 2 and random.randint(0,10) == 0: renpy.show("m_sticker hop") #1/10 chance for Monika's sticker to show.
                         elif t.nPoint > t.yPoint: renpy.show("n_sticker hop") #Since there's just Yuri and Natsuki in Act 2, whoever has the higher value for the word hops.
                         elif persistent.playthrough == 2 and not persistent.seen_sticker and random.randint(0,100) == 0:
@@ -301,69 +179,188 @@ label poem(transition=True):
                     renpy.play("gui/sfx/baa.ogg")
                     played_baa = True
                 elif r <= 5: renpy.play(gui.activate_sound_glitch)
-            #Add the word's point values to the running total
-            sPointTotal += t.sPoint
-            nPointTotal += t.nPoint
-            yPointTotal += t.yPoint
-            progress += 1
-            if progress > numWords: #This stops the minigame once we've picked all the words.
-                break
-##################End of main loop.##################################################################
 
+            # Adds points to the characters and progress by 1.
+            chibi_s.charPointTotal += t.sPoint
+            chibi_n.charPointTotal += t.nPoint
+            chibi_y.charPointTotal += t.yPoint
+            progress += 1
+    
+    # End of the game
+    def poem_game_finish():
+        # Act 1
         if persistent.playthrough == 0:
             # For chapter 1, add 5 points to whomever we sided with
             if chapter == 1:
-                exec(ch1_choice[0] + "PointTotal += 5")
-            # Logic for taking point totals and assigning poem appeal, scene order, etc.
-            unsorted_pointlist = {"sayori": sPointTotal, "natsuki": nPointTotal, "yuri": yPointTotal}
-            pointlist = sorted(unsorted_pointlist, key=unsorted_pointlist.get)
+                chibis[ch1_choice].charPointTotal += 5
 
-            # Set poemwinner to the highest scorer
-            poemwinner[chapter] = pointlist[2]
+            poemwinner[chapter] = max(chibis, key=lambda c: chibis[c].charPointTotal)
         else:
-            if nPointTotal > yPointTotal: poemwinner[chapter] = "natsuki"
+            # Act 2
+            if chibi_n.charPointTotal > chibi_y.charPointTotal: poemwinner[chapter] = "natsuki"
             else: poemwinner[chapter] = "yuri"
 
         # Add appeal point based on poem winner
-        exec(poemwinner[chapter][0] + "_appeal += 1")
+        chibis[poemwinner[chapter]].appeal += 1
 
-        # Set poemappeal
-        if sPointTotal < POEM_DISLIKE_THRESHOLD: s_poemappeal[chapter] = -1
-        elif sPointTotal > POEM_LIKE_THRESHOLD: s_poemappeal[chapter] = 1
-        if nPointTotal < POEM_DISLIKE_THRESHOLD: n_poemappeal[chapter] = -1
-        elif nPointTotal > POEM_LIKE_THRESHOLD: n_poemappeal[chapter] = 1
-        if yPointTotal < POEM_DISLIKE_THRESHOLD: y_poemappeal[chapter] = -1
-        elif yPointTotal > POEM_LIKE_THRESHOLD: y_poemappeal[chapter] = 1
+        # Set poem appeal
+        s_poemappeal[chapter] = chibi_s.calculate_appeal()
+        n_poemappeal[chapter] = chibi_n.calculate_appeal()
+        y_poemappeal[chapter] = chibi_y.calculate_appeal()
 
         # Poem winner always has appeal 1 (loves poem)
         exec(poemwinner[chapter][0] + "_poemappeal[chapter] = 1")
 
+screen poem_test(words, progress, poemgame_glitch):
+    default numWords = 20
+    
+    if progress is not None:
+        fixed:
+            xpos 810
+            
+            python:
+                if persistent.playthrough == 2 and chapter == 2:
+                    pstring = ""
+                    for i in range(progress):
+                        pstring += "1"
+                else:
+                    pstring = str(progress)
+
+            text pstring + "/" + str(numWords):
+                style "poemgame_text"
+                ypos 80
+
+        # Two fixed areas for the two sections of poemgame we have
+        fixed:
+            xpos 440
+            ypos 160
+
+            viewport:
+                has vbox
+                spacing 56
+
+                for i in range(5):
+                    if persistent.playthrough == 3:
+                        python:
+                            s = list("Monika")
+                            for k in range(6): # This gives random corruption effects to the "Monika" words.
+                                if random.randint(0, 4) == 0:
+                                    s[k] = ' '
+                                elif random.randint(0, 4) == 0:
+                                    s[k] = random.choice(nonunicode)
+                            wordString = "".join(s)
+                    elif persistent.playthrough == 2 and not poemgame_glitch and chapter >= 1 and progress < numWords and random.randint(0, 400) == 0:
+                        python:
+                            wordString = glitchtext(80) # This gives a chance for a random word in Act 2 to be the glitched word.
+                    else:
+                        python:
+                            wordString = words[i]
+
+                    textbutton wordString:
+                        action Return(wordString)
+                        text_style "poemgame_text"
+
+        fixed:
+            xpos 680
+            ypos 160
+
+            viewport:
+                has vbox
+                spacing 56
+
+                for i in range(5):
+                    if persistent.playthrough == 3:
+                        python:
+                            s = list("Monika")
+                            for k in range(6): # This gives random corruption effects to the "Monika" words.
+                                if random.randint(0, 4) == 0:
+                                    s[k] = ' '
+                                elif random.randint(0, 4) == 0:
+                                    s[k] = random.choice(nonunicode)
+                            wordString = "".join(s)
+                    elif persistent.playthrough == 2 and not poemgame_glitch and chapter >= 1 and progress < numWords and random.randint(0, 400) == 0:
+                        python:
+                            wordString = glitchtext(80) # This gives a chance for a random word in Act 2 to be the glitched word.
+                    else:
+                        python:
+                            wordString = words[5+i]
+
+                    textbutton wordString:
+                        action Return(wordString)
+                        text_style "poemgame_text"
+
+label poem(transition=True):
+    stop music fadeout 2.0
+
+    if persistent.playthrough == 3: #Takes us to the glitched notebook if we're in Just Monika Mode.
+        scene bg notebook-glitch
+    else:
+        scene bg notebook
+    
+    if persistent.playthrough == 3: 
+        show m_sticker at sticker_mid #Just Monika.
+    else:
+        if persistent.playthrough == 0:
+            show s_sticker at sticker_left #Only show Sayori's sticker in Act 1.
+        show n_sticker at sticker_mid #Natsuki's sticker
+        if persistent.playthrough == 2 and chapter == 2:
+            show y_sticker_cut at sticker_right #Replace Yuri's sticker with the "cut arms" sticker..
+        else:
+            show y_sticker at sticker_right #Yuri's sticker
+        if persistent.playthrough == 2 and chapter == 2:
+            show m_sticker at sticker_m_glitch #Monika's sticker
+        
+    if transition:
+        with dissolve_scene_full
+
+    if persistent.playthrough == 3:
+        play music ghostmenu #Change the music in Just Monika.
+    else:
+        play music t4
+
+    $ config.allow_skipping = False
+    $ allow_skipping = False
+
+    if persistent.playthrough == 0 and chapter == 0: #Shows the below dialogue the first time the minigame is played.
+        call screen dialog("It's time to write a poem!\n\nPick words you think your favorite club member\nwill like. Something good might happen with\nwhoever likes your poem the most!", ok_action=Return())
+    
+    $ poem_game_start()
+    $ poem_game_finish()
+
+    # Call the new poem eye scare label if we are in Act 2 and we yet seen eyes
     if persistent.playthrough == 2 and persistent.seen_eyes == None and renpy.random.randint(0,5) == 0:
-        $ seen_eyes_this_chapter = True
-        $ quick_menu = False
-        play sound "sfx/eyes.ogg"
-        $ persistent.seen_eyes = True
-        stop music
-        scene black with None
-        show bg eyes_move
-        pause 1.2
-        hide bg eyes_move
-        show bg eyes
-        pause 0.5
-        hide bg eyes
-        show bg eyes_move
-        pause 1.25
-        hide bg eyes with None
-        $ quick_menu = True
+        call poem_eye_scare
+
     $ config.allow_skipping = True
     $ allow_skipping = True
+
     stop music fadeout 2.0
-    hide screen quick_menu
     show black as fadeout:
         alpha 0
         linear 1.0 alpha 1.0
     pause 1.0
     return
+
+## Scare code moved as it's own label
+label poem_eye_scare:
+    $ seen_eyes_this_chapter = True
+    $ quick_menu = False
+    play sound "sfx/eyes.ogg"
+    $ persistent.seen_eyes = True
+    stop music
+    scene black with None
+    show bg eyes_move
+    pause 1.2
+    hide bg eyes_move
+    show bg eyes
+    pause 0.5
+    hide bg eyes
+    show bg eyes_move
+    pause 1.25
+    hide bg eyes with None
+    $ quick_menu = True
+    return
+
 ############ Image definitions start here. #############
 image bg eyes_move:
     "images/bg/eyes.png"
@@ -380,115 +377,116 @@ image bg eyes_move:
         choice:
             xoffset 0
         repeat
+        
 image bg eyes:
     "images/bg/eyes.png"
 
 image s_sticker:
     "gui/poemgame/s_sticker_1.png"
-    xoffset sayoriOffset xzoom sayoriZoom
+    xoffset chibi_s.charOffset xzoom chibi_s.charZoom
     block:
-        function randomPauseSayori
+        function chibi_s.randomPauseTime
         parallel:
             sticker_move_n
         parallel:
-            function randomMoveSayori
+            function chibi_s.randomMoveTime
         repeat
 
 image n_sticker:
     "gui/poemgame/n_sticker_1.png"
-    xoffset natsukiOffset xzoom natsukiZoom
+    xoffset chibi_n.charOffset xzoom chibi_n.charZoom
     block:
-        function randomPauseNatsuki
+        function chibi_n.randomPauseTime
         parallel:
             sticker_move_n
         parallel:
-            function randomMoveNatsuki
+            function chibi_n.randomMoveTime
         repeat
 
 image y_sticker:
     "gui/poemgame/y_sticker_1.png"
-    xoffset yuriOffset xzoom yuriZoom
+    xoffset chibi_y.charOffset xzoom chibi_y.charZoom
     block:
-        function randomPauseYuri
+        function chibi_y.randomPauseTime
         parallel:
             sticker_move_n
         parallel:
-            function randomMoveYuri
+            function chibi_y.randomMoveTime
         repeat
 
 image y_sticker_cut:
     "gui/poemgame/y_sticker_cut_1.png"
-    xoffset yuriOffset xzoom yuriZoom
+    xoffset chibi_y.charOffset xzoom chibi_y.charZoom
     block:
-        function randomPauseYuri
+        function chibi_y.randomPauseTime
         parallel:
             sticker_move_n
         parallel:
-            function randomMoveYuri
+            function chibi_y.randomMoveTime
         repeat
 
 image m_sticker:
     "gui/poemgame/m_sticker_1.png"
-    xoffset monikaOffset xzoom monikaZoom
+    xoffset chibi_m.charOffset xzoom chibi_m.charZoom
     block:
-        function randomPauseMonika
+        function chibi_m.randomPauseTime
         parallel:
             sticker_move_n
         parallel:
-            function randomMoveMonika
+            function chibi_m.randomMoveTime
         repeat
 
 image s_sticker hop:
     "gui/poemgame/s_sticker_2.png"
-    xoffset sayoriOffset xzoom sayoriZoom
+    xoffset chibi_s.charOffset xzoom chibi_s.charZoom
     sticker_hop
     xoffset 0 xzoom 1
     "s_sticker"
 
 image n_sticker hop:
     "gui/poemgame/n_sticker_2.png"
-    xoffset natsukiOffset xzoom natsukiZoom
+    xoffset chibi_n.charOffset xzoom chibi_n.charZoom
     sticker_hop
     xoffset 0 xzoom 1
     "n_sticker"
 
 image y_sticker hop:
     "gui/poemgame/y_sticker_2.png"
-    xoffset yuriOffset xzoom yuriZoom
+    xoffset chibi_y.charOffset xzoom chibi_y.charZoom
     sticker_hop
     xoffset 0 xzoom 1
     "y_sticker"
 
 image y_sticker_cut hop:
     "gui/poemgame/y_sticker_cut_2.png"
-    xoffset yuriOffset xzoom yuriZoom
+    xoffset chibi_y.charOffset xzoom chibi_y.charZoom
     sticker_hop
     xoffset 0 xzoom 1
     "y_sticker_cut"
 
 image y_sticker hopg:
     "gui/poemgame/y_sticker_2g.png"
-    xoffset yuriOffset xzoom yuriZoom
+    xoffset chibi_y.charOffset xzoom chibi_y.charZoom
     sticker_hop
     xoffset 0 xzoom 1
     "y_sticker"
 
 image m_sticker hop:
     "gui/poemgame/m_sticker_2.png"
-    xoffset monikaOffset xzoom monikaZoom
+    xoffset chibi_m.charOffset xzoom chibi_m.charZoom
     sticker_hop
     xoffset 0 xzoom 1
     "m_sticker"
 
 image y_sticker glitch:
     "gui/poemgame/y_sticker_1_broken.png"
-    xoffset yuriOffset xzoom yuriZoom zoom 3.0
+    xoffset chibi_y.charOffset xzoom chibi_y.charZoom zoom 3.0
     block:
-        function randomPauseYuri
+        function chibi_y.randomPauseTime
         parallel:
             sticker_move_n
         parallel:
-            function randomMoveYuri
+            function chibi_y.randomMoveTime
         repeat
 
 transform sticker_left:
