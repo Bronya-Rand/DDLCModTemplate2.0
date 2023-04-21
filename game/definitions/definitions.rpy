@@ -55,11 +55,12 @@ define config.gestures = { "n" : 'game_menu', "s" : "hide_windows", "e" : 'toggl
 init python:
     ## More Android Gestures
     # This variable makes a keymap for the history screen.
-    config.underlay.append(renpy.Keymap(history = ShowMenu("history"))) 
+    if renpy.android:
+        config.underlay.append(renpy.Keymap(history = ShowMenu("history"))) 
 
-    # These commented variables sets all keybinds from Rollback to History.
-    # config.keymap["rollback"] = []
-    # config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
+        # These commented variables sets all keybinds from Rollback to History.
+        # config.keymap["rollback"] = []
+        # config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
     
     # These variable declarations adjusts the mapping for certain actions in-game.
     config.keymap['game_menu'].remove('mouseup_3')
