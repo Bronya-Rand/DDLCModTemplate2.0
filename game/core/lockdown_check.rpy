@@ -26,7 +26,7 @@ label lockdown_check:
 
     elif renpy.version_tuple > (7, 6, 0, 23051307) and not persistent.lockdown_warning:
         "{b}Warning:{/b} The version of Ren'Py you are trying to mod DDLC on has not been tested for modding compatibility."
-        "The last recent version of Ren'Py that works for DDLC mods is \"{i}Ren'Py 7.5.3{/i}\"."
+        "The last recent version of Ren'Py that works for DDLC mods is \"{i}Ren'Py 7.6.0{/i}\"."
         "Running DDLC or your DDLC mod on a higher version than the one tested may introduce bugs and other game breaking features."
 
         menu:
