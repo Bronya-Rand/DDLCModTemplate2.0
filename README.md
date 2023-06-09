@@ -13,7 +13,7 @@
    </a>
 </p>
 
-The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (GanstaKingofSA) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.5.3.
+The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bronya_rand) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.5.3.
 
 > Additionaly [here](./CREDITS.md) are all the contributors that contributed to the mod template.
 
@@ -22,19 +22,19 @@ The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (Gans
 ### Disclaimers
    - <u>Team Salvato</u>
       > The template code/files are designed for original DDLC fan games and mods that use DDLC assets with Ren'Py. It is not meant for non-DDLC projects. The DDLC Mod Template is not afilliated in anyway with Team Salvato.
-   - <u>GanstaKingofSA</u>
+   - <u>bronya_rand</u>
       > You may not use the template to make unofficial DDLC patchers, fixes, etc.
 
 ### **Credit Requirements**
 You must include a name credit in your mods' credits screen and/or `credits.txt` file. Below is a example credit you may use.
-   > This mod was made possible by GanstaKingofSA's DDLC Mod Template 2.0: https://github.com/GanstaKingofSA/DDLCModTemplate2.0
+   > This mod was made possible by bronya_rand's DDLC Mod Template 2.0: https://github.com/GanstaKingofSA/DDLCModTemplate2.0
 
 By default a credits screen is enabled in-game, either in the Extras screen or as a button in-game if the Extras screen is disabled.
 
 Optional but very appreciated credits that you can also add are
-   1. A custom splash screen that features the Team Salvato logo (and/or your mod logo) and a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES/Logos)).
-   2. A small mention in the game's disclaimer saying that this mod was not possible without using GanstaKingofSA's mod template.
-   3. A presplash screen that contains a `GanstaKingofSA` logo (which can be found [here](.github/IMAGES/Logos)).
+   1. A custom splash screen that features the Team Salvato logo (and/or your mod logo) and a `Bronya Rand` logo (which can be found [here](.github/IMAGES/Logos)).
+   2. A small mention in the game's disclaimer saying that this mod was not possible without using bronya_rand's mod template.
+   3. A presplash screen that contains a `Bronya Rand` logo (which can be found [here](.github/IMAGES/Logos)).
    4. Present a custom idea to me for approval either through Discord or Reddit.
 
 ### Template Features
@@ -80,6 +80,6 @@ Follow the steps listed [here](https://ganstakingofsa.github.io/information/guid
 Refer to [*The DDLC Android Mod Guide*](./Documentation/Android%20Mod%20Guide.pdf) for more in-depth information about making your mod work on Android.
 > For older templates, refer to the PDF in your templates' ZIP file as the latest guide may not match your current template.
 
-Copyright © 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+Copyright © 2019-2023 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato (Dan Salvato LLC). Copyright © 2017 Team Salvato. All rights reserved.
