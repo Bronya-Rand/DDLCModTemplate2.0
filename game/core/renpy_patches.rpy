@@ -1,4 +1,4 @@
-## Copyright 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## Copyright 2019-2023 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 ## renpy_patches.rpy
 # This file is mainly designed to patch certain versions of Ren'Py that break 
