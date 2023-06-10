@@ -17,3 +17,4 @@ Special thanks to the following for contributing to the mod template
 - Lezalith (New Console (4.1.1+))
 - RS/6000 (New Mod Template Logo (4.2.1+))
 - Tulkas (Android Gestures)
+- FiT (Weiss Chibi Branding Icon Design)

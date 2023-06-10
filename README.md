@@ -5,6 +5,10 @@
 </p>
 
 <p align="center">
+  <img src=".github/IMAGES/Logos/SmallBronyaLogo.png" width=250px/>
+</p>
+
+<p align="center">
    <a href="https://ko-fi.com/K3K22K8SU">
       <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
    </a>
