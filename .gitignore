@@ -1,6 +1,7 @@
 *.rpa
 *.rpyb
 *.rpyc
+*.psd
 firstrun
 DDLCModTemplate-*.*.*.zip
 log.txt
