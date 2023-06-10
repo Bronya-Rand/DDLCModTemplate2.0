@@ -1,4 +1,4 @@
-## Copyright 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## Copyright 2019-2023 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 ## lockdown_check.rpy
 # This file is mainly designed to warn new modders about bugs with certain Ren'Py 

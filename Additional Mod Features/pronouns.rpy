@@ -1,4 +1,4 @@
-﻿## Copyright 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+﻿## Copyright 2019-2023 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 ## pronouns.rpy
 # This file asks the user for their pronoun input.

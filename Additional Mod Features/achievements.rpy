@@ -1,4 +1,4 @@
-## Copyright 2019-2023 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+## Copyright 2019-2023 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 ## achievements.rpy
 # This file contains the code for the achievements menu and notification that 

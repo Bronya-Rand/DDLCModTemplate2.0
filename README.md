@@ -5,6 +5,10 @@
 </p>
 
 <p align="center">
+  <img src=".github/IMAGES/Logos/SmallBronyaLogo.png" width=250px/>
+</p>
+
+<p align="center">
    <a href="https://ko-fi.com/K3K22K8SU">
       <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
    </a>
@@ -13,7 +17,7 @@
    </a>
 </p>
 
-The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bronya_rand) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5 - 7.5.3.
+The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bronya_rand) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5+.
 
 > Additionaly [here](./CREDITS.md) are all the contributors that contributed to the mod template.
 
