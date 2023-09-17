@@ -44,7 +44,7 @@ init 10 python:
         """
         def __init__(self, number=10, offtimeMult=1, ontimeMult=1, offsetRange=(0, 50), chroma=False, render_child=True, srf=None):
             super(TearSurface, self).__init__(number, offtimeMult, ontimeMult, offsetRange, chroma, render_child)
-            srf = srf or renpy.display.draw.screenshot(None)
+            srf = srf or screenshot_srf()
 
             with io.BytesIO() as sio:
                 renpy.display.module.save_png(srf, sio, 0)
