@@ -1,4 +1,5 @@
 init 10 python:
+    import io
     
     class TearDisplayable(object):
         """
