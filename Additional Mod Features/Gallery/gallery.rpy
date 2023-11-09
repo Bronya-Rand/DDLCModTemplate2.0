@@ -6,7 +6,7 @@
 
 default persistent.gallery_imgs = {}
 
-init -1 python in gallery:
+init -2 python in gallery:
     from store import Transform, persistent, config, Hide, Composite
     import os
     import renpy.display.image as imgcore
@@ -115,7 +115,6 @@ init -1 python in gallery:
             return imgcore.images.get(name)
 
 init python:
-    # from store.gallery import GalleryImage, galleryList
     current_img_name = None
     # This function advances to the next/previous image in the gallery.
     def next_image(back=False):
