@@ -12,7 +12,7 @@
    <a href="https://ko-fi.com/K3K22K8SU">
       <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
    </a>
-   <a href="https://github.com/GanstaKingofSA/DDLCModTemplate2.0/releases/latest">
+   <a href="https://github.com/Bronya-Rand/DDLCModTemplate2.0/releases/latest">
       <img src=".github/IMAGES/download.png">
    </a>
 </p>
@@ -21,7 +21,7 @@ The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bron
 
 > Additionaly [here](./CREDITS.md) are all the contributors that contributed to the mod template.
 
-> For Ren'Py 8 support, see the [Python 3](https://github.com/GanstaKingofSA/DDLCModTemplate2.0/tree/python-3) branch.
+> For Ren'Py 8 support, see the [Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3) branch.
 
 ### Disclaimers
    - <u>Team Salvato</u>
@@ -31,7 +31,7 @@ The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bron
 
 ### **Credit Requirements**
 You must include a name credit in your mods' credits screen and/or `credits.txt` file. Below is a example credit you may use.
-   > This mod was made possible by bronya_rand's DDLC Mod Template 2.0: https://github.com/GanstaKingofSA/DDLCModTemplate2.0
+   > This mod was made possible by bronya_rand's DDLC Mod Template 2.0: https://github.com/Bronya-Rand/DDLCModTemplate2.0
 
 By default a credits screen is enabled in-game, either in the Extras screen or as a button in-game if the Extras screen is disabled.
 
@@ -73,11 +73,11 @@ In addition to these base features, the template comes with additional optional 
 4. Special Poems! (The random poems in DDLC that appear in Act 2) <u>[now improved!]</u>.
 
 ### Getting Started for Beginners (Ren'Py 7)
-Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
+Follow the steps listed [here](https://bronya-rand.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
 > Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 7 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Renpy7Mod* ZIP file with your mod files.
 
 ### Getting Started for Beginners (Legacy/Ren'Py 6) [NOT RECOMMENDED]
-Follow the steps listed [here](https://ganstakingofsa.github.io/information/guides/Installing-the-Mod-Template-Legacy.html) in order to install the mod template.
+Follow the steps listed [here](https://bronya-rand.github.io/information/guides/Installing-the-Mod-Template-Legacy.html) in order to install the mod template.
 > Once you finished writing your script, select *Build Distributions*. Uncheck all the options, check only `Ren'Py 6 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform *Mod* ZIP file with your mod files.
 
 ### Getting Started For Android Porting/Modding (Versions 2.4.0 and higher)
