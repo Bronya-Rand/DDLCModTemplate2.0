@@ -155,7 +155,7 @@ init python:
     if renpy.version_tuple == (6, 99, 12, 4, 2187):
         build.package(build.directory_name + "Mod", 'zip', 'mod', description="Ren'Py 6 DDLC Compliant Mod")
     else:
-        build.package(build.directory_name + "Renpy7Mod", 'zip', 'windows linux mac renpy mod',
+        build.package(build.directory_name + "Renpy7Mod", 'zip', 'windows linux mac renpy mod all',
         description="Ren'Py 7 DDLC Compliant Mod")
 
     # These variables declare the archives that will be made to your packaged mod.
@@ -174,18 +174,18 @@ init python:
     
     #############################################################
     # These variables classify packages for PC and Android platforms.
-    # Make sure to add 'all' to your build.classify variable if you are planning
+    # Make sure to add 'android' to your build.classify variable if you are planning
     # to build your mod on Android like in this example.
-    #   Example: build.classify("game/**.pdf", "scripts all")
-    build.classify("game/mod_assets/**", "mod_assets all")
-    build.classify("game/presplash.png", "scripts all")
-    build.classify("game/**.rpyc", "scripts all")
+    #   Example: build.classify("game/**.pdf", "scripts android")
+    build.classify("game/mod_assets/**", "mod_assets android")
+    build.classify("game/presplash.png", "scripts android")
+    build.classify("game/**.rpyc", "scripts android")
     build.classify("game/README.md", None)
     build.classify("game/**/README.md", None)
-    build.classify("game/**.txt", "scripts all")
-    build.classify("game/**.chr", "scripts all")
-    build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
-    build.classify("game/tl/**", "scripts all") ## Translation Folder
+    build.classify("game/**.txt", "scripts android")
+    build.classify("game/**.chr", "scripts android")
+    build.classify("game/advanced_scripts/**","scripts android") ## Backwards Compatibility
+    build.classify("game/tl/**", "scripts android") ## Translation Folder
     build.classify("game/mod_extras/**.rpyc", "scripts") ## Extra Features (Backwards Compatibility)
 
     build.classify('**~', None)
@@ -202,7 +202,7 @@ init python:
     build.classify('/game/10', None)
     build.classify('/game/cache/*.*', None)
     build.classify('**.rpa', None)
-    build.classify('README.html','mod all')
+    build.classify('README.html','mod android')
     build.classify('README.linux', 'linux')
    
     # This sets' README.html as documentation
