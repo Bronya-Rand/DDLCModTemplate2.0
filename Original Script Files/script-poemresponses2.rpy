@@ -52,7 +52,7 @@ label ch23_y_end:
 label ch21_n_end:
     jump ch1_n_end
 label ch22_n_end:
-    if n_appeal >= 2:
+    if chibi_n.appeal >= 2:
         jump ch22_n_end2
     else:
         call showpoem (poem_n2)
@@ -594,7 +594,7 @@ label ch21_m_start:
     mc "Yeah, that's true."
     "I hand Monika my poem."
     m 2a "...Mhm!"
-    $ nextscene = "m2_" + poemwinner[0] + "_" + str(eval(poemwinner[0][0] + "_appeal"))
+    $ nextscene = "m2_" + poemwinner[0] + "_" + str(eval("chibi_" + poemwinner[0][0] + ".appeal"))
     call expression nextscene
 
     m 1a "Anyway, do you want to read my poem now?"
@@ -607,7 +607,7 @@ label ch21_m_start:
     return
 
 label ch22_m_start:
-    if y_appeal < 2:
+    if chibi_y.appeal < 2:
         m 1b "Hi again, [player]!"
         m "How's the writing going?"
         mc "Alright, I guess..."
@@ -622,7 +622,7 @@ label ch22_m_start:
         "I give my poem to Monika."
         m "..."
         m "...Alright!"
-    $ nextscene = "m2_yuri_" + str(eval("y_appeal"))
+    $ nextscene = "m2_yuri_" + str(eval("chibi_y.appeal"))
     call expression nextscene
 
     m 1a "But anyway..."
@@ -631,9 +631,9 @@ label ch22_m_start:
     return
 
 label ch23_m_start:
-    $ nextscene = "m2_yuri_" + str(eval("y_appeal"))
+    $ nextscene = "m2_yuri_" + str(eval("chibi_y.appeal"))
     call expression nextscene
-    if y_appeal < 3:
+    if chibi_y.appeal < 3:
         m 1a "Anyway..."
         if y_gave:
             m 1m "I guess we won't worry about your poem..."

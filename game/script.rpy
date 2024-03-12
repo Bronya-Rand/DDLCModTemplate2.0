@@ -162,7 +162,7 @@ label start:
 
     #         # This if statement calls either a special poem response game or play
     #         # as normal.
-    #         if y_appeal >= 3:
+    #         if chibi_y.appeal >= 3:
     #             call poemresponse_start2
     #         else:
     #             call poemresponse_start

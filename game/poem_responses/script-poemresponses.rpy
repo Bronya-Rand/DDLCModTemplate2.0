@@ -318,7 +318,7 @@ label ch2_y_end:
     y 2u "I-I might be ranting a little bit now..."
     y "...But I'm glad that you're a good listener."
     # This if statement checks if Yuri's appeal to your poems is 2 or more.
-    if y_appeal >= 2:
+    if chibi_y.appeal >= 2:
         y 2s "You're good at a lot of things..."
         y "Writing, listening..."
         y 2u "There really aren't many people like you, [player]..."
@@ -338,7 +338,7 @@ label ch3_y_end:
     $ y_read3 = True
     # This if statement checks if Yuri's appeal is 3 or more to call her
     # special poem instead.
-    if y_appeal >= 3:
+    if chibi_y.appeal >= 3:
         jump ch3_y_end_special
     call showpoem (poem_y3, img="yuri 2v")
     y "Um..."
@@ -346,7 +346,7 @@ label ch3_y_end:
     y "But I did my best to take a metaphorical approach to it."
     # This if/else statement checks if you did not read Natsuki's special poem
     # or if her poem appeal is 3 or more.
-    if not n_read3 or n_appeal >= 3:
+    if not n_read3 or chibi_n.appeal >= 3:
         mc "You say that like you didn't even want to write about it..."
         y 2e "Oh, you haven't heard...?"
         y 2h "After yesterday, Natsuki and I...well..."
@@ -517,7 +517,7 @@ label ch2_n_end:
         mc "Well, you're definitely right."
         mc "At least, I can relate to that."
         mc "And I'm sure a lot of other people can, too."
-    if n_appeal >= 2:
+    if chibi_n.appeal >= 2:
         n 4h "You know..."
         n "I'm glad that you can appreciate this kind of writing..."
         n 4q "I mean...I know I was talking about that yesterday."
@@ -542,14 +542,14 @@ label ch2_n_end:
 label ch3_n_end:
     $ n_read3 = True
 
-    if n_appeal >= 3:
+    if chibi_n.appeal >= 3:
         jump ch3_n_end_special
     call showpoem (poem_n3)
     n 2a "Yeah..."
     n "I felt like I kept writing about negative things, so I wanted to write something with a nice message for once."
     n 2z "Besides...the beach is awesome!"
     n 2j "Kinda hard to write anything negative about the beach."
-    if not y_read3 or y_appeal >= 3:
+    if not y_read3 or chibi_y.appeal >= 3:
         mc "So you decided to write about the beach first, and then came up with the message later?"
         n 2c "Yeah, well..."
         n "It's only because of what happened yesterday."
@@ -2431,7 +2431,7 @@ label ch1_m_start:
     m 2a "...Mhm!"
     # This variable and call expression statement sets the 'nextscene' variable to
     # the character you wrote your poem to and calls it.
-    $ nextscene = "m_" + poemwinner[0] + "_" + str(eval(poemwinner[0][0] + "_appeal"))
+    $ nextscene = "m_" + poemwinner[0] + "_" + str(eval("chibi_" + poemwinner[0][0] + ".appeal"))
     call expression nextscene
 
     mc "I'm sure I'll end up trying different things a lot."
@@ -2481,7 +2481,7 @@ label ch2_m_start:
         "I give my poem to Monika."
         m "..."
         m "...Alright!"
-        $ nextscene = "m_" + poemwinner[1] + "_" + str(eval(poemwinner[1][0] + "_appeal"))
+        $ nextscene = "m_" + poemwinner[1] + "_" + str(eval("chibi_" + poemwinner[1][0] + ".appeal"))
         call expression nextscene
 
         m 1a "But anyway..."
@@ -2509,7 +2509,7 @@ label ch3_m_start:
         mc "Sure..."
         "I let Monika take the poem I'm holding in my hands."
         m "..."
-        $ nextscene = "m_" + poemwinner[2] + "_" + str(eval(poemwinner[2][0] + "_appeal"))
+        $ nextscene = "m_" + poemwinner[2] + "_" + str(eval("chibi_" + poemwinner[2][0] + ".appeal"))
         call expression nextscene
 
         m 1a "Anyway...!"
