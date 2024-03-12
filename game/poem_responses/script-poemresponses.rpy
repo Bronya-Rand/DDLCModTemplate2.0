@@ -2431,7 +2431,7 @@ label ch1_m_start:
     m 2a "...Mhm!"
     # This variable and call expression statement sets the 'nextscene' variable to
     # the character you wrote your poem to and calls it.
-    $ nextscene = "m_" + poemwinner[0] + "_" + str(eval(poemwinner[0][0] + "_appeal"))
+    $ nextscene = "m_" + poemwinner[0] + "_" + str(eval("chibi_" + poemwinner[0][0] + ".appeal"))
     call expression nextscene
 
     mc "I'm sure I'll end up trying different things a lot."
@@ -2481,7 +2481,7 @@ label ch2_m_start:
         "I give my poem to Monika."
         m "..."
         m "...Alright!"
-        $ nextscene = "m_" + poemwinner[1] + "_" + str(eval(poemwinner[1][0] + "_appeal"))
+        $ nextscene = "m_" + poemwinner[1] + "_" + str(eval("chibi_" + poemwinner[1][0] + ".appeal"))
         call expression nextscene
 
         m 1a "But anyway..."
@@ -2509,7 +2509,7 @@ label ch3_m_start:
         mc "Sure..."
         "I let Monika take the poem I'm holding in my hands."
         m "..."
-        $ nextscene = "m_" + poemwinner[2] + "_" + str(eval(poemwinner[2][0] + "_appeal"))
+        $ nextscene = "m_" + poemwinner[2] + "_" + str(eval("chibi_" + poemwinner[2][0] + ".appeal"))
         call expression nextscene
 
         m 1a "Anyway...!"

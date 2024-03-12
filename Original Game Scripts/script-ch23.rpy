@@ -66,7 +66,7 @@ label ch23_main:
     n 1q "You say that like I do it on a regular basis or something."
     n "I just wasn't paying attention, okay? I'm sorry."
     n 4u "Seriously... What's gotten into you lately?"
-    if n_appeal >= 2:
+    if chibi_n.appeal >= 2:
         n "Look..."
         n "I did some thinking about yesterday."
         n 2q "I was a little more hostile than I meant to be..."
@@ -238,7 +238,7 @@ label ch23_main:
     y 2u "Um... Thank you for understanding, Monika."
     if poemwinner[2] == "natsuki":
         $ poemwinner[2] = "yuri"
-        $ y_appeal += 1
+        $ chibi_y.appeal += 1
 
     scene bg club_day2
     show yuri 3 zorder 2 at t11
@@ -266,7 +266,7 @@ label ch23_end:
     m "Okay, everyone!"
     m "It's time to figure out the festival preparations."
     m 1i "Let's hurry and get this over with."
-    if n_appeal >= 2:
+    if chibi_n.appeal >= 2:
         show natsuki 4q zorder 3 at f31
         n "..."
     else:
@@ -282,7 +282,7 @@ label ch23_end:
     show monika zorder 3 at f32
     m 2r "Look, can we just get this done?"
     m 2d "I'm going to be printing and assembling all the poetry pamphlets."
-    if n_appeal >= 2:
+    if chibi_n.appeal >= 2:
         m 2i "Natsuki, you can make cupcakes."
         m "I know you're at least good at that."
         show monika zorder 2 at t32
