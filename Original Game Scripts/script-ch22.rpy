@@ -235,12 +235,12 @@ label ch22_main:
     y "I was wondering if you would like to spend some time together today."
     y 3o "I mean--in the club!"
     if poemwinner[0] == "natsuki":
-        $ y_appeal = 1
+        $ chibi_y.appeal = 1
         mc "Ah, I suppose so."
         mc "I don't think I could say no to you, after you gave that book to me."
         mc "Well, I guess I need to make sure Natsuki isn't waiting for me."
         mc "After we finished reading yesterday, she--"
-        if n_appeal >= 2:
+        if chibi_n.appeal >= 2:
             y 3r "She's fine!"
             $ style.say_dialogue = style.normal
             y 3h "She's reading over there. See?"
@@ -264,7 +264,7 @@ label ch22_main:
             mc "Ah--"
             mc "In that case, I don't see any problem..."
     else:
-        $ y_appeal = 2
+        $ chibi_y.appeal = 2
         mc "Yeah, definitely."
         mc "I planned on it anyway."
     show yuri zorder 2 at h11
@@ -292,7 +292,7 @@ label ch22_main2:
     scene bg club_day2
     show yuri 3a at i11
     with wipeleft
-    $ nextscene = "yuri_exclusive2_" + str(eval("y_appeal")) + "_ch22"
+    $ nextscene = "yuri_exclusive2_" + str(eval("chibi_y.appeal")) + "_ch22"
     call expression nextscene
 
     return
