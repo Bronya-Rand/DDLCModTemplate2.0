@@ -3,6 +3,15 @@
 # This file defines all the effects in DDLC used in Act 2.
 
 init python:
+    # This function returns the size of a 16:9 screenshot surface.
+    def screenshot_srf_size():
+        width, height = renpy.get_physical_size()
+        if float(width) / float(height) > 16.0/9.0:
+            width = height * 16 / 9
+        else:
+            height = width * 9 / 16
+        return (width, height)
+
     # This screenshot is used to screenshot the game which is used for different
     # effects in-game.
     def screenshot_srf():
@@ -11,6 +20,8 @@ init python:
         else:
             srf = renpy.display.draw.screenshot(None, False)
         
+        # The screenshot's size must match the window.
+        srf = renpy.display.scale.smoothscale(srf, screenshot_srf_size())
         return srf
 
     # This function inverts the image in-game for the Invert Class.
@@ -25,8 +36,7 @@ init python:
     class Invert(renpy.Displayable):
         def __init__(self, delay=0.0, screenshot_delay=0.0):
             super(Invert, self).__init__()
-            self.width, self.height = renpy.get_physical_size()
-            self.height = self.width * 9 / 16
+            self.width, self.height = screenshot_srf_size()
             self.srf = invert()
             self.delay = delay
         
@@ -35,11 +45,6 @@ init python:
             if st >= self.delay:
                 render.blit(self.srf, (0, 0))
             return render
-
-    # This function hides all the windows in-game.
-    def hide_windows_enabled(enabled=True):
-        global _windows_hidden
-        _windows_hidden = not enabled
 
 ## Invert(length, delay)
 # This screen is called using the state `show screen invert(0.15, 0.3)` to invert the screen.
@@ -51,10 +56,8 @@ screen invert(length, delay=0.0):
     timer delay action PauseAudio("music")
     timer delay action Play("sound", "sfx/glitch1.ogg")
     timer length + delay action Hide("invert")
-    on "show" action Function(hide_windows_enabled, enabled=False)
     on "hide" action PauseAudio("music", False)
     on "hide" action Stop("sound")
-    on "hide" action Function(hide_windows_enabled, enabled=True)
 
 init python:
     # This class defines the code for the tear piece effect in 'screen tear'.
@@ -79,12 +82,8 @@ init python:
     class Tear(renpy.Displayable):
         def __init__(self, number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf=None):
             super(Tear, self).__init__()
-            self.width, self.height = renpy.get_physical_size()
+            self.width, self.height = screenshot_srf_size()
 
-            if float(self.width) / float(self.height) > 16.0/9.0:
-                self.width = self.height * 16 / 9
-            else:
-                self.height = self.width * 9 / 16
             self.number = number
             if not srf: self.srf = screenshot_srf()
             else: self.srf = srf
@@ -119,8 +118,6 @@ init python:
 screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None):
     zorder 150
     add Tear(number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf) size (1280,720)
-    on "show" action Function(hide_windows_enabled, enabled=False)
-    on "hide" action Function(hide_windows_enabled, enabled=True)
 
 # RectStatic
 # These images transforms show glitched rectangles in-game during Act 3 when Monika
