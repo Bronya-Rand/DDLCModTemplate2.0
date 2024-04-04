@@ -86,7 +86,7 @@ label ch21_main:
     "Meanwhile, Natsuki is rummaging around in the closet."
 
 
-    $ nextscene = poemwinner[0] + "_exclusive2_" + str(eval(poemwinner[0][0] + "_appeal"))
+    $ nextscene = poemwinner[0] + "_exclusive2_" + str(eval("chibi_" + poemwinner[0][0] + ".appeal"))
     call expression nextscene
 
     return
