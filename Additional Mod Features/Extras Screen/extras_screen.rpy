@@ -1,4 +1,4 @@
-## Copyright 2019-2023 Azariel Del Carmen (bronya_rand). All rights reserved.
+## Copyright 2019-2024 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 # extras_screen.rpy
 # This file contains the screen code for the extras menu for more screen options
