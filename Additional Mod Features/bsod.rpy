@@ -1,4 +1,4 @@
-## Copyright 2019-2023 Azariel Del Carmen (bronya_rand). All rights reserved.
+## Copyright 2019-2024 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 # bsod.rpy
 # This file contains the screen code to display a fake Blue Screen of death.
