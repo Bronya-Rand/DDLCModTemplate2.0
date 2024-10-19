@@ -86,9 +86,13 @@ In addition to these base features, the template comes with additional optional 
 
 ### Getting Started
 
-Follow the steps listed [here](https://bronya-band.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
+Follow the steps listed [here](https://github.com/Bronya-Rand/DDLCModTemplate2.0/wiki/Installing-the-Mod-Template) in order to install the mod template.
 
-> Once you finished writing your script, select _Build Distributions_. Uncheck all the options, check only `Ren'Py 8 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform _Renpy8-DDLCMod_ ZIP file with your mod files.
+> Once you finished writing your script, select _Build Distributions_. Uncheck all the options and check only the version of Ren'Py's "DDLC Compliant Mod" Option (`Ren'Py X DDLC Compliant Mod`) i.e. 'Ren'Py 7 DDLC Compliant Mod' for Ren'Py 7 and click <u>Build</u>. This will create a cross-platform mod package ZIP file with your mod files.
+
+- Ren'Py 6 Mods are classified with the `-Mod` ending in the ZIP filename.
+- Ren'Py 7 Mods are classified with the `-Renpy7Mod` ending in the ZIP filename.
+- Ren'Py 8 Mods are classified with the `-Renpy8-DDLCMod` ending in the ZIP filename.
 
 ### Getting Started For Android Porting/Modding
 
