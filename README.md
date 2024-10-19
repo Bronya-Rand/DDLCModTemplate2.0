@@ -81,19 +81,17 @@ In addition to these base features, the template comes with additional optional 
 3. Monika Kill Script (plays if Monika is deleted before a new game starts).
 4. Special Poems! (The random poems in DDLC that appear in Act 2) <u>[now improved!]</u>.
 
-### Getting Started for Beginners (Ren'Py 7)
+### Getting Started
 
-Follow the steps listed [here](https://bronya-rand.github.io/information/guides/Installing-the-Mod-Template-Recent.html) in order to install the mod template.
+Follow the steps listed [here](https://github.com/Bronya-Rand/DDLCModTemplate2.0/wiki/Installing-the-Mod-Template) in order to install the mod template.
 
-> Once you finished writing your script, select _Build Distributions_. Uncheck all the options, check only `Ren'Py 7 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform _Renpy7Mod_ ZIP file with your mod files.
+> Once you finished writing your script, select _Build Distributions_. Uncheck all the options and check only the version of Ren'Py's "DDLC Compliant Mod" Option (`Ren'Py X DDLC Compliant Mod`) i.e. 'Ren'Py 7 DDLC Compliant Mod' for Ren'Py 7 and click <u>Build</u>. This will create a cross-platform mod package ZIP file with your mod files.
 
-### Getting Started for Beginners (Legacy/Ren'Py 6) [NOT RECOMMENDED]
+- Ren'Py 6 Mods are classified with the `-Mod` ending in the ZIP filename.
+- Ren'Py 7 Mods are classified with the `-Renpy7Mod` ending in the ZIP filename.
+- Ren'Py 8 Mods are classified with the `-Renpy8-DDLCMod` ending in the ZIP filename.
 
-Follow the steps listed [here](https://bronya-rand.github.io/information/guides/Installing-the-Mod-Template-Legacy.html) in order to install the mod template.
-
-> Once you finished writing your script, select _Build Distributions_. Uncheck all the options, check only `Ren'Py 6 DDLC Compliant Mod` and click <u>Build</u>. This will create a cross-platform _Mod_ ZIP file with your mod files.
-
-### Getting Started For Android Porting/Modding (Versions 2.4.0 and higher)
+### Getting Started For Android Porting/Modding
 
 Refer to [_The DDLC Android Mod Guide_](./Documentation/Android%20Mod%20Guide.pdf) for more in-depth information about making your mod work on Android.
 
