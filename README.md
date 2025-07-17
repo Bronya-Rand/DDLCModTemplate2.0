@@ -1,5 +1,8 @@
 # Welcome to the **New** Modification Club!
 
+> [!CAUTION]
+> As of July 12th, 2025, Ren'Py 7 has been deprecated by Ren'PyTom. As such, following a pending mod template update backport from Python 3 to Python 2, this branch of the Mod Template will no longer be supported sometime in the near future. All future DDLC modding should now be done on the **[Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3)** version of the template on Ren'Py 8.
+
 <p align="center">
   <img src="./game/mod_assets/DDLCModTemplateLogo.png" width=250px/>
 </p>
