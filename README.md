@@ -1,7 +1,7 @@
 # Welcome to the **New** Modification Club!
 
 > [!CAUTION]
-> As of July 12th, 2025, Ren'Py 7 has been deprecated by Ren'PyTom. As such, following a pending mod template update backport from Python 3 to Python 2, this branch of the Mod Template will no longer be supported sometime in the near future. All future DDLC modding should now be done on the **[Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3)** version of the template on Ren'Py 8.
+> As of July 12th, 2025, Ren'Py 7 has been deprecated by Ren'PyTom. As such, this branch of the Mod Template will no longer be supported in the near future. All future DDLC modding should now be done on the **[Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3)** version of the template for Ren'Py 8.
 
 <p align="center">
   <img src="./game/mod_assets/DDLCModTemplateLogo.png" width=250px/>
@@ -20,7 +20,7 @@
    </a>
 </p>
 
-The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bronya_rand) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5+.
+The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bronya_rand) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5-7.8.7.
 
 > Additionaly [here](./CREDITS.md) are all the contributors that contributed to the mod template.
 
@@ -100,6 +100,6 @@ Refer to [_The DDLC Android Mod Guide_](./Documentation/Android%20Mod%20Guide.pd
 
 > For older templates, refer to the PDF in your templates' ZIP file as the latest guide may not match your current template.
 
-Copyright © 2019-2024 Azariel "Bronya Rand" Del Carmen (bronya_rand). All rights reserved.
+Copyright © 2019-2025 Azariel "Bronya Rand" Del Carmen (bronya_rand). All rights reserved.
 
 Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato (Dan Salvato LLC). Copyright © 2017 Team Salvato. All rights reserved.
