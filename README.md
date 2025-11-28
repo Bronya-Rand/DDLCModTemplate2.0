@@ -1,105 +1,221 @@
 # Welcome to the **New** Modification Club!
 
 > [!CAUTION]
-> As of July 12th, 2025, Ren'Py 7 has been deprecated by Ren'PyTom. As such, this branch of the Mod Template will no longer be supported in the near future. All future DDLC modding should now be done on the **[Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3)** version of the template for Ren'Py 8.
+> As of July 12th, 2025, Ren'Py 7 has been deprecated by RenPyTom. As such, the Python 2 version of the DDLC Mod Template will no longer be supported in the near future. All future DDLC modding should now be done on Ren'Py 8 using the **[Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3)** version of the DDLC Mod Template.
 
 <p align="center">
-  <img src="./game/mod_assets/DDLCModTemplateLogo.png" width=250px/>
+  <img src=".github/IMAGES/ddlcmt-open-graph.png"/>
 </p>
 
 <p align="center">
-  <img src=".github/IMAGES/Logos/SmallBronyaLogo.png" width=250px/>
-</p>
-
-<p align="center">
-   <a href="https://ko-fi.com/K3K22K8SU">
-      <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
-   </a>
    <a href="https://github.com/Bronya-Rand/DDLCModTemplate2.0/releases/latest">
       <img src=".github/IMAGES/download.png">
    </a>
+   &nbsp;&nbsp;
+   <a href="https://ko-fi.com/K3K22K8SU">
+      <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
+   </a>
 </p>
 
-The **new** DDLC Mod Template is a mod template made by Azariel Del Carmen (bronya_rand) for the **original** Doki Doki Literature Club that adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/) for fan mods on Ren'Py 6.99.12.4 and 7.3.5-7.8.7.
+## Table of Contents
+- [📖 Overview](#-overview) 
+- [📋 Credit Requirements (Important)](#-credit-requirements) 
+- [✨ Features](#-features) 
+- [🚀 Quick Start](#-quick-start) 
+- [📦 Building & Distribution](#-building--distribution)
+- [🎯 Platform-Specific Guides](#-platform-specific-guides)
+- [📚 Additional Resources](#-additional-resources)
+- [👏 Credits](#-credits)
 
-> Additionaly [here](./CREDITS.md) are all the contributors that contributed to the mod template.
+## 📖 Overview
 
-> For Ren'Py 8 support, see the [Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3) branch.
+The DDLC Mod Template 2.0 is a comprehensive mod template for **Doki Doki Literature Club** that fully adheres to [Team Salvato's IP Guidelines](http://teamsalvato.com/ip-guidelines/). 
 
-### Disclaimers
+Built originally for Ren'Py 6.99.12.4 and later updated for Ren'Py 7.3.5-7.8.7, this template provides everything you need to create fan-made, cross-platform DDLC mods with ease.
 
-- <u>Team Salvato</u>
-  > The template code/files are designed for original DDLC fan games and mods that use DDLC assets with Ren'Py. It is not meant for non-DDLC projects. The DDLC Mod Template is not afilliated in anyway with Team Salvato.
-- <u>bronya_rand</u>
-  > You may not use the template to make unofficial DDLC patchers, fixes, etc.
+**Perfect for:**
+- First-time mod creators looking for a solid foundation.
+- Experienced modders seeking a reliable and feature-rich template.
+- Modders seeking cross-platform compatibility (Windows, macOS, Linux, Android).
 
-### **Credit Requirements**
+> [!NOTE]
+> **The DDLC Mod Template is not affiliated in any way with Team Salvato nor is it designed for the sequel "Doki Doki Literature Club Plus". Do not use the template nor its code for unofficial DDLC patches, fixes, etc.**
 
-You must include a name credit in your mods' credits screen and/or `credits.txt` file. Below is a example credit you may use.
+> [!NOTE] 
+> For modern Ren'Py support (Ren'Py 8.X.X), see the [Python 3](https://github.com/Bronya-Rand/DDLCModTemplate2.0/tree/python-3) branch of the mod template.
 
-> This mod was made possible by bronya_rand's DDLC Mod Template 2.0: https://github.com/Bronya-Rand/DDLCModTemplate2.0
+---
 
-By default a credits screen is enabled in-game, either in the Extras screen or as a button in-game if the Extras screen is disabled.
+## ✨ Features
 
-Optional but very appreciated credits that you can also add are
+### Core Features
 
-1.  A custom splash screen that features the Team Salvato logo (and/or your mod logo) and a `Bronya Rand` logo (which can be found [here](.github/IMAGES/Logos)).
-2.  A small mention in the game's disclaimer saying that this mod was not possible without using bronya_rand's mod template.
-3.  A presplash screen that contains a `Bronya Rand` logo (which can be found [here](.github/IMAGES/Logos)).
-4.  Present a custom idea to me for approval either through Discord or Reddit.
+- ✅ **Team Salvato Compliant** - Includes required splashscreen (disclaimer) and follows all IP guidelines for fan mods.
+- 📚 **Original DDLC Scripts Included** - Reference the original game scripts for learning purposes.
+- 🌐 **Cross-Platform Support** - Build for Windows, macOS, Linux, and Android.
+- 🎨 **Automatic GUI Coloring** - Customize GUI and menu button colors without editing assets.
+- 🖼️ **Dynamic Super Resolution (DSR/DSP)** - Universal resolution template supporting custom resolutions.
+- 📝 **Player Name Change** - Allow players to correct or change their name in-game.
+- 💬 **Enhanced Console & Poem Responses** - Improved Monika console and cleaner poem response system.
 
-### Template Features
+### Gameplay Features
 
-1. Ren'Py 6\* or 7 Team Salvato Compliant Mods and Splashscreen (Disclaimer)!
-   > \* - Ren'Py 6 support will end soon to keep up with Ren'Py's Development Lifecycle. It is **highly** recommended you upgrade to Ren'Py 7 for mod development. [Learn more.](https://www.reddit.com/r/DDLCMods/wiki/notices/#wiki_why_is_the_megathread_and_other_users_recommending_me_to_create_my_mod_in_ren.27py_7.3F)
-2. DDLC's exact RPY files with explainations.
-3. Support for macOS, Linux\* and Android\*\*!
+- 🎮 **Uncensored Mode** - Option to show more sensitive content.
+- 📹 **Let's Play Mode** - Protect personal information while streaming/recording.
+- 📖 **NVL Support** - Full NVL (novel-style) dialogue support thanks to Yagamirai01.
 
-   > \* - Linux users must run your mod via `LinuxLauncher.sh`.
+### Returned DDLC Features
 
-   > \*\* - If your mod uses simple code or DDLC functions. More complex code or non-mobile friendly features may require some adjustments to get working. See _guide.pdf_ or visit the DDMC Discord for additional help.
+Classic DDLC features restored and improved:
+- 👻 **Ghost Menu** - Dan's spooky easter egg.
+- 💔 **Character Kill Scripts** - Sayori and Monika deletion scripts.
+- 📄 **Special Poems** - Act 2 random poems.
 
-4. Xcode Support! Open this project in Xcode and you can edit, build, and run your mod without opening the Ren'Py Launcher ever again!
-   > Note: You need to change your `RENPY_TOOL` location and the Ren'Py app location in the target scheme for Xcode. [Learn more &rsaquo;](XCODE.md)
-5. Uncensored Mode and Let's Play Mode! - Allow more "sensitive" content to be shown in-game and protect your IRL information while streaming/recording!
-6. Automatic GUI Coloring and Different Menu Button Colors! - Color the GUI and/or menu buttons in the game to whatever you like without editing the asset files themselves!
-7. Terra's in-depth Poem Game guide!
-8. NVL Support thanks to Yagamirai01!
-9. Patches for several Ren'Py releases and Windows features.
-10. Dynamic Super Resolution/Dynamic Super Positions (DSR/DSP) and Custom Resolutions! - Scale positions and/or your assets higher than they usually can go and display DDLC in different resolution modes. The DDLC Mod Template is now a universal X resolution template!
-11. Player Name Change! - Did you wrongly typed your name or want to change it? You can now do so very easily!
-12. New Monika Console and Poem Responses! - Enjoy a easier console to type commands in and a cleaner, easier poem response!
-13. Improved effects!
+### Optional Extras
 
-In addition to these base features, the template comes with additional optional features you can use such as
+> [!IMPORTANT]
+> Download `DDLCModTemplate-X.X.X-Extras.zip` to access these optional features.
 
-- **[BETA]** Pronoun Support! - Allow players to identify with the pronoun they go by!
-- Better Blue Screens of Death! - Make your own BSOD easily in-game on every OS!
-- Gallery and Achievements Menu! - Allow players to see the work you have done in-game and earn achievements for playing your mod!
+- 💥 **Better Blue Screens of Death** - Create custom BSODs on all platforms.
+- 🖼️ **Gallery System** - Showcase your artwork and CGs.
+- 🏆 **Achievements Menu** - Reward players for completing milestones.
 
-### Returned Features
+---
 
-1. Ghost Menu. (Dan's spooky easter egg)
-2. Sayori Kill Script (plays if Sayori is deleted before the game starts).
-3. Monika Kill Script (plays if Monika is deleted before a new game starts).
-4. Special Poems! (The random poems in DDLC that appear in Act 2) <u>[now improved!]</u>.
+## 🚀 Quick Start
 
-### Getting Started
+### Prerequisites
+1. **[Ren'Py 6.99.12.4](https://www.renpy.org/release/6.99.12)** or **[Ren'Py 7.8.7](https://www.renpy.org/release/7.8.7)**.
+2. **[DDLC (PC Version)](https://ddlc.moe/)**.
+3. **[This DDLC Mod Template](https://github.com/Bronya-Rand/DDLCModTemplate2.0/releases)**.
 
-Follow the steps listed [here](https://github.com/Bronya-Rand/DDLCModTemplate2.0/wiki/Installing-the-Mod-Template) in order to install the mod template.
+### Installation Steps
 
-> Once you finished writing your script, select _Build Distributions_. Uncheck all the options and check only the version of Ren'Py's "DDLC Compliant Mod" Option (`Ren'Py X DDLC Compliant Mod`) i.e. 'Ren'Py 7 DDLC Compliant Mod' for Ren'Py 7 and click <u>Build</u>. This will create a cross-platform mod package ZIP file with your mod files.
+1. **Extract Ren'Py** to a folder of your choice.
+> [!WARNING]
+> Do not extract Ren'Py to a cloud storage folder (e.g. Google Drive, OneDrive, etc.) as it will cause issues when testing your mod.
 
-- Ren'Py 6 Mods are classified with the `-Mod` ending in the ZIP filename.
-- Ren'Py 7 Mods are classified with the `-Renpy7Mod` ending in the ZIP filename.
-- Ren'Py 8 Mods are classified with the `-Renpy8-DDLCMod` ending in the ZIP filename.
+2. **Create a new folder** in either the `renpy-6.99.12.4-sdk` (for Ren'Py 6) or `renpy-7.8.7-sdk` (for Ren'Py 7) folder and extract the DDLC Mod Template ZIP into it.
 
-### Getting Started For Android Porting/Modding
+3. **Extract DDLC assets** - Open `DDLC-1.1.1-pc.zip` and copy these RPA files into the mod template's `game` folder:
+   - `audio.rpa`
+   - `fonts.rpa`
+   - `images.rpa`
 
-Refer to [_The DDLC Android Mod Guide_](./Documentation/Android%20Mod%20Guide.pdf) for more in-depth information about making your mod work on Android.
+4. **Launch the template**
+   - Open the Ren'Py Launcher.
+   - Select the DDLC Mod Template project.
+   - Click _Launch Project_ to test it.
 
-> For older templates, refer to the PDF in your templates' ZIP file as the latest guide may not match your current template.
+🎉 You're ready to start modding!
 
-Copyright © 2019-2025 Azariel "Bronya Rand" Del Carmen (bronya_rand). All rights reserved.
+---
 
-Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato (Dan Salvato LLC). Copyright © 2017 Team Salvato. All rights reserved.
+## 📦 Building & Distribution
+
+When you're ready to release your mod:
+
+1. Open the **Ren'Py Launcher**.
+2. Click on **Build Distributions**.
+3. **Uncheck all options** in `Build Packages` and check either **Ren'Py 6 DDLC Compliant Mod** (for Ren'Py 6) or **Ren'Py 7 DDLC Compliant Mod** (for Ren'Py 7).
+4. Click **Build**.
+
+This creates a cross-platform mod package ZIP file (marked with `-Mod` for Ren'Py 6 or `-Renpy7Mod` for Ren'Py 7) containing your mod files ready for distribution.
+
+> [!TIP]
+> Always test your mod thoroughly before building and distributing!
+
+
+---
+
+## 🎯 Platform-Specific Guides
+
+### Android
+
+Making your mod work on Android requires additional considerations, especially for complex features or non-mobile-friendly code.
+
+📱 **Read the full guide:** [Android Mod Guide](./Documentation/Android%20Mod%20Guide.pdf)
+
+> [!NOTE]
+> For older templates, refer to the PDF included in your template's ZIP file as the latest guide may not match your version.
+
+### Linux
+
+Linux users must run mods using the included launcher script (at least once):
+
+```bash
+./LinuxLauncher.sh
+```
+
+### macOS
+
+macOS support is included out of the box. Build distributions include macOS packages automatically.
+
+---
+
+## 📋 Credit Requirements
+
+> [!IMPORTANT]
+> **You MUST credit this template in your mod.** By default, a credits screen is enabled in-game (either in the Extras screen or as a standalone button). You can use the default implementation or choose one of the alternatives below.
+
+### Default Credit Text
+
+Include this in your mod's credits screen and/or `credits.txt` file:
+
+```
+This mod was made possible by bronya_rand's DDLC Mod Template 2.0: https://github.com/Bronya-Rand/DDLCModTemplate2.0
+```
+
+### Alternative Credit Methods
+
+If you prefer a different approach, you may use one of these alternatives:
+
+1. **Custom Splash Screen** - Feature the Team Salvato logo alongside a Bronya Rand logo ([available here](.github/IMAGES/Logos/)).
+2. **Disclaimer Mention** - Add a line to your game's disclaimer: "This mod was made possible using bronya_rand's mod template".
+3. **Presplash Screen** - Include a Bronya Rand logo ([available here](.github/IMAGES/Logos)) in your presplash.
+4. **Custom Idea** - Contact me via Discord or Reddit with your proposed credit method for approval.
+
+---
+
+## 📚 Additional Resources
+
+### Documentation
+
+- 📱 [Android Mod Guide](./Documentation/Android%20Mod%20Guide.pdf) - Complete guide for Android porting
+- 📝 [New Poem Game Guide](./Documentation/New%20Poemgame%20Guide.pdf) - In-depth poem game documentation
+
+### Community & Support
+
+- 💬 **DDMC Discord** - Get help and share your mods with the community
+- ☕ **Support Development** - [Buy me a Ko-fi](https://ko-fi.com/K3K22K8SU)
+
+---
+
+## 👏 Credits
+
+Thanks to the following people for their contributions to the DDLC Mod Template:
+
+> [!NOTE]
+> This list goes from the past to present.
+
+- Dan Salvato (DDLC)
+- renpytom (Ren'Py)
+- MAS Team (template base before revamping)
+- alicerunsonfedora (Xcode)
+- Terra (In-depth poem game)
+- Yagamirai01 (NVL)
+- Alexxonder (Auto Color Adjustments)
+- Elckarow (Python 3 updates, New poem responses/effects)
+- NekoLaiS (Cryllic compatibility)
+- The DDMC Community (Feature suggestions and feedback)
+- Pseurae (Donation/Act 3 GL2 Fix)
+- Lezalith (New Console (4.1.1+))
+- RS/6000 (New Mod Template Logo (4.2.1+))
+- Tulkas (Android Gestures)
+- FiT (Weiss Chibi Branding Icon Design)
+
+---
+
+<p align="center">
+   <b>Copyright © 2019-2025 Azariel "Bronya Rand" Del Carmen (bronya_rand). All rights reserved. Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato. Copyright © 2017 Team Salvato. All rights reserved.</b>
+</p>
