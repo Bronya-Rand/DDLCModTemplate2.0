@@ -184,6 +184,7 @@ def pause(time=None):
     :param time: The time to pause in seconds. If None, pauses indefinitely.
     """
     global _windows_hidden
+    skipping_state = renpy.config.allow_skipping
 
     if not time:
         _windows_hidden = True
@@ -191,11 +192,13 @@ def pause(time=None):
         renpy.ui.interact(mouse="pause", type="pause", roll_forward=None)
         _windows_hidden = False
         return
-    if time <= 0:
+    if time <= 0: 
         return
     _windows_hidden = True
+    renpy.config.allow_skipping = False
     renpy.pause(time)
     _windows_hidden = False
+    renpy.config.allow_skipping = skipping_state
 
 
 ## OS Functions
