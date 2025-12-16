@@ -1221,12 +1221,7 @@ screen template_preferences():
             vbox:
                 style_prefix "check"
                 label _("Game Modes")
-                textbutton _("Uncensored Mode") action If(persistent.uncensored_mode, 
-                    ToggleField(persistent, "uncensored_mode"), 
-                    Show("confirm", message="Are you sure you want to turn on Uncensored Mode?\nDoing so will enable more adult/sensitive\ncontent in your playthrough.\n\nThis setting will be dependent on the modder if\nthey programmed these checks in their story.", 
-                        yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
-                        no_action=Hide("confirm")
-                    ))
+                textbutton _("Enable Content Warnings") action ToggleField(persistent, "enable_content_warnings")
         
         vbox:
             style_prefix "name"
