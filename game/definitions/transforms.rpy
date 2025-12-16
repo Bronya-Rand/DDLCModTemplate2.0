@@ -300,7 +300,7 @@ transform r21:
     rightin(400)
 transform r22:
     rightin(880)
-transform r11:6
+transform r11:
     rightin(640)
 
 # This transform acts as in your eyes are opening up to see where you are at.
