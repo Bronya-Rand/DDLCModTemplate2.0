@@ -300,7 +300,7 @@ transform r21:
     rightin(400)
 transform r22:
     rightin(880)
-transform r11:
+transform r11:6
     rightin(640)
 
 # This transform acts as in your eyes are opening up to see where you are at.
@@ -320,6 +320,11 @@ transform cgfade:
         alpha 1.0
         linear 0.5 alpha 0.0
 
+# From Mobile Version of DDLC. Keeps the base CG of Natsuki's closet scene static.
+transform n_cg2_static:
+    xoffset 0
+    alpha 1.0
+
 # This transform causes Natsuki to wiggle on screen when she panics in her closet CG.
 transform n_cg2_wiggle:
     subpixel True
@@ -332,6 +337,8 @@ transform n_cg2_wiggle:
     easeout 0.15 xoffset 0
     easein 0.15 xoffset -5
     ease 0.15 xoffset 0
+    on replaced:
+        xoffset 0
 
 # This transform loop repeats the wiggle effect each second.
 transform n_cg2_wiggle_loop:
