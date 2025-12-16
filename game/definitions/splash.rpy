@@ -227,6 +227,7 @@ default persistent.first_run = False
 ## Startup Disclaimer
 ## This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
+    $ initialize_characters_folder()
     ## Shows the option to delete existing save data if conditions are met.
     if not persistent.first_run and len(renpy.list_saved_games(fast=True)) > 0:
         $ quick_menu = False
@@ -241,7 +242,7 @@ label splashscreen:
                     renpy.utter_restart()
             "No, continue where I left off.":
                 python:
-                    restore_relevant_characters()
+                    restore_characters()
                     persistent.first_run = True
 
     if not persistent.first_run:

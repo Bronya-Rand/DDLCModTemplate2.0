@@ -235,7 +235,7 @@ label ch22_main:
     y "I was wondering if you would like to spend some time together today."
     y 3o "I mean--in the club!"
     if poemwinner[0] == "natsuki":
-        $ poemappeal["yuri"][0] = 1
+        $ set_character_poem_appeal("yuri", 1, 1)
         mc "Ah, I suppose so."
         mc "I don't think I could say no to you, after you gave that book to me."
         mc "Well, I guess I need to make sure Natsuki isn't waiting for me."
@@ -264,7 +264,7 @@ label ch22_main:
             mc "Ah--"
             mc "In that case, I don't see any problem..."
     else:
-        $ poemappeal["yuri"][1] = 1
+        $ set_character_poem_appeal("yuri", 2, 1)
         mc "Yeah, definitely."
         mc "I planned on it anyway."
     show yuri zorder 2 at h11
@@ -284,8 +284,8 @@ label ch22_main:
     mc "Take your time."
     "Yuri takes a deep breath, then pulls a copy of the book out of her bag."
 label ch22_main2:
-    if poemappeal["natsuki"][1] == 1:
-        $ poemappeal["natsuki"][1] = 0
+    if get_character_poem_appeal("natsuki", 2) == 1:
+        $ set_character_poem_appeal("natsuki", 2, 0)
     $ poemwinner[1] = "yuri"
 
 

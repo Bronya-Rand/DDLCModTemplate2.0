@@ -5,6 +5,7 @@
 """renpy
 python early:
 """
+
 import os
 import tempfile
 import sys
@@ -17,7 +18,7 @@ else:
 # Enables/Disables running only one instance of the game at a time.
 # Set to False to allow multiple instances.
 # Note: This is not recommended for most DDLC mods.
-enable_singleton = True
+ENABLE_SINGLETON = True
 
 
 class SingleInstance:
@@ -41,7 +42,7 @@ class SingleInstance:
 
         :return bool: True if the lock was acquired, False otherwise.
         """
-        if not enable_singleton:
+        if not ENABLE_SINGLETON:
             return True
 
         try:
@@ -61,7 +62,7 @@ class SingleInstance:
         """
         Release the lock on the lock file.
         """
-        if not enable_singleton:
+        if not ENABLE_SINGLETON:
             return
 
         if self.lock_fd:
@@ -80,4 +81,7 @@ class SingleInstance:
         self.release_lock()
 
 
-SingleInstance()
+# Create a singleton instance to enforce single instance behavior.
+# Do not remove this line. If you wish to disable singleton behavior, set
+# `ENABLE_SINGLETON` to False above.
+_singleton = SingleInstance()

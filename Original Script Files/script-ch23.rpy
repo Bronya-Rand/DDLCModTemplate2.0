@@ -238,9 +238,9 @@ label ch23_main:
     y 2u "Um... Thank you for understanding, Monika."
     if poemwinner[2] == "natsuki":
         $ poemwinner[2] = "yuri"
-        $ poemappeal["yuri"][0] = 1
-        $ poemappeal["yuri"][1] = 1
-        $ poemappeal["yuri"][2] = 1
+        $ set_character_poem_appeal("yuri", 1, 1)
+        $ set_character_poem_appeal("yuri", 2, 1)
+        $ set_character_poem_appeal("yuri", 3, 1)
 
     scene bg club_day2
     show yuri 3 zorder 2 at t11

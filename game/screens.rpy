@@ -1266,10 +1266,10 @@ screen template_preferences():
                         enable_text = _("Disable")
 
                 textbutton enable_text action [ToggleField(persistent, "enable_discord"), 
-                    If(persistent.enable_discord, Function(RPC.close), Function(RPC.connect, reset=True))]:
+                    If(persistent.enable_discord, Function(RPC.disconnect), Function(RPC.connect))]:
                         text_style "navigation_button_text"
                 if persistent.enable_discord and not RPC.rpc_connected:
-                    textbutton _("Reconnect") action Function(RPC.connect, reset=True):
+                    textbutton _("Reconnect") action Function(RPC.connect):
                         text_style "navigation_button_text"
 
     null height (4 * gui.pref_spacing)

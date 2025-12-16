@@ -31,6 +31,22 @@ splash_messages = [
 
 ## DDLC Functions
 
+def _get_android_data_directory() -> str | None:
+    """
+    Returns the Android data directory path.
+
+    :return: The Android data directory path or None if it cannot be determined.
+    :rtype: str | None
+    """
+    if not renpy.android:
+        return None
+    
+    import jnius  # type: ignore
+    activity = jnius.autoclass("org.renpy.android.PythonSDLActivity")
+    current_activity = jnius.cast("android.app.Activity", activity.mActivity)
+
+    data_directory = current_activity.getFilesDir().getAbsolutePath()
+    return data_directory
 
 def get_characters_folder():
     """
@@ -41,32 +57,47 @@ def get_characters_folder():
     """
     characters_folder = None
     if renpy.android:
-        android_public_directory = os.environ.get("ANDROID_PUBLIC_DIRECTORY")
+        android_public_directory = _get_android_data_directory()
         if android_public_directory:
             characters_folder = os.path.join(android_public_directory, "characters")
     else:
-        characters_folder = os.path.join(renpy.config.basedir, "characters")
+        characters_folder = os.path.join(renpy.config.basedir, "characters").replace("\\", "/")
 
     return characters_folder
 
 
 def restore_character(characters: list[str]):
     """
-    Restores the specified characters to the 'characters' folder.
+    Restores the specified characters to the 'characters' folder
+    and removes any characters not in the list.
 
     :param characters: A list of character names to restore.
     :type characters: list[str]
     """
     characters_folder = get_characters_folder()
-    if characters_folder:
-        for character in characters:
-            character_file_path = os.path.join(characters_folder, f"{character}.chr")
-            try:
-                renpy.open_file(character_file_path)
-            except OSError:
-                open(character_file_path, "wb").write(
-                    renpy.open_file(os.path.join("chrs", f"{character}.chr")).read()
-                )
+    if characters_folder is None:
+        raise FileNotFoundError("Characters folder could not be determined.")
+
+    # Remove existing character files not in the restore list
+    for existing_file in os.listdir(characters_folder):
+        if existing_file.endswith(".chr"):
+            character_name = os.path.splitext(existing_file)[0]
+            if character_name not in characters:
+                try:
+                    os.remove(os.path.join(characters_folder, existing_file))
+                except OSError:
+                    pass  # Ignore if the file does not exist
+
+    # Restore specified character files
+    for character in characters:
+        character_file_path = os.path.join(characters_folder, f"{character}.chr")
+        if not os.path.exists(character_file_path):
+            src_path = os.path.join("chrs", f"{character}.chr").replace("\\", "/")
+
+            src_file = renpy.open_file(src_path)
+            data = src_file.read()
+            with open(character_file_path, "wb") as char_file:
+                char_file.write(data)
 
 
 def restore_characters():
@@ -94,11 +125,13 @@ def delete_character(name: str):
     :type name: str
     """
     characters_folder = get_characters_folder()
-    if characters_folder:
-        try:
-            os.remove(os.path.join(characters_folder, f"{name}.chr"))
-        except OSError:
-            pass  # Ignore if the file does not exist
+    if characters_folder is None:
+        raise FileNotFoundError("Characters folder could not be determined.")
+
+    try:
+        os.remove(os.path.join(characters_folder, f"{name}.chr"))
+    except OSError:
+        pass  # Ignore if the file does not exist
 
 
 def initialize_characters_folder():
@@ -109,7 +142,10 @@ def initialize_characters_folder():
     :rtype: str
     """
     characters_folder = get_characters_folder()
-    if characters_folder and not os.path.exists(characters_folder):
+    if characters_folder is None:
+        raise FileNotFoundError("Characters folder could not be determined.")
+
+    if not os.path.exists(characters_folder):
         os.makedirs(characters_folder)
 
     restore_characters()
@@ -172,6 +208,9 @@ def get_process_list():
     :return: A list of process names.
     :rtype: set[str]
     """
+    if renpy.android: 
+        return set()  # Process listing is not supported on Android
+    
     process_list: set[str] = set()
     if renpy.windows:
         try:
@@ -227,6 +266,7 @@ def process_check(stream_list: list[str]):
                 return True
     return False
 
+
 def is_user_streaming() -> bool:
     """
     Checks if any known streaming applications are currently running.
@@ -244,11 +284,12 @@ def is_user_streaming() -> bool:
         "twitchstudio.exe",
         "elgato.streamdeck.exe",
         "nvidia.share.exe",  # NVIDIA ShadowPlay
-        "amd.raptr.exe",     # AMD ReLive
-        "zoom.exe",          # Zoom (for video conferencing)
-        "teams.exe",         # Microsoft Teams (for video conferencing)
+        "amd.raptr.exe",  # AMD ReLive
+        "zoom.exe",  # Zoom (for video conferencing)
+        "teams.exe",  # Microsoft Teams (for video conferencing)
     ]
     return process_check(streaming_apps)
+
 
 def get_user_account_name():
     """
@@ -257,10 +298,13 @@ def get_user_account_name():
     :return: The username of the current user or None if it cannot be determined.
     :rtype: str | None
     """
+    if renpy.android:
+        return None # User account retrieval is not supported on Android
+    
     # Reject if streaming to protect privacy
     if is_user_streaming():
         return None
-    
+
     if renpy.windows:
         # `whoami` and split name (DOMAIN\Username -> Username)
         return (
@@ -277,6 +321,7 @@ def get_user_account_name():
             or None
         )
 
+
 def get_windows_version() -> tuple[int, int, int] | None:
     """
     Retrieves the current Windows version.
@@ -286,9 +331,10 @@ def get_windows_version() -> tuple[int, int, int] | None:
     """
     if not renpy.windows:
         return None
-    
+
     version = sys.getwindowsversion()
     return (version.major, version.minor, version.build)
+
 
 def get_macos_version() -> tuple[int, int, int] | None:
     """
@@ -299,7 +345,7 @@ def get_macos_version() -> tuple[int, int, int] | None:
     """
     if not renpy.macintosh:
         return None
-    
+
     release, _, _ = platform.mac_ver()
     if release != "":
         version_parts = release.split(".")
@@ -307,18 +353,20 @@ def get_macos_version() -> tuple[int, int, int] | None:
             major = int(version_parts[0])
             minor = int(version_parts[1])
             patch = int(version_parts[2]) if len(version_parts) > 2 else 0
-            return (major, minor, patch)    
-        
-    return None # Unknown or unsupported version
+            return (major, minor, patch)
+
+    return None  # Unknown or unsupported version
+
 
 def ddlc_under_steam() -> bool:
     """
     Checks if the game is running through Steam.
-    
+
     :return: True if running through Steam, False otherwise.
     :rtype: bool
     """
     return "steamapps" in renpy.config.basedir.lower()
+
 
 currentuser = get_user_account_name()
 
@@ -396,10 +444,9 @@ renpy.config.keymap["toggle_skip"] = []
 # Register the music channel for the poem game.
 renpy.music.register_channel("music_poem", mixer="music", tight=True)
 
-# If using 'More Android Gestures', uncomment the following lines to initialize the gesture mapping.
-# if renpy.android:
-#     # Initialize the gesture mapping for Android devices.
-#     renpy.config.keymap["rollback"] = []
-#     renpy.config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
+# Initialize gesture mapping for Android devices.
+if renpy.android:
+    renpy.config.keymap["rollback"] = []
+    renpy.config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
 
 renpy.pure(dsp)

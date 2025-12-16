@@ -1,5 +1,5 @@
 # Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
-# This file contains the Ren'Py code for DDLC's poem game.
+# This file contains the Python code for DDLC's poem game.
 
 # The code logic has been rewritten to use the Ren'Py `_ren.py` approach for Python code.
 
@@ -21,6 +21,7 @@ poemappeal: dict[str, dict[int, int]] = {
     "sayori": {0: 0, 1: 0, 2: 0},
     "natsuki": {0: 0, 1: 0, 2: 0},
     "yuri": {0: 0, 1: 0, 2: 0},
+    "monika": {0: 0, 1: 0, 2: 0},
 }
 
 """renpy
@@ -282,3 +283,73 @@ def get_monika_scene(chapter: int) -> str:
 
     monika_scene += f"_{name}_{get_appeal(name)}"
     return monika_scene
+
+
+def _character_poem_appeal_exists(character: str, chapter: int) -> bool:
+    """
+    Check if the poem appeal value exists for a given character and chapter.
+
+    :param character: The character's name as a string.
+    :type character: str
+    :param chapter: The chapter number as an integer starting from 1 onwards.
+    :type chapter: int
+
+    :return: True if the poem appeal value exists, False otherwise.
+    :rtype: bool
+    """
+
+    if character not in poemappeal:
+        return False
+
+    if chapter not in poemappeal[character]:
+        return False
+
+    return True
+
+
+def get_character_poem_appeal(character: str, chapter: int) -> int:
+    """
+    Get the poem appeal value for a given character and chapter.
+
+    :param character: The character's name as a string.
+    :type character: str
+    :param chapter: The chapter number as an integer starting from 1 onwards.
+    :type chapter: int
+
+    :return: The poem appeal value as an integer.
+    :rtype: int
+
+    :raises ValueError: If the character and/or chapter is not found in the poem appeal data.
+    """
+    character = character.lower()
+    chapter = chapter - 1  # Adjust chapter to be zero-indexed.
+    if not _character_poem_appeal_exists(character, chapter):
+        raise ValueError(
+            f"Poem appeal value for character '{character}' and/or chapter '{chapter}' not found."
+        )
+
+    return poemappeal[character][chapter]
+
+
+def set_character_poem_appeal(character: str, chapter: int, value: int) -> None:
+    """
+    Set the poem appeal value for a given character and chapter.
+
+    :param character: The character's name as a string.
+    :type character: str
+    :param chapter: The chapter number as an integer starting from 1 onwards.
+    :type chapter: int
+    :param value: The poem appeal value to set as an integer.
+    :type value: int
+
+    :raises ValueError: If the character and/or chapter is not found in the poem appeal data.
+    """
+    character = character.lower()
+    chapter = chapter - 1  # Adjust chapter to be zero-indexed.
+
+    if not _character_poem_appeal_exists(character, chapter):
+        raise ValueError(
+            f"Poem appeal value for character '{character}' and/or chapter '{chapter}' not found."
+        )
+
+    poemappeal[character][chapter] = value

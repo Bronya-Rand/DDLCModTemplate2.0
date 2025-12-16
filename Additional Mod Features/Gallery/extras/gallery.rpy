@@ -103,7 +103,7 @@ screen preview_gallery_image():
                 text_style "navigation_button_text"
                 action [ShowMenu("gallery"), Function(gallery_db.reset_navigation)]
         
-        if img_data.get_image_description():
+        if len(img_data.get_image_description()) > 0:
             frame:
                 style "default"
                 xalign 0.5
@@ -114,7 +114,7 @@ screen preview_gallery_image():
                 background "#eee8"
                 at Transform(yoffset=-20)
 
-                text img_data.current_info():
+                text img_data.get_image_description():
                     xalign 0.5
                     text_align 0.5
                     size 18
@@ -125,13 +125,13 @@ screen preview_gallery_image():
             text_style "navigation_button_text"
             xalign 0.0
             yalign 0.5
-            action Function(gallery_db.prev_image)
+            action [SetScreenVariable("display_alt", False), Function(gallery_db.prev_image)]
 
         textbutton ">":
             text_style "navigation_button_text"
             xalign 1.0
             yalign 0.5
-            action Function(gallery_db.next_image)
+            action [SetScreenVariable("display_alt", False), Function(gallery_db.next_image)]
 
         if img_data.has_alt_images():
             hbox:

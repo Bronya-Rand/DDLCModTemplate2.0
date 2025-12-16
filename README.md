@@ -5,11 +5,12 @@
 </p>
 
 <p align="center">
-   <a href="https://ko-fi.com/K3K22K8SU">
-      <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
-   </a>
    <a href="https://github.com/Bronya-Rand/DDLCModTemplate2.0/releases/latest">
       <img src=".github/IMAGES/download.png">
+   </a>
+   &nbsp;&nbsp;
+   <a href="https://ko-fi.com/K3K22K8SU">
+      <img src="https://www.ko-fi.com/img/githubbutton_sm.svg">
    </a>
 </p>
 
@@ -83,9 +84,9 @@ Classic DDLC features restored and improved:
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Ren'Py 8.X** - Download from [Ren'Py.org](https://www.renpy.org/latest.html)
-- **DDLC PC Version** - Download from [DDLC.moe](https://ddlc.moe/)
-- **DDLC Mod Template** - Download from [Releases](https://github.com/Bronya-Rand/DDLCModTemplate2.0/releases)
+1. **[Ren'Py 8.X](https://www.renpy.org/latest.html)** 
+2. **[DDLC (PC Version)](https://ddlc.moe/)**
+3. **[This DDLC Mod Template](https://github.com/Bronya-Rand/DDLCModTemplate2.0/releases)**
 
 ### Installation Steps
 

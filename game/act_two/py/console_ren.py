@@ -26,7 +26,7 @@ class Console(object):
         console_cps: int,
         max_log_history: int = 5,
         testing: bool = False,
-    ):
+    ) -> None:
         """
         Initializes the console with the given delay and characters per second (cps).
 
@@ -50,7 +50,7 @@ class Console(object):
 
         self.testing = testing
 
-    def __call__(self, input_text: str, output_text: str):
+    def __call__(self, input_text: str, output_text: str, cps: int | None = None, delay: float | None = None) -> None:
         """
         Processes the input and output text for the console.
         If you want specific stuff to happen whilst the input is being displayed,
@@ -58,6 +58,12 @@ class Console(object):
 
         :param input_text: The input text to be processed.
         :param output_text: The output text to be displayed after the input.
+        :param cps: Characters per second for output display. If None, uses the console's default cps.
+        :param delay: Delay after input has finished showing, before output is displayed. If None, uses the console's default delay.
+        :type input_text: str
+        :type output_text: str
+        :type cps: int | None
+        :type delay: float | None
         """
 
         # If console history exceeds the maximum with a new entry, remove the oldest entry.
@@ -74,6 +80,8 @@ class Console(object):
                 console=self,
                 input_text=input_text,
                 output_text=output_text,
+                cps=cps,
+                delay=delay,
             )
 
         # Store the input and output in the console history.
@@ -82,13 +90,13 @@ class Console(object):
 
         renpy.restart_interaction()
 
-    def clear_history(self):
+    def clear_history(self) -> None:
         """
         Clears the console history.
         """
         self.console_history.clear()
 
-    def show_screen(self):
+    def show_screen(self) -> None:
         """
         Shows the console screen.
         """

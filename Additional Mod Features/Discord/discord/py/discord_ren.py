@@ -93,9 +93,11 @@ class DiscordRPC(NoRollback):
             renpy.exports.write_log("Discord client not found.")
             return
     
-    def connect(self) -> None:
+    def connect(self, reset: bool = False) -> None:
         """
         Connects to the Discord Rich Presence service.
+        :param reset: Whether to reset the status data upon connection.
+        :type reset: bool
         """
 
         if not persistent.enable_discord:
@@ -107,8 +109,11 @@ class DiscordRPC(NoRollback):
             if self.rpc is None:
                 return
         
-        self.set_defaults()
-        self.start = time.time()
+        if reset:
+            self.reset()
+            self.start = time.time()
+        else:
+            self.set(**self.__dict__())
         
         try:
             self.rpc.connect()
@@ -205,7 +210,7 @@ class DiscordRPC(NoRollback):
 # Place your Discord RPC token inside the ""'s
 RPC = DiscordRPC("979471077187125248")
 RPC.initialize_rpc()
-RPC.connect()
+RPC.connect(True)
 
 renpy.config.quit_callbacks.append(RPC.disconnect)
 renpy.config.after_load_callbacks.append(RPC.on_load)

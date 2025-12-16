@@ -11,10 +11,12 @@ python early:
 
 # Patches old DDLC Windows commands to use PowerShell for compatibility with Windows 11.
 if renpy.windows:
-    os.environ['wmic process get Description'] = "powershell (Get-Process).ProcessName"
-    os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
+    os.environ["wmic process get Description"] = "powershell (Get-Process).ProcessName"
+    os.environ["wmic os get version"] = (
+        "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
+    )
 
-## An ATL displayable will now start its animation when it first 
+## An ATL displayable will now start its animation when it first
 ## appears, rather than when the screen itself is shown.
 ## We will disable this for DDLC's transform's sakes.
 if renpy.version_tuple >= (7, 4, 7, 1862):

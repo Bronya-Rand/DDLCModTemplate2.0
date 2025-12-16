@@ -11,7 +11,7 @@
 init -1:
     default console = Console(console_delay=0.5, console_cps=30, max_log_history=5)
 
-screen console_screen(console, input_text=None, output_text=None):
+screen console_screen(console, input_text=None, output_text=None, cps=None, delay=None):
     """
     This screen shows the console in-game.
     """
@@ -19,6 +19,10 @@ screen console_screen(console, input_text=None, output_text=None):
     style_prefix "console_screen"
 
     default finish_actions = [SetScreenVariable("in_progress", False), Return()]
+
+    python:
+        used_cps = cps if cps is not None and type(cps) == int else console.console_cps
+        used_delay = delay if delay is not None and type(delay) == float else console.console_delay
 
     # String of input to show.
     # It is put outside of the new_input variable so it doesn't
@@ -40,7 +44,7 @@ screen console_screen(console, input_text=None, output_text=None):
     # New code is showing.
     if in_progress:
 
-        timer ( float(len(renpy.filter_text_tags(new_input_code, deny = []))) / float(console.console_cps) + console.console_delay ) action finish_actions
+        timer ( (float(len(renpy.filter_text_tags(new_input_code, deny = []))) / float(used_cps)) + used_delay ) action finish_actions
 
     frame:
 
@@ -70,14 +74,3 @@ style console_screen_text:
     color "#fff"
     size 18
     outlines []
-
-# This label clears all console history and commands from the console in-game.
-# Decided to keep this for now as it just pauses stuff.
-# This assumes the default console is used from the above init python import.
-label updateconsole_clearall(text="", history=""):
-    if config.developer:
-        $ renpy.notify("This label call is deprecated. Use `console.clear_history()` instead.")
-    $ console.clear_history()
-    $ pause(len(text) / 30.0 + 0.5)
-    $ pause(0.5)
-    return

@@ -263,7 +263,7 @@ label ch21_n_good:
 
 label ch22_n_bad:
 
-    if poemappeal["natsuki"][0] < 0:
+    if get_character_poem_appeal("natsuki", 1) < 0:
         n 1r "..."
         n "Yeah, just as I thought..."
         mc "...?"
@@ -295,7 +295,7 @@ label ch22_n_bad:
 
 label ch22_n_med:
 
-    if poemappeal["natsuki"][0] < 0:
+    if get_character_poem_appeal("natsuki", 1) < 0:
         n "...Hm."
         n 2k "Well, I can admit that it's better than the last one."
         n "It's nice to see that you're putting in some effort."
@@ -313,7 +313,7 @@ label ch22_n_med:
             return
 
 
-    elif poemappeal["natsuki"][0] == 0:
+    elif get_character_poem_appeal("natsuki", 1) == 0:
         n "...Hm."
         n 2k "Well, it's not really any worse than your last one."
         n "But I can't really say it's any better, either."
@@ -353,7 +353,7 @@ label ch23_n_bad:
     if y_gave:
         jump ch23_n_ygave
 
-    if poemappeal["natsuki"][0] < 0 and poemappeal["natsuki"][1] < 0:
+    if get_character_poem_appeal("natsuki", 1) < 0 and get_character_poem_appeal("natsuki", 2) < 0:
         n 5x "I'm not going to read another one of your Yuri suck-up poems."
         n 5s "But I'm still going to make you read mine."
         n "There's a reason."
@@ -363,7 +363,7 @@ label ch23_n_bad:
         n "Then you can go away."
         return
 
-    elif poemappeal["natsuki"][0] < 0 or poemappeal["natsuki"][1] < 0:
+    elif get_character_poem_appeal("natsuki", 1) < 0 or get_character_poem_appeal("natsuki", 2) < 0:
         n "..."
         n 2c "...Meh."
         n "I guess you really haven't learned anything after all."
@@ -395,9 +395,9 @@ label ch23_n_med:
     if y_gave:
         jump ch23_n_ygave
 
-    if poemappeal["natsuki"][0] < 0 and poemappeal["natsuki"][1] < 0:
+    if get_character_poem_appeal("natsuki", 1) < 0 and get_character_poem_appeal("natsuki", 2) < 0:
         jump ch23_n_bad
-    elif poemappeal["natsuki"][1] < 0:
+    elif get_character_poem_appeal("natsuki", 2) < 0:
         n "..."
         n 2k "...This one's alright."
         mc "Alright?"
@@ -477,7 +477,7 @@ label ch22_y_med:
 
 label ch22_y_good:
 
-    if poemappeal["yuri"][0] < 1:
+    if get_character_poem_appeal("yuri", 1) < 1:
         y 2b "I've been waiting for this..."
         y "Let's see what you've written for today."
         y 2e "..."
