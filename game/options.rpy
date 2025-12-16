@@ -1,4 +1,4 @@
-﻿## This template version is 5.0.0. When asked to provide the template version
+﻿## This template version is 5.0.2. When asked to provide the template version
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
@@ -13,7 +13,7 @@ define config.name = "DDLC Mod Template – Python 3 Edition"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "5.0.0"
+define config.version = "5.0.2"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
@@ -169,19 +169,16 @@ init python:
     build.classify("*.sh", None)
     
     #############################################################
-    # These variables classify packages for PC and Android platforms.
-    # Make sure to add 'all' to your build.classify variable if you are planning
-    # to build your mod on Android like in this example.
-    #   Example: build.classify("game/**.pdf", "scripts all")
-    build.classify("game/mod_assets/**", "mod_assets all")
-    build.classify("game/presplash.png", "scripts all")
-    build.classify("game/**.rpyc", "scripts all")
+    # These variables classify packages for PC platforms.
+    build.classify("game/mod_assets/**", "mod_assets")
+    build.classify("game/presplash.png", "scripts")
+    build.classify("game/**.rpyc", "scripts")
     build.classify("game/README.md", None)
     build.classify("game/**/README.md", None)
-    build.classify("game/**.txt", "scripts all")
-    build.classify("game/**.chr", "scripts all")
-    build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
-    build.classify("game/tl/**", "scripts all") ## Translation Folder
+    build.classify("game/**.txt", "scripts")
+    build.classify("game/**.chr", "scripts")
+    build.classify("game/advanced_scripts/**","scripts") ## Backwards Compatibility
+    build.classify("game/tl/**", "scripts") ## Translation Folder
     build.classify("game/mod_extras/**.rpyc", "scripts") ## Extra Features (Backwards Compatibility)
 
     build.classify('**~', None)
@@ -205,3 +202,4 @@ init python:
     build.documentation('README.html')
 
     build.include_old_themes = False
+    build.android_permissions = [ 'android.permission.READ_EXTERNAL_STORAGE', 'android.permission.WRITE_EXTERNAL_STORAGE' ]
