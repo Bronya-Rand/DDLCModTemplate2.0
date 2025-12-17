@@ -41,12 +41,6 @@ def cw_restore_volume():
     """
     renpy.music.set_volume(store.cw_prev_volume, 2)
 
-## TODO: Move elsewhere?
-def get_variable_size(min: int, max: int, mod=None):
-    if mod is None:
-        mod = renpy.gui.text_scale
-    return round(min * (1 - mod) + max * mod)
-
 def show_poem_content_warning(special_poem: int):
     """
     Shows a content warning for specific special poems.

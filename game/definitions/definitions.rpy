@@ -1348,6 +1348,10 @@ define ny = Character('Nat & Yuri', what_prefix='"', what_suffix='"', ctc="ctc",
 # once you packaged your mod.
 define _dismiss_pause = config.developer
 
+## Extra Settings Variables
+# This section controls whether the mod is censored or is in let's play mode.
+default persistent.uncensored_mode = False
+
 ## Variables
 # This section declares variables when the mod runs for the first time on all saves.
 # To make a new persistent variable, make a new variable with the 'persistent.' in it's name
@@ -1389,6 +1393,14 @@ default basedir = config.basedir
 default chapter = 0
 default currentpos = 0
 default faint_effect = None
+
+# Variables brough from DDLC Mobile
+default hide_quick_skip_and_auto = False
+
+default persistent.reduce_motion = False
+default persistent.use_alt_poem_font = False
+default persistent.reduce_transparency = False
+default persistent.high_contrast = False
 
 # Default Name Variables
 # To define a default name make a character name variable like in this example:

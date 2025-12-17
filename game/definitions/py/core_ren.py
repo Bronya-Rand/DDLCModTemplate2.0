@@ -8,6 +8,7 @@ import os
 import subprocess
 import sys
 import platform
+import math
 import renpy  # type: ignore
 
 """renpy
@@ -31,6 +32,7 @@ splash_messages = [
 
 ## DDLC Functions
 
+
 def _get_android_data_directory() -> str | None:
     """
     Returns the Android data directory path.
@@ -40,13 +42,15 @@ def _get_android_data_directory() -> str | None:
     """
     if not renpy.android:
         return None
-    
+
     import jnius  # type: ignore
+
     activity = jnius.autoclass("org.renpy.android.PythonSDLActivity")
     current_activity = jnius.cast("android.app.Activity", activity.mActivity)
 
     data_directory = current_activity.getFilesDir().getAbsolutePath()
     return data_directory
+
 
 def get_characters_folder():
     """
@@ -61,7 +65,9 @@ def get_characters_folder():
         if android_public_directory:
             characters_folder = os.path.join(android_public_directory, "characters")
     else:
-        characters_folder = os.path.join(renpy.config.basedir, "characters").replace("\\", "/")
+        characters_folder = os.path.join(renpy.config.basedir, "characters").replace(
+            "\\", "/"
+        )
 
     return characters_folder
 
@@ -192,7 +198,7 @@ def pause(time=None):
         renpy.ui.interact(mouse="pause", type="pause", roll_forward=None)
         _windows_hidden = False
         return
-    if time <= 0: 
+    if time <= 0:
         return
     _windows_hidden = True
     renpy.config.allow_skipping = False
@@ -211,9 +217,9 @@ def get_process_list():
     :return: A list of process names.
     :rtype: set[str]
     """
-    if renpy.android: 
+    if renpy.mobile:
         return set()  # Process listing is not supported on Android
-    
+
     process_list: set[str] = set()
     if renpy.windows:
         try:
@@ -301,9 +307,9 @@ def get_user_account_name():
     :return: The username of the current user or None if it cannot be determined.
     :rtype: str | None
     """
-    if renpy.android:
-        return None # User account retrieval is not supported on Android
-    
+    if renpy.mobile:
+        return None  # User account retrieval is not supported on Android
+
     # Reject if streaming to protect privacy
     if is_user_streaming():
         return None
@@ -407,6 +413,15 @@ def recolorize(
 
 
 ### Dynamic Super Positioning
+def get_resolution_scale() -> float:
+    """
+    Returns the scale factor based on the current screen width compared to the original game's width (1280).
+
+    :return: The scale factor.
+    :rtype: float
+    """
+    return renpy.config.screen_width / 1280.0
+
 def dsp(original_position_value: int | float) -> int:
     """
     Dynamically adjusts the position value of an element based on the
@@ -414,11 +429,8 @@ def dsp(original_position_value: int | float) -> int:
 
     This assumes that the original position value is set for a 1280x720 resolution.
     """
-    valueIsInt = isinstance(original_position_value, int)
-    scale_position_by = renpy.config.screen_width / 1280.0
-    if valueIsInt:
-        return int(original_position_value * scale_position_by)
-    return original_position_value * scale_position_by
+    scale_position_by = get_resolution_scale()
+    return int(original_position_value * scale_position_by)
 
 
 ### Dynamic Super Resolution
@@ -433,6 +445,133 @@ def dsr(image_path: str):
     return renpy.Transform(
         image_path, size=(dsp(image_bounds[0]), dsp(image_bounds[1]))
     )
+
+
+### DDLC Mobile Scaling Functions
+def get_variable_size(min: int, max: int, mod: float | None = None) -> int:
+    """
+    Returns a size value that scales between min and max based on the mod value.
+
+    :param min: The minimum size value.
+    :param max: The maximum size value.
+    :param mod: The modifier value to determine the scaling factor. If None, uses the current text scale.
+    :type min: int
+    :type max: int
+    :type mod: float | None
+
+    :return: The calculated size value.
+    :rtype: int
+    """
+    scale = mod
+    if scale is None:
+        scale = renpy.store.gui.text_scale
+    return round(min * (1 - scale) + max * scale)
+
+
+def get_variable_size_f(min: int, max: int, mod: float | None = None) -> float:
+    """
+    Returns a size value that scales between min and max based on the mod value.
+
+    :param min: The minimum size value.
+    :param max: The maximum size value.
+    :param mod: The modifier value to determine the scaling factor. If None, uses the current text scale.
+    :type min: int
+    :type max: int
+    :type mod: float | None
+
+    :return: The calculated size value.
+    :rtype: float
+    """
+    scale = mod
+    if scale is None:
+        scale = renpy.store.gui.text_scale
+    return min * (1 - scale) + max * scale
+
+
+def get_relative_size(
+    size: int, ref_min: int, ref_max: int, mod: float | None = None
+) -> int:
+    """
+    Returns a size value that is relative to a reference size range based on the mod value.
+    :param size: The base size value.
+    :param ref_min: The minimum reference size value.
+    :param ref_max: The maximum reference size value.
+    :param mod: The modifier value to determine the scaling factor. If None, uses the current text scale.
+    :type size: int
+    :type ref_min: int
+    :type ref_max: int
+    :type mod: float | None
+
+    :return: The calculated relative size value.
+    :rtype: int
+    """
+    scale = mod
+    if scale is None:
+        scale = renpy.store.gui.text_scale
+    return round(size * (get_variable_size(ref_min, ref_max, scale) / ref_min))
+
+
+def get_relative_size_f(
+    size: int, ref_min: int, ref_max: int, mod: float | None = None
+) -> float:
+    """
+    Returns a size value that is relative to a reference size range based on the mod value.
+    :param size: The base size value.
+    :param ref_min: The minimum reference size value.
+    :param ref_max: The maximum reference size value.
+    :param mod: The modifier value to determine the scaling factor. If None, uses the current text scale.
+    :type size: int
+    :type ref_min: int
+    :type ref_max: int
+    :type mod: float | None
+
+    :return: The calculated relative size value.
+    :rtype: float
+    """
+    scale = mod
+    if scale is None:
+        scale = renpy.store.gui.text_scale
+    return size * (get_variable_size_f(ref_min, ref_max, scale) / ref_min)
+
+
+def get_scaled_outlines(outlines, ref_min: int, ref_max: int, mod: float | None = None):
+    """
+    Returns a list of outlines with sizes scaled relative to a reference size range based on the mod value.
+
+    :param outlines:
+    :param ref_min: The minimum reference size value.
+    :param ref_max: The maximum reference size value.
+    :param mod: The modifier value to determine the scaling factor. If None, uses the current text scale.
+    :type ref_min: int
+    :type ref_max: int
+    :type mod: float | None
+
+    :return: A list of tuples representing the scaled outlines.
+    :rtype: list[tuple[int, str, int, int]]
+    """
+    scale = mod
+    if scale is None:
+        scale = renpy.store.gui.text_scale
+
+    if isinstance(outlines[0], int):
+        return (
+            math.ceil(get_relative_size_f(outlines[0], ref_min, ref_max, scale)),
+            outlines[1],
+            outlines[2],
+            outlines[3],
+        )
+    else:
+        scaled_outlines = []
+        for outline in outlines:
+            scaled_outlines.append(
+                (
+                    math.ceil(get_relative_size_f(outline[0], ref_min, ref_max, scale)),
+                    outline[1],
+                    outline[2],
+                    outline[3],
+                )
+            )
+        return scaled_outlines
 
 
 ## Initialize Core Code
@@ -450,6 +589,11 @@ renpy.music.register_channel("music_poem", mixer="music", tight=True)
 # Initialize gesture mapping for Android devices.
 if renpy.android:
     renpy.config.keymap["rollback"] = []
-    renpy.config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
+    renpy.config.keymap["history"] = [
+        "K_PAGEUP",
+        "repeat_K_PAGEUP",
+        "K_AC_BACK",
+        "mousedown_4",
+    ]
 
 renpy.pure(dsp)
