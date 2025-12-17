@@ -45,10 +45,10 @@ define -2 text_outline_color = "#b59"
 ################################################################################
 
 style default:
-    font gui.default_font
-    size gui.text_size
+    font gui.text_font
+    size get_variable_size(gui.text_size, gui.max_text_size, gui.text_scale)
     color gui.text_color
-    outlines [(2, "#000000aa", 0, 0)]
+    outlines get_scaled_outlines([(2, "#000000aa", 0, 0)], gui.text_size, gui.max_text_size, gui.text_scale)
     line_overlap_split 1
     line_spacing 1
 
@@ -1109,190 +1109,237 @@ style viewframe_text is confirm_prompt_text:
 #             textbutton _("Reset") action [Hide("display_options"), Function(renpy.reset_physical_size)]
 #             textbutton _("Set") action [Hide("display_options"), Function(set_physical_resolution, scale)]
 
-screen ddlc_preferences():
-    hbox:
-        box_wrap True
-
-        if renpy.variant("pc"):
+screen display_preferences():
+    vbox:
+        fixed:
+            ysize 200
+            
+            if not renpy.mobile:
+                vbox:
+                    style_prefix "radio"
+                    label _("Display")
+                    textbutton _("Windowed") action Preference("display", "window")
+                    textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                    # textbutton _("More") action Show("display_options")
 
             vbox:
-                style_prefix "radio"
-                label _("Display")
-                textbutton _("Windowed") action Preference("display", "window")
-                textbutton _("Fullscreen") action Preference("display", "fullscreen")
-                # textbutton _("More") action Show("display_options")
+                style_prefix "slider"
+                xalign (1.0 if not renpy.mobile else 0.0)
+                ysize 1.0
 
-        if config.developer:
-            vbox:
-                style_prefix "radio"
-                label _("Rollback Side")
-                textbutton _("Disable") action Preference("rollback side", "disable")
-                textbutton _("Left") action Preference("rollback side", "left")
-                textbutton _("Right") action Preference("rollback side", "right")
-
-        vbox:
-            style_prefix "check"
-            label _("Skip")
-            textbutton _("Unseen Text") action Preference("skip", "toggle")
-            textbutton _("After Choices") action Preference("after choices", "toggle")
-            # textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-    
-    null height (4 * gui.pref_spacing)
-
-    hbox:
-        style_prefix "slider"
-        box_wrap True
-
-        vbox:
-            
-            hbox:
-                label _("Text Speed")
-                
-                null width 5
-
-                text str(preferences.text_cps) style "value_text"
-
-            #bar value Preference("text speed")
-            bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
-
-            hbox:
-                label _("Auto-Forward Time")
-                
-                null width 5
-                
-                text str(round(preferences.afm_time)) style "value_text"
-
-            bar value Preference("auto-forward time")
-
-        vbox:
-            
-            if config.has_music:
-                hbox:
+                if config.has_music:
                     label _("Music Volume")
-                    
+
                     null width 5
-                
-                    text str(round(preferences.get_mixer("music") * 100)) style "value_text"
 
-                hbox:
-                    bar value Preference("music volume")
+                    text "[round(music_volume_val) * 100]" style "value_text"
 
-            if config.has_sound:
+                    side "c l r":
+                        bar:
+                            value ScreenVariableValue("music_volume_val", range=1.0, offset=0, step=0.1, force_step=True)
+                            changed preferences.set_mixer("music", music_volume_val)
+                        add "slider_volume_icon_min" yalign 0.5 zoom 0.5
+                        add "slider_volume_icon_max" yalign 0.5 zoom 0.5
 
-                hbox:
+                if config.has_sound:
                     label _("Sound Volume")
-                    
-                    null width 5
-                
-                    text str(round(preferences.get_mixer("sfx") * 100)) style "value_text"
 
-                hbox:
-                    bar value Preference("sound volume")
+                    null width 5
+
+                    text str(round(sound_volume * 100)) style "value_text"
+
+                    side "c l r":
+                        bar:
+                            value ScreenVariableValue("sound_volume", range=1.0, offset=0, step=0.1, force_step=True)
+                            changed preferences.set_mixer("sfx", sound_volume)
+                        add "slider_volume_icon_min" yalign 0.5 zoom 0.5
+                        add "slider_volume_icon_max" yalign 0.5 zoom 0.5
 
                     if config.sample_sound:
                         textbutton _("Test") action Play("sound", config.sample_sound)
-
-            if config.has_voice:
-                hbox:
-                    label _("Voice Volume")
-                    
-                    null width 5
                 
-                    text str(round(preferences.get_mixer("voice") * 100)) style "value_text"
+                if config.has_voice:
+                    hbox:
+                        label _("Voice Volume")
+                        null width 5
+                        text str(round(voice_volume * 100)) style "value_text"
 
-                hbox:
-                    bar value Preference("voice volume")
+                    side "c l r":
+                        bar:
+                            value ScreenVariableValue("voice_volume", range=1.0, offset=0, step=0.1, force_step=True, style="slider")
+                            changed preferences.set_mixer("voice", voice_volume)
+                        add "slider_volume_icon_min" yalign 0.5 zoom 0.5
+                        add "slider_volume_icon_max" yalign 0.5 zoom 0.5
 
                     if config.sample_voice:
                         textbutton _("Test") action Play("voice", config.sample_voice)
 
-            if config.has_music or config.has_sound or config.has_voice:
-                null height gui.pref_spacing
+                if config.has_music or config.has_sound or config.has_voice:
+                    null height gui.pref_spacing
 
-                textbutton _("Mute All"):
-                    action Preference("all mute", "toggle")
-                    style "mute_all_button"
+                    textbutton _("Mute All"):
+                        action Preference("all mute", "toggle")
+                        style "mute_all_button"
+
+screen language_preferences():
+    vbox:
+        hbox:
+            style_prefix "slider"
+            box_wrap False
+
+            vbox:
+                label _("Text Speed")
+
+                null width 5
+
+                text str(round(preferences.text_cps)) style "value_text"
+
+                side "c l r":
+                    bar value FieldValue(_preferences, "text_cps", range=180, step=30, force_step=True, max_is_zero=False, offset=20):
+                        alt "Text Speed"
+                    add "slider_speed_icon_min" yalign 0.5 zoom 0.5
+                    add "slider_speed_icon_max" yalign 0.5 zoom 0.5
+
+                label _("Auto-Forward Speed")
+
+                null width 5
+
+                text str(round(preferences.afm_time)) style "value_text"
+
+                side "c l r":
+                    bar value FieldValue(_preferences, "afm_time", range=18, step=3, force_step=True, offset=1):
+                        bar_invert True
+                    add "slider_autopace_icon_min" yalign 0.5 zoom 0.5
+                    add "slider_autopace_icon_max" yalign 0.5 zoom 0.5
+                
+                label _("Text Size")
+
+                side "c l r":
+                    bar value FieldValue(_preferences, "text_scale", range=0.5, offset=0.5, step=0.25, force_step=True):
+                        released gui.SetPreference("text_scale", preferences.text_scale)
+                        alt "Text Size"
+
+            vbox:
+                xsize 1.0
+                if renpy.mobile:
+                    style_prefix "radio"
+                    label _("Allow Skipping")
+                    textbutton _("Previously Read Text Only") action Preference("skip", "seen")
+                    textbutton _("All Text") action Preference("skip", "all")
+                else:
+                    style_prefix "check"
+                    label _("Skip")
+                    textbutton _("Unseen Text") action Preference("skip", "toggle")
+                    textbutton _("After Choices") action Preference("after choices", "toggle")
+
+            if persistent.high_contrast:
+                python:
+                    a = "temp"
+            else:
+                add "wip/gui/long_divider_dark.png":
+                    xzoom 0.65
+                    yzoom 0.8
+                    xoffset 30
+            
+            null height 14
+
+            label _("Language")
+
+            # hbox:
+            #     xsize 1.0
+                
+            #     fixed:
+            #         # xysize (get_variable_size_f(0.6, 0.7, gui.text_scale), get_variable_size(40, 70, gui.text_scale))
+            #         imagebutton:
+            #             xalign 0.0
+            #             yalign 0.5
+            #             action Function(settings_scroll_language, increment=-1)
+            #             idle Transform("settings_arrow", zoom=0.4, rotate=180)
+            #             hover Transform("settings_arrow_selected", zoom=0.4, rotate=180)
+            #         text str()
+
+screen accessibility_preferences():
+    viewport id "settings_accessibility_viewport":
+        # at vp_vert_scroll_mask
+        draggable True
+        mousewheel True
+        ysize 1.0
+        has vbox
+        null height 20
+
+        vbox:
+            style_prefix "check"
+            xsize 1.0
+
+            textbutton _("Content Warnings") action ToggleField(persistent, "show_content_warnings", True, False) alt _("Enable Content Warnings")
+            text _("Enables content warnings that will appear before scenes with disturbing subject matter.") style "pref_hint_text"
+            textbutton _("High Contrast Textboxes") action [ToggleField(persistent, "high_contrast", True, False), Function(gui.rebuild)] alt _("High Contrast Textboxes")
+            text _("Replaces the dialogue box with a darker variant, making dialogue easier to read.") style "pref_hint_text"
+            textbutton _("Reduce Textbox Transparency") action [ToggleField(persistent, "reduce_transparency", True, False), Function(gui.rebuild)] alt _("Reduce Textbox Transparency")
+            text _("Makes the dialogue box opaque, making dialogue easier to read.") style "pref_hint_text"
+            textbutton _("Alternate Poem Font") action ToggleField(persistent, "use_alt_poem_font", True, False) alt _("Use Alternate Poem Font") style "check_button"
+            text _("Switches handwritten fonts in characters' poems with an easier-to-read font.") style "pref_hint_text"
+
+        null height 20
+
+    vbar value YScrollValue("settings_accessibility_viewport") xpos 1.0 xoffset -10 style ("vscrollbar" if not persistent.high_contrast else "vscrollbar_hc")
 
 screen template_preferences():
-    hbox:
-        box_wrap True
-
-        if extra_settings:
-            vbox:
-                style_prefix "check"
-                label _("Game Modes")
-                textbutton _("Enable Content Warnings") action ToggleField(persistent, "enable_content_warnings")
-        
-        vbox:
+    vbox:
+        hbox:
             style_prefix "name"
-            label _("Player Name")
-            
-            null height 3
-            
-            if player == "":
-                text _("No Name Set") xalign 0.5
-            else:
-                text "[player]" xalign 0.5
-            
-            textbutton _("Change Name") action Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName, launchGame=False)):
-                text_style "navigation_button_text"
-        
-        python:
-            has_discord_module = True
-            try:
-                RPC
-            except NameError:
-                has_discord_module = False
+            box_wrap False
 
-        if not renpy.android and has_discord_module:
             vbox:
-                style_prefix "name"
-                label _("Discord RPC")
-
-                python:
-                    connect_status = _("Disconnected")
-                    if not persistent.enable_discord:
-                        connect_status = _("Disabled")
-                    if RPC.rpc_connected:
-                        connect_status = _("Connected")
-                
+                label _("Player Name")
+            
                 null height 3
+            
+                if player == "":
+                    text _("No Name Set") xalign 0.5
+                else:
+                    text "[player]" xalign 0.5
+            
+                textbutton _("Change Name") action Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName, launchGame=False)):
+                    text_style "navigation_button_text"
+        
+            python:
+                has_discord_module = True
+                try:
+                    RPC
+                except NameError:
+                    has_discord_module = False
 
-                text "[connect_status]" xalign 0.5
+            if not renpy.mobile and has_discord_module:
+                vbox:
+                    style_prefix "name"
+                    label _("Discord RPC")
 
-                python:
-                    enable_text = _("Enable")
-                    if persistent.enable_discord:
-                        enable_text = _("Disable")
+                    python:
+                        connect_status = _("Disconnected")
+                        if not persistent.enable_discord:
+                            connect_status = _("Disabled")
+                        if RPC.rpc_connected:
+                            connect_status = _("Connected")
+                    
+                    null height 3
 
-                textbutton enable_text action [ToggleField(persistent, "enable_discord"), 
-                    If(persistent.enable_discord, Function(RPC.disconnect), Function(RPC.connect))]:
-                        text_style "navigation_button_text"
-                if persistent.enable_discord and not RPC.rpc_connected:
-                    textbutton _("Reconnect") action Function(RPC.connect):
-                        text_style "navigation_button_text"
+                    text "[connect_status]" xalign 0.5
 
-    null height (4 * gui.pref_spacing)
+                    python:
+                        enable_text = _("Enable")
+                        if persistent.enable_discord:
+                            enable_text = _("Disable")
 
-    hbox:
-        box_wrap True
+                    textbutton enable_text action [ToggleField(persistent, "enable_discord"), 
+                        If(persistent.enable_discord, Function(RPC.disconnect), Function(RPC.connect))]:
+                            text_style "navigation_button_text"
+                    if persistent.enable_discord and not RPC.rpc_connected:
+                        textbutton _("Reconnect") action Function(RPC.connect):
+                            text_style "navigation_button_text"
 
-        if enable_languages and translations:
-            vbox:
-                style_prefix "radio"
-                label _("Language")
-                hbox:
-                    viewport:
-                        mousewheel True
-                        scrollbars "vertical"
-                        ysize 120
-                        has vbox
+    null height 80
 
-                        for tran in translations:
-                            vbox:
-                                for tlid, tlname in tran:
-                                    textbutton tlname:
-                                        action Language(tlid)
 
 ## Preferences screen ##########################################################
 ##
@@ -1302,34 +1349,71 @@ screen template_preferences():
 ## https://www.renpy.org/doc/html/screen_special.html#preferences
 
 screen preferences():
-
     tag menu
+
+    default current_tab = "display"
 
     if renpy.mobile:
         $ cols = 2
     else:
         $ cols = 4
 
-    default ddlc_settings = True
-
-    use game_menu(_("Settings"), scroll="viewport"):
-
-        vbox:
-            xoffset 50
-
+    use game_menu(_("Settings")):
+        side "t c":
             hbox:
-                style_prefix "navigation"
-                xoffset 150
-                spacing 5
-                textbutton _("DDLC Settings") action [SetScreenVariable("ddlc_settings", True), SensitiveIf(not ddlc_settings)]
-                textbutton _("Template Settings") action [SetScreenVariable("ddlc_settings", False), SensitiveIf(ddlc_settings)]
-            
-            null height 10
+                xalign 0.5
+                button:
+                    style ("pref_active_tab_button" if current_tab == "display" else "pref_tab_button")
+                    action SetScreenVariable("current_tab", "display")
+                    left_padding 10
+                    has side 'l c'
 
-            if ddlc_settings:
-                use ddlc_preferences
-            else:
-                use template_preferences
+                    if renpy.mobile:
+                        add ("wip/gui/pref_display_icon_mobile_selected.png" if current_tab == "display" else "wip/gui/pref_display_icon_mobile.png"):
+                            yalign 0.75
+                            zoom 0.5
+                    else:
+                        add ("wip/gui/pref_display_icon_selected.png" if current_tab == "display" else "wip/gui/pref_display_icon.png"):
+                            yalign 0.75
+                            zoom 0.5
+                    label (_("Audio") if renpy.mobile else _("Display & Sound")) yalign 0.0 text_size 24 at loc_text_fit
+                if enable_languages and translations:
+                    button:
+                        style ("pref_active_tab_button" if current_tab == "gameplay" else "pref_tab_button")
+                        action SetScreenVariable("current_tab", "language")
+                        has side 'l c'
+                        add ("wip/gui/pref_language_icon_selected.png" if current_tab == "gameplay" else "wip/gui/pref_language_icon.png"):
+                            yalign 0.75
+                            zoom 0.5
+                        label _("Language & Text") yalign 0.0 text_size 24 at loc_text_fit
+                button:
+                    style ("pref_active_tab_button" if current_tab == "gameplay" else "pref_tab_button")
+                    action SetScreenVariable("current_tab", "accessibility")
+                    has side 'l c'
+                    add ("wip/gui/pref_accessibility_icon_selected.png" if current_tab == "accessibility" else "wip/gui/pref_accessibility_icon.png"):
+                        yalign 0.75
+                        zoom 0.5
+                    label _("Accessibility") yalign 0.0 text_size 24 at loc_text_fit
+                button:
+                    style ("pref_active_tab_button" if current_tab == "mods" else "pref_tab_button")
+                    action SetScreenVariable("current_tab", "bronya")
+                    has side 'l c'
+                    add ("wip/gui/pref_bronya_icon_selected.png" if current_tab == "bronya" else "wip/gui/pref_bronya_icon.png"):
+                        yalign 0.75
+                        zoom 0.5
+                    label _("Mod Template") yalign 0.0 text_size 24 at loc_text_fit
+            
+            frame:
+                padding (30, 30)
+
+                showif current_tab == "display":
+                    use display_preferences
+                elif current_tab == "language" and enable_languages and translations:
+                    use language_preferences
+                elif current_tab == "accessibility":
+                    use accessibility_preferences
+                elif current_tab == "bronya":
+                    use template_preferences
                             
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
