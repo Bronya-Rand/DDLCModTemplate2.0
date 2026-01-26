@@ -41,6 +41,10 @@ define -2 gui.selected_color = '#bb5588'
 # This color is used for a text button when it cannot be selected.
 define -2 gui.insensitive_color = '#aaaaaa7f'
 
+# These colors are used for outlining text in High Contrast mode.
+define gui.hc_label_outline_color = "#b59"
+define gui.hc_label_outline_selected_color = "#ffbde1"
+
 # These colors are used for bars that are not filled in completely. They are not
 # used directly, but are used when re-generating bar image files.
 define -2 gui.muted_color = '#6666a3'
