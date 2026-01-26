@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file defines important stuff for DDLC and your mod!
 
 # This variable declares whether to enable Developer Tools from Ren'Py.

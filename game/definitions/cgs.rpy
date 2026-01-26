@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 # This file defines all the character graphics (CGs) in DDLC such as Yuri's
 # Chocolate CG and Natsuki's Manga CG.

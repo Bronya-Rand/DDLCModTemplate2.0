@@ -1,5 +1,4 @@
-## screens.rpy
-
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file declares all the screens and styles in DDLC.
 
 ## Initialization
@@ -58,64 +57,73 @@ style default_monika is normal:
 style edited is default:
     font "gui/font/VerilySerifMono.otf"
     kerning 8
-    outlines [(10, "#000", 0, 0)]
-    xpos gui.text_xpos
-    xanchor gui.text_xalign
-    xsize gui.text_width
-    ypos gui.text_ypos
-    text_align gui.text_xalign
-    layout ("subtitle" if gui.text_xalign else "tex")
+    outlines get_scaled_outlines([(10, "#000", 0, 0)], gui.text_size, gui.max_text_size, gui.text_scale)
+    xpos gui.dialogue_xpos
+    xanchor gui.dialogue_text_xalign
+    xsize get_variable_size(gui.dialogue_width, gui.max_dialogue_width, gui.text_scale)
+    ypos gui.dialogue_ypos
+    text_align gui.dialogue_text_xalign
+    layout ("subtitle" if gui.dialogue_text_xalign else "tex")
 
 style normal is default:
-    xpos gui.text_xpos
-    xanchor gui.text_xalign
-    xsize gui.text_width
-    ypos gui.text_ypos
+    xpos gui.dialogue_xpos
+    xanchor gui.dialogue_text_xalign
+    xsize get_variable_size(gui.dialogue_width, gui.max_dialogue_width, gui.text_scale)
+    ypos gui.dialogue_ypos
 
-    text_align gui.text_xalign
-    layout ("subtitle" if gui.text_xalign else "tex")
+    text_align gui.dialogue_text_xalign
+    layout ("subtitle" if gui.dialogue_text_xalign else "tex")
 
 style input:
     color gui.accent_color
 
+style hyperlink_text:
+    color gui.accent_color
+    hover_color gui.hover_color
+    hover_underline True
+
 style splash_text:
-    size 24
+    size get_variable_size(24, 36, gui.text_scale)
     color "#000"
-    font gui.default_font
+    font gui.text_font
     text_align 0.5
     outlines []
 
+style poemgame_button is button:
+    xsize 226
+    ysize 63
+
 style poemgame_text:
     yalign 0.5
-    font "gui/font/Halogen.ttf"
-    size 30
+    font gui.halogen_font
+    size get_variable_size(30, 36, gui.text_scale)
     color "#000"
     outlines []
 
     hover_xoffset -3
-    hover_outlines [(3, "#fef", 0, 0), (2, "#fcf", 0, 0), (1, "#faf", 0, 0)]
+    hover_outlines get_scaled_outlines([(3, "#fef", 0, 0), (2, "#fcf", 0, 0), (1, "#faf", 0, 0)], 30, 36, gui.text_scale)
 
 style gui_text:
-    font gui.interface_font
+    font gui.interface_text_font
     color gui.interface_text_color
-    size gui.interface_text_size
-
+    size get_variable_size(gui.interface_text_size, gui.max_interface_text_size, gui.text_scale)
 
 style button:
     properties gui.button_properties("button")
 
 style button_text is gui_text:
     properties gui.button_text_properties("button")
+    size get_variable_size(gui.button_text_size, gui.max_button_text_size, gui.text_scale)
     yalign 0.5
 
 
 style label_text is gui_text:
     color gui.accent_color
-    size gui.label_text_size
+    size get_variable_size(gui.label_text_size, gui.max_label_text_size, gui.text_scale)
 
 style prompt_text is gui_text:
     color gui.text_color
-    size gui.interface_text_size
+    size get_variable_size(gui.interface_text_size, gui.max_interface_text_size, gui.text_scale)
 
 style vbar:
     xsize gui.bar_size
@@ -134,23 +142,30 @@ style scrollbar:
     unscrollable "hide"
     bar_invert True
 
+
 style vscrollbar:
     xsize 18
     base_bar Frame("gui/scrollbar/vertical_poem_bar.png", tile=False)
-    thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
+    thumb Frame("gui/slider/horizontal_hover_thumb.png", left=6, top=6, tile=True)
     unscrollable "hide"
     bar_invert True
+    thumb_offset (8, 8)
+
+style vscrollbar_hc is vscrollbar:
+    base_bar Frame("gui/scrollbar/vertical_poem_bar_hc.png", tile=False)
+    thumb Frame("gui/slider/horizontal_hover_thumb_hc.png", left=6, top=6, tile=True)
 
 style slider:
-    ysize 18
+    ysize (34 if renpy.mobile else 18)
     base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
-    thumb "gui/slider/horizontal_hover_thumb.png"
+    thumb Transform("gui/slider/horizontal_hover_thumb.png", zoom=(1.0 if renpy.mobile else 0.7), anchor=(0.5, 0.5))
+    thumb_offset 8
 
 style vslider:
     xsize gui.slider_size
     base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
     thumb "gui/slider/vertical_[prefix_]thumb.png"
-
+    thumb_offset (8, 8)
 
 style frame:
     padding gui.frame_borders.padding
@@ -229,29 +244,62 @@ style namebox:
 
 style say_label:
     color gui.accent_color
-    font gui.name_font
-    size gui.name_text_size
+    font gui.name_text_font
+    size get_variable_size(gui.name_text_size, gui.max_name_text_size, gui.text_scale)
     xalign gui.name_xalign
     yalign 0.5
-    outlines [(3, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)]
-    #outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
+    outlines get_scaled_outlines([(3, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)], gui.name_text_size, gui.max_name_text_size, gui.text_scale)
 
 style say_dialogue:
-    xpos gui.text_xpos
-    xanchor gui.text_xalign
-    xsize gui.text_width
-    ypos gui.text_ypos
+    xpos gui.dialogue_xpos
+    xanchor gui.dialogue_text_xalign
+    xfill True
+    ypos gui.dialogue_ypos
+    xsize get_variable_size(gui.dialogue_width, gui.max_dialogue_width, gui.text_scale)
+    text_align gui.dialogue_text_xalign
+    layout ("subtitle" if gui.dialogue_text_xalign else "tex")
 
-    text_align gui.text_xalign
-    layout ("subtitle" if gui.text_xalign else "tex")
-
-image ctc:
-    xalign 0.81 yalign 0.98 xoffset -5 alpha 0.0 subpixel True
-    "gui/ctc.png"
+image ctc_image:
+    subpixel True
+    alpha 0.0
+    xoffset -5
+    Transform("gui/ctc.png", zoom=get_resolution_scale())
     block:
         easeout 0.75 alpha 1.0 xoffset 0
         easein 0.75 alpha 0.5 xoffset -5
         repeat
+
+image auto_ctc_base = Transform("gui/auto_ctc_base.png", zoom=get_resolution_scale())
+image auto_ctc_fill = Transform("gui/auto_ctc_fill.png", zoom=get_resolution_scale())
+
+transform auto_ctc_pos:
+    zoom 0.7
+    yalign 0.98
+    xoffset -5
+    alpha 0.0
+    easeout 0.1 alpha 0.8
+    on hide:
+        easeout 0.1 alpha 0.0
+
+screen ctc:
+    fixed at auto_ctc_pos:
+        style "ctc_fixed"
+
+        if _preferences.afm_enable == True:
+            add "auto_ctc_base" at auto_ctc_pos:
+                fit "cover"
+                align (0.5, 0.5)
+            # add "auto_ctc_fill" at radial_alpha(wait_timer=get_automode_time()), auto_ctc_pos:
+            #     fit "cover"
+            #     align (0.5, 0.5)
+        else:
+            add "ctc_image" at auto_ctc_pos:
+                fit "scale-up"
+                align (0.5, 0.5)
+
+style ctc_fixed:
+    xalign gui.ctc_xalign
+    xysize (round(50 * gui.ctc_zoom), round(50 * gui.ctc_zoom))
 
 ## Input screen ################################################################
 ##
@@ -264,7 +312,7 @@ image ctc:
 ## http://www.renpy.org/doc/html/screen_special.html#input
 
 image input_caret:
-    Solid("#b59")
+    Solid(text_outline_color)
     size (2,25) subpixel True
     block:
         linear 0.35 alpha 0
@@ -275,26 +323,25 @@ screen input(prompt):
     style_prefix "input"
 
     window:
+        has vbox
+        xpos gui.dialogue_xpos
+        xanchor 0.5
+        ypos gui.dialogue_ypos
 
-        vbox:
-            xpos gui.text_xpos
-            xanchor 0.5
-            ypos gui.text_ypos
-
-            text prompt style "input_prompt"
-            input id "input"
+        text prompt style "input_prompt"
+        input id "input"
 
 
 style input_prompt is default
 
 style input_prompt:
-    xmaximum gui.text_width
-    xalign gui.text_xalign
-    text_align gui.text_xalign
+    xmaximum gui.dialogue_width
+    xalign gui.dialogue_text_xalign
+    text_align gui.dialogue_text_xalign
 
 style input:
     caret "input_caret"
-    xmaximum gui.text_width
+    xmaximum gui.dialogue_width
     xalign 0.5
     text_align 0.5
 
@@ -372,13 +419,13 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
-    hover_sound gui.hover_sound
+    xsize get_variable_size(gui.choice_button_width, gui.max_choice_button_width, gui.text_scale)
+    hover_sound (gui.hover_sound if not renpy.mobile else None)
     activate_sound gui.activate_sound
-    idle_background Frame("gui/button/choice_idle_background.png", gui.choice_button_borders)
-    hover_background Frame("gui/button/choice_hover_background.png", gui.choice_button_borders)
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
+    size get_variable_size(gui.choice_button_text_size, gui.max_choice_button_text_size, gui.text_scale)
     outlines []
 
 
@@ -445,7 +492,11 @@ style quick_button:
 
 style quick_button_text:
     properties gui.button_text_properties("quick_button")
+    size get_variable_size(gui.quick_button_text_size, gui.max_quick_button_text_size, gui.text_scale)
     outlines []
+
+style quick_hbox:
+    spacing get_variable_size(gui.quick_menu_spacing, gui.max_quick_menu_spacing, gui.text_scale)
 
 
 ################################################################################
@@ -458,8 +509,11 @@ style quick_button_text:
 ## to other menus, and to start the game.
 
 init python:
-    def FinishEnterName(launchGame=True):
-        if not player: return
+    def FinishEnterName(start_game=True):
+        if not player: 
+            if renpy.mobile:
+                renpy.hide_screen("name_input")
+            return
         persistent.playername = player
         renpy.save_persistent()
         renpy.hide_screen("name_input")
@@ -467,38 +521,44 @@ init python:
             renpy.jump_out_of_context("start")
 
 screen navigation():
+    if main_menu:
+        add "menu_nav"
+    else:
+        add "game_nav"
 
     vbox:
         style_prefix "navigation"
 
-        xpos gui.navigation_xpos
-        yalign 0.8
-
-        spacing gui.navigation_spacing
+        if renpy.mobile:
+            xpos gui.navigation_xpos
+            spacing gui.max_navigation_spacing
+        else:
+            xpos get_variable_size(gui.max_navigation_xpos, gui.navigation_xpos, gui.text_scale)
+            spacing get_variable_size(gui.navigation_spacing, gui.max_navigation_spacing, gui.text_scale)
+        
+        yanchor 1.0
+        yalign 0.85
+        xmaximum 200
 
         if not persistent.autoload or not main_menu:
 
             if main_menu:
 
                 if persistent.playthrough == 1:
-                    textbutton _("ŔŗñĮ¼»ŧþŀÂŻŕěōì«") action If(persistent.playername, true=Start(), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName)))
+                    textbutton _("ŔŗñĮ¼»ŧþŀÂŻŕěōì«") action If(persistent.playername, true=Start(), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName))) at loc_text_fit
                 else:
-                    textbutton _("New Game") action If(persistent.playername, true=Start(), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName)))
+                    textbutton _("New Game") action If(persistent.playername, true=Start(), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName))) at loc_text_fit
 
             else:
 
-                textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
+                textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)] at loc_text_fit
 
-                textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
+                textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)] at loc_text_fit
 
-            textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
+            textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)] at loc_text_fit
 
             if enable_extras_menu:
-                textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)]
-
-            if _in_replay:
-
-                textbutton _("End Replay") action EndReplay(confirm=True)
+                textbutton _("Extras") action [ShowMenu("extras"), SensitiveIf(renpy.get_screen("extras") == None)] at loc_text_fit
 
             elif not main_menu:
                 if persistent.playthrough != 3:
@@ -510,6 +570,9 @@ screen navigation():
 
             if not enable_extras_menu:
                 textbutton _("Credits") action ShowMenu("about")
+
+            if _in_replay:
+                textbutton _("End Replay") action EndReplay(confirm=True) at loc_text_fit
 
             if renpy.variant("pc"):
 
@@ -523,22 +586,24 @@ screen navigation():
 
 
 style navigation_button is gui_button
-style navigation_button_text is gui_button_text
+style navigation_button_text is gui_button_text:
+    size (gui.max_button_text_size if renpy.mobile else get_variable_size(gui.button_text_size, gui.max_button_text_size, gui.text_scale))
 
 style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
-    hover_sound gui.hover_sound
+    ysize (54 if renpy.mobile else gui.button_height)
+    hover_sound (gui.hover_sound if not renpy.mobile else None)
     activate_sound gui.activate_sound
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
-    font "gui/font/RifficFree-Bold.ttf"
+    layout "nobreak"
+    font gui.riffic_font
     color "#fff"
-    outlines [(4, text_outline_color, 0, 0), (2, text_outline_color, 2, 2)]
-    #outlines [(4, "#b59", 0, 0), (2, "#b59", 2, 2)]
-    hover_outlines [(4, "#fac", 0, 0), (2, "#fac", 2, 2)]
-    insensitive_outlines [(4, "#fce", 0, 0), (2, "#fce", 2, 2)]
+    outlines get_scaled_outlines([(4, text_outline_color, 0, 0), (2, text_outline_color, 2, 2)], (gui.max_button_text_size if renpy.mobile else gui.button_text_size), gui.max_button_text_size, gui.text_scale)
+    hover_outlines get_scaled_outlines([(4, "#fac", 0, 0), (2, "#fac", 2, 2)], (gui.max_button_text_size if renpy.mobile else gui.button_text_size), gui.max_button_text_size, gui.text_scale)
+    insensitive_outlines get_scaled_outlines([(4, "#fce", 0, 0), (2, "#fce", 2, 2)], (gui.max_button_text_size if renpy.mobile else gui.button_text_size), gui.max_button_text_size, gui.text_scale)
 
 
 ## Main Menu screen ############################################################
@@ -568,6 +633,13 @@ screen main_menu():
         ## contents of the main menu are in the navigation screen.
         use navigation
 
+    if gui.show_name:
+        vbox:
+            text "[config.name!t]":
+                style "main_menu_title"
+            text "[config.version!t]":
+                style "main_menu_version"
+
     if not persistent.ghost_menu:
         add "menu_particles"
         add "menu_particles"
@@ -576,6 +648,9 @@ screen main_menu():
     if persistent.ghost_menu:
         add "menu_art_s_ghost"
         add "menu_art_m_ghost"
+        
+        if renpy.mobile:
+            timer 4.0 action Show("fullscreen_return_button")
     else:
         if persistent.playthrough == 1 or persistent.playthrough == 2:
             add "menu_art_s_glitch"
@@ -586,16 +661,12 @@ screen main_menu():
             add "menu_art_m"
         add "menu_fade"
 
-    if gui.show_name:
-
-        vbox:
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
-
     key "K_ESCAPE" action Quit(confirm=False)
+
+screen fullscreen_return_button:
+    button:
+        xysize (1.0, 1.0)
+        action Jump("quit")
 
 style main_menu_frame is empty
 style main_menu_vbox is vbox
@@ -610,7 +681,7 @@ style main_menu_frame:
     xsize 310
     yfill True
 
-    background "menu_nav"
+    background None
 
 style main_menu_vbox:
     xalign 1.0
@@ -655,60 +726,67 @@ screen game_menu(title, scroll=None):
 
     style_prefix "game_menu"
 
+    use navigation
+
     frame:
         style "game_menu_outer_frame"
 
-        hbox:
+        has hbox
 
-            # Reserve space for the navigation section.
-            frame:
-                style "game_menu_navigation_frame"
+        frame:
+            style "game_menu_navigation_frame"
 
-            frame:
-                style "game_menu_content_frame"
+        frame:
+            style "game_menu_content_frame"
 
-                if scroll == "viewport":
+            # if renpy.get_screen("history"):
+            #     background Frame("history_background")
+            #     padding (10, 10)
+            #     xsize 1.0
 
-                    viewport:
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        yinitial 1.0
+            if scroll == "viewport":
 
-                        side_yfill True
+                viewport:
+                    at vp_vert_scroll_mask
+                    scrollbars "vertical"
+                    vscrollbar_xoffset -30
+                    mousewheel True
+                    draggable True
 
-                        vbox:
-                            transclude
+                    side_yfill True
 
-                elif scroll == "vpgrid":
+                    has vbox
+                    transclude
 
-                    vpgrid:
-                        cols 1
-                        yinitial 1.0
+            elif scroll == "vpgrid":
 
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
+                vpgrid:
+                    cols 1
 
-                        side_yfill True
+                    scrollbars "vertical"
+                    mousewheel True
+                    draggable True
 
-                        transclude
-
-                else:
+                    side_yfill True
 
                     transclude
 
-    use navigation
+            else:
 
-    if not main_menu and persistent.playthrough == 2 and not persistent.menu_bg_m and renpy.random.randint(0, 49) == 0:
+                transclude
+
+    if not main_menu and persistent.playthrough == 2 and not persistent.menu_bg_m and renpy.random.randint(0, 49) == 0 and persistent.content_warnings_enabled == False:
         on "show" action Show("game_menu_m")
 
     textbutton _("Return"):
         style "return_button"
-
+        if renpy.mobile:
+            xpos gui.navigation_xpos
+        else:
+            xpos get_variable_size(gui.max_navigation_xpos, gui.navigation_xpos, gui.text_scale)
         action Return()
 
-    label title
+    label title xoffset -16
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -729,10 +807,9 @@ style return_button_text is navigation_button_text
 
 style game_menu_outer_frame:
     bottom_padding 30
-    top_padding 120
+    top_padding 30
 
-    background "gui/overlay/game_menu.png"
-    # background recolorize("gui/overlay/game_menu.png")
+    background None
 
 style game_menu_navigation_frame:
     xsize 280
@@ -757,15 +834,14 @@ style game_menu_label:
     ysize 120
 
 style game_menu_label_text:
-    font "gui/font/RifficFree-Bold.ttf"
+    font gui.riffic_font
     size gui.title_text_size
     color "#fff"
     outlines [(6, text_outline_color, 0, 0), (3, text_outline_color, 2, 2)]
-    #outlines [(6, "#b59", 0, 0), (3, "#b59", 2, 2)]
     yalign 0.5
 
 style return_button:
-    xpos gui.navigation_xpos
+    xpos get_variable_size(gui.max_navigation_xpos, gui.navigation_xpos, gui.text_scale)
     yalign 1.0
     yoffset -30
 
@@ -978,13 +1054,14 @@ style page_button_text:
 
 style slot_button:
     properties gui.button_properties("slot_button")
-    idle_background Frame("gui/button/slot_idle_background.png", gui.choice_button_borders)
-    hover_background Frame("gui/button/slot_hover_background.png", gui.choice_button_borders)
 
 style slot_button_text:
     properties gui.button_text_properties("slot_button")
     color "#666"
     outlines []
+
+style mobile_slot_time_text is slot_button_text:
+    size 24
 
 screen viewframe_options(title):
 
@@ -1109,7 +1186,22 @@ style viewframe_text is confirm_prompt_text:
 #             textbutton _("Reset") action [Hide("display_options"), Function(renpy.reset_physical_size)]
 #             textbutton _("Set") action [Hide("display_options"), Function(set_physical_resolution, scale)]
 
-screen display_preferences():
+image slider_volume_icon_min:
+    ("gui/slider_volume_icon_min.png" if not persistent.high_contrast else "gui/slider_volume_icon_hc_min.png")
+image slider_volume_icon_max:
+    ("gui/slider_volume_icon_max.png" if not persistent.high_contrast else "gui/slider_volume_icon_hc_max.png")
+
+image slider_autopace_icon_min:
+    ("gui/slider_autopace_icon_min.png" if not persistent.high_contrast else "gui/slider_autopace_icon_hc_min.png")
+image slider_autopace_icon_max:
+    ("gui/slider_autopace_icon_max.png" if not persistent.high_contrast else "gui/slider_autopace_icon_hc_max.png")
+
+image slider_textsize_icon_min:
+    ("gui/slider_textsize_icon_min.png" if not persistent.high_contrast else "gui/slider_textsize_icon_hc_min.png")
+image slider_textsize_icon_max:
+    ("gui/slider_textsize_icon_max.png" if not persistent.high_contrast else "gui/slider_textsize_icon_hc_max.png")
+
+screen display_preferences(music_volume, sound_volume, voice_volume):
     vbox:
         fixed:
             ysize 200
@@ -1117,6 +1209,7 @@ screen display_preferences():
             if not renpy.mobile:
                 vbox:
                     style_prefix "radio"
+                    xalign 0.0
                     label _("Display")
                     textbutton _("Windowed") action Preference("display", "window")
                     textbutton _("Fullscreen") action Preference("display", "fullscreen")
@@ -1130,27 +1223,19 @@ screen display_preferences():
                 if config.has_music:
                     label _("Music Volume")
 
-                    null width 5
-
-                    text "[round(music_volume_val) * 100]" style "value_text"
-
                     side "c l r":
                         bar:
-                            value ScreenVariableValue("music_volume_val", range=1.0, offset=0, step=0.1, force_step=True)
-                            changed preferences.set_mixer("music", music_volume_val)
+                            value ScreenVariableValue("music_volume", range=1.0, offset=0, step=0.1, force_step=True, style="slider")
+                            changed preferences.set_mixer("music", music_volume)
                         add "slider_volume_icon_min" yalign 0.5 zoom 0.5
                         add "slider_volume_icon_max" yalign 0.5 zoom 0.5
 
                 if config.has_sound:
                     label _("Sound Volume")
 
-                    null width 5
-
-                    text str(round(sound_volume * 100)) style "value_text"
-
                     side "c l r":
                         bar:
-                            value ScreenVariableValue("sound_volume", range=1.0, offset=0, step=0.1, force_step=True)
+                            value ScreenVariableValue("sound_volume", range=1.0, offset=0, step=0.1, force_step=True, style="slider")
                             changed preferences.set_mixer("sfx", sound_volume)
                         add "slider_volume_icon_min" yalign 0.5 zoom 0.5
                         add "slider_volume_icon_max" yalign 0.5 zoom 0.5
@@ -1159,10 +1244,7 @@ screen display_preferences():
                         textbutton _("Test") action Play("sound", config.sample_sound)
                 
                 if config.has_voice:
-                    hbox:
-                        label _("Voice Volume")
-                        null width 5
-                        text str(round(voice_volume * 100)) style "value_text"
+                    label _("Voice Volume")
 
                     side "c l r":
                         bar:
@@ -1190,24 +1272,16 @@ screen language_preferences():
             vbox:
                 label _("Text Speed")
 
-                null width 5
-
-                text str(round(preferences.text_cps)) style "value_text"
-
                 side "c l r":
-                    bar value FieldValue(_preferences, "text_cps", range=180, step=30, force_step=True, max_is_zero=False, offset=20):
+                    bar value FieldValue(_preferences, "text_cps", style="slider", range=180, step=30, force_step=True, max_is_zero=False, offset=20):
                         alt "Text Speed"
-                    add "slider_speed_icon_min" yalign 0.5 zoom 0.5
-                    add "slider_speed_icon_max" yalign 0.5 zoom 0.5
+                    add "slider_autopace_icon_min" yalign 0.5 zoom 0.5
+                    add "slider_autopace_icon_max" yalign 0.5 zoom 0.5
 
                 label _("Auto-Forward Speed")
 
-                null width 5
-
-                text str(round(preferences.afm_time)) style "value_text"
-
                 side "c l r":
-                    bar value FieldValue(_preferences, "afm_time", range=18, step=3, force_step=True, offset=1):
+                    bar value FieldValue(_preferences, "afm_time", style="slider", range=18, step=3, force_step=True, offset=1):
                         bar_invert True
                     add "slider_autopace_icon_min" yalign 0.5 zoom 0.5
                     add "slider_autopace_icon_max" yalign 0.5 zoom 0.5
@@ -1215,9 +1289,11 @@ screen language_preferences():
                 label _("Text Size")
 
                 side "c l r":
-                    bar value FieldValue(_preferences, "text_scale", range=0.5, offset=0.5, step=0.25, force_step=True):
+                    bar value FieldValue(_preferences, "text_scale", style="slider", range=0.5, offset=0.5, step=0.25, force_step=True):
                         released gui.SetPreference("text_scale", preferences.text_scale)
                         alt "Text Size"
+                    add "slider_textsize_icon_min" yalign 0.5 zoom 0.5
+                    add "slider_textsize_icon_max" yalign 0.5 zoom 0.5
 
             vbox:
                 xsize 1.0
@@ -1232,31 +1308,27 @@ screen language_preferences():
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
 
-            if persistent.high_contrast:
-                python:
-                    a = "temp"
-            else:
-                add "wip/gui/long_divider_dark.png":
-                    xzoom 0.65
-                    yzoom 0.8
-                    xoffset 30
+        # null height 40
+
+        # if persistent.high_contrast == True:
+        #     add "gui/long_divider_dark_hc.png":
+        #         xzoom 0.65
+        #         yzoom 0.80
+        #         xoffset 30
+        # else:
+        #     add "gui/long_divider_dark.png":
+        #         xzoom 0.65
+        #         yzoom 0.80
+        #         xoffset 30
             
-            null height 14
+        # null height 14
 
-            label _("Language")
+        # label _("Language")
 
-            # hbox:
-            #     xsize 1.0
-                
-            #     fixed:
-            #         # xysize (get_variable_size_f(0.6, 0.7, gui.text_scale), get_variable_size(40, 70, gui.text_scale))
-            #         imagebutton:
-            #             xalign 0.0
-            #             yalign 0.5
-            #             action Function(settings_scroll_language, increment=-1)
-            #             idle Transform("settings_arrow", zoom=0.4, rotate=180)
-            #             hover Transform("settings_arrow_selected", zoom=0.4, rotate=180)
-            #         text str()
+        # hbox:
+        #     xsize 1.0
+
+        ## TODO: Language selection dropdown/menu
 
 screen accessibility_preferences():
     viewport id "settings_accessibility_viewport":
@@ -1277,7 +1349,7 @@ screen accessibility_preferences():
             text _("Replaces the dialogue box with a darker variant, making dialogue easier to read.") style "pref_hint_text"
             textbutton _("Reduce Textbox Transparency") action [ToggleField(persistent, "reduce_transparency", True, False), Function(gui.rebuild)] alt _("Reduce Textbox Transparency")
             text _("Makes the dialogue box opaque, making dialogue easier to read.") style "pref_hint_text"
-            textbutton _("Alternate Poem Font") action ToggleField(persistent, "use_alt_poem_font", True, False) alt _("Use Alternate Poem Font") style "check_button"
+            textbutton _("Alternate Poem Font") action ToggleField(persistent, "use_alt_poem_font", True, False) alt _("Use Alternate Poem Font") 
             text _("Switches handwritten fonts in characters' poems with an easier-to-read font.") style "pref_hint_text"
 
         null height 20
@@ -1287,10 +1359,10 @@ screen accessibility_preferences():
 screen template_preferences():
     vbox:
         hbox:
-            style_prefix "name"
             box_wrap False
 
             vbox:
+                style_prefix "name"
                 label _("Player Name")
             
                 null height 3
@@ -1338,8 +1410,12 @@ screen template_preferences():
                         textbutton _("Reconnect") action Function(RPC.connect):
                             text_style "navigation_button_text"
 
-    null height 80
+    # null height 80
 
+style name_label is pref_label
+style name_label_text is pref_label_text
+style name_text is radio_button_text:
+    color "#000"
 
 ## Preferences screen ##########################################################
 ##
@@ -1348,10 +1424,21 @@ screen template_preferences():
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#preferences
 
+init python:
+    def vp_vert_scroll_mask(d):
+        return AlphaMask(d, Frame("gui/viewport-vertical-fade.png", 0, 13))
+
+image pref_background:
+    textbox_frame(high_contrast=persistent.high_contrast, opaque=persistent.reduce_transparency, dots=False, glare=False)
+
 screen preferences():
     tag menu
 
+    default music_volume = preferences.get_mixer("music")
+    default sound_volume = preferences.get_mixer("sfx")
+    default voice_volume = preferences.get_mixer("voice")
     default current_tab = "display"
+    on "show" action [SetScreenVariable("music_volume", preferences.get_mixer("music")),  SetScreenVariable("sound_volume", preferences.get_mixer("sfx")), SetScreenVariable("voice_volume", preferences.get_mixer("voice"))]   
 
     if renpy.mobile:
         $ cols = 2
@@ -1369,46 +1456,45 @@ screen preferences():
                     has side 'l c'
 
                     if renpy.mobile:
-                        add ("wip/gui/pref_display_icon_mobile_selected.png" if current_tab == "display" else "wip/gui/pref_display_icon_mobile.png"):
+                        add ("gui/pref_display_icon_mobile_selected.png" if current_tab == "display" else "gui/pref_display_icon_mobile.png"):
                             yalign 0.75
                             zoom 0.5
                     else:
-                        add ("wip/gui/pref_display_icon_selected.png" if current_tab == "display" else "wip/gui/pref_display_icon.png"):
+                        add ("gui/pref_display_icon_selected.png" if current_tab == "display" else "gui/pref_display_icon.png"):
                             yalign 0.75
                             zoom 0.5
-                    label (_("Audio") if renpy.mobile else _("Display & Sound")) yalign 0.0 text_size 24 at loc_text_fit
-                if enable_languages and translations:
-                    button:
-                        style ("pref_active_tab_button" if current_tab == "gameplay" else "pref_tab_button")
-                        action SetScreenVariable("current_tab", "language")
-                        has side 'l c'
-                        add ("wip/gui/pref_language_icon_selected.png" if current_tab == "gameplay" else "wip/gui/pref_language_icon.png"):
-                            yalign 0.75
-                            zoom 0.5
-                        label _("Language & Text") yalign 0.0 text_size 24 at loc_text_fit
+                    label (_("Audio") if renpy.mobile else _("Display & Sound")) yalign 0.0 text_size (24 if renpy.mobile else 18) at loc_text_fit style "pref_tab_label"
                 button:
-                    style ("pref_active_tab_button" if current_tab == "gameplay" else "pref_tab_button")
+                    style ("pref_active_tab_button" if current_tab == "language" else "pref_tab_button")
+                    action SetScreenVariable("current_tab", "language")
+                    has side 'l c'
+                    add ("gui/pref_language_icon_selected.png" if current_tab == "language" else "gui/pref_language_icon.png"):
+                        yalign 0.75
+                        zoom 0.5
+                    label _("Language & Text") yalign 0.0 text_size (24 if renpy.mobile else 18) at loc_text_fit style "pref_tab_label"
+                button:
+                    style ("pref_active_tab_button" if current_tab == "accessibility" else "pref_tab_button")
                     action SetScreenVariable("current_tab", "accessibility")
                     has side 'l c'
-                    add ("wip/gui/pref_accessibility_icon_selected.png" if current_tab == "accessibility" else "wip/gui/pref_accessibility_icon.png"):
+                    add ("gui/pref_accessibility_icon_selected.png" if current_tab == "accessibility" else "gui/pref_accessibility_icon.png"):
                         yalign 0.75
-                        zoom 0.5
-                    label _("Accessibility") yalign 0.0 text_size 24 at loc_text_fit
+                        zoom 0.25 # For some reason this icon is larger than the others :BronyaUhhhhh:
+                    label _("Accessibility") yalign 0.0 text_size (24 if renpy.mobile else 18) at loc_text_fit style "pref_tab_label"
                 button:
-                    style ("pref_active_tab_button" if current_tab == "mods" else "pref_tab_button")
+                    style ("pref_active_tab_button" if current_tab == "bronya" else "pref_tab_button")
                     action SetScreenVariable("current_tab", "bronya")
                     has side 'l c'
-                    add ("wip/gui/pref_bronya_icon_selected.png" if current_tab == "bronya" else "wip/gui/pref_bronya_icon.png"):
+                    add ("gui/pref_bronya_icon_selected.png" if current_tab == "bronya" else "gui/pref_bronya_icon.png"):
                         yalign 0.75
                         zoom 0.5
-                    label _("Mod Template") yalign 0.0 text_size 24 at loc_text_fit
+                    label _("Mod Template") yalign 0.0 text_size (24 if renpy.mobile else 18) at loc_text_fit style "pref_tab_label"
             
             frame:
                 padding (30, 30)
 
                 showif current_tab == "display":
-                    use display_preferences
-                elif current_tab == "language" and enable_languages and translations:
+                    use display_preferences(music_volume, sound_volume, voice_volume)
+                elif current_tab == "language":
                     use language_preferences
                 elif current_tab == "accessibility":
                     use accessibility_preferences
@@ -1416,9 +1502,9 @@ screen preferences():
                     use template_preferences
                             
     text "v[config.version]":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "main_menu_version"
+        xalign 1.0 yalign 1.0
+        xoffset -10 yoffset -10
+        style "main_menu_version"
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text
@@ -1451,41 +1537,77 @@ style pref_label:
     bottom_margin 2
 
 style pref_label_text:
-    font "gui/font/RifficFree-Bold.ttf"
-    size 24
+    font gui.riffic_font
+    size get_variable_size(24, 28, gui.text_scale)
     color "#fff"
-    outlines [(3, "#b59", 0, 0), (1, "#b59", 1, 1)]
+    outlines (get_scaled_outlines([(3, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)], 24, 28, gui.text_scale) if not persistent.high_contrast else get_scaled_outlines([(2, gui.hc_label_outline_color, 0, 0), (1, gui.hc_label_outline_color, 1, 1)], 24, 28, gui.text_scale))
     yalign 1.0
+
+style pref_tab_button:
+    xysize (get_pref_tab_button_width(), 60)
+    yalign 1.0
+    background Frame("gui/namebox-deselected.png", 3, 3)
+    hover_sound (gui.hover_sound if not renpy.mobile else None)
+    activate_sound gui.activate_sound
+    yoffset 9
+style pref_active_tab_button is pref_tab_button:
+    background Frame("gui/namebox-selected.png", 3, 3)
+    yoffset 0
+style pref_tab_label is pref_label
+style pref_tab_label_text is pref_label_text:
+    outlines [(4, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)]
+    layout "nobreak"
+
+style pref_header_label is pref_label
+style pref_header_label_text is pref_label_text:
+    size get_variable_size(28, 38, gui.text_scale)
+    outlines get_scaled_outlines([(4, text_outline_color, 0, 0), (1, text_outline_color, 1, 1)], 28, 38, gui.text_scale)
+
+style pref_hint_text:
+    font gui.halogen_font
+    size get_variable_size(24, 30, gui.text_scale)
+    outlines []
+    color (text_outline_color if not persistent.high_contrast else "#ffdfee")
+    xoffset get_variable_size(40, 60, gui.text_scale)
+    xmaximum 800
 
 style pref_vbox:
     xsize 225
 
 style radio_vbox:
-    spacing gui.pref_button_spacing
+    spacing get_variable_size(gui.pref_button_spacing, gui.max_pref_button_spacing, gui.text_scale)
 
 style radio_button:
     properties gui.button_properties("radio_button")
     foreground "gui/button/check_[prefix_]foreground.png"
+    # yminimum get_variable_size(24, 32, gui.text_scale)
+    # ymaximum get_variable_size(48, 64, gui.text_scale)
 
 style radio_button_text:
     properties gui.button_text_properties("radio_button")
     font "gui/font/Halogen.ttf"
     outlines []
 
+
 style check_vbox:
-    spacing gui.pref_button_spacing
+    spacing get_variable_size(gui.pref_button_spacing, gui.max_pref_button_spacing, gui.text_scale)
 
 style check_button:
     properties gui.button_properties("check_button")
     foreground "gui/button/check_[prefix_]foreground.png"
+    # ysize get_variable_size(24, 32, gui.text_scale)
 
 style check_button_text:
     properties gui.button_text_properties("check_button")
     font "gui/font/Halogen.ttf"
     outlines []
 
+
 style slider_slider:
     xsize 350
+    base_bar ("gui/scrollbar/horizontal_poem_bar_short.png" if not persistent.high_contrast else "gui/scrollbar/horizontal_poem_bar_short_hc.png")
+    thumb ("gui/slider/horizontal_hover_thumb.png" if not persistent.high_contrast else "gui/slider/horizontal_hover_thumb_hc.png")
+    yalign 0.5
 
 style slider_button:
     properties gui.button_properties("slider_button")
@@ -1497,21 +1619,6 @@ style slider_button_text:
 
 style slider_vbox:
     xsize 450
-
-style name_label is pref_label
-style name_label_text is pref_label_text
-
-style name_text:
-    font "gui/font/Halogen.ttf"
-    size 24
-    color gui.idle_color
-    outlines []
-
-style value_text:
-    size 18
-    color "#000"
-    outlines []
-    yalign 0.65
 
 ## History screen ##############################################################
 ##
@@ -1527,17 +1634,15 @@ screen history():
     ## Avoid predicting this screen, as it can be very large.
     predict False
 
-    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport")):
-        
+    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0):
         style_prefix "history"
        
         for h in _history_list:
             
             window:
-                
                 ## This lays things out properly if history_height is None.
-                has fixed:
-                    yfit True
+                has fixed
+                yfit True
 
                 if h.who:
 
@@ -1550,14 +1655,12 @@ screen history():
                         if "color" in h.who_args:
                             text_color h.who_args["color"]
 
-                $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
-                text what:
-                    substitute False
+                text h.what:
+                    ypos (gui.history_text_ypos if h.who else gui.history_name_ypos)
+            null height get_variable_size(12, 15)
 
         if not _history_list:
             label _("The dialogue history is empty.")
-
-define gui.history_allow_tags = set()
 
 style history_window is empty
 
@@ -1580,9 +1683,11 @@ style history_name:
     ypos gui.history_name_ypos
     xsize gui.history_name_width
 
-style history_name_text:
+style history_name_text is namebox_label:
     min_width gui.history_name_width
     text_align gui.history_name_xalign
+    xalign 0.0
+    layout "nobreak"
 
 style history_text:
     xpos gui.history_text_xpos
@@ -1763,18 +1868,27 @@ style history_label_text:
 ################################################################################
 
 screen name_input(message, ok_action):
-
     ## Ensure other screens do not get input while this screen is displayed.
     modal True
-
     zorder 200
-
     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+    default inv = VariableInputValue("player")
 
+    add "gui/overlay/confirm.png"
+    if renpy.mobile:
+        key "K_RETURN" action [inv.Disable(), Play("sound", gui.activate_sound), ok_action]
+    else:
+        key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
+
+    if renpy.mobile:
+        button:
+            xysize (1.0, 1.0)
+            action [inv.Disable(), Function(FinishEnterName)]
     frame:
+        if renpy.mobile:
+            yalign 0.0
+            yoffset 10
 
         vbox:
             xalign .5
@@ -1785,8 +1899,17 @@ screen name_input(message, ok_action):
                 style "confirm_prompt"
                 xalign 0.5
 
-            input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-            #additionally added Cyrillic characters to support Russian names for MC
+            fixed:
+                fit_first True
+                yminimum 10
+
+                xalign 0.5
+                input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+                if renpy.mobile:
+                    button:
+                        action inv.Enable()
+                        xysize (get_variable_size(280, 400, gui.text_scale), 90)
+                        align (0.5, 0.5)
 
             hbox:
                 xalign 0.5
@@ -1795,10 +1918,8 @@ screen name_input(message, ok_action):
                 textbutton _("OK") action ok_action
 
 screen dialog(message, ok_action):
-
     ## Ensure other screens do not get input while this screen is displayed.
     modal True
-
     zorder 200
 
     style_prefix "confirm"
@@ -1806,21 +1927,20 @@ screen dialog(message, ok_action):
     add "gui/overlay/confirm.png"
 
     frame:
+        has vbox
+        xalign .5
+        yalign .5
+        spacing 30
 
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
 
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
+        hbox:
+            xalign 0.5
+            spacing 100
 
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("OK") action ok_action
+            textbutton _("OK") action ok_action
 
 image confirm_glitch:
     "gui/overlay/confirm_glitch.png"
@@ -1836,45 +1956,29 @@ image confirm_glitch:
 ##
 ## http://www.renpy.org/doc/html/screen_special.html#confirm
 screen confirm(message, yes_action, no_action):
-
     ## Ensure other screens do not get input while this screen is displayed.
     modal True
-
     zorder 200
-
     style_prefix "confirm"
 
     add "gui/overlay/confirm.png"
 
     frame:
+        has vbox
+        xalign .5
+        yalign .5
+        spacing 30
 
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
+        label _(message):
+            style "confirm_prompt"
+            xalign 0.5
 
-            ## This if-else statement either shows a normal textbox or
-            ## glitched textbox if you are in Sayori's Death Scene and are
-            ## quitting the game.
-            # if in_sayori_kill and message == layout.QUIT:
-            #     add "confirm_glitch" xalign 0.5
-            # else:
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
+        hbox:
+            xalign 0.5
+            spacing 100
 
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                ## This if-else statement disables quitting from the quit box
-                ## if you are in Sayori's Death Scene, else normal box.
-                # if in_sayori_kill and message == layout.QUIT:
-                #     textbutton _("Yes") action NullAction()
-                #     textbutton _("No") action Hide("confirm")
-                # else:
-                textbutton _("Yes") action yes_action
-                textbutton _("No") action no_action
+            textbutton _("Yes") action yes_action
+            textbutton _("No") action no_action
 
     ## Right-click and escape answer "no".
     #key "game_menu" action no_action
@@ -1887,8 +1991,7 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame("gui/frame.png", gui.confirm_frame_borders, tile=gui.frame_tile)
-    # background Frame(recolorize("gui/frame.png"), gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
@@ -1901,7 +2004,7 @@ style confirm_prompt_text:
 
 style confirm_button:
     properties gui.button_properties("confirm_button")
-    hover_sound gui.hover_sound
+    hover_sound (gui.hover_sound if not renpy.mobile else None)
     activate_sound gui.activate_sound
 
 style confirm_button_text is navigation_button_text:
@@ -1918,13 +2021,12 @@ screen fake_skip_indicator():
     use skip_indicator
 
 screen skip_indicator():
-
     zorder 100
     style_prefix "skip"
 
-    frame:
-
-        hbox:
+    if not renpy.mobile:
+        frame:
+            has hbox
             spacing 6
 
             text _("Skipping")
@@ -1958,7 +2060,7 @@ style skip_frame:
     padding gui.skip_frame_borders.padding
 
 style skip_text:
-    size gui.notify_text_size
+    size get_variable_size(gui.notify_text_size, gui.max_notify_text_size, gui.text_scale)
 
 style skip_triangle:
     # We have to use a font that has the BLACK RIGHT-POINTING SMALL TRIANGLE
