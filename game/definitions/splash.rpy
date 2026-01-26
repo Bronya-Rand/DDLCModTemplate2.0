@@ -119,6 +119,10 @@ image menu_nav:
     #recolorize("gui/overlay/main_menu.png", "#ffbde1")
     menu_nav_move
 
+image game_nav:
+    "gui/overlay/main_menu.png"
+    #recolorize("gui/overlay/main_menu.png", "#ffbde1")
+
 ## Main Menu Effects
 # These transforms and image transform store the effects that appear in the
 # main menu on startup.
