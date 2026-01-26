@@ -110,8 +110,8 @@ define gui.max_textbox_height = 211
 define gui.textbox_yalign = 0.99
 
 # This controls the placement of the speaking character's name.
-define gui.name_xpos = 0.13
-define gui.name_ypos = 0.0
+define gui.name_xpos = 0.14
+define gui.name_ypos = -0.26
 
 # This controls the horizontal alignment of the character's name.
 define gui.name_xalign = 0.5

@@ -6,8 +6,8 @@
 
 init offset = -1
 
-# Thanks RenpyTom! Borrowed from the Ren'Py Launcher
 init python:
+    # Thanks RenpyTom! Borrowed from the Ren'Py Launcher
     def scan_translations():
 
         languages = renpy.known_languages()
@@ -23,6 +23,43 @@ init python:
         bound = math.ceil(len(rv)/2.)
 
         return (rv[:bound], rv[bound:2*bound])
+
+    def textbox_frame(high_contrast=False, opaque=False, dots=True, glare=True, button_glare=False):
+        alphamask = ("textbox_alphamask_opaque" if opaque else "textbox_alphamask")
+        bg_glare = Crop((0,0,1.0,1.0), "textbox_highlight") if glare else Solid("#00000000")
+        if button_glare and glare:
+            bg_glare = Crop((0,0,1.0,1.0), Frame("gui/quick_button_highlight.png"))
+        bg = Solid("#ffbde1")
+        if high_contrast:
+            bg = Solid("#39051d")
+        elif dots:
+            bg = Image("gui/textbox_tile.png", oversample=3)
+        
+        r = Fixed(
+        Transform(AlphaMask(Fixed(Frame(bg, tile=True), bg_glare, fit_first=True), alphamask), xalign=0.5, yalign=0.5, zoom=1.002), 
+        Frame(Image("gui/textbox_border.png", oversample=3), 42, 42)) 
+        
+        return r
+
+image textbox_border:
+    Frame(Image("gui/textbox_border.png", oversample=3), 42, 42)
+image textbox_highlight:
+    Image("gui/textbox_highlight.png", oversample=3, xalign=0.5, yalign=1.0)
+image textbox_alphamask:
+    Frame(Image("gui/textbox_alphamask.png", oversample=3), 42, 42)
+image textbox_alphamask_opaque:
+    Frame(Image("gui/textbox_alphamask_opaque.png", oversample=3), 42, 42)
+image textbox_buttonglare:
+    Fixed(Frame(Image("gui/textbox_tile.png", oversample=3), tile=True), Crop((0,0,1.0,1.0), Frame("gui/quick_button_highlight.png")), fit_first=True)
+
+image textbox_background = textbox_frame()
+image textbox_background_opaque = textbox_frame(opaque=True)
+image textbox_background_hc = textbox_frame(high_contrast=True, glare=False)
+image textbox_background_hc_opaque = textbox_frame(high_contrast=True, opaque=True, glare=False)
+image rounded_frame_background = textbox_frame(dots=False)
+image rounded_frame_background_opaque = textbox_frame(opaque=True, dots=False)
+image rounded_frame_background_hc = textbox_frame(high_contrast=True, glare=False)
+image rounded_frame_background_hc_opaque = textbox_frame(high_contrast=True, opaque=True, glare=False)
 
 default translations = scan_translations()
 
@@ -223,11 +260,11 @@ style namebox_label is say_label
 
 style window:
     xalign 0.5
-    xfill True
+    xsize get_variable_size(gui.dialogue_width, gui.max_dialogue_width, gui.text_scale) + (gui.dialogue_xpos * 2)
     yalign gui.textbox_yalign
-    ysize gui.textbox_height
+    ysize get_variable_size(gui.textbox_height, gui.max_textbox_height, gui.text_scale)
 
-    background Transform("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background "textbox_background"
 
 style window_monika is window:
     background Transform("gui/textbox_monika.png", xalign=0.5, yalign=1.0)
@@ -1415,7 +1452,7 @@ screen template_preferences():
 style name_label is pref_label
 style name_label_text is pref_label_text
 style name_text is radio_button_text:
-    color "#000"
+    color ("#000" if not persistent.high_contrast else "#ffdfee")
 
 ## Preferences screen ##########################################################
 ##
@@ -1433,7 +1470,8 @@ image pref_background:
 
 screen preferences():
     tag menu
-
+    
+    ## These default variables keep track of the current tab and volume levels.
     default music_volume = preferences.get_mixer("music")
     default sound_volume = preferences.get_mixer("sfx")
     default voice_volume = preferences.get_mixer("voice")
@@ -1478,7 +1516,7 @@ screen preferences():
                     has side 'l c'
                     add ("gui/pref_accessibility_icon_selected.png" if current_tab == "accessibility" else "gui/pref_accessibility_icon.png"):
                         yalign 0.75
-                        zoom 0.5 
+                        zoom 0.5
                     label _("Accessibility") yalign 0.0 text_size (24 if renpy.mobile else 18) at loc_text_fit style "pref_tab_label"
                 button:
                     style ("pref_active_tab_button" if current_tab == "bronya" else "pref_tab_button")
@@ -1491,6 +1529,7 @@ screen preferences():
             
             frame:
                 padding (30, 30)
+                background "pref_background"
 
                 showif current_tab == "display":
                     use display_preferences(music_volume, sound_volume, voice_volume)
