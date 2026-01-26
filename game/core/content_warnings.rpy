@@ -10,7 +10,7 @@ image cw_darken:
     Solid("#000")
     alpha 0.8
 
-image cw_warning_icon = "wip/gui/cwicon.png"
+image cw_warning_icon = "gui/cwicon.png"
 
 screen content_warning_popup(warning_text):
     modal True
@@ -50,7 +50,7 @@ style cw_popup_text is default:
     textalign 0.5
 
 style cw_popup_frame:
-    background Frame(Transform("wip/gui/cw_frame.png", zoom=1.0), 30, 30) 
+    background Frame(Transform("gui/cw_frame.png", zoom=1.0), 30, 30) 
 
 style cw_popup_button is confirm_button:
     xalign 0.5
