@@ -1478,7 +1478,7 @@ screen preferences():
                     has side 'l c'
                     add ("gui/pref_accessibility_icon_selected.png" if current_tab == "accessibility" else "gui/pref_accessibility_icon.png"):
                         yalign 0.75
-                        zoom 0.25 # For some reason this icon is larger than the others :BronyaUhhhhh:
+                        zoom 0.5 
                     label _("Accessibility") yalign 0.0 text_size (24 if renpy.mobile else 18) at loc_text_fit style "pref_tab_label"
                 button:
                     style ("pref_active_tab_button" if current_tab == "bronya" else "pref_tab_button")
