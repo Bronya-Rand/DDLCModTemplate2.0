@@ -181,7 +181,6 @@ If you prefer a different approach, you may use one of these alternatives:
 
 - 📱 [Android Mod Guide](./Documentation/Android%20Mod%20Guide.pdf) - Complete guide for Android porting
 - 🎮 [Discord RPC Guide](./Documentation/Discord%20RPC%20Guide.pdf) - Set up Discord Rich Presence
-- 📝 [New Poem Game Guide](./Documentation/New%20Poemgame%20Guide.pdf) - In-depth poem game documentation
 
 ### Community & Support
 
