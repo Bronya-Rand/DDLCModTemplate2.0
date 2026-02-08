@@ -10,6 +10,9 @@ init -2 python:
     # This sets the resolution of DDLC to 1280x720p
     gui.init(1280, 720)
 
+default preferences.text_scale = (1.0 if renpy.variant("small") else 0.0)
+define gui.text_scale = gui.preference("text_scale", (1.0 if renpy.variant("small") else 0.0))
+
 ## GUI Sounds
 # These variables set the sound effects for the GUI elements in the game.
 define -2 gui.hover_sound = "gui/sfx/hover.ogg" # Hover Sound Effect
@@ -38,6 +41,10 @@ define -2 gui.selected_color = '#bb5588'
 # This color is used for a text button when it cannot be selected.
 define -2 gui.insensitive_color = '#aaaaaa7f'
 
+# These colors are used for outlining text in High Contrast mode.
+define gui.hc_label_outline_color = "#b59"
+define gui.hc_label_outline_selected_color = "#ffbde1"
+
 # These colors are used for bars that are not filled in completely. They are not
 # used directly, but are used when re-generating bar image files.
 define -2 gui.muted_color = '#6666a3'
@@ -51,54 +58,60 @@ define -2 gui.interface_text_color = '#ffffff'
 # These variables set the font and its' size for DDLC's text in-game.
 
 # This font is used for in-game text.
-define -2 gui.default_font = "gui/font/Aller_Rg.ttf"
+define gui.text_font = "gui/font/Aller_Rg.ttf"
 
 # This font is used for character names.
-define -2 gui.name_font = "gui/font/RifficFree-Bold.ttf"
+define gui.name_text_font = "gui/font/RifficFree-Bold.ttf"
 
 # This font is used for out-of-game text.
-define -2 gui.interface_font = "gui/font/Aller_Rg.ttf"
+define gui.interface_text_font = "gui/font/Aller_Rg.ttf"
 
 # The text size of normal dialogue text.
-define -2 gui.text_size = 24
+define gui.text_size = 24
+define gui.max_text_size = 36
 
 # This determines the text size of character names.
-define -2 gui.name_text_size = 24
+define gui.name_text_size = 24
+define gui.max_name_text_size = 36
 
 # This determines the text size of the game's user interface.
-define -2 gui.interface_text_size = 24
+define gui.interface_text_size = 24
+define gui.max_interface_text_size = 36
 
 # This determines the text size of the game's label in the user interface.
-define -2 gui.label_text_size = 28
+define gui.label_text_size = 28
+define gui.max_label_text_size = 36
 
 # This determines the text size of the notification screen.
-define -2 gui.notify_text_size = 16
+define gui.notify_text_size = 16
+define gui.max_notify_text_size = 25
 
 # This determines the text size of the game's title on the bottom-right.
-define -2 gui.title_text_size = 38
+define gui.title_text_size = 38
 
 ## Main Menu and Game Menu
 # These variables set what is shown in the game menu.
 
 # This sets the background for the main menu
-define -2 gui.main_menu_background = "menu_bg"
+define gui.main_menu_background = "menu_bg"
 
 # This sets background for the pause/game menu
-define -2 gui.game_menu_background = "game_menu_bg"
+define gui.game_menu_background = "game_menu_bg"
 
 ## Dialogue
 # These variables set the dialogue box positions and placement in-game.
 
 # This controls the height of the textbox containing dialogue.
-define -2 gui.textbox_height = 182
+define gui.textbox_height = 147
+define gui.max_textbox_height = 211
 
 # This controls the placement of the textbox vertically on the screen. 
 # 0.0 is the top, 0.5 is the center, and 1.0 is the bottom.
-define -2 gui.textbox_yalign = 0.99
+define gui.textbox_yalign = 0.99
 
 # This controls the placement of the speaking character's name.
-define gui.name_xpos = 350
-define gui.name_ypos = -3
+define gui.name_xpos = 0.14
+define gui.name_ypos = -0.26
 
 # This controls the horizontal alignment of the character's name.
 define gui.name_xalign = 0.5
@@ -107,6 +120,8 @@ define gui.name_xalign = 0.5
 # characters' name.
 define gui.namebox_width = 168
 define gui.namebox_height = 39
+define gui.max_namebox_width = 224
+define gui.max_namebox_height = 52
 
 # This controls the borders of the box containing the characters' name in 
 # left, top, right, and bottom order.
@@ -116,14 +131,18 @@ define gui.namebox_borders = Borders(5, 5, 5, 2)
 define gui.namebox_tile = False
 
 # This controls the placement of dialogue relative to the textbox.
-define gui.text_xpos = 268
-define gui.text_ypos = 62
+define gui.dialogue_xpos = 40
+define gui.dialogue_ypos = 23
 
 # This controls the maximum width of dialogue text.
-define gui.text_width = 744
+define gui.dialogue_width = 764
+define gui.max_dialogue_width = 1146
 
 # This controls the horizontal alignment of the dialogue text.
-define gui.text_xalign = 0.0
+define gui.dialogue_text_xalign = 0.0
+
+define gui.ctc_xalign = get_variable_size_f(0.81, 0.96, gui.text_scale)
+define gui.ctc_zoom = ((1.25 if renpy.mobile else 1.0) + get_variable_size_f(0, 0.5, gui.text_scale))
 
 ## Buttons
 # These variables set the buttons in-game.
@@ -143,10 +162,11 @@ define gui.button_borders = Borders(4, 4, 4, 4)
 define gui.button_tile = False
 
 # This controls the font that the button will use.
-define gui.button_text_font = gui.interface_font
+define gui.button_text_font = gui.interface_text_font
 
 # This controls the font size of the text used by the button.
 define gui.button_text_size = gui.interface_text_size
+define gui.max_button_text_size = gui.max_interface_text_size
 
 # This controls the color of button text in various states.
 define gui.button_text_idle_color = gui.idle_color
@@ -159,8 +179,14 @@ define gui.button_text_xalign = 0.0
 
 # This controls the borders on each side of the 
 # check/radio buttons in left, top, right, bottom order.
-define gui.radio_button_borders = Borders(28, 4, 4, 4)
-define gui.check_button_borders = Borders(28, 4, 4, 4)
+define gui.radio_button_borders = Borders((34 + get_variable_size(0, 16, gui.text_scale)), 4, 4, 4)
+define gui.check_button_borders = Borders((34 + get_variable_size(0, 16, gui.text_scale)), 4, 4, 4)
+
+define gui.radio_button_text_yalign = (0.5 if renpy.mobile else 0.0)
+define gui.radio_button_text_xoffset = (5 if renpy.mobile else 0)
+
+define gui.check_button_text_yoffset = get_variable_size(-8, -12, gui.text_scale)
+define gui.check_button_text_xoffset = (5 if renpy.mobile else 0)
 
 # This controls the horizontal alignment of the confirm button.
 define gui.confirm_button_text_xalign = 0.5
@@ -171,9 +197,11 @@ define gui.page_button_borders = Borders(10, 4, 10, 4)
 
 ## Quick Buttons
 # These variables set the buttons in the quick menu and it's text.
+define gui.quick_menu_spacing = 0
+define gui.max_quick_menu_spacing = 30
 
 define gui.quick_button_text_size = 14
-
+define gui.max_quick_button_text_size = 20
 define gui.quick_button_text_idle_color = "#522"
 define gui.quick_button_text_hover_color = "#fcc"
 define gui.quick_button_text_selected_color = gui.accent_color
@@ -183,14 +211,16 @@ define gui.quick_button_text_insensitive_color = "#a66"
 # These variables set the buttons of the choice (menu) buttons.
 
 define gui.choice_button_width = 420
+define gui.max_choice_button_width = 600
 define gui.choice_button_height = None
-
 define gui.choice_button_tile = False
 
 define gui.choice_button_borders = Borders(100, 5, 100, 5)
 
-define gui.choice_button_text_font = gui.default_font
+define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
+define gui.choice_button_text_xalign = 0.5
+define gui.max_choice_button_text_size = gui.max_text_size
 define gui.choice_button_text_xalign = 0.5
 
 define gui.choice_button_text_idle_color = "#000"
@@ -222,8 +252,11 @@ define gui.file_slot_rows = 2
 # These variables control the positioning and spacing of various user interface
 # elements.
 
-define gui.navigation_xpos = 80
+define gui.navigation_xpos = 50
+define gui.max_navigation_xpos = 80
+
 define gui.skip_ypos = 10
+
 define gui.notify_ypos = 45
 
 # This controls the spacing between each menu/choice option in the choice screen.
@@ -231,6 +264,7 @@ define gui.choice_spacing = 22
 
 # This controls the spacing between each navigation option in the navigation screen.
 define gui.navigation_spacing = 6
+define gui.max_navigation_spacing = 36
 
 # This controls the spacing between each preference and preference button option 
 # in the preference screen.
@@ -239,9 +273,11 @@ define gui.pref_button_spacing = 0
 
 # This controls the spacing between each page option in the page screen.
 define gui.page_spacing = 0
+define gui.slot_spacing = 10
 
 # This controls the spacing between each save/load slot option in the save/load screen.
-define gui.slot_spacing = 10
+define gui.pref_button_spacing = 10
+define gui.max_pref_button_spacing = 20
 
 ## Frames
 # These variables control the border of frames in-game such as the confirm prompt.
@@ -307,13 +343,13 @@ define gui.history_height = None
 define gui.history_name_xpos = 150
 define gui.history_name_ypos = 0
 define gui.history_name_width = 150
-define gui.history_name_xalign = 1.0
+define gui.history_name_xalign = 0.0
 
 # This controls the position, width, and alignment of the characters' dialogue in
 # the history menu.
-define gui.history_text_xpos = 170
-define gui.history_text_ypos = 5
-define gui.history_text_width = 740
+define gui.history_text_xpos = 20
+define gui.history_text_ypos = get_variable_size(40, 57)
+define gui.history_text_width = 800
 define gui.history_text_xalign = 0.0
 
 ## NVL
@@ -354,67 +390,17 @@ define gui.nvl_thought_xalign = 0.0
 define gui.nvl_button_xpos = 450
 define gui.nvl_button_xalign = 0.0
 
+define gui.riffic_font = "gui/font/RifficFree-Bold.ttf"
+define gui.halogen_font = "gui/font/Halogen.ttf"
+
 ## Mobile Phones & Tablets
 # These variables control how DDLC is displayed on a mobile platform.
 
 init python:
 
-    # This increases the size of the quick buttons to make them easier to touch
-    # on tablets and phones.
-    if renpy.variant("touch"):
-
-        gui.quick_button_borders = Borders(20, 14, 20, 0)
-
-    # This changes the size and spacing of various GUI elements to ensure they
-    # are easily visible on smaller devices.
-    if renpy.variant("small"):
-
-        ## Font Size
-        gui.text_size = 24
-        gui.name_text_size = 24
-        gui.notify_text_size = 24
-        gui.interface_text_size = 26
-        gui.button_text_size = 26
-        gui.label_text_size = 28
-
-        ## Dialogue Box/Name Box Positions, Heights and Alignments.
-        gui.textbox_height = 182
-        gui.name_xpos = 350
-        gui.text_xpos = 268
-        gui.text_ypos = 62
-        gui.text_width = 744
-        gui.text_xalign = 0.0
-
-        ## Choice Button Width
-        gui.choice_button_width = 420
-
-        ## Spacing
-        gui.navigation_spacing = 6
-        gui.pref_button_spacing = 10
-
-        ## History 
-        gui.history_height = None
-        gui.history_text_width = 740
-
-        ## Save/Load File Slots
-        gui.file_slot_cols = 3
+    @gui.variant
+    def small():
+        gui.file_slot_cols = 2
         gui.file_slot_rows = 2
-
-        ## NVL
-        gui.nvl_height = 115
-
-        gui.nvl_name_width = 150
-        gui.nvl_name_xpos = 430
-
-        gui.nvl_text_width = 590
-        gui.nvl_text_xpos = 450
-        gui.nvl_text_ypos = 8
-
-        gui.nvl_thought_width = 780
-        gui.nvl_thought_xpos = 240
-
-        gui.nvl_button_width = 1240
-        gui.nvl_button_xpos = 450
-
-        ## Quick Menu
-        gui.quick_button_text_size = 14
+        
+        gui.quick_button_borders = Borders(60, 14, 60, 0)
