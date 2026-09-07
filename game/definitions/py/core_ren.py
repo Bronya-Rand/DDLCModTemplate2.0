@@ -442,7 +442,8 @@ renpy.config.keymap["clipboard_voicing"] = []
 renpy.config.keymap["toggle_skip"] = []
 
 # Register the music channel for the poem game.
-renpy.music.register_channel("music_poem", mixer="music", tight=True)
+renpy.music.register_channel("poem", mixer="music", tight=True)
+renpy.music.register_channel("page_turn", mixer="music", tight=True)
 
 # Initialize gesture mapping for Android devices.
 if renpy.android:
