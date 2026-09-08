@@ -136,21 +136,21 @@ class Poem(renpy.text.text.Text):
         :return music: A formatted music string.
         :rtype: str
         """
-        music_match_pattern = re.compile(r"^<.*?>")
-        track_partition_pattern = re.compile(r"from( *)((\d+\.\d*)|(\d+)|(\.\d+))")
 
-        if music_match_pattern.match(music):
-            info, gt, path = music.partition(">")
+        stripped_song = music.rpartition(">")[2]
 
-            if track_partition_pattern.search(info):
-                info = track_partition_pattern.sub("from %s" % pos, info)
-                music = info + gt + path
-            else:
-                music = "<from %s %s>" % (pos, music[1:])
-        else:
-            music = "<from %s %s>" % (pos, music)
+        loop_pattern = re.compile(r"loop\s+\d+\.\d+")
+        to_pattern = re.compile(r"to\s+\d+\.\d+")
 
-        return music
+        loop_match = loop_pattern.search(music)
+        loop_value = loop_match.group(0) if loop_match else ""
+
+        to_match = to_pattern.search(music)
+        to_value = to_match.group(0) if to_match else ""
+
+        return f"<from {pos} {loop_value} {to_value}>{stripped_song}"
+
+        
 
     def show(
         self,
@@ -225,13 +225,13 @@ class Poem(renpy.text.text.Text):
             if poem_track and revert_music:
                 if previous_music:
                     previous_music = (
-                        self.format_music_str(previous_music, renpy.music.get_pos())
+                        self.format_music_str(previous_music, renpy.music.get_pos(channel="poem"))
                         if from_current
                         else previous_music
                     )
                     renpy.music.play(previous_music, loop=True, fadein=2.0)
 
-                renpy.music.stop("music", fadeout=2.0)
+                renpy.music.stop("poem", fadeout=2.0)
 
             renpy._window_auto = True
 
