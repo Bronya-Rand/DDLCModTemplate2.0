@@ -126,21 +126,13 @@ image menu_nav:
 # This image transform shows a particle burst effect image to the main menu when
 # the game starts.
 image menu_particles:
-    2.481
     xpos 224
     ypos 104
     emit_particles
-    ## TODO: Remove these comments if and once the fix works as intended.
-    # ParticleBurst("gui/menu_particle.png", explodeTime=0, numParticles=40, particleTime=2.0, particleXSpeed=3, particleYSpeed=3).sm
-    # particle_fadeout
-
-## TODO: Remove this transform if and once the fix works as intended.
-# This transform fades out the particle effects of the main menu
-transform particle_fadeout:
-    easeout 1.5 alpha 0
 
 # This transform performs the title screen particle burst effect.
 transform emit_particles:
+    pause 2.481
     ParticleBurst("gui/menu_particle.png", explodeTime=0, numParticles=40, particleTime=2.0, particleXSpeed=3, particleYSpeed=3).sm
     easeout 1.5 alpha 0
 
