@@ -92,10 +92,7 @@ label start:
     #     # This python statement writes a file from within the game to the game folder
     #     # or to the Android/data/[modname]/files/game folder.
     #     python:
-    #         if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
-    #             try: file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
-    #             except IOError: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
-    #         elif renpy.android:
+    #         if renpy.android:
     #             try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png")
     #             except IOError: open(os.environ['ANDROID_PUBLIC'] + "/hxppy thxughts.png", "wb").write(renpy.file("hxppy thxughts.png").read())
     #         else:
@@ -126,10 +123,7 @@ label start:
     #         call poem
 
     #         python:
-    #             if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
-    #                 try: file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
-    #                 except IOError: open(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
-    #             elif renpy.android:
+    #             if renpy.android:
     #                 try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt")
     #                 except IOError: open(os.environ['ANDROID_PUBLIC'] + "/CAN YOU HEAR ME.txt", "wb").write(renpy.file("CAN YOU HEAR ME.txt").read())
     #             else:
@@ -146,10 +140,7 @@ label start:
     #         call poem(False)
 
     #         python:
-    #             if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
-    #                 try: file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
-    #                 except IOError: open(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
-    #             elif renpy.android:
+    #             if renpy.android:
     #                 try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt")
     #                 except IOError: open(os.environ['ANDROID_PUBLIC'] + "/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt", "wb").write(renpy.file("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.txt").read())
     #             else:
@@ -170,7 +161,7 @@ label start:
 
     #         # This if statement calls either a special poem response game or play
     #         # as normal.
-    #         if chibi_y.appeal >= 3:
+    #         if get_appeal("yuri") >= 3:
     #             call poemresponse_start2
     #         else:
     #             call poemresponse_start

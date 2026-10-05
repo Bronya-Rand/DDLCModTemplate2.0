@@ -128,8 +128,7 @@ label ch1_main:
     "I can't help but notice her intense expression, like she was waiting for this chance."
     "Meanwhile, Natsuki is rummaging around in the closet."
 
-
-    $ nextscene = poemwinner[0] + "_exclusive_" + str(eval("chibi_" + poemwinner[0][0] + ".appeal"))
+    $ nextscene = get_exclusive_scene(0)
     call expression nextscene
 
 

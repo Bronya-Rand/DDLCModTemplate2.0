@@ -7,6 +7,7 @@ PRIMARY_NAME = "DDLCModTemplate-"
 EXCLUDE_LIST = [
     ".github",
     ".git",
+    ".venv",
     ".gitattributes",
     ".gitignore",
     "requirements.txt",
@@ -15,6 +16,8 @@ EXCLUDE_LIST = [
     "zipper.py",
     "zipper_env.py",
     "__pycache__",
+    "tests",
+    ".vscode",
 ]
 
 
@@ -40,12 +43,14 @@ def main():
     if PY3:
         main_zip_name += "-Py3"
 
+    zip_kwargs = {"compresslevel": 5} if sys.version_info >= (3, 7) else {}
+
     print("Creating Template ZIP file.")
     with ZipFile(
         os.path.join(".", "ZIPs", main_zip_name + ".zip"),
         "w",
         ZIP_DEFLATED,
-        compresslevel=5,
+        **zip_kwargs
     ) as main_template:
         for src, dirs, files in os.walk("."):
             for f in files:
@@ -71,7 +76,7 @@ def main():
             os.path.join(".", "ZIPs", extras_zip_name + ".zip"),
             "w",
             ZIP_DEFLATED,
-            compresslevel=5,
+            **zip_kwargs
         ) as extras_template:
             for src, dirs, files in os.walk("."):
                 for f in files:

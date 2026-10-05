@@ -8,7 +8,7 @@ label ch0_main:
         try: renpy.file("../characters/monika.chr")
         except: renpy.jump("ch0_kill")
 
-    $ restore_all_characters()
+    $ restore_characters()
     s "Heeeeeeeyyy!!"
     "I see an annoying girl running toward me from the distance, waving her arms in the air like she's totally oblivious to any attention she might draw to herself."
     "That girl is Sayori, my neighbor and good friend since we were children."

@@ -1,17 +1,18 @@
-
-# __imports__.rpy
+## Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
+# 0imports.rpy
 # This file imports certain python modules at runtime for DDLC and template
 # features.
 
 python early:
-    # For DSR/DSP, Effects
-    import math 
+    # For Effects
+    import math
 
-    # For Credits
+    # For the Credits Screen
     import datetime
 
     # For Glitchtext
     import random
+    import unicodedata
 
     # For Splash
     import re

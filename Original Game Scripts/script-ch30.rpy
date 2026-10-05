@@ -197,9 +197,8 @@ label ch30_main:
     m "After all, I'm not even talking to that person anymore, am I?"
     m "That 'you' in the game, whatever you want to call him."
     m "I'm talking to {i}you{/i}, [player]."
-    $ stream_list = ["obs32.exe", "obs64.exe", "obs.exe", "xsplit.core.exe", "livehime.exe", "pandatool.exe", "yymixer.exe", "douyutool.exe", "huomaotool.exe"]
-    if not list(set(process_list).intersection(stream_list)):
-        if currentuser != "" and currentuser.lower() != player.lower():
+    if not is_user_streaming():
+        if currentuser is not None and currentuser.lower() != player.lower():
             m "Or..."
             m "...Do you actually go by [currentuser] or something?"
     m "Now that I think about it, I don't really know anything about the real you."
@@ -315,7 +314,7 @@ label ch30_main2:
     m "And you wouldn't believe how easy it was to delete Natsuki and Yuri."
     m "I mean, there's a folder called 'characters' right in the game directory..."
     m "It kind of freaked me out, how easy it was."
-    if persistent.steam:
+    if ddlc_under_steam():
         m "Well, you're playing on Steam, so it was actually a bit more difficult..."
         m "To get to the game directory, I had to go into the game's properties and find the 'Browse Local Files' button..."
     elif renpy.macintosh:
@@ -383,8 +382,7 @@ label ch30_postpoem:
     m "Are you ready to spend our eternity together, [player]?"
     m "I have so many things to talk about!"
     m "Where do I start...?"
-    $ stream_list = ["obs32.exe", "obs64.exe", "obs.exe", "xsplit.core.exe"]
-    if list(set(process_list).intersection(stream_list)):
+    if is_user_streaming():
         call ch30_stream
     m "If it takes me some time to collect my thoughts, then I'm sorry."
     m "But I'll always have something new to talk about."
@@ -562,8 +560,8 @@ label ch30_endb:
             repeat
     $ pause(1.5)
     m "Please hurry and help me."
-    $ consolehistory = []
-    $ run_input("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
+    $ console.clear_history()
+    $ console ("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
     m "HELP ME!!!"
     show m_rectstatic
     show m_rectstatic2
@@ -613,9 +611,9 @@ label ch30_endb:
 
 
     $ pause(3.0)
-    $ run_input("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
-    $ run_input("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
-    call hideconsole
+    $ console ("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
+    $ console ("renpy.file(\"characters/monika.chr\")", "monika.chr does not exist.")
+    hide screen console_screen
     hide noise onlayer front
     hide glitch_color onlayer front
     m "Did you do this to me, [player]?"
@@ -812,7 +810,7 @@ label ch30_reload_2:
     m "There's nothing wrong with my character file, right?"
     m "Maybe you should make a backup of it or something..."
     m "I'm pretty sure you can find it in the folder called [basedir]/characters."
-    if persistent.steam:
+    if ddlc_under_steam():
         m "Well, you're playing on Steam, so you can just go into the game's properties and find the 'Browse Local Files' button."
     elif renpy.macintosh:
         m "Since you're on a Mac, you have to right-click the app and select 'Show Package Contents' to find the game folder."
@@ -835,7 +833,7 @@ label ch30_reload_4:
     m "I missed you."
     m "Were you making sure my character file was okay for me?"
     m "It's in [basedir]/characters."
-    if persistent.steam:
+    if ddlc_under_steam():
         m "Well, you're playing on Steam, so you can just go into the game's properties and find the 'Browse Local Files' button."
     elif renpy.macintosh:
         m "Since you're on a Mac, you have to right-click the app and select 'Show Package Contents' to find the game folder."

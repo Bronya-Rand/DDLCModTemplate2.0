@@ -4,64 +4,119 @@
 # Monika deletes characters.
 
 # This file has heavily changed from DDLC to provide better access to call the 
-# console than via labels. To call, do $ run_input(input="Text", output="Output").
-# To only show, the console, just do `show screen console_screen`.
+# console than via labels. To call, do $ console(input_text="Text", output_text="Output").
+# To only show the console, just do `show screen console_screen`.
+# Legacy calls like `run_input(...)` and `call updateconsole(...)` are also supported.
 # Thank you Lezalith for assistance in making this new console!
-
-init -1:
-
-    # None or tuple with (input, output).
-    default new_input = None
-
-    # List with outputs.
-    default console_history = []
-
-    # Not to be changed midgame.
-    # Delay after input has finished showing, before output is displayed.
-    define console_delay = 0.5
-
-    define console_cps = 30
 
 init python:
 
-    # Make the console display the given input and output.
+    class Console(object):
+        """
+        Handles the console logic for DDLC's "terminal".
+        """
+
+        def __init__(
+            self,
+            console_delay,
+            console_cps,
+            max_log_history=5,
+            testing=False,
+        ):
+            """
+            Initializes the console with the given delay and characters per second (cps).
+
+            :param console_delay: Delay after input has finished showing, before output is displayed.
+            :param console_cps: Characters per second for output display.
+            :param max_log_history: Maximum number of log entries to keep.
+            :param testing: Bypasses Ren'Py's screen system for testing purposes. Unused in DDLC.
+
+            :type console_delay: float
+            :type console_cps: int
+            :type max_log_history: int
+            :type testing: bool
+            """
+
+            self.console_delay = console_delay
+            self.console_cps = console_cps
+            self.max_log_history = max_log_history
+
+            # Initialize the console history as an empty dictionary.
+            self.console_history = {}
+
+            self.testing = testing
+
+        def __call__(self, input_text, output_text, cps=None, delay=None):
+            """
+            Processes the input and output text for the console.
+            If you want specific stuff to happen whilst the input is being displayed,
+            you should add it here.
+
+            :param input_text: The input text to be processed.
+            :param output_text: The output text to be displayed after the input.
+            :param cps: Characters per second for output display. If None, uses the console's default cps.
+            :param delay: Delay after input has finished showing, before output is displayed. If None, uses the console's default delay.
+            :type input_text: str
+            :type output_text: str
+            :type cps: int | None
+            :type delay: float | None
+            """
+
+            # If console history exceeds the maximum with a new entry, remove the oldest entry.
+            if len(self.console_history) + 1 > self.max_log_history:
+                oldest_key = min(self.console_history.keys())
+                del self.console_history[oldest_key]
+
+            # Show the console screen with the input and output.
+            if not self.testing:
+                if renpy.get_screen("console_screen"):
+                    renpy.hide_screen("console_screen")
+                renpy.call_screen(
+                    "console_screen",
+                    console=self,
+                    input_text=input_text,
+                    output_text=output_text,
+                    cps=cps,
+                    delay=delay,
+                )
+
+            # Store the input and output in the console history.
+            self.console_history[input_text] = output_text
+            self.show_screen()
+
+            renpy.restart_interaction()
+
+        def clear_history(self):
+            """
+            Clears the console history.
+            """
+            self.console_history.clear()
+
+        def show_screen(self):
+            """
+            Shows the console screen.
+            """
+            if not self.testing:
+                renpy.show_screen("console_screen", console=self)
+
+    ## Backward-compatibility functions for DDLC / older mod scripts
     def run_input(input, output):
-        global new_input
-
-        new_input = (input, output)
-
-        if renpy.get_screen("console_screen"):
-            renpy.hide_screen("console_screen")
-        renpy.call_screen("console_screen", finish=True)
-        renpy.show_screen("console_screen")
-
-    # Add the output to history.
-    def add_to_history(input):
-        global console_history
-
-        console_history.insert(0, input[1])
-        if len(console_history) > 5:
-            console_history.pop(5)
-
-    # Add the output to history after code is done
-    def input_finished():
-        global new_input
-
-        add_to_history(new_input)
-        new_input = None
-        
-        renpy.restart_interaction()
+        console(input, output)
 
     def clear_history():
-        global console_history
+        console.clear_history()
 
-        console_history = []
+init -1:
+    default console = Console(console_delay=0.5, console_cps=30, max_log_history=5)
 
-screen console_screen(finish=False):
-
+screen console_screen(console=console, input_text=None, output_text=None, cps=None, delay=None):
     style_prefix "console_screen"
 
-    default finish_actions = [Function(input_finished), SetScreenVariable("in_progress", False), Return()]
+    default finish_actions = [SetScreenVariable("in_progress", False), Return()]
+
+    python:
+        used_cps = cps if cps is not None and type(cps) == int else console.console_cps
+        used_delay = delay if delay is not None and type(delay) == float else console.console_delay
 
     # String of input to show.
     # It is put outside of the new_input variable so it doesn't
@@ -76,16 +131,14 @@ screen console_screen(finish=False):
 
         $ new_input_code = "_"
 
-        # If a new_input is available, set it as code to display.
-        if store.new_input:
-
+        if input_text:
             $ in_progress = True
-            $ new_input_code = store.new_input[0]
+            $ new_input_code = input_text
 
     # New code is showing.
     if in_progress:
 
-        timer ( float(len(renpy.filter_text_tags(new_input_code, deny = []))) / float(console_cps) + console_delay ) action finish_actions
+        timer ( (float(len(renpy.filter_text_tags(new_input_code, deny = []))) / float(used_cps)) + used_delay ) action finish_actions
 
     frame:
 
@@ -100,8 +153,9 @@ screen console_screen(finish=False):
             vbox:
                 xpos 26 ypos 30 
                 spacing 5
-                for x in store.console_history:
-                    text x
+
+                for output in console.console_history.values():
+                    text output
 
 style console_screen_frame:
     background Frame(Transform(Solid("#333"), alpha=0.75))
@@ -115,8 +169,15 @@ style console_screen_text:
     size 18
     outlines []
 
-# This label clears all console history and commands from the console in-game.
-# Decided to keep this for now as it just pauses stuff.
+# Backward compatibility labels for original DDLC scripts
+label updateconsole(text="", history=""):
+    $ console(text, history)
+    return
+
+label hideconsole:
+    hide screen console_screen
+    return
+
 label updateconsole_clearall(text="", history=""):
     $ pause(len(text) / 30.0 + 0.5)
     $ pause(0.5)
