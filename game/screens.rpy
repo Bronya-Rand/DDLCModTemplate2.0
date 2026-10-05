@@ -9,11 +9,6 @@ init offset = -1
 
 # Thanks RenpyTom! Borrowed from the Ren'Py Launcher
 init python:
-    # Ren'Py 6 doesn't have translate_string defined by default so
-    # import it and set for Ren'Py 7 code workings.
-    from renpy.translation import translate_string
-    renpy.translate_string = translate_string
-
     def scan_translations():
 
         languages = renpy.known_languages()
@@ -22,17 +17,11 @@ init python:
             return None
 
         rv = [(i, renpy.translate_string("{#language name and font}", i)) for i in languages ]
-        
-        # We will use a imported Ren'Py 7 function for Ren'Py 6
-        if renpy.version_tuple == (6, 99, 12, 4, 2187):
-            rv.sort(key=lambda a : filter_text_tags(a[1], allow=[]).lower())
-        else:
-            rv.sort(key=lambda a : renpy.filter_text_tags(a[1], allow=[]).lower())
+        rv.sort(key=lambda a : renpy.filter_text_tags(a[1], allow=[]).lower())
 
         rv.insert(0, (None, "English"))
 
-        # Cause Ren'Py 6 sets this as float, set it as int
-        bound = int(math.ceil(len(rv)/2.))
+        bound = math.ceil(len(rv)/2.)
 
         return (rv[:bound], rv[bound:2*bound])
 
@@ -525,7 +514,7 @@ screen navigation():
             if renpy.variant("pc"):
 
                 ## Help isn't necessary or relevant to mobile devices.
-                #textbutton _("Help") action OpenURL("https://github.com/GanstaKingofSA/DDLCModTemplate2.0")
+                textbutton _("Help") action [Help("README.html"), Show(screen="dialog", message="The help file has been opened in your browser.", ok_action=Hide("dialog"))]
 
                 ## The quit button is banned on iOS and unnecessary on Android.
                 textbutton _("Quit") action Quit(confirm=not main_menu)
@@ -819,7 +808,7 @@ screen about():
                 ## Do not touch/remove these unless the © or – symbol isn't available in your font.
                 ## You may add things above or below it.
                 ## If you are not going with a splashscreen option, this first line MUST stay in the mod.
-                text "Made with bronya_rands's {a=https://github.com/GanstaKingofSA/DDLCModTemplate2.0}DDLC Mod Template 2.0{/a}.\nCopyright © 2019-" + str(datetime.date.today().year) + " Azariel Del Carmen (bronya_rand). All rights reserved.\n"
+                text "Made with bronya_rand's {a=https://github.com/Bronya-Rand/DDLCModTemplate2.0}DDLC Mod Template 2.0{/a}\nCopyright © 2019-" + str(datetime.date.today().year) + " Azariel Del Carmen (bronya_rand). All rights reserved.\n"
                 text "Doki Doki Literature Club. Copyright © 2017 Team Salvato. All rights reserved.\n"
                 text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n[renpy.license!t]")
 
@@ -1183,7 +1172,7 @@ screen ddlc_preferences():
                     
                     null width 5
                 
-                    text str(round(preferences.get_volume("music") * 100)) style "value_text"
+                    text str(round(preferences.get_mixer("music") * 100)) style "value_text"
 
                 hbox:
                     bar value Preference("music volume")
@@ -1195,7 +1184,7 @@ screen ddlc_preferences():
                     
                     null width 5
                 
-                    text str(round(preferences.get_volume("sfx") * 100)) style "value_text"
+                    text str(round(preferences.get_mixer("sfx") * 100)) style "value_text"
 
                 hbox:
                     bar value Preference("sound volume")
@@ -1209,7 +1198,7 @@ screen ddlc_preferences():
                     
                     null width 5
                 
-                    text str(round(preferences.get_volume("voice") * 100)) style "value_text"
+                    text str(round(preferences.get_mixer("voice") * 100)) style "value_text"
 
                 hbox:
                     bar value Preference("voice volume")
@@ -1238,12 +1227,6 @@ screen template_preferences():
                         yes_action=[Hide("confirm"), ToggleField(persistent, "uncensored_mode")],
                         no_action=Hide("confirm")
                     ))
-                textbutton _("Let's Play Mode") action If(persistent.lets_play, 
-                    ToggleField(persistent, "lets_play"),
-                    [ToggleField(persistent, "lets_play"), Show("dialog", 
-                        message="You have enabled Let's Play Mode.\nThis mode allows you to skip content that\ncontains sensitive information or apply alternative\nstory options.\n\nThis setting will be dependent on the modder\nif they programmed these checks in their story.", 
-                        ok_action=Hide("dialog")
-                    )])
         
         vbox:
             style_prefix "name"
@@ -1439,47 +1422,52 @@ screen history():
                         style "history_name"
                         if "color" in h.who_args:
                             text_color h.who_args["color"]
-                $ what = filter_text_tags(h.what, allow=set([]))
+                $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
                 text what:
                     substitute False
         if not _history_list:
             label _("The dialogue history is empty.")
 
 python early:
-    import renpy.text.textsupport as textsupport
-    from renpy.text.textsupport import TAG, PARAGRAPH
-    
-    def filter_text_tags(s, allow=None, deny=None):
-        if (allow is None) and (deny is None):
-            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+    if not hasattr(renpy, "filter_text_tags"):
+        import renpy.text.textsupport as textsupport
+        from renpy.text.textsupport import TAG, PARAGRAPH
+        
+        def filter_text_tags(s, allow=None, deny=None):
+            if (allow is None) and (deny is None):
+                raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
 
-        if (allow is not None) and (deny is not None):
-            raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
+            if (allow is not None) and (deny is not None):
+                raise Exception("Only one of the allow and deny keyword arguments should be given to filter_text_tags.")
 
-        tokens = textsupport.tokenize(unicode(s))
+            tokens = textsupport.tokenize(unicode(s))
 
-        rv = [ ]
+            rv = [ ]
 
-        for tokentype, text in tokens:
+            for tokentype, text in tokens:
 
-            if tokentype == PARAGRAPH:
-                rv.append("\n")
-            elif tokentype == TAG:
-                kind = text.partition("=")[0]
+                if tokentype == PARAGRAPH:
+                    rv.append("\n")
+                elif tokentype == TAG:
+                    kind = text.partition("=")[0]
 
-                if kind and (kind[0] == "/"):
-                    kind = kind[1:]
+                    if kind and (kind[0] == "/"):
+                        kind = kind[1:]
 
-                if allow is not None:
-                    if kind in allow:
-                        rv.append("{" + text + "}")
+                    if allow is not None:
+                        if kind in allow:
+                            rv.append("{" + text + "}")
+                    else:
+                        if kind not in deny:
+                            rv.append("{" + text + "}")
                 else:
-                    if kind not in deny:
-                        rv.append("{" + text + "}")
-            else:
-                rv.append(text.replace("{", "{{"))
+                    rv.append(text.replace("{", "{{"))
 
-        return "".join(rv)
+            return "".join(rv)
+
+        renpy.filter_text_tags = filter_text_tags
+
+define gui.history_allow_tags = set()
 
 style history_window is empty
 
@@ -1707,7 +1695,8 @@ screen name_input(message, ok_action):
                 style "confirm_prompt"
                 xalign 0.5
 
-            input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+            #additionally added Cyrillic characters to support Russian names for MC
 
             hbox:
                 xalign 0.5
@@ -2082,7 +2071,7 @@ screen choose_language():
 
                 textbutton renpy.translate_string(_("{#in language font}Select"), local_lang):
                     style "confirm_button"
-                    action [Language(chosen_lang), Return()]
+                    action [Language(chosen_lang), SetField(persistent, "has_chosen_language", True), Return()]
 
 translate None strings:
     old "{#language name and font}"

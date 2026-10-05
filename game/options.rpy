@@ -1,4 +1,4 @@
-﻿## This template version is 4.2.4. When asked to provide the template version
+## This template version is 5.1.0-Final. When asked to provide the template version
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
@@ -14,7 +14,7 @@ define config.name = "DDLC Mod Template – Python 2 Edition"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "4.2.4-Py2"
+define config.version = "5.1.0-Final"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
@@ -209,3 +209,4 @@ init python:
     build.documentation('README.html')
 
     build.include_old_themes = False
+    build.android_permissions = [ 'android.permission.READ_EXTERNAL_STORAGE', 'android.permission.WRITE_EXTERNAL_STORAGE' ]

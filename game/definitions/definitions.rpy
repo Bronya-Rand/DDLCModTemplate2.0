@@ -1,46 +1,12 @@
-## definitions.rpy
-
+## Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
+# definitions.rpy
 # This file defines important stuff for DDLC and your mod!
 
-# This variable declares if the mod is a demo or not.
-# Leftover from DDLC.
-define persistent.demo = False
+# This variable declares whether to enable Developer Tools from Ren'Py.
+define config.developer = True
 
-# This variable declares whether the mod is in the 'steamapps' folder.
-define persistent.steam = ("steamapps" in config.basedir.lower())
-
-# This variable declares whether Developer Mode is on or off in the mod.
-define config.developer = False
-
-# This python statement starts singleton to make sure only one copy of the mod
-# is running.
-python early:
-    import singleton
-    me = singleton.SingleInstance()
-
-init -3 python:
-    ## Dynamic Super Position (DSP)
-    # DSP is a feature in where the game upscales the positions of assets 
-    # with higher resolutions (1080p).
-    # This is just simple division from Adobe, implemented in Python.
-    def dsp(orig_val):
-        ceil = not isinstance(orig_val, float)
-        dsp_scale = config.screen_width / 1280.0 
-        if ceil: return math.ceil(orig_val * dsp_scale)
-        # since `absolute * float` -> `float`
-        # we wanna keep the same type
-        return type(orig_val)(orig_val * dsp_scale)
-    
-    # This makes evaluating the value faster
-    renpy.pure(dsp)
-
-    ## Dynamic Super Resolution
-    # DSR is a feature in where the game upscales asset sizes to higher
-    # resolutions (1080p) and sends back a modified transform.
-    # (Recommend that you just make higher res assets than upscale lower res ones)
-    def dsr(path):
-        img_bounds = renpy.image_size(path)
-        return Transform(path, size=(dsp(img_bounds[0]), dsp(img_bounds[1])))
+# Whether to allow underfilled grids in the game.
+define config.allow_underfull_grids = True
 
 ## Android Gestures (provided by Tulkas)
 ## These gestures allow players to access different settings using the touch screen.
@@ -50,91 +16,10 @@ init -3 python:
 # Swipe Right - Skip Dialogue
 define config.gestures = { "n" : 'game_menu', "s" : "hide_windows", "e" : 'toggle_skip', "w" : "history" }
 
-# This init python statement sets up the functions, keymaps and channels
-# for the game.
 init python:
-    ## More Android Gestures
-    # This variable makes a keymap for the history screen.
+    # Creates a keymap for the history screen
     if renpy.android:
-        config.underlay.append(renpy.Keymap(history = ShowMenu("history"))) 
-
-        # These commented variables sets all keybinds from Rollback to History.
-        # config.keymap["rollback"] = []
-        # config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
-    
-    # These variable declarations adjusts the mapping for certain actions in-game.
-    config.keymap['game_menu'].remove('mouseup_3')
-    config.keymap['hide_windows'].append('mouseup_3')
-    config.keymap['self_voicing'] = []
-    config.keymap['clipboard_voicing'] = []
-    config.keymap['toggle_skip'] = []
-
-    # This variable declaration registers the music poem channel for the poem sharing music.
-    renpy.music.register_channel("music_poem", mixer="music", tight=True)
-    
-    # This function gets the postition of the music playing in a given channel.
-    def get_pos(channel='music'):
-        pos = renpy.music.get_pos(channel=channel)
-        if pos: return pos
-        return 0
-
-    # This function deletes all the saves made in the mod.
-    def delete_all_saves():
-        for savegame in renpy.list_saved_games(fast=True):
-            renpy.unlink_save(savegame)
-
-    # This function deletes a given character name from the characters folder.
-    def delete_character(name):
-        if renpy.android:
-            try: os.remove(os.environ['ANDROID_PUBLIC'] + "/characters/" + name + ".chr")
-            except: pass
-        else:
-            try: os.remove(config.basedir + "/characters/" + name + ".chr")
-            except: pass
-
-    # These functions restores all the character CHR files to the characters folder 
-    # given the playthrough number in the mod and list of characters to restore.
-    def restore_character(names):
-        if not isinstance(names, list):
-            raise Exception("'names' parameter must be a list. Example: [\"monika\", \"sayori\"].")
-
-        for x in names:
-            if renpy.android:
-                try: renpy.file(os.environ['ANDROID_PUBLIC'] + "/characters/" + x + ".chr")
-                except: open(os.environ['ANDROID_PUBLIC'] + "/characters/" + x + ".chr", "wb").write(renpy.file("chrs/" + x + ".chr").read())
-            else:
-                try: renpy.file(config.basedir + "/characters/" + x + ".chr")
-                except: open(config.basedir + "/characters/" + x + ".chr", "wb").write(renpy.file("chrs/" + x + ".chr").read())
-
-    def restore_all_characters():
-        if persistent.playthrough == 0:
-            restore_character(["monika", "sayori", "natsuki", "yuri"])
-        elif persistent.playthrough == 1 or persistent.playthrough == 2:
-            restore_character(["monika", "natsuki", "yuri"])
-        elif persistent.playthrough == 3:
-            restore_character(["monika"])
-        else:
-            restore_character(["sayori", "natsuki", "yuri"])
-    
-    # This function is obsolete as all characters now restores only
-    # relevant characters to the characters folder.
-    def restore_relevant_characters():
-        restore_all_characters()
-
-    # This function pauses the time for a certain amount of time or indefinite.
-    def pause(time=None):
-        global _windows_hidden
-
-        if not time:
-            _windows_hidden = True
-            renpy.ui.saybehavior(afm=" ")
-            renpy.ui.interact(mouse='pause', type='pause', roll_forward=None)
-            _windows_hidden = False
-            return
-        if time <= 0: return
-        _windows_hidden = True
-        renpy.pause(time)
-        _windows_hidden = False
+        config.underlay.append(renpy.Keymap(history = ShowMenu("history")))
 
 ## Music
 # This section declares the music available to be played in the mod.
@@ -193,6 +78,23 @@ define audio.closet_open = "sfx/closet-open.ogg"
 define audio.closet_close = "sfx/closet-close.ogg"
 define audio.page_turn = "sfx/pageflip.ogg"
 define audio.fall = "sfx/fall.ogg"
+define audio.s_kill_glitch1 = "sfx/s_kill_glitch1.ogg"
+define audio.fall2 = "sfx/fall2.ogg"
+define audio.giggle = "sfx/giggle.ogg"
+define audio.glitch1 = "sfx/glitch1.ogg"
+define audio.glitch2 = "sfx/glitch2.ogg"
+define audio.glitch3 = "sfx/glitch3.ogg"
+define audio.gnid = "sfx/gnid.ogg"
+define audio.interference = "sfx/interference.ogg"
+define audio.monikapound = "sfx/monikapound.ogg"
+define audio.mscare = "sfx/mscare.ogg"
+define audio.run = "sfx/run.ogg"
+define audio.slap = "sfx/slap.ogg"
+define audio.smack = "sfx/smack.ogg"
+define audio.stab = "sfx/stab.ogg"
+define audio.yuri_kill = "sfx/yuri-kill.ogg"
+define audio.crack = "sfx/crack.ogg"
+define audio.eyes = "sfx/eyes.ogg"  
 
 ## Backgrounds
 # This section declares the backgrounds available to be shown in the mod.
@@ -1482,20 +1384,20 @@ default persistent.playername = ""
 default player = persistent.playername
 default persistent.playthrough = 0
 default persistent.yuri_kill = 0
-default persistent.seen_eyes = None
-default persistent.seen_sticker = None
-default persistent.ghost_menu = None
-default persistent.seen_ghost_menu = None
+default persistent.seen_eyes = False
+default persistent.seen_sticker = False
+default persistent.ghost_menu = False
+default persistent.seen_ghost_menu = False
 default seen_eyes_this_chapter = False
 default persistent.anticheat = 0
 default persistent.clear = [False, False, False, False, False, False, False, False, False, False]
 default persistent.special_poems = None
-default persistent.clearall = None
-default persistent.menu_bg_m = None
-default persistent.first_load = None
-default persistent.first_poem = None
-default persistent.seen_colors_poem = None
-default persistent.monika_back = None
+default persistent.clearall = False
+default persistent.menu_bg_m = False
+default persistent.first_load = False
+default persistent.first_poem = False
+default persistent.seen_colors_poem = False
+default persistent.monika_back = False
 
 default in_sayori_kill = None
 default in_yuri_kill = None
@@ -1525,15 +1427,32 @@ default y_name = "Yuri"
 # To add a new poem person, make a poem array like in this example:
 #   default e_poemappeal = [0, 0, 0]
 
+default poemappeal = {
+    "sayori": {0: 0, 1: 0, 2: 0},
+    "natsuki": {0: 0, 1: 0, 2: 0},
+    "yuri": {0: 0, 1: 0, 2: 0},
+    "monika": {0: 0, 1: 0, 2: 0},
+}
+
+default poemwinner = {
+    0: "sayori",
+    1: "sayori",
+    2: "sayori",
+}
+
+default readpoem = {
+    "sayori": False,
+    "natsuki": False,
+    "yuri": False,
+    "monika": False,
+}
+
+# Legacy poem appeal and read status variables for backward compatibility
 default n_poemappeal = [0, 0, 0]
 default s_poemappeal = [0, 0, 0]
 default y_poemappeal = [0, 0, 0]
 default m_poemappeal = [0, 0, 0]
 
-# This variable keeps tracks on which person won the poem session after each day.
-default poemwinner = ['sayori', 'sayori', 'sayori']
-
-# These variables keep track on who has read your poem during poem sharing
 default s_readpoem = False
 default n_readpoem = False
 default y_readpoem = False
@@ -1562,8 +1481,8 @@ default ch1_choice = "sayori"
 default n_poemearly = False
 
 # These variables track whether we tried to help Monika or Sayori during Day 3's ending.
-default help_sayori = None
-default help_monika = None
+default help_sayori = False
+default help_monika = False
 
 # These variables track which route Day 4 will play and who is their name.
 default ch4_scene = "yuri"
@@ -1573,4 +1492,4 @@ default ch4_name = "Yuri"
 default sayori_confess = True
 
 # This variable tracks whether we read Natsuki's 3rd poem in Act 2.
-default natsuki_23 = None
+default natsuki_23 = False

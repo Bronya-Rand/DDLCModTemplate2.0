@@ -1,4 +1,4 @@
-## Copyright 2019-2024 Azariel Del Carmen (bronya_rand). All rights reserved.
+## Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 
 ## renpy_patches.rpy
 # This file is mainly designed to patch certain versions of Ren'Py that break 
@@ -6,9 +6,13 @@
 
 python early:
     import os
-    ## Readds WMIC using Powershell's Get-WmiObject class (for Win 11)
-    os.environ['wmic process get Description'] = "powershell (Get-Process).ProcessName"
-    os.environ['wmic os get version'] = "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
+
+    # Patches old DDLC Windows commands to use PowerShell for compatibility with Windows 11.
+    if renpy.windows:
+        os.environ["wmic process get Description"] = "powershell (Get-Process).ProcessName"
+        os.environ["wmic os get version"] = (
+            "powershell (Get-WmiObject -class Win32_OperatingSystem).Version"
+        )
 
     ## Patches the 7.4.6 - 7.4.8 transform bugs.
     ## using 7.4.9's Scenelists code. 

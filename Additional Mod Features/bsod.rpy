@@ -1,10 +1,10 @@
-## Copyright 2019-2024 Azariel Del Carmen (bronya_rand). All rights reserved.
-
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # bsod.rpy
 # This file contains the screen code to display a fake Blue Screen of death.
 
 init python:
     cursor = 0
+    purple = False
 
     def fakePercent(st, at, winver):
 
@@ -14,7 +14,7 @@ init python:
             percent = 100
 
         if winver == 8:
-            d = Text("we'll restart for you. (" + str(percent) + "% complete)\n", style="bsod_win8_text", size=26)
+            d = Text("we'll restart for you. (" + str(percent) + "% complete)\n", style="bsod_win8_text", size=28)
         else:
             d = Text(str(percent) + "% complete", style="bsod_win10_text", line_leading=20)
 
@@ -32,12 +32,18 @@ init python:
             cursor = 0
             return Text("   ", style="bsod_linux_text"), 0.3
 
+    def fake_macos_bigsur_panic(st, at):
+        global purple
 
-    if renpy.windows:
-        try: osVer = tuple(map(int, subprocess.check_output("powershell (Get-WmiObject -class Win32_OperatingSystem).Version", shell=True).split("."))) # Vista+
-        except: osVer = tuple(map(int, platform.version().split("."))) or (5, 1, 2600) # XP returns JIC (though who uses XP today?)
+        if purple:
+            purple = False
+            return Solid("#ff41ff"), 0.15
+        else:
+            purple = True
+            return Solid("#000"), 2
 
-## BSOD screen ##################################################################\
+
+## BSOD screen ##################################################################
 ##
 ## This screen is used to fake a BSOD/kernel panic on the players' computer 
 ## on all platforms (Mobile devices defaults to the Linux BSOD).
@@ -48,22 +54,42 @@ init python:
 ##     bsodFile (Windows 7 Only) - The fake file name that caused the 
 ##                error. Defaults to libGLESv2.dll if no file name is given.
 ##     rsod (Windows 11 Only) - Swaps the Windows 11 BSOD with a RSOD.
+##               Defaults to False.
+##     hexcodeError (Windows 11 10.0.26100 and above Only) - The hex code error
 ##
 ## Examples:
 ##     show screen bsod("DOKI_DOKI", "renpy32.dll", False) 
 ##     show screen bsod("EILEEN_EXCEPTION_NOT_HANDLED", rsod=True) 
-screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False):
+##     show screen bsod("NOT_BRONYA_DUMPLING_FRIENDLY", hexcodeError="0x4A")
+screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=False, hexcodeError="0xFA"):
 
     layer "master"
 
     if renpy.windows:
 
-        if osVer < (6, 2, 9200): # Windows 7
+        python:
+            # Get Windows version
+            os = get_windows_version()
             
+            # Check Hexcode Error is Hexadecimal
+            if hexcodeError != "":
+                try:
+                    int(hexcodeError, 16)
+
+                    if not hexcodeError.startswith("0x"):
+                        hexcodeError = "0x" + hexcodeError
+                    
+                    # Truncate to 2 bytes (0xFF)
+                    hexcodeError = hexcodeError[:4]
+                except ValueError:
+                    hexcodeError = "0xFA" # Default Hexcode Error
+            else:
+                hexcodeError = "0xFA" # Default Hexcode Error
+
+        if os and os <= (6, 1): # Windows 7 and below
             add Solid("#000082")
 
             vbox:
-
                 style_prefix "bsod_win7"
 
                 text "A problem has been detected and Windows has been shut down to prevent damage to your computer."
@@ -76,14 +102,11 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 text "*** STOP: 0x00000051 (OXFD69420, 0x00000005, OXFBF92317" + ", 0x00000000)\n"
                 text "*** " + bsodFile.upper() + "  -  Address FBF92317 base at FBF102721, Datestamp 3d6dd67c"
 
-        elif osVer < (10, 0, 10240): # Windows 8/8.1
-            
+        elif os and (os[:2] == (6, 2) or os[:2] == (6, 3)): # Windows 8 and 8.1
             add Solid("#1273aa")
 
-            style_prefix "bsod_win8"
-
             vbox:
-
+                style_prefix "bsod_win8"
                 xalign 0.5
                 yalign 0.4
 
@@ -93,33 +116,25 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                 add DynamicDisplayable(fakePercent, 8)
                 text "If you'd like to know more, you can search online later for this error: " + bsodCode.upper() style "bsod_win8_sub_text"
 
-        else: # Windows 10, 11 and RSOD
-            
-            # After a silent update, Windows 11 now returns to a
-            # Windows 10 BSOD color. We will remove the black for
-            # blue now.
+        elif os and os[0] == 10 and os < (10, 0, 26100): # Windows 10, 11 (Before 10.0.26100) and RSOD / Unknown
             if rsod:
-
                 add Solid("#d40e0eff")
                 python:
                     blackCol = "#f00"
 
             else:
-
                 add Solid("#0078d7")
                 python:
                     blackCol = "#0078d7"
 
-            style_prefix "bsod_win10"
-
             vbox:
-
+                style_prefix "bsod_win10"
                 xalign 0.2
                 yalign 0.4
 
                 text ":(" style "bsod_win10_sad_text"
 
-                if osVer < (10, 0, 22000):
+                if os < (10, 0, 22000):
                     python:
                         bsodQRSize = 100
 
@@ -154,67 +169,119 @@ screen bsod(bsodCode="DDLC_ESCAPE_PLAN_FAILED", bsodFile="libGLESv2.dll", rsod=F
                             text "Stop code: " + bsodCode.upper() style "bsod_win10_sub_text"
                             text "What failed: " + bsodFile.lower() style "bsod_win10_sub_text"
         
+        else: # Windows 11 (10.0.26100 and above)
+            add Solid("#000")
+
+            vbox:
+                style_prefix "bsod_win10"
+                xalign 0.5
+                yalign 0.5
+
+                text "Your device ran into a problem and needs to restart."
+
+                vbox:
+                    xalign 0.5
+                    add DynamicDisplayable(fakePercent, 10)
+                
+            vbox:
+                style_prefix "bsod_win10"
+                xalign 0.5
+                yalign 0.95
+                
+                text "Stop code: " + bsodCode.upper() + " (" + hexcodeError + ")" style "bsod_win10_info_text"
+
+
     elif renpy.macintosh:
 
-        add Solid("#222")
+        python:
+            release = get_macos_version()
 
-        add im.MatrixColor("mod_assets/DDLCModTemplateLogo.png", im.matrix.desaturate() * im.matrix.brightness(-0.36)) at bsod_qrcode(440) xalign 0.5 yalign 0.54
-        vbox:
+        if release and release <= (10, 10): # OS X Yosemite and below 
+            add Solid("#222")
 
-            style_prefix "bsod_mac"
-            xalign 0.53
-            yalign 0.51
+            add im.MatrixColor("mod_assets/DDLCModTemplateLogo.png", im.matrix.desaturate() * im.matrix.brightness(-0.36)) at bsod_qrcode(440) xalign 0.5 yalign 0.54
+            vbox:
 
-            text "You need to restart your computer. Hold down the Power\n"
-            text "button until it turns off, then press the Power button again." line_spacing 25
-            text "Redémarrez l'ordinateur. Enfoncez le bouton de démarrage\n"
-            text "jusqu'à l'extinction, puis appuyez dessus une nouvelle fois." line_spacing 25
-            text "Debe reiniciar el o rdenador. Mantenga pulsado el botón de\n"
-            text "arranque hasta que se apague y luego vuelva a pulsarlo." line_spacing 25
-            text "Sie müssen den Computer neu starten. Halten Sie den\n"
-            text "Ein-/Ausschalter gedrückt bis das Gerät ausgeschaltet ist\n"
-            text "und drücken Sie ihn dann erneut." line_spacing 25
-            text "Devi riavviare il computer. Tieni premuto il pulsante di\n"
-            text "accensione finché non si spegne, quindi premi di nuovo il\n"
-            text "pulsante di accensione."
+                style_prefix "bsod_osx"
+                xalign 0.53
+                yalign 0.51
 
-    else:
+                text "Your computer restarted because of a problem. Press a key or wait a few\n"
+                text "seconds to continue starting up" line_spacing 25
+                text "Votre ordinateur a redémarré en raison d'un problème. Pour poursuivre\n"
+                text "le démarrage, appuyez sur une touche ou patientez quelques secondes." line_spacing 25
+                text "El ordenador se ha reiniciado debido a un problema. Para continuar con\n"
+                text "el arranque, pulse cualquier tecla o espere unos segundos." line_spacing 25
+                text "Ihr Computer wurde aufgrund eines Problems neu gestartet. Drücken\n"
+                text "Sie zum Fortfahren eine Taste oder warten Sie einige Sekunden." line_spacing 25
+                
+                # Due to font limitations, JP and CN are not supported. If using a font 
+                # that supports these languages, uncomment the lines below.
+                # Alternative languages will be used (IT/NL).
+                
+                #text "問題が起きたためコンピュータを再起動しました。このまま起動する場合は、\n"
+                #text "いずれかのキーを押すか、数秒間そのままお待ちください。" line_spacing 25
+                #text "电脑因出现问题而重新启动。请按一下按键,或等几秒钟以继续启动。"
+
+                text "Il computer è stato riavviato a causa di un problema. Per continuare l'avvio,\n"
+                text "premere un tasto o attendere qualche secondo." line_spacing 25
+                text "De computer is opnieuw opgestart vanwege een probleem. Druk op een toets\n"
+                text "om door te gaan met opstarten, of wacht een paar seconden." line_spacing 25
+        elif release and release <= (10, 15): # OS X El Capitan, macOS Sierra -> macOS Catalina
+            add Solid("#000")
+
+            vbox:
+                style_prefix "bsod_macos"
+                xalign 0.0
+                yalign 0.0
+
+                text "**************************************************\n"
+                text "This system was automatically rebooted after panic" line_spacing 5
+                text "**************************************************" line_spacing 5 
+
+        else: # macOS Big Sur and above
+            add DynamicDisplayable(fake_macos_bigsur_panic)
+
+    else: # Linux and other platforms
 
         add Solid("#000")
 
         vbox:
             style_prefix "bsod_linux"
 
-            text "metaverse-pci.c:v[config.version] 9/22/2017 Metaverse Enterprise Solutions\n"
+            text "metaverse-pci.c:v[config.version] 5/22/2024 Metaverse Enterprise Solutions\n"
             text "  https://www.metaverse-enterprise.com/network/metaverse-pci.html"
-            text "hda0: METAVERSE ENTERPRISE VIRTUAL HARDDISK, ATA DISK drive"
-            text "ide0 at 0x1f0 - 0x1f7, 0x3f6 on irq 14"
+            text "hd0: METAVERSE ENTERPRISE VIRTUAL HARDDISK, ATA DISK drive"
+            text "sda0 at 0x1f0 - 0x1f7, 0x3f6 on irq 14"
             text "hdc: METAVERSE ENTERPRISE VIRTUAL CD-ROM, ATAPI CD/DVD-ROM drive"
-            text "ide1 at 0x444 - 0x910, 0x211 on irq 15"
+            text "sr0 at 0x444 - 0x910, 0x211 on irq 15"
             text "fd0: METAVERSE ENTERPRISE VIRTUAL FLOPPY, ATA FLOPPY drive"
             text "ide2 at 0x7363-0x6e6565, 0x4569 on irq 16"
             text "ACPI: PCI Interrupt Link [[LNKC] ebabked at IRQ 10"
             text "ACPI: PCI Interrupt 0000:00:03:.0[[A] -> Link [[LNKC] -> GSI 10 (level, low) -> IRQ 10"
             text "eno1: Metaverse Enterprise LIB-0922 found at 0xc453, IRQ 10, 09:10:21:86:75:30"
-            text "hda: max request size: 512KiB"
-            text "hda: 2147483648 sectors (1 TB) w/256KiB Cache, CHS=178/255/63, (U)DMA"
-            text "hda: hda1"
-            text "hdc: ATAPI 4x CD-ROM drive, 512kB Cache, (U)DMA"
-            text "Uniform CD-ROM driver Revision: 3.20"
+            text "sda: max request size: 4MiB"
+            text "sda: 2147483648 sectors (1 TB) w/256KiB Cache, CHS=178/255/63, (U)DMA"
+            text "sda: sda1"
+            text "sr0: ATAPI 16x CD-ROM drive, 2MB Cache, (U)DMA"
+            text "Uniform CD-ROM driver Revision: [renpy.version_tuple]"
             text "Done."
             text "Begin: DDLC.so"
             text "Done."
-            text "DDLC.so[[3352]: Importing _renpysteam: ImportError('No module named _renpysteam',)"
+            text "DDLC.so[[3352]: Faled to initialize steam: FileNotFoundError(\"Could not find module '/usr/app/ddlc/lib/py3-linux-x86_64/steam_api64.so') (or one of its dependencies). Try using the full path with constructor syntax.\")"
             text "DDLC.so[[3352]: nvdrs: Loaded, about to disable thread optimizations."
             text "DDLC.so[[3352]: nvdrs: Disabled thread optimizations."
             text "DDLC.so: SUCCESS."
             text "Done."
-            text "Begin: DDLC.so -> linux-4.12.14"
+            text "Begin: DDLC.so -> linux-5.18"
             text "/init: /init: 151: " + bsodCode.upper() + ": 0xforce=panic"
             text "Kernel panic - not syncing: Attempted to kill init!"
             add DynamicDisplayable(constantCursor)
 
-    add Solid("#000000") at bsod_transition
+    if renpy.windows:
+        add Solid("#000") at win_bsod_transition
+    else:
+        add Solid("#000") at general_bsod_transition
 
 style bsod_win7_text is gui_text
 style bsod_win7_text:
@@ -265,12 +332,17 @@ style bsod_win10_sub_text is bsod_win10_text
 style bsod_win10_sub_text:
     size 11
 
-style bsod_mac_text is gui_text
-style bsod_mac_text:
+style bsod_osx_text is gui_text
+style bsod_osx_text:
     font gui.default_font
     size 28
     outlines []
     line_spacing -30
+
+style bsod_macos_text is bsod_osx_text
+style bsod_macos_text:
+    size 21
+    line_spacing -25
 
 style bsod_linux_text is gui_text
 style bsod_linux_text:
@@ -279,14 +351,19 @@ style bsod_linux_text:
     outlines []
     line_leading 5
             
-transform bsod_transition:
+transform win_bsod_transition:
     "black"
-    0.1
+    0.05
     yoffset 250
-    0.1
+    0.05
     yoffset 500
-    0.1
+    0.05
+    yoffset 750
+
+transform general_bsod_transition:
+    "black"
+    pause 2.5
     yoffset 750
 
 transform bsod_qrcode(x):
-    size(x,x)
+    xysize(x,x)

@@ -334,7 +334,7 @@ label ch2_main:
 
 
 
-    $ nextscene = poemwinner[1] + "_exclusive_" + str(eval("chibi_" + poemwinner[1][0] + ".appeal"))
+    $ nextscene = get_exclusive_scene(1)
     call expression nextscene
 
 
