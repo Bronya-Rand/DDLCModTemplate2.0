@@ -15,7 +15,7 @@ init python:
 """
 
 
-class Console(object):
+class Console:
     """
     Handles the console logic for DDLC's "terminal".
     """
@@ -50,7 +50,13 @@ class Console(object):
 
         self.testing = testing
 
-    def __call__(self, input_text: str, output_text: str, cps: int | None = None, delay: float | None = None) -> None:
+    def __call__(
+        self,
+        input_text: str,
+        output_text: str,
+        cps: int | None = None,
+        delay: float | None = None,
+    ) -> None:
         """
         Processes the input and output text for the console.
         If you want specific stuff to happen whilst the input is being displayed,

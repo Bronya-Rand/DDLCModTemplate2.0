@@ -6,10 +6,11 @@
 # For the Ren'Py code, see `script-poemgame.rpy` in the `poem_game` directory.
 
 ## Not included in the game, but used for IDEs to avoid multiple warnings.
-from game.poem_game.py.poemgame_chibi_ren import chibis, chibi_s, chibi_n, chibi_y
-from game.poem_game.py.poemwords_ren import poem_word_db, glitch_word, monika_word
-from game.definitions.py.core_ren import persistent, store
 import renpy  # type: ignore
+
+from game.definitions.py.core_ren import persistent, store
+from game.poem_game.py.poemgame_chibi_ren import chibi_n, chibi_s, chibi_y, chibis
+from game.poem_game.py.poemwords_ren import glitch_word, monika_word, poem_word_db
 
 poemwinner: dict[int, str] = {
     0: "sayori",
@@ -187,11 +188,10 @@ class PoemGame:
         """
         chapter = store.chapter
 
-        if persistent.playthrough == 0:
-            # Add 5 points to whoever we side with in Act 1 - Chapter 1.
-            if chapter == 1:
-                chibi = chibis.get_chibi(store.ch1_choice)
-                chibi.add_points(5)
+        # Add 5 points to whoever we side with in Act 1 - Chapter 1.
+        if persistent.playthrough == 0 and chapter == 1:
+            chibi = chibis.get_chibi(store.ch1_choice)
+            chibi.add_points(5)
 
         # Determine the poem winner.
         if persistent.playthrough == 0:
@@ -301,10 +301,7 @@ def _character_poem_appeal_exists(character: str, chapter: int) -> bool:
     if character not in poemappeal:
         return False
 
-    if chapter not in poemappeal[character]:
-        return False
-
-    return True
+    return chapter in poemappeal[character]
 
 
 def get_character_poem_appeal(character: str, chapter: int) -> int:

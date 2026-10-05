@@ -5,8 +5,10 @@
 # and decompile them for the builds to work.
 
 import os
-from game.core.py.template_checks_ren import DDLCRPAsMissing, IllegalModLocation
+
 import renpy  # type: ignore
+
+from game.core.py.template_checks_ren import DDLCRPAsMissing, IllegalModLocation
 
 """renpy
 init -100 python:
@@ -19,6 +21,5 @@ if not renpy.android:
 
     if renpy.windows:
         onedrive_path = os.environ.get("OneDrive")
-        if onedrive_path is not None:
-            if onedrive_path in renpy.config.basedir:
-                raise IllegalModLocation
+        if onedrive_path is not None and onedrive_path in renpy.config.basedir:
+            raise IllegalModLocation

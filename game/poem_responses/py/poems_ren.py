@@ -11,15 +11,17 @@
 ## one warning than multiple.
 import re
 import typing
-from game.definitions.py.core_ren import pause, persistent, store
+
 import renpy  # type: ignore
+
+from game.definitions.py.core_ren import pause, persistent, store
 
 """renpy
 init python:
 """
 
 
-class PoemAuthor(object):
+class PoemAuthor:
     """
     A class used to represent a DDLC character's poem author.
     """
@@ -107,15 +109,13 @@ class Poem(renpy.text.text.Text):
 
         if style is True:
             if author:
-                style = "%s_text" % author
+                style = f"{author}_text"
             else:
                 style = "default"
         else:
             style = "default"
 
-        poem = (
-            "%s\n\n%s" % (title, text) if separate_title_from_text and title else text
-        )
+        poem = f"{title}\\n\\n{text}" if separate_title_from_text and title else text
 
         super().__init__(poem, style=style, **properties)
 
@@ -264,7 +264,7 @@ class Poem(renpy.text.text.Text):
             persistent.first_poem = True
 
 
-class PoemResponseDB(object):
+class PoemResponseDB:
     """
     A class used to represent a database of poems.
     """

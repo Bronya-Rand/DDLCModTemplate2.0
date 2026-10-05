@@ -9,10 +9,11 @@ import random
 init python:
 """
 
+
 def glitchtext(length: int) -> str:
     """
     Generates a string of random unicode characters of a specified length.
-    
+
     :param length: The length of the string to generate.
 
     :type length: int
@@ -33,9 +34,9 @@ def glitchtext(length: int) -> str:
         (0x0400, 0x04FF),  # Cyrillic
     ]
 
-    exclude_chars = set([
+    exclude_chars = {
         0x00AD,  # Soft hyphen
-    ])
+    }
 
     ## Generate a string of random unicode characters
     result: list[str] = []
@@ -45,7 +46,7 @@ def glitchtext(length: int) -> str:
             for code_point in range(start, end + 1):
                 if code_point not in exclude_chars and chr(code_point).isprintable():
                     result.append(chr(code_point))
-    
+
     # Shuffle the result to ensure randomness
     random.shuffle(result)
-    return ''.join(result[:length])
+    return "".join(result[:length])

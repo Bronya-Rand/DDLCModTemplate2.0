@@ -52,5 +52,5 @@ def reset_read_poem_status() -> None:
     """
     Resets the read poem status for all characters to False.
     """
-    for character in readpoem.keys():
+    for character in readpoem:
         readpoem[character] = False

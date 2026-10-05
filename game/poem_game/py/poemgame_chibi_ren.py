@@ -5,6 +5,7 @@
 
 ## Not included in the original game, but used for IDEs to avoid multiple warnings.
 from typing import Literal
+
 import renpy  # type: ignore
 
 """renpy
@@ -12,7 +13,7 @@ init python:
 """
 
 
-class ChibiTransform(object):
+class ChibiTransform:
     """
     This class handles the transform animations for the Chibi characters in the poem game.
     """
@@ -41,7 +42,7 @@ class ChibiTransform(object):
         self.charOffset = 0
         self.charZoom = 1
 
-    def randomPauseTime(self, trans, st, at) -> Literal[None, 0]:
+    def randomPauseTime(self, trans, st, at) -> Literal[0] | None:
         """
         Randomly pauses the character animation based on the specified time.
         """
@@ -50,7 +51,7 @@ class ChibiTransform(object):
             return None
         return 0
 
-    def randomMoveTime(self, trans, st, at) -> Literal[None, 0]:
+    def randomMoveTime(self, trans, st, at) -> Literal[0] | None:
         """
         Randomly moves the character based on the specified time.
         """
@@ -140,7 +141,7 @@ class Chibi(ChibiTransform):
         return self.name
 
 
-class ChibiDB(object):
+class ChibiDB:
     """
     This class defines a database of Chibi characters used in the poem game.
     """

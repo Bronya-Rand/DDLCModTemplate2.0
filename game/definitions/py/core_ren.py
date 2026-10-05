@@ -5,9 +5,10 @@
 ## This import is not used when the game is running, but exists so IDEs reports
 ## one warning than multiple.
 import os
+import platform
 import subprocess
 import sys
-import platform
+
 import renpy  # type: ignore
 
 """renpy
@@ -229,6 +230,7 @@ def get_process_list():
         try:
             subprocess_list = subprocess.run(
                 "powershell (Get-Process).ProcessName",
+                check=False,
                 shell=True,
                 capture_output=True,
                 text=True,
@@ -241,7 +243,7 @@ def get_process_list():
     else:
         try:
             subprocess_list = subprocess.run(
-                "ps -eo comm=", shell=True, capture_output=True, text=True
+                "ps -eo comm=", check=False, shell=True, capture_output=True, text=True
             ).stdout.splitlines()
 
             for process in subprocess_list:
@@ -321,7 +323,9 @@ def get_user_account_name():
     if renpy.windows:
         # `whoami` and split name (DOMAIN\Username -> Username)
         return (
-            subprocess.run("whoami", shell=True, capture_output=True, text=True)
+            subprocess.run(
+                "whoami", check=False, shell=True, capture_output=True, text=True
+            )
             .stdout.strip()
             .split("\\")[-1]
             or None
@@ -329,7 +333,7 @@ def get_user_account_name():
     else:
         return (
             subprocess.run(
-                "id -un", shell=True, capture_output=True, text=True
+                "id -un", check=False, shell=True, capture_output=True, text=True
             ).stdout.strip()
             or None
         )
@@ -389,7 +393,7 @@ currentuser = get_user_account_name()
 ## TODO: Adjust to maybe Transform and MatrixColor
 def recolorize(
     path: str, blackCol: str = "#ffbde1", whiteCol: str = "#ffe6f4", contr: float = 1.29
-):
+) -> renpy.display.transform.Transform:
     """
     Recolorizes the image at the given path with the specified colors and contrast.
 
@@ -405,19 +409,23 @@ def recolorize(
 
     :return: The recolorized image.
     """
-    return renpy.im.MatrixColor(
-        renpy.im.MatrixColor(
-            renpy.im.MatrixColor(
-                path, renpy.im.matrix.desaturate() * renpy.im.matrix.contrast(contr)
+    return renpy.display.transform.Transform(
+        renpy.display.transform.Transform(
+            renpy.display.transform.Transform(
+                path,
+                matrixcolor=renpy.display.matrix.SaturationMatrix(0.0)
+                * renpy.display.matrix.ContrastMatrix(contr),
             ),
-            renpy.im.matrix.colorize("#00f", "#fff") * renpy.im.matrix.saturation(120),
+            matrixcolor=renpy.display.matrix.ColorizeMatrix("#00f", "#fff")
+            * renpy.display.matrix.SaturationMatrix(120),
         ),
-        renpy.im.matrix.desaturate() * renpy.im.matrix.colorize(blackCol, whiteCol),
+        matrixcolor=renpy.display.matrix.SaturationMatrix(0.0)
+        * renpy.display.matrix.ColorizeMatrix(blackCol, whiteCol),
     )
 
 
 ### Dynamic Super Positioning
-def dsp(original_position_value: int | float) -> int:
+def dsp(original_position_value: float) -> int:
     """
     Dynamically adjusts the position value of an element based on the
     original game's screen size (1280x720) against the set screen size.

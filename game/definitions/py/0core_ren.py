@@ -7,8 +7,8 @@ python early:
 """
 
 import os
-import tempfile
 import sys
+import tempfile
 
 if sys.platform == "win32":
     import msvcrt  # For Windows systems
@@ -52,7 +52,7 @@ class SingleInstance:
             else:
                 fcntl.flock(self.lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
             return True
-        except (IOError, OSError):
+        except OSError:
             if self.lock_fd:
                 self.lock_fd.close()
                 self.lock_fd = None
