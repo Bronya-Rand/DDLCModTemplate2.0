@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This is where the splashscreen, disclaimer and menu code reside in.
 
 # This image text shows the splash message when the game loads.

@@ -4,8 +4,10 @@
 # Altering this file may break the game or mod functionality.
 
 init -3 python:
-    persistent = renpy.store.persistent
-    store = renpy.store
+    import os
+    import subprocess
+    import sys
+    import platform
 
     # The default splash message for the game that players will see when launching your mod.
     splash_message_default = (
@@ -182,6 +184,14 @@ init -3 python:
         pos = renpy.music.get_pos(channel)
         if pos is not None:
             return pos
+        if channel == "music_poem":
+            pos = renpy.music.get_pos("poem")
+            if pos is not None:
+                return pos
+        elif channel == "poem":
+            pos = renpy.music.get_pos("music_poem")
+            if pos is not None:
+                return pos
         return 0
 
 

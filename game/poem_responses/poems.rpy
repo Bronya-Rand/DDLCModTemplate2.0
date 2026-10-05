@@ -3,7 +3,7 @@
 # This file defines all the poems in the game that can be shown to the player
 # by the girls in the poem sharing mini-game.
 
-screen poem(poem):
+screen poem(poem, paper=None):
     style_prefix "poem"
 
     fixed:
@@ -11,8 +11,12 @@ screen poem(poem):
         frame:
             style "poem_paper"
 
-            add poem.paper:
-                subpixel True align (0.5, 0.5)
+            if paper:
+                add paper:
+                    subpixel True align (0.5, 0.5)
+            else:
+                add poem.paper:
+                    subpixel True align (0.5, 0.5)
 
         frame:
             background None
@@ -99,6 +103,7 @@ label showpoem(poem, **properties):
         else:
             text = "This feature is now depreciated. Please use '$ poem_db.show_poem(\"%s\")' instead.\nRefer to {u}poem_responses/poems.rpy{/u} for more information." % poem
     $ renpy.notify(text)
+    $ show_poem(poem, **properties)
     return
 
 init 1 python:
@@ -200,14 +205,25 @@ init 1 python:
             self,
             img=None,
             at_list=None,
+            where=None,
             paper_sound=_DEFAULT_SOUND,
             music=True,
+            track=None,
+            paper=None,
             from_current=True,
             revert_music=True,
             testing=False,
+            channel=None,
+            **kwargs
         ):
-            if at_list is None:
+            if where is not None:
+                if isinstance(where, (list, tuple)):
+                    at_list = list(where)
+                else:
+                    at_list = [where]
+            elif at_list is None:
                 at_list = [store.i11]
+
             if paper_sound is _DEFAULT_SOUND:
                 paper_sound = getattr(store.audio, "page_turn", None)
 
@@ -219,19 +235,25 @@ init 1 python:
 
                 _window_hide()
 
-                if music is True:
+                if track is not None:
+                    poem_track = track
+                elif music is True:
                     poem_track = self.music or None
+                elif music:
+                    poem_track = music
                 else:
-                    poem_track = music or None
+                    poem_track = None
+
+                play_channel = channel or "music_poem"
 
                 if poem_track:
                     previous_music = renpy.music.get_playing()
-                    music = (
+                    music_str = (
                         self.format_music_str(poem_track, renpy.music.get_pos())
                         if from_current
                         else poem_track
                     )
-                    renpy.music.play(music, channel="poem", loop=True, fadeout=0.5)
+                    renpy.music.play(music_str, channel=play_channel, loop=True, fadeout=0.5)
                     renpy.music.stop(fadeout=2.0)
 
                 allow_skipping = renpy.config.allow_skipping
@@ -240,7 +262,8 @@ init 1 python:
                 store._skipping = False
 
                 renpy.transition(store.dissolve)
-                renpy.show_screen("poem", self)
+                poem_paper = renpy.easy.displayable_or_none(paper) if paper else None
+                renpy.show_screen("poem", self, paper=poem_paper)
                 pause()
 
                 if img:
@@ -259,13 +282,16 @@ init 1 python:
                 if poem_track and revert_music:
                     if previous_music:
                         previous_music = (
-                            self.format_music_str(previous_music, renpy.music.get_pos(channel="poem"))
+                            self.format_music_str(previous_music, renpy.music.get_pos(channel=play_channel))
                             if from_current
                             else previous_music
                         )
                         renpy.music.play(previous_music, loop=True, fadein=2.0)
 
-                    renpy.music.stop("poem", fadeout=2.0)
+                    renpy.music.stop(play_channel, fadeout=2.0)
+                    if play_channel in ("poem", "music_poem"):
+                        renpy.music.stop("poem", fadeout=2.0)
+                        renpy.music.stop("music_poem", fadeout=2.0)
 
                 renpy._window_auto = True
 
