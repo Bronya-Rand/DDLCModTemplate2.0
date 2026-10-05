@@ -1,1 +1,11 @@
 *.sh text eol=lf
+
+.github/                    export-ignore
+.gitattributes              export-ignore
+.gitignore                  export-ignore
+.vscode/                    export-ignore
+build/                      export-ignore
+requirements.txt            export-ignore
+tests/                      export-ignore
+tests.py                    export-ignore
+"Additional Mod Features/"  export-ignore

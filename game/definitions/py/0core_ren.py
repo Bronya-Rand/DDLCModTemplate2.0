@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file handles locking the game to ensure that only one instance is running at a time.
 # This is basically a revamped version of `singleton.py` to allow enabling/disabling singleton behavior.
 

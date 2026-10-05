@@ -150,33 +150,44 @@ class Poem(renpy.text.text.Text):
 
         return f"<from {pos} {loop_value} {to_value}>{stripped_song}"
 
-        
-
     def show(
         self,
         img: str | None = None,
-        at_list: list = [store.i11],
+        at_list: list | None = None,
+        where: typing.Any = None,
         paper_sound: str | None = store.audio.page_turn,
         music: str | bool = True,
+        track: str | None = None,
+        paper: str | None = None,
         from_current: bool = True,
         revert_music: bool = True,
         testing: bool = False,
+        channel: str | None = None,
+        **kwargs,
     ):
         """
         Displays the poem to the Poem Response screen.
 
+        :param img: The image to display after the poem is closed.
+        :param at_list: The list of transforms to apply to the character image.
+        :param where: A single transform to apply to the character image (legacy alternative to at_list).
         :param paper_sound: The sound to play when the poem is displayed.
         :param music: Whether to play the music associated with the poem.
+        :param track: An explicit music track to play (overrides music).
+        :param paper: A custom background paper to display for this poem view.
         :param from_current: Whether to start the music from the current position of the previous music track.
         :param revert_music: Whether to revert the music to the previous track after the poem is displayed.
         :param testing: Unused in DDLC. Used for GitHub Actions testing purposes.
-
-        :type paper_sound: str | None
-        :type music: str | bool
-        :type from_current: bool
-        :type revert_music: bool
-        :type testing: bool
+        :param channel: The audio channel to play on (defaults to 'music_poem').
         """
+        if where is not None:
+            if isinstance(where, (list, tuple)):
+                at_list = list(where)
+            else:
+                at_list = [where]
+        elif at_list is None:
+            at_list = [store.i11]
+
         if not testing:
             previous_music = None
 
@@ -185,19 +196,27 @@ class Poem(renpy.text.text.Text):
 
             _window_hide()  # type: ignore # noqa: F821
 
-            if music is True:
+            if track is not None:
+                poem_track = track
+            elif music is True:
                 poem_track = self.music or None
+            elif music:
+                poem_track = music
             else:
-                poem_track = music or None
+                poem_track = None
+
+            play_channel = channel or "music_poem"
 
             if poem_track:
                 previous_music = renpy.music.get_playing()
-                music = (
+                music_str = (
                     self.format_music_str(poem_track, renpy.music.get_pos())
                     if from_current
                     else poem_track
                 )
-                renpy.music.play(music, channel="poem", loop=True, fadeout=0.5)
+                renpy.music.play(
+                    music_str, channel=play_channel, loop=True, fadeout=0.5
+                )
                 renpy.music.stop(fadeout=2.0)
 
             allow_skipping = renpy.config.allow_skipping
@@ -206,7 +225,8 @@ class Poem(renpy.text.text.Text):
             store._skipping = False
 
             renpy.transition(store.dissolve)
-            renpy.show_screen("poem", self)
+            poem_paper = renpy.easy.displayable_or_none(paper) if paper else None
+            renpy.show_screen("poem", self, paper=poem_paper)
             pause()
 
             if img:
@@ -225,13 +245,18 @@ class Poem(renpy.text.text.Text):
             if poem_track and revert_music:
                 if previous_music:
                     previous_music = (
-                        self.format_music_str(previous_music, renpy.music.get_pos(channel="poem"))
+                        self.format_music_str(
+                            previous_music, renpy.music.get_pos(channel=play_channel)
+                        )
                         if from_current
                         else previous_music
                     )
                     renpy.music.play(previous_music, loop=True, fadein=2.0)
 
-                renpy.music.stop("poem", fadeout=2.0)
+                renpy.music.stop(play_channel, fadeout=2.0)
+                if play_channel in ("poem", "music_poem"):
+                    renpy.music.stop("poem", fadeout=2.0)
+                    renpy.music.stop("music_poem", fadeout=2.0)
 
             renpy._window_auto = True
 

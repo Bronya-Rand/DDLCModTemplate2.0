@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This is where the splashscreen, disclaimer and menu code reside in.
 
 # This image text shows the splash message when the game loads.
@@ -227,6 +227,15 @@ default persistent.first_run = False
 ## Startup Disclaimer
 ## This label calls the disclaimer screen that appears when the game starts.
 label splashscreen:
+    # New IPG guideline: Require extracting DDLC assets by user to play mods on Android.
+    if renpy.mobile:
+        if not renpy.android:
+            $ raise NotImplementedError("DDLC mods are not supported on iOS devices. Please use an Android device or PC to play this mod.")
+        if not has_installed_ddlc_assets():
+            call screen android_asset_setup
+        if not has_installed_ddlc_assets():
+            $ raise NotImplementedError("DDLC assets are required to play this mod. Please install the DDLC assets and try again.")
+
     $ initialize_characters_folder()
     ## Shows the option to delete existing save data if conditions are met.
     if not persistent.first_run and len(renpy.list_saved_games(fast=True)) > 0:
