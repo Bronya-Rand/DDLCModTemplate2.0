@@ -172,7 +172,7 @@ init python:
     # This class declares the code used for the ParticleBurst effect.
     class ParticleBurst(object):
         def __init__(self, theDisplayable, explodeTime=0, numParticles=20, particleTime = 0.500, particleXSpeed = 3, particleYSpeed = 5):
-            self.sm = SpriteManager(update=self.update)
+            self.sm = SpriteManager(update=self.update, animation=False)
 
             self.stars = [ ]
             self.displayable = theDisplayable
