@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This is where the splashscreen, disclaimer and menu code reside in.
 
 # This image text shows the splash message when the game loads.
@@ -118,6 +118,10 @@ image menu_nav:
     "gui/overlay/main_menu.png"
     #recolorize("gui/overlay/main_menu.png", "#ffbde1")
     menu_nav_move
+
+image game_nav:
+    "gui/overlay/main_menu.png"
+    #recolorize("gui/overlay/main_menu.png", "#ffbde1")
 
 ## Main Menu Effects
 # These transforms and image transform store the effects that appear in the

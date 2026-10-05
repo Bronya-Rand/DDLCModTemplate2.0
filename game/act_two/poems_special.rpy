@@ -33,6 +33,8 @@ label poem_special(poem=1):
     $ quick_menu = False
     play sound page_turn
 
+    $ show_poem_content_warning(poem)
+
     if poem == 7:
         show poem_special7a as ps with Dissolve(1.0)
     else:

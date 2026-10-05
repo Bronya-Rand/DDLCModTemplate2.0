@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file defines the placements and animations in DDLC.
 
 # This transform sizes the character properly at the given X position.
@@ -320,6 +320,11 @@ transform cgfade:
         alpha 1.0
         linear 0.5 alpha 0.0
 
+# From Mobile Version of DDLC. Keeps the base CG of Natsuki's closet scene static.
+transform n_cg2_static:
+    xoffset 0
+    alpha 1.0
+
 # This transform causes Natsuki to wiggle on screen when she panics in her closet CG.
 transform n_cg2_wiggle:
     subpixel True
@@ -332,6 +337,8 @@ transform n_cg2_wiggle:
     easeout 0.15 xoffset 0
     easein 0.15 xoffset -5
     ease 0.15 xoffset 0
+    on replaced:
+        xoffset 0
 
 # This transform loop repeats the wiggle effect each second.
 transform n_cg2_wiggle_loop:
@@ -553,3 +560,6 @@ init python:
 transform malpha(a=1.00):
     i11
     alpha a
+
+transform loc_text_fit:
+    fit "scale-down"

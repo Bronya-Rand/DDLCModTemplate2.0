@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the Python code for the Gallery Menu.
 # The code is designed to work with Ren'Py 8 and uses the `_ren.py` approach for Python code.
 

@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file defines important stuff for DDLC and your mod!
 
 # This variable declares whether to enable Developer Tools from Ren'Py.
@@ -1393,6 +1393,14 @@ default basedir = config.basedir
 default chapter = 0
 default currentpos = 0
 default faint_effect = None
+
+# Variables brough from DDLC Mobile
+default hide_quick_skip_and_auto = False
+
+default persistent.reduce_motion = False
+default persistent.use_alt_poem_font = False
+default persistent.reduce_transparency = False
+default persistent.high_contrast = False
 
 # Default Name Variables
 # To define a default name make a character name variable like in this example:

@@ -1,26 +1,12 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file defines all the effects in DDLC used in Act 2 and beyond.
+define effects = object()
 
 init python:
-    # This function returns the size of a 16:9 screenshot surface.
-    def screenshot_srf_size():
-        width, height = renpy.get_physical_size()
-        if float(width) / float(height) > 16.0/9.0:
-            width = height * 16 / 9
-        else:
-            height = width * 9 / 16
-        return (width, height)
-
     # This screenshot is used to screenshot the game which is used for different
     # effects in-game.
     def screenshot_srf():
-        if renpy.version_tuple > (7, 3, 5, 606):
-            srf = renpy.display.draw.screenshot(None)
-        else:
-            srf = renpy.display.draw.screenshot(None, False)
-        
-        # The screenshot's size must match the window.
-        srf = renpy.display.scale.smoothscale(srf, screenshot_srf_size())
+        srf = renpy.display.draw.screenshot(None)
         return srf
 
     # This function inverts the image in-game for the Invert Class.
@@ -35,15 +21,20 @@ init python:
     class Invert(renpy.Displayable):
         def __init__(self, delay=0.0, screenshot_delay=0.0):
             super(Invert, self).__init__()
-            self.width, self.height = screenshot_srf_size()
-            self.srf = invert()
+            self.width, self.height = renpy.get_physical_size()
+            self.height = self.width * 9 / 16
+            effects.invert_srf = invert()
             self.delay = delay
         
         def render(self, width, height, st, at):
             render = renpy.Render(self.width, self.height)
             if st >= self.delay:
-                render.blit(self.srf, (0, 0))
+                render.blit(effects.invert_srf, (0, 0))
             return render
+
+    def hide_windows_enabled(enabled=True):
+        global _windows_hidden
+        _windows_hidden = not enabled
 
 ## Invert(length, delay)
 # This screen is called using the state `show screen invert(0.15, 0.3)` to invert the screen.
@@ -55,8 +46,11 @@ screen invert(length, delay=0.0):
     timer delay action PauseAudio("music")
     timer delay action Play("sound", "sfx/glitch1.ogg")
     timer length + delay action Hide("invert")
+    on "show" action Function(hide_windows_enabled, enabled=False)
     on "hide" action PauseAudio("music", False)
     on "hide" action Stop("sound")
+    on "hide" action Function(hide_windows_enabled, enabled=True)
+
 
 init python:
     # This class defines the code for the tear piece effect in 'screen tear'.
@@ -81,26 +75,39 @@ init python:
     class Tear(renpy.Displayable):
         def __init__(self, number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf=None):
             super(Tear, self).__init__()
-            self.width, self.height = screenshot_srf_size()
+            self.width, self.height = renpy.get_physical_size()
+            screenshot_offset_x = 0
+            screenshot_offset_y = 0
+            if float(self.width) / float(self.height) > 16.0/9.0:
+                screenshot_offset_x = int((self.width - int(self.height * 16 / 9)) / 2)
+                self.width = int(self.height * 16 / 9)
+            else:
+                screenshot_offset_y = int((self.height - int(self.width * 9 / 16)) / 2)
+                self.height = int(self.width * 9 / 16)
 
             self.number = number
+            if not srf: effects_vars.tear_srf = screenshot_srf()
+            else: effects_vars.tear_srf = srf
+            
+            if (screenshot_offset_x != 0 or screenshot_offset_y != 0) and effects_vars.tear_srf.get_size() == renpy.get_physical_size():
+                effects_vars.tear_srf = screenshot_srf().subsurface(screenshot_offset_x, screenshot_offset_y, self.width, self.height)
             if not srf: self.srf = screenshot_srf()
             else: self.srf = srf
 
             self.pieces = []
             tearpoints = [0, self.height]
             for i in range(number):
-                tearpoints.append(random.randint(10, int(self.height) - 10))
+                tearpoints.append(random.randint(10, int(self.height - 10)))
             tearpoints.sort()
             for i in range(number+1):
                 self.pieces.append(TearPiece(tearpoints[i], tearpoints[i+1], offtimeMult, ontimeMult, offsetMin, offsetMax))
         
         def render(self, width, height, st, at):
             render = renpy.Render(self.width, self.height)
-            render.blit(self.srf, (0,0))
+            render.blit(effects_vars.tear_srf, (0,0))
             for piece in self.pieces:
                 piece.update(st)
-                subsrf = self.srf.subsurface((0, max(0, piece.startY - 1), self.width, max(0, piece.endY - piece.startY)))
+                subsrf = effects_vars.tear_srf.subsurface((0, max(0, piece.startY - 1), self.width, max(0, piece.endY - piece.startY)))
                 render.blit(subsrf, (piece.offset, piece.startY))
             renpy.redraw(self, 0)
             return render
@@ -117,6 +124,8 @@ init python:
 screen tear(number=10, offtimeMult=1, ontimeMult=1, offsetMin=0, offsetMax=50, srf=None):
     zorder 150
     add Tear(number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf) size (1280,720)
+    on "show" action Function(hide_windows_enabled, enabled=False)
+    on "hide" action Function(hide_windows_enabled, enabled=True)
 
 # RectStatic
 # These images transforms show glitched rectangles in-game during Act 3 when Monika
@@ -171,7 +180,7 @@ init python:
     ## ParticleBurst
     # This class declares the code used for the ParticleBurst effect.
     class ParticleBurst(object):
-        def __init__(self, theDisplayable, explodeTime=0, numParticles=20, particleTime = 0.500, particleXSpeed = 3, particleYSpeed = 5):
+        def __init__(self, theDisplayable, explodeTime=0, numParticles=20, particleTime = 0.500, particleTimeOffset = 0.0, particleXSpeed = 3, particleYSpeed = 5):
             self.sm = SpriteManager(update=self.update)
 
             self.stars = [ ]
@@ -179,6 +188,7 @@ init python:
             self.explodeTime = explodeTime
             self.numParticles = numParticles
             self.particleTime = particleTime
+            self.particleTimeOffset = particleTimeOffset
             self.particleXSpeed = particleXSpeed
             self.particleYSpeed = particleYSpeed
             self.gravity = 240
@@ -200,10 +210,11 @@ init python:
         
         def update(self, st):
             sindex=0
+            st_offset = st - self.particleTimeOffset
             for s, ySpeed, xSpeed, particleTime in self.stars:
-                if (st < particleTime):
-                    s.x = xSpeed * 120 * (st + .20)
-                    s.y = (ySpeed * 120 * (st + .20) + (self.gravity * st * st))
+                if ((st_offset) < particleTime):
+                    s.x = xSpeed * 120 * (st_offset + .20)
+                    s.y = (ySpeed * 120 * (st_offset + .20) + (self.gravity * st_offset * st_offset))
                 else:
                     s.destroy()
                     self.stars.pop(sindex)
@@ -288,6 +299,75 @@ init python:
                 pindex += 1
             return 0
 
+
+init python:
+    ## AnimatedMask
+    # This class declares the code used for the AnimatedMask effect in Act 3.
+    class AnimatedMask(renpy.Displayable):
+        
+        def __init__(self, child, mask, maskb, oc, op, moving=True, speed=1.0, frequency=1.0, amount=0.5, **properties):
+            super(AnimatedMask, self).__init__(**properties)
+            
+            self.child = renpy.displayable(child)
+            self.mask = renpy.displayable(mask)
+            self.maskb = renpy.displayable(maskb)
+            self.oc = oc
+            self.op = op
+            self.null = None
+            self.size = None
+            self.moving = moving
+            self.speed = speed
+            self.amount = amount
+            self.frequency = frequency
+        
+        def render(self, width, height, st, at):
+            
+            cr = renpy.render(self.child, width, height, st, at)
+            mr = renpy.render(self.mask, width, height, st, at)
+            mb = renpy.Render(width, height)
+            
+            if self.moving:
+                mb.place(self.mask, ((-st * 50) % (width * 2)) - (width * 2), 0)
+                mb.place(self.maskb, -width / 2, 0)
+            else:
+                mb.place(self.mask, 0, 0)
+                mb.place(self.maskb, 0, 0)
+            
+            cw, ch = cr.get_size()
+            mw, mh = mr.get_size()
+            
+            w = min(cw, mw)
+            h = min(ch, mh)
+            size = (w, h)
+            
+            if self.size != size:
+                self.null = Null(w, h)
+            
+            nr = renpy.render(self.null, width, height, st, at)
+            
+            rv = renpy.Render(w, h)
+            rv.mesh = True  
+            rv.add_shader("renpy.imagedissolve")
+            
+            mult = self.op if (self.op > 0) else 1
+            progress = self.oc + math.pow(math.sin(st * self.speed / 8), 64 * self.frequency) * self.amount 
+            
+            offset = ((mult / 256.0) + 1) * progress - 1.0
+            
+            rv.add_uniform("u_renpy_dissolve_offset", offset)
+            rv.add_uniform("u_renpy_dissolve_multiplier", 256.0 / mult) 
+            
+            rv.blit(mb, (0, 0), focus=False, main=False) 
+            rv.blit(nr, (0, 0), focus=False, main=False)
+            rv.blit(cr, (0, 0))
+            
+            renpy.redraw(self, 0)
+            return rv
+
+    def monika_alpha(trans, st, at):
+        trans.alpha = math.pow(math.sin(st / 8), 64) * 1.4
+        return 0
+
 # This image transform adds a blood drop that gets longer and 
 # thinner over time.
 image blood_particle_drip:
@@ -331,98 +411,6 @@ image blood_eye2:
     size (1, 1)
     truecenter
     Blood("blood_particle", dripChance=0.005, numSquirts=0, burstSize=0).sm
-
-init python:
-    ## AnimatedMask
-    # This class declares the code used for the AnimatedMask effect in Act 3.
-    class AnimatedMask(renpy.Displayable):
-        
-        def __init__(self, child, mask, maskb, oc, op, moving=True, speed=1.0, frequency=1.0, amount=0.5, **properties):
-            super(AnimatedMask, self).__init__(**properties)
-            
-            self.child = renpy.displayable(child)
-            self.mask = renpy.displayable(mask)
-            self.maskb = renpy.displayable(maskb)
-            self.oc = oc
-            self.op = op
-            self.null = None
-            self.size = None
-            self.moving = moving
-            self.speed = speed
-            self.amount = amount
-            self.frequency = frequency
-        
-        def render(self, width, height, st, at):
-            
-            cr = renpy.render(self.child, width, height, st, at)
-            mr = renpy.render(self.mask, width, height, st, at)
-            mb = renpy.Render(width, height)
-            
-            
-            if self.moving:
-                mb.place(self.mask, ((-st * 50) % (width * 2)) - (width * 2), 0)
-                mb.place(self.maskb, -width / 2, 0)
-            else:
-                mb.place(self.mask, 0, 0)
-                mb.place(self.maskb, 0, 0)
-            
-            
-            
-            cw, ch = cr.get_size()
-            mw, mh = mr.get_size()
-            
-            w = min(cw, mw)
-            h = min(ch, mh)
-            size = (w, h)
-            
-            if self.size != size:
-                self.null = Null(w, h)
-            
-            nr = renpy.render(self.null, width, height, st, at)
-            
-            rv = renpy.Render(w, h)
-            
-            complete = self.oc + math.pow(math.sin(st * self.speed / 8), 64 * self.frequency) * self.amount
-
-            rv.operation = renpy.display.render.IMAGEDISSOLVE
-            rv.operation_alpha = 1.0
-            rv.operation_complete = complete
-            rv.operation_parameter = self.op
-            
-            if renpy.display.render.models:
-
-                target = rv.get_size()
-
-                op = self.op
-
-                # Prevent a DBZ if the user gives us a 0 ramp.
-                if op < 1:
-                    op = 1
-
-                # Compute the offset to apply to the alpha.
-                start = -1.0
-                end = op / 256.0
-                offset = start + (end - start) * complete
-
-                rv.mesh = True
-
-                rv.add_shader("renpy.imagedissolve",)
-                rv.add_uniform("u_renpy_dissolve_offset", offset)
-                rv.add_uniform("u_renpy_dissolve_multiplier", 256.0 / op)
-                rv.add_property("mipmap", renpy.config.mipmap_dissolves if (self.style.mipmap is None) else self.style.mipmap)
-            
-            rv.blit(mb, (0, 0), focus=False, main=False)
-            rv.blit(nr, (0, 0), focus=False, main=False)
-            rv.blit(cr, (0, 0))
-            
-            renpy.redraw(self, 0)
-            return rv
-
-    # This function makes a image be transparent for a bit then 
-    # fade in and out in Act 3.
-    def monika_alpha(trans, st, at):
-        trans.alpha = math.pow(math.sin(st / 8), 64) * 1.4
-        return 0
 
 ## The Old Blue Screen of Death
 # These images tricks the player to think their PC has crashed.

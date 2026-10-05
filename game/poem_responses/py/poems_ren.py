@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the Python code for displaying poems in DDLC.
 
 # The logic for displaying poems has been changed drastically compared to the original
