@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the Python code for DDLC's poem game.
 
 # The code logic has been rewritten to use the Ren'Py `_ren.py` approach for Python code.

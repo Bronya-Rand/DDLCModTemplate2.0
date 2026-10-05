@@ -16,6 +16,10 @@ This folder contains the needed files for DDLC and the template to run. (Patches
 
 This folder contains the definition files for images, sprites, music, etc. that are used in DDLC. (CGs, Definitions, Effects, Splash, Transforms)
 
+### <u>gui</u>
+
+This folder contains only the necessary gui files to run a DDLC mod on Android without crashes which is `window_icon.png` (duplicated from `mod_assets`). Replace the icon with your own before building but **do note delete this folder**.
+
 ### <u>mod_assets</u>
 
 This folder stores all your images, music/sfx, and more relating to your mod along with files needed for the Extras screen.

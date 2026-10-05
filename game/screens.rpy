@@ -2091,3 +2091,116 @@ translate None strings:
 label choose_language:
     call screen choose_language
     return
+
+################################################################################
+## Asset Setup Screen 
+## Displayed only for Android, this screen allows the player to select the asset 
+## source for the game. Required with the new Team Salvato IP guidelines.
+##
+## DO NOT REMOVE NOR MODIFY THIS SCREEN WHATSOEVER! THIS MUST STAY EXACTLY AS IS 
+## WITHOUT MODIFICATION! MODIFYING THIS WILL RESULT IN THE SCREEN NOT WORKING AND 
+## NO ONE BEING ABLE TO PLAY THE MOD.
+################################################################################
+
+define -2 aas_frame_borders = Borders(40, 40, 40, 40)
+define -2 aas_button_borders = Borders(4, 4, 4, 4)
+
+screen android_asset_setup():
+    modal True
+    zorder 200
+    style_prefix "aas"
+
+    add Solid("#000000cc")
+
+    if asset_setup_busy:
+        timer 0.25 repeat True action renpy.restart_interaction
+
+    frame:
+        background Solid("#b59")
+        padding (4, 4)
+        
+        frame:
+            vbox:
+                xalign .5
+                yalign .5
+                spacing 30
+
+                label _("In accordance with Team Salvato's IP guidelines, before playing [config.name], you must obtain the assets for DDLC."):
+                    style "aas_prompt"
+                    xalign .5
+                
+                vbox:
+                    spacing 10
+                    xfill True
+
+                    if asset_setup_status:
+                        text asset_setup_status:
+                            substitute False
+                            xalign .5
+                            if asset_setup_busy:
+                                italic True
+
+                    if not asset_setup_busy:
+                        text _("Depending on the mod creator, you may be required to obtain the PC version of DDLC or the Android version of DDLC."):
+                            xalign .5
+                        text _("If you are unsure which version of DDLC to obtain, select the 'Android' option."):
+                            xalign .5
+                
+                hbox:
+                    xalign .5
+                    spacing 60
+
+                    textbutton _("PC"):
+                        sensitive not asset_setup_busy
+                        action Function(prompt_and_extract_pc)
+
+                    textbutton _("Android"):
+                        sensitive not asset_setup_busy
+                        action Function(prompt_and_extract_android)
+
+                    textbutton _("Quit"):
+                        action Quit(confirm=False)
+
+style aas_frame:
+    background Solid("#ffe6f4")
+    padding aas_frame_borders.padding
+    xalign .5
+    yalign .5
+
+style aas_prompt:
+    xsize 900
+    xalign 0.5
+    text_align 0.5
+
+style aas_prompt_text:
+    font "DejaVuSans.ttf"
+    size 24
+    color "#000"
+    outlines []
+    text_align 0.5
+    layout "subtitle"
+
+style aas_text:
+    font "DejaVuSans.ttf"
+    size 14
+    color "#000"
+    outlines []
+    text_align 0.5
+    layout "subtitle"
+
+style aas_button:
+    background None
+    xsize 300
+    ysize None
+    padding aas_button_borders.padding
+    hover_sound gui.hover_sound
+    activate_sound gui.activate_sound
+
+style aas_button_text:
+    font "DejaVuSans.ttf"
+    size 24
+    color "#fff"
+    xalign 0.5
+    text_align 0.5
+    outlines [(4, "#b59", 0, 0), (2, "#b59", 2, 2)]
+    insensitive_outlines [(4, "#fce", 0, 0), (2, "#fce", 2, 2)]

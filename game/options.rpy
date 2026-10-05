@@ -1,4 +1,4 @@
-﻿## This template version is 5.0.0. When asked to provide the template version
+﻿## This template version is 5.1.0. When asked to provide the template version
 ## you are using, give them this version number. 
 ### DO NOT REMOVE OR CHANGE THE ABOVE COMMENT. ###
 
@@ -13,7 +13,7 @@ define config.name = "DDLC Mod Template – Python 3 Edition"
 define gui.show_name = True
 
 # This controls the version number of your mod.
-define config.version = "5.0.0"
+define config.version = "5.1.0"
 
 # This adds information about your mod in the About screen.
 # DDLC does not have a 'About' screen so you can leave this blank.
@@ -180,9 +180,8 @@ init python:
     build.classify("game/**/README.md", None)
     build.classify("game/**.txt", "scripts all")
     build.classify("game/**.chr", "scripts all")
-    build.classify("game/advanced_scripts/**","scripts all") ## Backwards Compatibility
     build.classify("game/tl/**", "scripts all") ## Translation Folder
-    build.classify("game/mod_extras/**.rpyc", "scripts") ## Extra Features (Backwards Compatibility)
+    build.classify("game/gui/window_icon.png", "android")
 
     build.classify('**~', None)
     build.classify('**.bak', None)
@@ -200,6 +199,14 @@ init python:
     build.classify('**.rpa', None)
     build.classify('README.html','mod all')
     build.classify('README.linux', 'linux')
+
+    # Exclude all base DDLC and Android port assets from distribution
+    build.classify("game/images/**", None)
+    build.classify("game/gui/**", None)
+    build.classify("game/fonts/**", None)
+    build.classify("game/bgm/**", None)
+    build.classify("game/sfx/**", None)
+    build.classify("**.rpa", None)
    
     # This sets' README.html as documentation
     build.documentation('README.html')

@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file checks that 'audio.rpa', 'fonts.rpa' and 'images.rpa' are in the
 # game folder and if the project is in a cloud folder (OneDrive).
 # Note: For building a mod for PC/Android, you must keep the DDLC RPAs

@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the Python code of assigning words to characters in the poem game of DDLC.
 
 # This file replaces the original `poemwords.txt` file and defines the words used in the poem game
@@ -111,7 +111,7 @@ class PoemWordDB:
         :return list[PoemWord]: List of PoemWord instances.
         """
         return self.words.copy()
-    
+
     def get_words_str(self) -> list[str]:
         """
         Returns a list of words as strings from the PoemWord database.

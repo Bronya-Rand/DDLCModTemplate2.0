@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the Python code for displaying poems in DDLC.
 
 # The logic for displaying poems has been changed drastically compared to the original
@@ -150,8 +150,6 @@ class Poem(renpy.text.text.Text):
 
         return f"<from {pos} {loop_value} {to_value}>{stripped_song}"
 
-        
-
     def show(
         self,
         img: str | None = None,
@@ -225,7 +223,9 @@ class Poem(renpy.text.text.Text):
             if poem_track and revert_music:
                 if previous_music:
                     previous_music = (
-                        self.format_music_str(previous_music, renpy.music.get_pos(channel="poem"))
+                        self.format_music_str(
+                            previous_music, renpy.music.get_pos(channel="poem")
+                        )
                         if from_current
                         else previous_music
                     )

@@ -1,4 +1,4 @@
-# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the major Python code for DDLC and the Mod Template + Features.
 # Altering this file may break the game or mod functionality.
 
@@ -31,6 +31,7 @@ splash_messages = [
 
 ## DDLC Functions
 
+
 def _get_android_data_directory() -> str | None:
     """
     Returns the Android data directory path.
@@ -40,13 +41,15 @@ def _get_android_data_directory() -> str | None:
     """
     if not renpy.android:
         return None
-    
+
     import jnius  # type: ignore
+
     activity = jnius.autoclass("org.renpy.android.PythonSDLActivity")
     current_activity = jnius.cast("android.app.Activity", activity.mActivity)
 
     data_directory = current_activity.getFilesDir().getAbsolutePath()
     return data_directory
+
 
 def get_characters_folder():
     """
@@ -61,7 +64,9 @@ def get_characters_folder():
         if android_public_directory:
             characters_folder = os.path.join(android_public_directory, "characters")
     else:
-        characters_folder = os.path.join(renpy.config.basedir, "characters").replace("\\", "/")
+        characters_folder = os.path.join(renpy.config.basedir, "characters").replace(
+            "\\", "/"
+        )
 
     return characters_folder
 
@@ -208,9 +213,9 @@ def get_process_list():
     :return: A list of process names.
     :rtype: set[str]
     """
-    if renpy.android: 
+    if renpy.android:
         return set()  # Process listing is not supported on Android
-    
+
     process_list: set[str] = set()
     if renpy.windows:
         try:
@@ -299,8 +304,8 @@ def get_user_account_name():
     :rtype: str | None
     """
     if renpy.android:
-        return None # User account retrieval is not supported on Android
-    
+        return None  # User account retrieval is not supported on Android
+
     # Reject if streaming to protect privacy
     if is_user_streaming():
         return None
@@ -448,6 +453,11 @@ renpy.music.register_channel("page_turn", mixer="music", tight=True)
 # Initialize gesture mapping for Android devices.
 if renpy.android:
     renpy.config.keymap["rollback"] = []
-    renpy.config.keymap["history"] = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ]
+    renpy.config.keymap["history"] = [
+        "K_PAGEUP",
+        "repeat_K_PAGEUP",
+        "K_AC_BACK",
+        "mousedown_4",
+    ]
 
 renpy.pure(dsp)
