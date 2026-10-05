@@ -1,4 +1,4 @@
-# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the major Python code for DDLC and the Mod Template + Features.
 # Altering this file may break the game or mod functionality.
 
@@ -179,6 +179,14 @@ def get_pos(channel: str = "music"):
     pos = renpy.music.get_pos(channel)
     if pos is not None:
         return pos
+    if channel == "music_poem":
+        pos = renpy.music.get_pos("poem")
+        if pos is not None:
+            return pos
+    elif channel == "poem":
+        pos = renpy.music.get_pos("music_poem")
+        if pos is not None:
+            return pos
     return 0
 
 

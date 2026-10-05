@@ -1,9 +1,9 @@
-# Copyright 2019-2026 Azariel Del Carmen (bronya_rand). All rights reserved.
+# Copyright 2019-2025 Azariel Del Carmen (bronya_rand). All rights reserved.
 # This file contains the Ren'Py code for displaying poems in DDLC.
 
 # For the Python code, see `poems_ren.py` in the `py` directory.
 
-screen poem(poem):
+screen poem(poem, paper=None):
     style_prefix "poem"
 
     fixed:
@@ -11,8 +11,12 @@ screen poem(poem):
         frame:
             style "poem_paper"
 
-            add poem.paper:
-                subpixel True align (0.5, 0.5)
+            if paper:
+                add paper:
+                    subpixel True align (0.5, 0.5)
+            else:
+                add poem.paper:
+                    subpixel True align (0.5, 0.5)
 
         frame:
             background None
@@ -89,10 +93,3 @@ style monika_text:
     outlines []
 
 default poem_last_author = None
-
-# Depreciation Warning
-label showpoem(poem, **properties):
-    python:
-        text = "This feature is now depreciated. Please use " + ("'$ poem_db.show_poem(\"%s\", %s)'" % (poem, ", ".join("%s=%s" % (k, v) for k, v in properties.items())) if properties else "'$ poem_db.show_poem(\"%s\")'" % poem) + " instead.\nRefer to {u}poem_responses/py/poems_ren.py{/u} for more information."
-    $ renpy.notify(text)
-    return
