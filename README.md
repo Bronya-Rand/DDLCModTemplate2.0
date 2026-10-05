@@ -33,7 +33,7 @@ Built for Ren'Py 8.X.X by Azariel Del Carmen (bronya_rand), this template provid
 **Perfect for:**
 - First-time mod creators looking for a solid foundation.
 - Experienced modders wanting to upgrade to Ren'Py 8.
-- Developers seeking cross-platform compatibility (Windows x64, macOS, Linux, Android).
+- Developers seeking cross-platform compatibility (Windows x64, macOS, Linux).
 
 > [!NOTE]
 > **The DDLC Mod Template is not affiliated in any way with Team Salvato nor is it designed for the sequel "Doki Doki Literature Club Plus". Do not use the template nor its code for unofficial DDLC patches, fixes, etc.**
@@ -50,7 +50,8 @@ Built for Ren'Py 8.X.X by Azariel Del Carmen (bronya_rand), this template provid
 - ✅ **Team Salvato Compliant** - Includes required splashscreen (disclaimer) and follows all IP guidelines for fan mods.
 - 🐍 **Python 3 & Ren'Py 8 Optimized** - Clean, modern code optimized for the latest Ren'Py.
 - 📚 **Original DDLC Scripts Included** - Reference the original game scripts for learning purposes.
-- 🌐 **Cross-Platform Support** - Build for Windows, macOS, Linux, and Android.
+- 🌐 **Cross-Platform Support** - Build for Windows, macOS and Linux.
+<!-- - 🌐 **Cross-Platform Support** - Build for Windows, macOS, Linux, and Android. -->
 - 🎨 **Automatic GUI Coloring** - Customize GUI and menu button colors without editing assets.
 - 🖼️ **Dynamic Super Resolution (DSR/DSP)** - Universal resolution template supporting custom resolutions.
 - 📝 **Player Name Change** - Allow players to correct or change their name in-game.
@@ -130,12 +131,14 @@ This creates a cross-platform mod package ZIP file (marked with `-Renpy8-DDLCMod
 
 ### Android
 
-Making your mod work on Android requires additional considerations, especially for complex features or non-mobile-friendly code.
+<!-- Making your mod work on Android requires additional considerations, especially for complex features or non-mobile-friendly code.
 
 📱 **Read the full guide:** [Android Mod Guide](./Documentation/Android%20Mod%20Guide.pdf)
 
 > [!NOTE]
-> For older templates, refer to the PDF included in your template's ZIP file as the latest guide may not match your version.
+> For older templates, refer to the PDF included in your template's ZIP file as the latest guide may not match your version. -->
+
+Android mod making is unavailable at this time due to recent Team Salvato IP guidelines.
 
 ### Linux
 
@@ -179,7 +182,7 @@ If you prefer a different approach, you may use one of these alternatives:
 
 ### Documentation
 
-- 📱 [Android Mod Guide](./Documentation/Android%20Mod%20Guide.pdf) - Complete guide for Android porting
+<!-- - 📱 [Android Mod Guide](./Documentation/Android%20Mod%20Guide.pdf) - Complete guide for Android porting -->
 - 🎮 [Discord RPC Guide](./Documentation/Discord%20RPC%20Guide.pdf) - Set up Discord Rich Presence
 - 📝 [New Poem Game Guide](./Documentation/New%20Poemgame%20Guide.pdf) - In-depth poem game documentation
 
@@ -218,5 +221,5 @@ Thanks to the following people for their contributions to the DDLC Mod Template:
 ---
 
 <p align="center">
-   <b>Copyright © 2019-2025 Azariel "Bronya Rand" Del Carmen (bronya_rand). All rights reserved. Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato. Copyright © 2017 Team Salvato. All rights reserved.</b>
+   <b>Copyright © 2019-2026 Azariel "Bronya Rand" Del Carmen (bronya_rand). All rights reserved. Doki Doki Literature Club, the Doki Doki Literature Club code, is the property of Team Salvato. Copyright © 2017 Team Salvato. All rights reserved.</b>
 </p>
