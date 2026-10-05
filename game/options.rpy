@@ -169,13 +169,10 @@ init python:
     build.classify("*.sh", None)
     
     #############################################################
-    # These variables classify packages for PC and Android platforms.
-    # Make sure to add 'all' to your build.classify variable if you are planning
-    # to build your mod on Android like in this example.
-    #   Example: build.classify("game/**.pdf", "scripts all")
-    build.classify("game/mod_assets/**", "mod_assets all")
-    build.classify("game/presplash.png", "scripts all")
-    build.classify("game/**.rpyc", "scripts all")
+    # These variables classify packages for PC platforms.
+    build.classify("game/mod_assets/**", "mod_assets")
+    build.classify("game/presplash.png", "scripts")
+    build.classify("game/**.rpyc", "scripts")
     build.classify("game/README.md", None)
     build.classify("game/**/README.md", None)
     build.classify("game/**.txt", "scripts all")
@@ -212,3 +209,4 @@ init python:
     build.documentation('README.html')
 
     build.include_old_themes = False
+    build.android_permissions = [ 'android.permission.READ_EXTERNAL_STORAGE', 'android.permission.WRITE_EXTERNAL_STORAGE' ]
