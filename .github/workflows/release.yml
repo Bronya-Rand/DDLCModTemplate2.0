@@ -1,10 +1,8 @@
 
 name: Publish Mod Template
 on:
-    push:
-        tags: 
-            - "*.*.*"
-            - "v*.*.*"
+    release:
+        types: [published]
 
 permissions:
     contents: "write"
@@ -17,14 +15,13 @@ jobs:
 
             - name: Build ZIPs
               run: |
-                VER="${GITHUB_REF_NAME#v}"
+                TAG="${{ github.event.release.tag_name || github.ref_name }}"
+                VER="${TAG#v}"
                 mkdir -p ZIPs
                 git archive --format=zip -o "ZIPs/DDLCModTemplate-${VER}-Py3.zip" HEAD
-                git archive --format=zip -o "ZIPs/DDLCModTemplate-${VER}-Py3Extras.zip" 
-                    HEAD:"Additional Mod Features"
+                git archive --format=zip -o "ZIPs/DDLCModTemplate-${VER}-Py3Extras.zip" HEAD:"Additional Mod Features"
             
-            - name: Create GitHub Release
+            - name: Upload Release Assets
               uses: softprops/action-gh-release@v3
               with: 
                 files: ZIPs/*.zip
-                generate_release_notes: true
