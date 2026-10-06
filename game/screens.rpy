@@ -155,7 +155,6 @@ style vslider:
 style frame:
     padding gui.frame_borders.padding
     background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
-    # background Frame(recolorize("gui/frame.png"), gui.frame_borders, tile=gui.frame_tile)
 
 ################################################################################
 ## In-game screens
@@ -337,10 +336,8 @@ screen choice(items):
                     $ arg2 = kwarg[-1]
                     
                     textbutton caption:
-                        idle_background Frame(im.MatrixColor(im.MatrixColor("gui/button/choice_idle_background.png", im.matrix.desaturate() * im.matrix.contrast(1.29) * im.matrix.colorize("#00f", "#fff") * im.matrix.saturation(120)), 
-                            im.matrix.desaturate() * im.matrix.colorize(arg1, arg2)), gui.choice_button_borders)
-                        hover_background Frame(im.MatrixColor(im.MatrixColor("gui/button/choice_hover_background.png", im.matrix.desaturate() * im.matrix.contrast(1.29) * im.matrix.colorize("#00f", "#fff") * im.matrix.saturation(120)), 
-                            im.matrix.desaturate() * im.matrix.colorize(arg1, "#fff")), gui.choice_button_borders)
+                        idle_background Frame(recolorize("gui/button/choice_idle_background.png", "#ffbde1", "#ffe6f4", arg1, arg2), gui.choice_button_borders)
+                        hover_background Frame(recolorize("gui/button/choice_hover_background.png", "#ffbde1", "#fff", arg1, arg2), gui.choice_button_borders)
                         action i.action
 
                 else:
@@ -732,7 +729,6 @@ style game_menu_outer_frame:
     top_padding 120
 
     background "gui/overlay/game_menu.png"
-    # background recolorize("gui/overlay/game_menu.png")
 
 style game_menu_navigation_frame:
     xsize 280
@@ -914,17 +910,17 @@ screen file_slots(title):
                     button:
                         action FileActionMod(slot)
 
-                        has vbox
+                        vbox:
 
-                        add FileScreenshot(slot) xalign 0.5
+                            add FileScreenshot(slot) xalign 0.5
 
-                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
-                            style "slot_time_text"
+                            text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
+                                style "slot_time_text"
 
-                        text FileSaveName(slot):
-                            style "slot_name_text"
+                            text FileSaveName(slot):
+                                style "slot_name_text"
 
-                        key "save_delete" action FileDelete(slot)
+                            key "save_delete" action FileDelete(slot)
 
             ## Buttons to access other pages.
             hbox:
@@ -1095,10 +1091,9 @@ style viewframe_text is confirm_prompt_text:
 #                 scrollbars "vertical"
 #                 mousewheel True
 #                 draggable True
-#                 has vbox
-
-#                 textbutton "1280x720" action SetScreenVariable("scale", (1280, 720))
-#                 textbutton "1600x900" action SetScreenVariable("scale", (1600, 900))
+#                 vbox:
+#                     textbutton "1280x720" action SetScreenVariable("scale", (1280, 720))
+#                     textbutton "1600x900" action SetScreenVariable("scale", (1600, 900))
 
 #         null height 10
 
@@ -1291,13 +1286,13 @@ screen template_preferences():
                         mousewheel True
                         scrollbars "vertical"
                         ysize 120
-                        has vbox
 
-                        for tran in translations:
-                            vbox:
-                                for tlid, tlname in tran:
-                                    textbutton tlname:
-                                        action Language(tlid)
+                        vbox:
+                            for tran in translations:
+                                vbox:
+                                    for tlid, tlname in tran:
+                                        textbutton tlname:
+                                            action Language(tlid)
 
 ## Preferences screen ##########################################################
 ##
@@ -1809,7 +1804,6 @@ style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
     background Frame("gui/frame.png", gui.confirm_frame_borders, tile=gui.frame_tile)
-    # background Frame(recolorize("gui/frame.png"), gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
@@ -1937,7 +1931,7 @@ screen nvl(dialogue, items=None):
     window:
         style "nvl_window"
 
-        has vbox:
+        vbox:
             spacing gui.nvl_spacing
 
         ## Displays dialogue in either a vpgrid or the vbox.

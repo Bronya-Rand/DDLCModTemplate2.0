@@ -28,29 +28,29 @@ screen poem_test(words, progress, poemgame_glitch):
             ypos 160
 
             viewport:
-                has vbox
                 spacing 56
 
-                for i in range(5):
-                    if persistent.playthrough == 3:
-                        python:
-                            s = list("Monika")
-                            for k in range(6): # This gives random corruption effects to the "Monika" words.
-                                if random.randint(0, 4) == 0:
-                                    s[k] = ' '
-                                elif random.randint(0, 4) == 0:
-                                    s[k] = random.choice(nonunicode)
-                            wordString = "".join(s)
-                    elif persistent.playthrough == 2 and not poemgame_glitch and chapter >= 1 and progress < numWords and random.randint(0, 400) == 0:
-                        python:
-                            wordString = glitchtext(80) # This gives a chance for a random word in Act 2 to be the glitched word.
-                    else:
-                        python:
-                            wordString = words[i]
+                vbox:
+                    for i in range(5):
+                        if persistent.playthrough == 3:
+                            python:
+                                s = list("Monika")
+                                for k in range(6): # This gives random corruption effects to the "Monika" words.
+                                    if random.randint(0, 4) == 0:
+                                        s[k] = ' '
+                                    elif random.randint(0, 4) == 0:
+                                        s[k] = random.choice(nonunicode)
+                                wordString = "".join(s)
+                        elif persistent.playthrough == 2 and not poemgame_glitch and chapter >= 1 and progress < numWords and random.randint(0, 400) == 0:
+                            python:
+                                wordString = glitchtext(80) # This gives a chance for a random word in Act 2 to be the glitched word.
+                        else:
+                            python:
+                                wordString = words[i]
 
-                    textbutton wordString:
-                        action Return(wordString)
-                        text_style "poemgame_text"
+                        textbutton wordString:
+                            action Return(wordString)
+                            text_style "poemgame_text"
 
         fixed:
             xpos 680

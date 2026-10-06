@@ -390,38 +390,35 @@ currentuser = get_user_account_name()
 ## Template Functions
 
 
-## TODO: Adjust to maybe Transform and MatrixColor
+LUMA = (0.2126, 0.7152, 0.0722)
+
+
+def _luma(c):
+    return sum(w * v for w, v in zip(LUMA, c.rgba[:3]))
+
+
 def recolorize(
-    path: str, blackCol: str = "#ffbde1", whiteCol: str = "#ffe6f4", contr: float = 1.29
+    path: str, src_lo: str, src_hi: str, new_lo: str, new_hi: str
 ) -> renpy.display.transform.Transform:
     """
-    Recolorizes the image at the given path with the specified colors and contrast.
+    Recolorizes an image.
 
-    :param path: The path to the image file.
-    :param blackCol: The color to use for black areas.
-    :param whiteCol: The color to use for white areas.
-    :param contr: The contrast level to apply.
-
-    :type path: str
-    :type blackCol: str
-    :type whiteCol: str
-    :type contr: float
-
-    :return: The recolorized image.
+    :param path: The path to the image.
+    :param src_lo: The lower bound of the source color (the original image's darkest color)
+    :param src_hi: The upper bound of the source color (the original image's lightest color)
+    :param new_lo: The lower bound of the new color.
+    :param new_hi: The upper bound of the new color.
     """
-    return renpy.display.transform.Transform(
-        renpy.display.transform.Transform(
-            renpy.display.transform.Transform(
-                path,
-                matrixcolor=renpy.display.matrix.SaturationMatrix(0.0)
-                * renpy.display.matrix.ContrastMatrix(contr),
-            ),
-            matrixcolor=renpy.display.matrix.ColorizeMatrix("#00f", "#fff")
-            * renpy.display.matrix.SaturationMatrix(120),
-        ),
-        matrixcolor=renpy.display.matrix.SaturationMatrix(0.0)
-        * renpy.display.matrix.ColorizeMatrix(blackCol, whiteCol),
-    )
+    lo, hi = _luma(renpy.store.Color(src_lo)), _luma(renpy.store.Color(src_hi))
+    s = 1.0 / (hi - lo)
+    b, f = renpy.store.Color(new_lo).rgba, renpy.store.Color(new_hi).rgba
+    rows = []
+
+    for ch in range(3):
+        k = (f[ch] - b[ch]) * s
+        rows += [k * LUMA[0], k * LUMA[1], k * LUMA[2], b[ch] - k * lo]
+    rows += [0, 0, 0, 1]
+    return renpy.display.transform.Transform(path, matrixcolor=renpy.store.Matrix(rows))
 
 
 ### Dynamic Super Positioning
