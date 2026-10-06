@@ -14,11 +14,7 @@ init python:
     # This screenshot is used to screenshot the game which is used for different
     # effects in-game.
     def screenshot_srf():
-        if renpy.version_tuple > (7, 3, 5, 606):
-            srf = renpy.display.draw.screenshot(None)
-        else:
-            srf = renpy.display.draw.screenshot(None, False)
-        
+        srf = renpy.display.draw.screenshot(None)
         # The screenshot's size must match the window.
         srf = renpy.display.scale.smoothscale(srf, screenshot_srf_size())
         return srf
@@ -34,7 +30,7 @@ init python:
     # This class defines the code to invert the screen in 'screen invert'
     class Invert(renpy.Displayable):
         def __init__(self, delay=0.0, screenshot_delay=0.0):
-            super(Invert, self).__init__()
+            super().__init__()
             self.width, self.height = screenshot_srf_size()
             self.srf = invert()
             self.delay = delay
@@ -80,7 +76,7 @@ init python:
     # This class defines the code for the 'screen tear' effect in-game.
     class Tear(renpy.Displayable):
         def __init__(self, number, offtimeMult, ontimeMult, offsetMin, offsetMax, srf=None):
-            super(Tear, self).__init__()
+            super().__init__()
             self.width, self.height = screenshot_srf_size()
 
             self.number = number
@@ -130,15 +126,15 @@ image m_rectstatic:
 
 # This image transform adds multiple squares of the DDLC logo to the screen.
 image m_rectstatic2:
-    RectStatic(im.FactorScale(im.Crop("gui/logo.png", (100, 100, 128, 128)), 0.25), 2, 32, 32).sm
+    RectStatic(Transform("gui/logo.png", crop=(100, 100, 128, 128), zoom=0.25), 2, 32, 32).sm
 
 # This image transform adds multiple squares of Sayori's menu sprite to the screen.
 image m_rectstatic3:
-    RectStatic(im.FactorScale(im.Crop("gui/menu_art_s.png", (100, 100, 64, 64)), 0.5), 2, 32, 32).sm
+    RectStatic(Transform("gui/menu_art_s.png", crop=(100, 100, 64, 64), zoom=0.5), 2, 32, 32).sm
 
 init python:
     # This class declares the code used for the RectStatic effect.
-    class RectStatic(object):
+    class RectStatic:
         def __init__(self, theDisplayable, numRects=12, rectWidth = 30, rectHeight = 30):
             self.sm = SpriteManager(update=self.update)
             self.rects = [ ]
@@ -170,7 +166,7 @@ init python:
 
     ## ParticleBurst
     # This class declares the code used for the ParticleBurst effect.
-    class ParticleBurst(object):
+    class ParticleBurst:
         def __init__(self, theDisplayable, explodeTime=0, numParticles=20, particleTime = 0.500, particleXSpeed = 3, particleYSpeed = 5):
             self.sm = SpriteManager(update=self.update, animation=False)
 
@@ -212,7 +208,7 @@ init python:
     
     ## Blood
     # This class declares the code used for the Blood effect for Yuri in Act 2.
-    class Blood(object):
+    class Blood:
         def __init__(self, theDisplayable, density=120.0, particleTime=1.0, dripChance=0.05, dripSpeedX=0.0, dripSpeedY=120.0, dripTime=180.0, burstSize=100, burstSpeedX=200.0, burstSpeedY=400.0, numSquirts=4, squirtPower=400, squirtTime=0.25):
             self.sm = SpriteManager(update=self.update)
             self.drops = []
@@ -338,7 +334,7 @@ init python:
     class AnimatedMask(renpy.Displayable):
         
         def __init__(self, child, mask, maskb, oc, op, moving=True, speed=1.0, frequency=1.0, amount=0.5, **properties):
-            super(AnimatedMask, self).__init__(**properties)
+            super().__init__(**properties)
             
             self.child = renpy.displayable(child)
             self.mask = renpy.displayable(mask)
@@ -384,10 +380,10 @@ init python:
             
             complete = self.oc + math.pow(math.sin(st * self.speed / 8), 64 * self.frequency) * self.amount
 
-            rv.operation = renpy.display.render.IMAGEDISSOLVE
-            rv.operation_alpha = 1.0
-            rv.operation_complete = complete
-            rv.operation_parameter = self.op
+            # rv.operation = renpy.display.render.IMAGEDISSOLVE
+            # rv.operation_alpha = 1.0
+            # rv.operation_complete = complete
+            # rv.operation_parameter = self.op
             
             if renpy.display.render.models:
 
@@ -441,7 +437,7 @@ image bsod_2:
     0.1
     yoffset 750
 
-image bsod = LiveComposite((1280, 720), (0, 0), "bsod_1", (0, 0), "bsod_2")
+image bsod = Composite((1280, 720), (0, 0), "bsod_1", (0, 0), "bsod_2")
 
 ## Veins
 # This image transform creates a veiny border around the screen that shakes and pulses

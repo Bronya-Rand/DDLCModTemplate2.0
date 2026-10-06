@@ -104,19 +104,13 @@ define config.rollback_enabled = config.developer
 # These variables controls the layers placement of screens, images, and more. 
 # It is highly recommended to leave these variables alone.
 define config.layers = [ 'master', 'transient', 'screens', 'overlay', 'front' ]
-define config.image_cache_size = 64
+define config.image_cache_size = 8
 define config.predict_statements = 50
 define config.menu_clear_layers = ["front"]
-define config.gl_test_image = "white"
 
 init python:
     if len(renpy.loadsave.location.locations) > 1: del(renpy.loadsave.location.locations[1])
     renpy.game.preferences.pad_enabled = False
-    def replace_text(s):
-        s = s.replace('--', u'\u2014') 
-        s = s.replace(' - ', u'\u2014') 
-        return s
-    config.replace_text = replace_text
 
     def game_menu_check():
         if quick_menu: renpy.call_in_new_context('_game_menu')
@@ -208,5 +202,4 @@ init python:
     # This sets' README.html as documentation
     build.documentation('README.html')
 
-    build.include_old_themes = False
     build.android_permissions = [ 'android.permission.READ_EXTERNAL_STORAGE', 'android.permission.WRITE_EXTERNAL_STORAGE' ]
