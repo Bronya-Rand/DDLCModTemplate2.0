@@ -115,7 +115,7 @@ class Poem(renpy.text.text.Text):
         else:
             style = "default"
 
-        poem = f"{title}\\n\\n{text}" if separate_title_from_text and title else text
+        poem = f"{title}\n\n{text}" if separate_title_from_text and title else text
 
         super().__init__(poem, style=style, **properties)
 
